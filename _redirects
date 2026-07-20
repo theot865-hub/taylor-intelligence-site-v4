@@ -1,0 +1,7 @@
+# Cloudflare Pages — serve index.html for the client-side routes so the
+# hash/path router can render them (200 = rewrite, URL stays put).
+# This is what makes the bare path taylorintelligence.ai/card work.
+/card       /index.html   200
+/portfolio  /index.html   200
+/approach   /index.html   200
+/contact    /index.html   200

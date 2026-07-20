@@ -1,0 +1,875 @@
+<meta charset="utf-8">
+<title>Taylor Intelligence — Simple by design</title>
+<style>
+  :root {
+    --ground: #ffffff;
+    --ink: #121212;
+    --line: #121212;
+    --muted: #6f6c66;
+    --hover: #f4f2ee;
+    --pad: clamp(20px, 3.2vw, 40px);
+    --maxw: 1120px;
+    --sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0c0c0c;
+      --ink: #eceae4;
+      --line: #34322d;
+      --muted: #8b877f;
+      --hover: #151513;
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #ffffff; --ink: #121212; --line: #121212; --muted: #6f6c66; --hover: #f4f2ee;
+  }
+  :root[data-theme="dark"] {
+    --ground: #0c0c0c; --ink: #eceae4; --line: #34322d; --muted: #8b877f; --hover: #151513;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.006em;
+  }
+
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: clamp(18px, 4vw, 56px) clamp(16px, 4vw, 40px);
+  }
+
+  /* the ledger: sections share hairlines via the gap trick, no outer border */
+  .frame {
+    background: var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .band { background: var(--ground); }
+
+  /* multi-cell rows: 1px gap over ink shows as shared hairlines */
+  .cells {
+    display: grid;
+    gap: 1px;
+    background: var(--line);
+  }
+  .cell { background: var(--ground); padding: var(--pad); }
+
+  /* ---- top bar ---- */
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: clamp(14px, 1.8vw, 20px) var(--pad);
+    flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .mark {
+    width: 20px; height: 20px;
+    border: 1px solid var(--ink);
+    flex: none;
+  }
+  .word {
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    font-size: 15px;
+  }
+  nav { display: flex; gap: clamp(14px, 2.4vw, 30px); flex-wrap: wrap; }
+  nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+  }
+  nav a:hover { border-bottom-color: var(--ink); }
+
+  /* ---- eyebrow label ---- */
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    display: block;
+    margin: 0 0 18px;
+  }
+
+  /* ---- statement (no hero: restrained, same weight as the grid) ---- */
+  .statement { padding: clamp(28px, 5vw, 64px) var(--pad); }
+  .statement-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(24px, 6vw, 64px);
+    flex-wrap: wrap;
+  }
+  .statement-copy { flex: 1 1 320px; min-width: 240px; }
+  .statement h1 {
+    margin: 0;
+    font-weight: 500;
+    font-size: clamp(1.5rem, 3.6vw, 2.45rem);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+    max-width: 20ch;
+    text-wrap: balance;
+  }
+  .statement h1 em { font-style: normal; color: var(--muted); }
+  .statement .sub {
+    margin: 22px 0 0;
+    max-width: 46ch;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  /* Salish Sea map — real coastline (OSM), hairline line-art matching the site */
+  .statement-map { width: clamp(220px, 32vw, 340px); height: auto; flex: none; }
+  .statement-map .coast {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 0.8;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .statement-map .city {
+    fill: var(--ink);
+    stroke: var(--ground);
+    stroke-width: 1.4;
+    paint-order: stroke;
+  }
+  .statement-map .label {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    fill: var(--ink);
+    stroke: var(--ground);
+    stroke-width: 2.6;
+    paint-order: stroke;
+    stroke-linejoin: round;
+  }
+
+  /* ---- section heads ---- */
+  .cell h2 {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+  }
+  .cell p { margin: 10px 0 0; color: var(--muted); font-size: 14.5px; }
+
+  .idx { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+  /* services — confident */
+  .svc-lead { padding: clamp(24px, 4vw, 44px) var(--pad); }
+  .svc-lead .lead-line {
+    margin: 16px 0 0;
+    font-size: clamp(1.15rem, 2.4vw, 1.6rem);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.22;
+    max-width: 26ch;
+    text-wrap: balance;
+  }
+  /* free diagnostic — small, separate, quiet: a lead-in note, not a fourth equal tile */
+  .free-strip {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    max-width: 56ch;
+  }
+  .free-strip p { margin: 0; font-size: 13.5px; color: var(--muted); }
+  .free-strip p strong { color: var(--ink); font-weight: 500; }
+  .free-strip a {
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 12px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    white-space: nowrap;
+  }
+  .free-strip a:hover { color: var(--muted); border-bottom-color: var(--muted); }
+
+  .badge {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    padding: 3px 9px;
+    line-height: 1.6;
+    flex: none;
+  }
+
+  .svc { display: flex; flex-direction: column; min-height: 280px; }
+  .svc-title { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .svc h2 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); letter-spacing: -0.02em; }
+  .svc p { flex: 1; font-size: 14.5px; margin-top: 16px; }
+  .svc .role {
+    margin-top: 22px;
+    font-size: 13.5px;
+    color: var(--ink);
+    align-self: flex-start;
+    border: 1px solid var(--line);
+    padding: 9px 15px;
+    text-decoration: none;
+  }
+  .svc .role:hover { border-color: var(--ink); background: var(--hover); }
+  .svc:hover { background: var(--hover); }
+
+  /* portfolio */
+  .pf {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--ground);
+  }
+  .pf:hover { background: var(--hover); }
+  .pf-vis {
+    aspect-ratio: 5 / 3;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: clamp(1.8rem, 4.4vw, 2.8rem);
+    letter-spacing: 0.06em;
+    color: var(--ink);
+  }
+  .pf-meta { padding: var(--pad); display: flex; flex-direction: column; flex: 1; }
+  .pf-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .pf-meta h3 { margin: 12px 0 0; font-size: 1.08rem; font-weight: 500; letter-spacing: -0.01em; }
+  .pf-meta p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+
+  /* work / index rows */
+  .rows { display: flex; flex-direction: column; gap: 1px; background: var(--line); }
+  .rowline {
+    background: var(--ground);
+    display: grid;
+    grid-template-columns: 1.4fr 2fr auto;
+    gap: 16px;
+    align-items: baseline;
+    padding: 20px var(--pad);
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .rowline:hover { background: var(--hover); }
+  .rowline .who { font-weight: 500; font-size: 15px; }
+  .rowline .what { color: var(--muted); font-size: 14px; }
+  .rowline .yr { font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
+
+  /* approach */
+  .approach .cell h2 { font-size: 0.98rem; }
+
+  /* contact */
+  .contact {
+    padding: clamp(28px, 5vw, 56px) var(--pad);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .contact .lead { font-size: clamp(1.25rem, 2.6vw, 1.7rem); font-weight: 500; letter-spacing: -0.015em; max-width: 18ch; margin: 0; line-height: 1.2; }
+  .contact .lead + p { margin: 14px 0 0; color: var(--muted); font-size: 14.5px; max-width: 34ch; }
+  .cta {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    padding: 14px 22px;
+    white-space: nowrap;
+  }
+  .cta:hover { background: var(--ink); color: var(--ground); }
+
+  /* footer */
+  .foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px var(--pad);
+    flex-wrap: wrap;
+  }
+  .foot span { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.03em; }
+
+  a:focus-visible, .cta:focus-visible, nav a:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 820px) {
+    .cells.pf-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 720px) {
+    .cells.svc-grid { grid-template-columns: 1fr; }
+    .cells.approach-grid { grid-template-columns: 1fr; }
+    .cells.contact-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .cells.pf-grid { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .band, .cell, .rowline, .cta, .svc .role, nav a { transition: background .12s ease, color .12s ease, border-color .12s ease; }
+  }
+
+  /* pages */
+  .page.is-hidden { display: none; }
+  nav a[aria-current="page"] { border-bottom-color: var(--ink); color: var(--ink); }
+
+  .pf-lead { padding: clamp(28px, 5vw, 56px) var(--pad); }
+  .pf-lead h1 {
+    margin: 16px 0 0;
+    font-weight: 500;
+    font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  .pf-lead .sub { margin: 18px 0 0; max-width: 46ch; color: var(--muted); font-size: 15px; }
+
+  .pf-close {
+    padding: clamp(24px, 4vw, 44px) var(--pad);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .pf-close p { margin: 0; font-size: 15px; color: var(--muted); }
+  .back-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 16px var(--pad) 0;
+    display: inline-block;
+  }
+  .back-link:hover { color: var(--ink); }
+
+  /* per-sentence spans: separate DOM nodes for annotation, zero visual change (inline, flows as one paragraph) */
+  .ln { display: inline; }
+
+  /* ---- contact page ---- */
+  .contact-grid > .form,
+  .contact-grid > .cell { background: var(--ground); }
+  .form { display: flex; flex-direction: column; }
+  .field { display: flex; flex-direction: column; border-bottom: 1px solid var(--line); }
+  .field:focus-within { background: var(--hover); }
+  .field label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding: 15px var(--pad) 0;
+  }
+  .field input,
+  .field textarea {
+    border: 0;
+    background: transparent;
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--ink);
+    padding: 7px var(--pad) 15px;
+    width: 100%;
+    resize: vertical;
+  }
+  .field input:focus, .field textarea:focus { outline: none; }
+  .field textarea::placeholder, .field input::placeholder { color: var(--muted); opacity: 0.6; }
+  .form-submit {
+    border: 0;
+    background: var(--ink);
+    color: var(--ground);
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 20px var(--pad);
+    text-align: left;
+    cursor: pointer;
+  }
+  .form-submit:hover { background: var(--muted); }
+  .contact-side { display: flex; flex-direction: column; gap: clamp(28px, 5vw, 44px); }
+  .contact-line { margin: 0 0 6px; font-size: 15px; }
+  .contact-line a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1px;
+  }
+  .contact-line a:hover { color: var(--muted); border-bottom-color: var(--muted); }
+  .contact-note { color: var(--muted); font-size: 14px; margin: 0 0 14px; max-width: 30ch; }
+  .deep-link {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+  }
+  .deep-link:hover { color: var(--muted); border-bottom-color: var(--muted); }
+
+  /* ---- approach: methodology + service deep-dives ---- */
+  .step .step-num { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.04em; }
+  .step h3 { margin: 20px 0 0; font-size: 1.05rem; font-weight: 500; letter-spacing: -0.01em; }
+  .step p { margin: 9px 0 0; font-size: 14px; color: var(--muted); }
+  .method-note {
+    padding: clamp(18px, 3vw, 26px) var(--pad);
+    font-size: 14.5px;
+    color: var(--muted);
+    margin: 0;
+  }
+  .method-note strong { color: var(--ink); font-weight: 500; }
+
+  .detail-head { display: flex; flex-direction: column; }
+  .detail-head h2 { margin: 12px 0 0; font-size: clamp(1.4rem, 2.6vw, 1.95rem); font-weight: 500; letter-spacing: -0.02em; }
+  .detail-head .summary { margin: 14px 0 0; color: var(--muted); font-size: 15px; max-width: 28ch; }
+  .detail-head .role-tag {
+    margin-top: 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    padding: 4px 10px;
+    align-self: flex-start;
+  }
+  .detail-body { display: flex; flex-direction: column; gap: 24px; }
+  .detail-item .lbl {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .detail-item p { margin: 0; font-size: 14.5px; color: var(--muted); max-width: 62ch; }
+
+  /* Conduit modules — hairline mini-table */
+  .modules { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 4px; }
+  .module { background: var(--ground); padding: 13px 16px; display: flex; gap: 16px; align-items: baseline; }
+  .module .mname {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink);
+    flex: none;
+    width: 96px;
+  }
+  .module .mdesc { margin: 0; font-size: 13.5px; color: var(--muted); }
+
+  @media (max-width: 820px) {
+    .cells.method-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 720px) {
+    .cells.detail-grid { grid-template-columns: 1fr; }
+    .module { flex-direction: column; gap: 4px; }
+    .module .mname { width: auto; }
+  }
+  @media (max-width: 460px) {
+    .cells.method-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="wrap">
+  <div class="frame">
+
+    <!-- top bar -->
+    <div class="band top">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <span class="word">Taylor Intelligence</span>
+      </div>
+      <nav>
+        <a href="#/services" data-nav="home">Services</a>
+        <a href="#/portfolio" data-nav="portfolio">Portfolio</a>
+        <a href="#/approach" data-nav="approach">Approach</a>
+        <a href="#/contact" data-nav="contact">Contact</a>
+      </nav>
+    </div>
+
+    <!-- ============ PAGE: HOME ============ -->
+    <div class="page" id="page-home">
+
+    <!-- statement (no hero) -->
+    <div class="band statement">
+      <div class="statement-grid">
+        <div class="statement-copy">
+          <h1><span class="ln">AI as a service for the</span> <em class="ln">PNW.</em></h1>
+          <p class="sub"><span class="ln">Simple by design.</span></p>
+        </div>
+        <svg class="statement-map" viewBox="0 0 334.8 367.5" role="img" aria-label="Map of the Salish Sea region — Vancouver, Victoria and Seattle">
+    <path class="coast" d="M 247.8,-1.1 L 248.6,-0.6 L 248.5,0.2 L 249.2,1.1 L 249.4,2.0 L 249.2,2.4 L 249.5,2.8 L 249.4,3.6 L 249.0,4.1 L 249.2,5.3 L 248.8,6.6 L 247.8,7.5 L 247.7,8.3 L 247.8,9.1 L 248.2,9.2 L 248.2,9.8 L 248.5,10.0 L 248.3,10.7 L 247.5,11.7 L 247.3,12.8 L 245.9,15.0 L 245.7,16.6 L 246.1,17.1 L 243.0,20.4 L 242.7,20.3 L 243.3,19.5 L 243.1,18.9 L 243.9,18.1 L 243.6,17.9 L 243.0,18.0 L 243.0,18.4 L 241.6,19.9 L 242.1,19.8 L 241.9,21.9 L 242.1,22.8 L 242.6,22.9 L 242.9,23.5 L 243.8,23.5 L 244.3,23.1 L 245.3,23.0 L 246.3,22.4 L 247.7,22.2 L 248.8,23.3 L 250.5,24.2 L 250.5,24.6 L 251.3,24.7 L 251.3,25.3 L 251.0,25.1 L 250.3,25.5 L 249.8,25.2 L 249.7,25.5 L 249.5,25.2 L 249.5,25.4 L 249.0,25.3 L 248.9,25.6 L 248.6,25.3 L 248.9,25.1 L 247.5,23.7 L 245.5,23.7 L 244.5,24.3 L 243.6,24.0 L 242.9,24.2 L 242.3,23.6 L 241.1,23.7 L 239.6,24.0 L 238.6,24.4 L 236.1,23.2 L 234.8,23.9 L 232.8,23.5 L 231.4,24.0 L 229.8,23.4 L 228.7,24.0 L 228.4,24.5 L 228.0,24.5 L 228.0,24.1 L 227.9,24.3 L 227.1,24.0 L 227.1,24.4 L 226.8,24.7 L 226.7,24.5 L 226.6,24.9 L 226.2,24.3 L 224.7,23.9 L 224.6,24.2 L 225.2,24.6 L 224.9,24.4 L 224.6,24.7 L 223.7,24.5 L 223.1,23.9 L 222.2,23.9 L 222.1,23.6 L 221.3,23.2 L 222.4,22.8 L 222.5,23.4 L 222.7,23.1 L 222.5,22.9 L 223.1,22.8 L 223.2,22.5 L 222.7,22.5 L 221.9,22.1 L 220.6,20.4 L 219.8,20.6 L 219.2,21.2 L 219.1,22.8 L 219.4,22.9 L 220.5,24.2 L 220.4,24.9 L 221.8,26.8 L 222.8,26.9 L 222.9,26.5 L 223.4,26.6 L 224.0,26.1 L 224.5,26.2 L 224.6,26.7 L 223.4,26.8 L 222.9,27.3 L 221.7,27.4 L 221.4,27.2 L 221.8,27.1 L 221.4,26.5 L 221.1,27.0 L 220.9,26.8 L 220.8,25.9 L 220.1,25.6 L 219.3,26.5 L 218.5,26.4 L 217.7,26.8 L 215.4,26.6 L 214.7,26.0 L 213.9,26.2 L 211.4,25.6 L 210.0,25.7 L 208.6,26.9 L 208.4,27.7 L 208.6,28.6 L 208.9,28.4 L 209.6,29.8 L 213.4,32.5 L 213.4,33.2 L 212.7,33.3 L 212.6,33.7 L 211.3,32.9 L 213.3,34.4 L 213.4,35.0 L 208.4,36.7 L 213.7,35.0 L 214.5,35.2 L 214.2,36.8 L 213.7,37.5 L 213.7,38.4 L 212.8,38.8 L 213.8,39.0 L 214.6,42.4 L 214.9,47.0 L 214.8,47.4 L 214.3,47.3 L 213.9,47.8 L 214.7,48.5 L 215.3,48.5 L 214.8,48.6 L 216.1,51.1 L 216.2,51.7 L 216.5,51.9 L 216.0,52.3 L 216.3,53.1 L 216.8,53.3 L 217.0,54.9 L 217.8,55.5 L 217.9,55.9 L 218.3,55.9 L 219.1,56.5 L 219.0,57.8 L 222.4,59.8 L 219.0,63.8 L 218.2,63.8 L 217.6,64.8 L 219.1,65.4 L 220.0,63.9 L 219.9,64.1 L 219.4,63.8 L 219.5,63.4 L 220.5,62.2 L 222.5,60.1 L 223.7,60.4 L 224.1,61.7 L 224.9,62.3 L 224.7,63.4 L 222.5,65.8 L 221.6,66.4 L 221.6,66.8 L 224.1,64.1 L 224.8,64.2 L 225.6,66.1 L 226.4,69.7 L 226.5,71.8 L 228.5,71.4 L 228.4,71.0 L 227.8,70.9 L 228.0,70.5 L 228.6,71.3 L 230.7,70.9 L 232.0,71.4 L 232.7,71.0 L 231.3,67.6 L 231.3,66.1 L 230.8,64.6 L 230.1,63.9 L 229.7,63.9 L 230.1,64.1 L 229.1,63.6 L 229.9,61.3 L 230.4,60.7 L 230.3,60.5 L 230.9,60.5 L 231.4,59.4 L 231.7,59.4 L 232.1,58.8 L 232.6,59.1 L 232.5,58.6 L 233.8,58.0 L 235.0,57.9 L 239.9,56.5 L 243.5,54.9 L 244.5,54.8 L 245.0,54.1 L 245.8,53.8 L 248.1,54.1 L 248.2,54.4 L 248.8,54.6 L 249.0,55.2 L 249.0,54.7 L 249.6,55.1 L 249.9,54.7 L 250.8,54.5 L 249.9,54.8 L 249.4,55.6 L 248.7,55.7 L 249.0,57.1 L 248.7,58.1 L 247.7,59.0 L 247.2,59.0 L 247.2,58.1 L 246.0,58.9 L 246.5,61.4 L 247.4,63.2 L 248.1,63.9 L 252.7,63.8 L 257.6,65.9 L 258.9,66.9 L 259.4,67.9 L 258.1,68.7 L 258.6,68.8 L 258.5,68.5 L 259.2,68.2 L 259.5,68.4 L 259.2,68.8 L 258.4,68.9 L 259.5,68.6 L 259.7,69.4 L 260.9,70.1 L 261.1,71.3 L 261.9,71.6 L 261.4,71.7 L 261.5,73.2 L 260.0,73.9 L 257.0,72.4 L 255.8,70.9 L 256.3,70.1 L 257.5,69.5 L 257.8,69.1 L 257.4,68.8 L 255.1,71.2 L 253.9,73.3 L 253.1,74.1 L 252.6,76.0 L 253.0,76.6 L 255.6,77.7 L 256.1,77.8 L 256.0,77.0 L 256.3,77.2 L 256.1,77.7 L 257.7,76.1 L 259.2,76.7 L 260.0,77.5 L 260.3,79.3 L 259.9,80.6 L 259.2,81.2 L 258.2,81.5 L 256.5,83.3 L 255.5,83.3 L 255.5,83.6 L 256.2,84.7 L 259.1,87.0 L 260.1,88.4 L 262.2,89.3 L 263.0,90.2 L 263.9,94.6 L 263.7,99.0 L 263.9,99.3 L 263.9,98.9 L 264.3,99.1 L 264.0,98.7 L 264.1,97.7 L 264.6,99.1 L 263.8,99.5 L 264.6,99.5 L 264.9,99.1 L 264.2,97.6 L 264.1,97.1 L 264.5,96.9 L 264.8,96.8 L 265.5,97.4 L 266.9,97.0 L 267.8,98.3 L 268.2,98.5 L 268.7,98.1 L 268.9,97.4 L 268.4,98.5 L 268.5,99.3 L 267.1,99.4 L 266.7,99.7 L 267.2,100.6 L 269.1,101.7 L 269.3,101.5 L 268.6,101.6 L 267.2,100.5 L 266.7,99.7 L 267.3,99.4 L 268.3,99.4 L 268.6,99.1 L 268.9,99.5 L 269.1,99.3 L 269.2,99.7 L 269.7,99.6 L 270.2,100.0 L 270.1,100.6 L 269.5,100.8 L 269.3,101.3 L 269.9,100.6 L 270.1,101.4 L 268.1,105.2 L 267.5,107.4 L 267.6,107.7 L 268.5,107.8 L 269.1,109.4 L 269.7,110.1 L 270.1,109.9 L 271.5,106.5 L 273.8,104.0 L 273.9,103.1 L 274.6,102.5 L 274.8,101.2 L 275.9,100.1 L 275.8,99.2 L 276.6,99.3 L 277.2,100.5 L 278.1,100.4 L 278.9,100.8 L 281.3,101.2 L 282.0,102.3 L 283.4,103.0 L 283.5,103.5 L 284.0,103.3 L 283.7,103.8 L 284.0,104.0 L 284.2,103.8 L 284.6,104.1 L 284.1,104.5 L 284.5,104.3 L 285.1,104.6 L 284.7,103.6 L 285.3,104.1 L 285.0,104.5 L 285.6,104.2 L 285.2,104.9 L 285.4,105.4 L 286.6,104.3 L 285.8,105.5 L 285.2,105.9 L 285.4,105.7 L 285.8,106.1 L 284.2,108.3 L 284.1,109.5 L 284.0,109.2 L 283.3,109.3 L 283.3,109.8 L 282.9,110.0 L 282.9,110.6 L 283.3,111.0 L 283.2,111.2 L 283.1,111.0 L 283.4,111.7 L 283.2,112.3 L 284.1,114.0 L 284.2,113.7 L 284.3,114.2 L 284.4,113.9 L 284.0,112.7 L 284.8,112.1 L 285.3,112.4 L 284.9,113.0 L 284.3,112.9 L 285.1,113.2 L 285.8,115.6 L 285.8,116.8 L 285.4,117.0 L 285.4,117.4 L 284.8,117.4 L 285.0,117.8 L 284.7,118.1 L 283.9,117.1 L 283.6,117.2 L 283.7,117.5 L 284.4,119.0 L 285.5,119.4 L 285.4,119.8 L 286.1,121.0 L 288.4,123.6 L 290.0,124.1 L 290.4,124.7 L 290.3,125.2 L 290.8,125.4 L 291.6,126.9 L 292.7,127.6 L 292.9,128.0 L 292.3,127.5 L 292.4,128.2 L 291.9,128.4 L 291.5,130.3 L 290.4,131.3 L 290.6,131.7 L 290.4,132.0 L 289.6,132.2 L 289.6,132.9 L 289.9,133.2 L 290.3,133.3 L 290.5,132.7 L 290.7,133.1 L 290.5,132.7 L 290.3,133.4 L 289.9,133.3 L 289.3,132.9 L 289.3,132.7 L 288.9,132.6 L 288.9,133.5 L 288.6,133.3 L 288.2,133.5 L 289.1,134.4 L 288.2,134.2 L 287.8,133.9 L 287.8,134.2 L 287.2,134.3 L 286.9,133.6 L 286.2,133.5 L 286.2,134.3 L 285.1,132.7 L 285.1,132.4 L 286.1,132.0 L 285.1,131.5 L 285.3,131.1 L 280.8,131.1 L 280.5,130.6 L 279.7,130.2 L 279.6,129.4 L 279.3,129.2 L 278.7,130.1 L 279.2,130.8 L 279.0,131.4 L 279.6,131.1 L 281.1,131.2 L 282.5,132.3 L 284.5,132.8 L 285.0,134.1 L 284.8,135.0 L 285.0,136.2 L 285.7,136.9 L 286.3,137.1 L 286.1,137.7 L 286.4,139.2 L 287.3,139.5 L 287.4,139.7 L 286.9,139.5 L 286.6,139.8 L 286.6,139.5 L 286.1,140.5 L 286.5,141.7 L 286.6,144.2 L 287.0,145.3 L 287.6,145.6 L 287.9,146.4 L 287.9,147.1 L 287.4,147.4 L 287.3,148.2 L 287.6,148.8 L 288.2,149.0 L 287.4,148.7 L 287.6,149.6 L 287.8,149.8 L 288.5,149.8 L 289.0,150.4 L 288.4,149.9 L 287.9,149.8 L 287.8,150.0 L 287.4,149.7 L 287.0,147.5 L 285.7,148.1 L 286.6,149.4 L 286.5,150.0 L 286.3,149.9 L 286.3,149.5 L 285.6,148.8 L 285.3,148.7 L 285.0,149.0 L 284.9,148.8 L 284.5,148.9 L 284.3,148.6 L 283.6,148.8 L 283.4,148.3 L 283.4,148.8 L 283.9,149.1 L 283.5,149.0 L 283.7,150.3 L 284.3,151.3 L 285.0,151.5 L 284.5,151.3 L 284.9,151.7 L 285.1,153.4 L 284.8,153.7 L 284.8,154.6 L 285.3,156.0 L 285.2,157.3 L 285.5,157.3 L 285.5,157.7 L 285.2,157.7 L 285.4,158.2 L 284.2,159.9 L 283.9,161.3 L 284.1,161.7 L 284.6,161.7 L 284.5,161.3 L 284.8,161.2 L 284.7,161.6 L 285.7,161.7 L 284.1,162.8 L 284.4,163.0 L 284.0,163.4 L 284.9,163.5 L 285.1,162.9 L 285.1,163.6 L 286.1,163.8 L 286.6,163.1 L 286.2,164.0 L 287.0,164.4 L 287.0,163.7 L 287.4,163.4 L 287.1,163.8 L 287.5,164.7 L 288.1,164.4 L 288.7,164.6 L 290.5,166.6 L 292.3,167.0 L 293.2,167.8 L 293.2,168.1 L 294.3,168.8 L 294.4,169.5 L 295.0,169.8 L 294.7,170.0 L 295.0,170.7 L 295.4,170.9 L 296.1,172.3 L 295.8,172.8 L 296.1,172.8 L 296.0,173.8 L 295.7,174.0 L 296.1,174.4 L 295.9,174.7 L 296.3,174.8 L 296.5,176.6 L 296.3,177.7 L 296.5,177.7 L 296.4,179.3 L 295.8,180.8 L 296.8,181.7 L 297.7,181.5 L 298.1,181.6 L 298.2,182.1 L 297.5,182.8 L 298.1,183.6 L 298.6,183.4 L 299.0,182.2 L 299.6,182.0 L 299.3,182.8 L 299.5,183.2 L 300.3,183.1 L 300.9,183.6 L 301.3,183.6 L 301.6,184.3 L 302.7,183.9 L 302.6,184.2 L 301.7,184.6 L 301.6,185.4 L 302.0,185.3 L 302.1,185.8 L 303.0,186.0 L 302.6,186.2 L 304.1,186.6 L 302.4,186.3 L 302.0,186.5 L 300.8,185.9 L 299.6,186.4 L 299.2,187.6 L 297.9,188.3 L 297.8,188.7 L 298.4,190.1 L 298.7,189.6 L 298.6,188.6 L 298.7,189.9 L 299.0,190.2 L 297.8,192.7 L 298.4,196.1 L 298.0,197.2 L 298.5,197.7 L 298.3,198.6 L 298.7,199.5 L 300.0,200.9 L 300.4,202.7 L 302.2,203.6 L 302.6,204.5 L 302.6,205.4 L 304.7,206.7 L 305.4,208.2 L 305.6,207.7 L 306.3,207.8 L 307.6,209.0 L 307.3,210.0 L 306.2,209.5 L 305.9,209.2 L 306.3,209.2 L 305.7,209.3 L 305.8,209.6 L 307.8,210.5 L 311.0,212.9 L 312.0,212.8 L 312.0,211.9 L 313.5,210.8 L 315.1,211.1 L 315.7,210.5 L 316.4,210.3 L 315.8,210.6 L 315.3,211.3 L 314.2,211.2 L 313.6,211.6 L 314.4,212.2 L 315.9,212.1 L 316.0,212.4 L 314.7,212.8 L 314.8,213.2 L 314.6,212.8 L 314.1,212.9 L 314.3,214.0 L 313.9,214.1 L 313.6,214.9 L 313.8,215.2 L 313.4,214.8 L 313.2,214.9 L 313.6,215.8 L 313.3,216.8 L 312.6,216.7 L 312.5,217.0 L 313.0,217.0 L 313.0,217.3 L 312.5,217.3 L 312.4,217.6 L 313.2,217.6 L 313.3,218.2 L 312.5,218.2 L 312.1,219.5 L 311.4,220.3 L 311.8,219.8 L 312.0,220.0 L 311.7,220.5 L 312.6,219.1 L 313.1,219.2 L 313.0,220.1 L 311.7,221.9 L 309.7,223.7 L 307.0,224.1 L 304.1,225.3 L 303.7,226.8 L 303.8,228.6 L 302.7,230.4 L 301.4,235.4 L 301.9,236.9 L 301.2,238.4 L 301.2,239.9 L 300.4,241.0 L 299.4,241.5 L 296.7,245.3 L 295.8,245.9 L 296.0,245.9 L 295.5,246.6 L 295.3,246.5 L 295.6,246.1 L 295.2,246.5 L 295.7,249.4 L 295.1,250.2 L 295.1,250.5 L 295.4,251.0 L 295.5,251.8 L 296.8,253.8 L 296.5,255.3 L 297.5,258.2 L 296.7,261.2 L 296.1,261.9 L 294.8,262.7 L 294.2,263.5 L 294.5,264.0 L 294.4,265.0 L 293.8,266.1 L 294.4,267.2 L 295.1,267.7 L 294.0,267.5 L 293.9,266.8 L 293.7,266.8 L 291.2,268.2 L 292.2,268.8 L 292.7,269.5 L 293.1,271.0 L 293.6,271.7 L 295.3,272.9 L 295.7,273.0 L 296.4,272.5 L 296.4,273.5 L 296.5,272.7 L 296.9,272.5 L 297.0,273.5 L 297.9,273.9 L 299.1,275.3 L 300.6,276.4 L 301.0,277.0 L 300.9,277.3 L 301.2,277.4 L 300.8,277.4 L 301.1,277.6 L 300.8,277.6 L 300.5,278.8 L 300.9,279.0 L 300.5,279.0 L 300.5,280.4 L 300.8,280.8 L 300.5,280.8 L 300.2,282.7 L 299.9,282.7 L 299.1,281.6 L 298.7,281.5 L 298.6,279.9 L 298.0,279.7 L 297.6,280.0 L 296.2,278.2 L 295.8,278.4 L 294.7,279.9 L 292.7,281.1 L 293.7,282.0 L 294.9,284.5 L 295.2,287.2 L 294.6,287.9 L 295.4,288.8 L 294.9,290.0 L 296.1,292.2 L 297.9,293.6 L 298.7,294.8 L 297.9,297.0 L 298.0,298.6 L 296.5,299.9 L 298.3,300.4 L 299.4,301.3 L 300.0,305.1 L 301.3,306.3 L 301.8,307.1 L 302.2,308.6 L 302.4,315.1 L 301.2,316.3 L 297.5,317.5 L 296.8,318.5 L 295.6,318.3 L 294.4,319.2 L 292.6,319.7 L 291.8,319.6 L 291.4,321.3 L 290.4,321.6 L 290.5,322.5 L 293.1,323.1 L 293.7,323.7 L 294.3,325.0 L 295.7,325.4 L 295.2,325.7 L 295.9,325.7 L 298.9,328.2 L 298.7,328.4 L 296.5,326.4 L 294.7,325.8 L 293.8,324.9 L 293.5,325.6 L 297.2,328.7 L 297.5,329.4 L 296.5,329.4 L 296.5,328.7 L 295.4,327.7 L 295.1,327.8 L 293.2,325.9 L 293.2,326.3 L 293.0,326.1 L 292.8,326.6 L 293.6,327.6 L 293.4,327.8 L 292.8,326.9 L 292.6,327.4 L 292.4,327.1 L 291.9,327.2 L 291.6,327.9 L 292.0,329.2 L 291.5,328.1 L 291.2,328.2 L 291.6,329.7 L 292.2,329.8 L 291.6,329.8 L 291.6,331.2 L 291.3,329.2 L 290.3,327.4 L 289.1,326.4 L 287.9,326.0 L 286.4,324.9 L 284.8,323.2 L 283.9,321.5 L 283.5,321.4 L 284.1,322.1 L 283.8,322.2 L 281.4,319.9 L 280.4,319.7 L 280.0,320.1 L 281.0,321.4 L 281.9,323.6 L 281.8,325.0 L 279.5,329.4 L 279.5,330.3 L 279.2,330.9 L 278.8,330.9 L 278.8,331.6 L 278.5,332.2 L 278.7,330.8 L 278.5,330.9 L 278.3,333.7 L 276.8,336.1 L 276.4,339.4 L 276.7,339.7 L 277.0,339.6 L 277.4,338.8 L 277.3,339.3 L 276.8,339.9 L 276.3,339.8 L 276.4,339.5 L 275.7,341.0 L 273.5,342.2 L 273.2,343.8 L 272.3,346.1 L 271.2,347.1 L 270.3,347.3 L 269.4,348.0 L 267.6,350.8 L 267.1,352.2 L 266.3,352.9 L 266.3,352.6 L 265.9,353.0 L 266.1,352.6 L 265.7,352.3 L 265.6,352.5 L 264.9,352.4 L 265.1,352.8 L 264.6,352.8 L 264.1,353.3 L 263.3,352.8 L 263.6,353.5 L 262.5,352.9 L 262.1,353.0 L 262.1,352.3 L 259.4,350.7 L 258.9,349.8 L 258.4,349.9 L 258.7,349.7 L 258.5,349.5 L 257.0,349.3 L 257.1,348.8 L 256.2,348.4 L 255.9,346.9 L 256.1,346.3 L 255.5,344.6 L 255.1,344.6 L 254.7,345.1 L 255.0,344.4 L 254.9,343.6 L 254.3,342.8 L 253.9,343.0 L 254.1,343.6 L 253.8,343.4 L 253.9,342.8 L 253.5,342.2 L 253.3,340.8 L 252.7,341.1 L 252.1,342.9 L 252.1,347.1 L 251.9,347.6 L 252.1,347.4 L 251.8,348.3 L 252.1,348.1 L 252.2,348.5 L 252.0,348.4 L 251.8,349.8 L 252.2,350.5 L 252.5,350.5 L 252.3,350.6 L 252.5,351.5 L 252.2,351.9 L 252.5,351.7 L 252.4,352.3 L 252.7,352.5 L 252.4,352.5 L 252.6,353.8 L 252.3,353.2 L 251.9,353.3 L 252.0,350.9 L 250.9,349.4 L 250.6,347.9 L 250.1,348.0 L 250.0,348.5 L 249.7,348.4 L 248.7,349.3 L 250.1,347.7 L 250.8,347.5 L 250.2,347.5 L 250.0,347.0 L 249.8,347.1 L 249.5,346.5 L 249.2,346.8 L 249.5,346.3 L 250.4,347.0 L 250.4,345.3 L 251.1,344.8 L 250.8,344.4 L 250.6,342.9 L 250.4,342.8 L 250.0,343.2 L 249.7,342.7 L 249.3,343.1 L 248.7,343.2 L 248.5,343.9 L 249.1,343.7 L 249.3,344.1 L 249.0,343.8 L 248.3,344.6 L 248.3,343.9 L 247.7,344.0 L 247.2,344.3 L 247.1,344.8 L 247.2,344.3 L 247.1,344.4 L 246.4,345.6 L 245.8,345.8 L 245.5,346.4 L 245.3,345.6 L 244.8,345.8 L 244.7,346.5 L 244.1,346.4 L 244.2,347.6 L 245.6,350.5 L 246.3,350.0 L 246.3,350.9 L 246.0,350.5 L 245.5,350.9 L 245.4,352.7 L 244.4,356.2 L 244.6,356.9 L 245.3,356.4 L 244.9,356.9 L 245.4,358.8 L 245.5,360.4 L 245.0,359.7 L 244.9,358.9 L 244.5,358.6 L 244.2,359.1 L 244.4,360.7 L 243.8,360.9 L 243.7,359.6 L 243.1,357.5 L 242.1,355.7 L 241.5,355.4 L 241.1,355.5 L 241.8,353.3 L 241.5,352.2 L 242.3,351.5 L 242.5,350.8 L 242.1,347.8 L 242.2,345.4 L 240.5,348.6 L 241.1,351.1 L 239.9,352.6 L 239.9,352.9 L 240.3,353.2 L 239.7,352.9 L 239.0,353.0 L 238.7,353.5 L 236.8,354.8 L 236.6,355.4 L 235.8,355.6 L 234.9,356.4 L 234.2,356.5 L 234.0,357.7 L 234.2,358.3 L 235.3,358.6 L 235.9,359.2 L 235.1,358.9 L 235.3,359.5 L 236.1,359.7 L 235.6,359.7 L 236.2,360.4 L 236.0,360.6 L 236.2,360.8 L 236.0,360.7 L 236.3,361.0 L 235.8,360.8 L 236.3,361.4 L 235.9,361.9 L 235.8,361.6 L 235.6,362.2 L 235.5,361.5 L 235.9,361.3 L 235.5,360.8 L 235.9,360.5 L 235.7,360.1 L 235.4,360.1 L 235.5,359.8 L 235.1,359.8 L 235.0,359.3 L 235.0,359.6 L 234.3,360.0 L 234.9,359.3 L 233.6,358.7 L 233.1,357.5 L 233.2,356.3 L 233.9,355.3 L 235.9,354.6 L 236.6,352.3 L 236.0,352.1 L 235.7,351.5 L 236.2,352.0 L 236.7,351.9 L 237.3,352.3 L 239.2,351.4 L 239.0,350.9 L 237.8,350.2 L 238.4,350.3 L 238.5,348.7 L 239.2,346.9 L 239.7,346.7 L 241.1,344.9 L 241.3,345.1 L 241.6,345.0 L 242.6,343.4 L 242.8,342.6 L 242.9,341.4 L 241.9,341.0 L 241.6,341.2 L 240.8,340.2 L 240.7,341.7 L 238.4,344.4 L 238.5,344.8 L 238.1,345.6 L 237.4,345.7 L 236.7,346.9 L 236.5,346.8 L 236.8,345.8 L 236.5,345.2 L 234.8,345.6 L 234.3,346.9 L 234.6,347.3 L 235.0,347.2 L 235.1,347.6 L 234.7,347.6 L 234.7,348.1 L 233.9,348.9 L 233.5,349.9 L 232.4,351.1 L 230.7,351.7 L 230.2,351.3 L 230.5,350.8 L 228.9,351.1 L 226.8,353.2 L 226.8,353.6 L 227.3,353.8 L 226.8,353.7 L 226.7,353.3 L 226.5,353.4 L 226.8,352.6 L 226.6,352.4 L 226.5,352.9 L 226.3,352.8 L 226.5,351.4 L 227.4,351.0 L 228.8,349.5 L 230.9,349.4 L 231.2,349.3 L 231.2,349.0 L 231.9,349.4 L 232.6,349.0 L 232.6,347.3 L 233.1,346.5 L 233.0,344.7 L 232.6,345.2 L 232.3,345.1 L 232.5,344.5 L 231.0,344.7 L 230.7,344.4 L 229.3,345.2 L 229.2,345.8 L 227.9,347.1 L 227.6,347.0 L 227.2,347.8 L 226.6,347.9 L 226.3,347.5 L 226.0,348.3 L 225.9,347.6 L 226.6,346.7 L 227.1,346.8 L 228.2,346.0 L 228.9,345.4 L 228.7,345.3 L 229.1,344.9 L 230.1,344.2 L 231.7,344.4 L 232.5,344.1 L 232.7,343.5 L 232.9,344.3 L 233.7,344.5 L 234.8,342.9 L 235.7,342.3 L 236.7,341.9 L 238.5,342.1 L 239.3,340.8 L 239.4,339.6 L 241.0,337.7 L 240.2,336.9 L 239.7,337.4 L 238.6,337.1 L 237.7,337.3 L 236.6,337.6 L 236.4,338.0 L 235.1,338.0 L 235.3,338.1 L 235.0,338.7 L 235.2,338.1 L 235.0,338.0 L 235.4,337.9 L 234.4,337.4 L 234.3,336.8 L 233.4,337.0 L 231.0,336.7 L 228.9,337.2 L 227.3,336.6 L 227.4,336.3 L 226.5,336.6 L 225.5,336.6 L 225.4,336.1 L 226.2,336.1 L 225.3,336.1 L 225.6,336.0 L 225.5,335.4 L 226.3,335.3 L 227.7,333.7 L 228.5,333.2 L 229.5,332.0 L 230.0,330.7 L 231.0,331.0 L 231.1,330.3 L 230.7,329.8 L 232.8,328.6 L 232.9,328.2 L 233.2,328.8 L 233.7,328.8 L 232.7,330.0 L 231.5,330.6 L 230.1,332.2 L 230.4,333.0 L 231.5,333.5 L 231.6,334.2 L 231.9,334.0 L 231.9,334.3 L 232.1,334.2 L 231.2,334.2 L 230.4,333.7 L 228.2,335.1 L 227.8,335.5 L 227.9,335.9 L 228.5,336.2 L 228.7,336.7 L 231.0,336.1 L 232.5,336.5 L 234.4,336.1 L 234.9,336.6 L 234.9,337.3 L 235.9,337.5 L 235.9,337.1 L 236.9,336.9 L 237.1,337.0 L 238.7,336.3 L 238.6,336.6 L 238.8,336.7 L 239.6,336.6 L 239.6,337.1 L 240.5,336.3 L 241.2,336.7 L 241.4,336.1 L 241.0,335.1 L 240.6,335.2 L 240.6,334.9 L 240.8,333.7 L 241.1,333.5 L 241.1,333.9 L 241.3,333.3 L 241.4,332.2 L 241.1,332.8 L 241.2,332.2 L 240.9,332.0 L 241.2,331.3 L 240.7,330.9 L 240.9,330.4 L 241.0,330.6 L 241.5,330.4 L 241.5,330.6 L 241.7,330.4 L 241.6,330.7 L 242.1,330.0 L 242.1,327.5 L 241.5,328.1 L 241.9,327.7 L 241.9,325.4 L 242.4,325.1 L 242.8,324.3 L 242.6,324.8 L 242.8,324.8 L 243.5,324.1 L 244.3,323.8 L 244.9,323.0 L 244.8,323.6 L 245.3,323.2 L 245.3,323.6 L 245.7,323.2 L 246.1,323.3 L 246.8,322.5 L 247.2,322.6 L 247.9,322.0 L 248.3,321.1 L 248.0,320.9 L 248.1,319.7 L 248.2,320.7 L 248.7,320.3 L 248.7,321.2 L 250.2,320.8 L 250.7,319.8 L 250.8,318.4 L 250.8,319.1 L 251.5,318.2 L 251.5,316.9 L 252.0,315.8 L 251.5,316.2 L 252.1,315.2 L 252.3,314.3 L 252.1,313.9 L 251.5,314.6 L 252.4,313.1 L 252.3,311.7 L 251.8,312.8 L 252.0,311.4 L 251.3,311.3 L 251.9,310.4 L 252.4,308.7 L 252.5,307.9 L 251.9,306.7 L 252.4,306.6 L 252.4,306.8 L 252.9,306.5 L 252.8,307.1 L 253.5,308.1 L 253.5,309.8 L 253.1,310.9 L 253.5,312.3 L 254.2,313.1 L 254.1,313.8 L 255.9,313.3 L 255.6,313.3 L 255.9,313.2 L 256.7,311.8 L 256.0,313.4 L 256.2,313.8 L 255.7,314.2 L 255.7,314.7 L 255.2,315.5 L 256.8,316.2 L 258.5,316.2 L 258.1,316.7 L 257.3,316.9 L 255.9,316.8 L 256.1,316.2 L 255.9,316.5 L 255.4,319.6 L 255.5,321.4 L 256.2,321.1 L 256.1,320.8 L 256.8,320.1 L 256.2,320.9 L 256.3,321.2 L 256.0,321.7 L 256.1,322.5 L 255.3,324.2 L 254.2,325.3 L 253.6,326.3 L 253.3,326.2 L 251.7,330.9 L 252.6,332.9 L 254.2,334.1 L 254.1,335.1 L 254.4,336.3 L 255.8,339.3 L 256.7,339.7 L 258.0,339.1 L 257.4,339.6 L 257.1,340.2 L 257.8,342.4 L 258.7,342.3 L 260.1,340.6 L 259.8,340.6 L 260.0,339.4 L 260.8,337.5 L 260.2,337.7 L 259.9,338.7 L 259.6,336.3 L 259.1,336.5 L 258.9,335.5 L 259.3,336.0 L 259.6,335.3 L 260.0,334.1 L 259.8,333.6 L 260.1,334.0 L 260.0,335.3 L 260.4,336.5 L 261.0,336.2 L 261.3,335.5 L 262.8,334.3 L 262.2,332.3 L 262.4,330.8 L 263.0,329.9 L 262.6,329.9 L 262.1,330.9 L 261.2,330.3 L 260.9,329.0 L 261.1,327.8 L 260.6,328.6 L 259.4,328.7 L 259.0,329.5 L 259.2,328.5 L 259.8,328.0 L 259.9,326.5 L 259.6,326.8 L 259.1,326.7 L 258.6,327.3 L 258.5,327.1 L 257.7,327.3 L 259.5,325.5 L 259.5,324.0 L 260.6,321.3 L 261.6,319.6 L 262.0,318.0 L 261.9,317.5 L 262.0,317.9 L 261.7,317.7 L 261.8,316.4 L 261.2,315.7 L 261.5,315.8 L 261.8,315.5 L 261.9,316.7 L 262.2,316.8 L 265.4,314.4 L 265.6,313.8 L 265.1,314.4 L 265.1,313.2 L 264.7,312.0 L 265.5,313.5 L 265.8,313.5 L 266.8,312.5 L 271.9,310.0 L 270.7,310.5 L 271.1,309.6 L 271.3,307.0 L 271.9,306.3 L 271.9,305.7 L 272.1,306.8 L 271.8,307.2 L 272.0,307.7 L 271.7,308.0 L 271.9,309.4 L 272.1,309.6 L 272.2,309.3 L 271.9,309.7 L 272.4,311.7 L 271.3,312.5 L 271.3,313.2 L 269.6,314.1 L 269.3,315.2 L 269.3,314.9 L 269.0,314.8 L 267.7,316.1 L 268.2,316.8 L 268.7,316.8 L 269.1,317.4 L 269.5,316.4 L 269.6,316.6 L 270.0,316.2 L 269.5,316.7 L 269.2,318.2 L 269.3,318.5 L 269.8,318.0 L 269.2,319.0 L 269.2,318.6 L 269.0,318.8 L 268.8,319.5 L 268.7,318.8 L 267.4,319.1 L 266.0,321.1 L 266.0,321.4 L 266.8,322.8 L 266.2,325.0 L 265.9,322.9 L 266.2,322.6 L 265.8,322.9 L 265.2,324.4 L 265.3,325.2 L 265.9,325.5 L 266.6,325.4 L 266.7,325.2 L 266.5,325.3 L 266.7,324.6 L 267.5,324.3 L 270.9,325.8 L 272.0,325.8 L 273.1,326.9 L 274.6,326.7 L 274.9,326.2 L 274.8,325.4 L 274.1,324.2 L 273.7,324.1 L 273.5,323.0 L 273.4,322.9 L 273.3,323.2 L 272.9,322.7 L 273.5,322.5 L 273.9,323.8 L 274.2,323.8 L 274.4,324.4 L 276.1,325.5 L 275.6,326.3 L 275.7,326.8 L 274.9,327.9 L 275.8,329.1 L 276.3,329.3 L 277.2,328.9 L 278.2,327.8 L 279.9,324.8 L 279.7,323.8 L 277.5,319.9 L 277.2,318.4 L 275.6,316.9 L 276.5,315.7 L 276.5,316.7 L 277.1,317.3 L 277.5,318.3 L 277.3,318.5 L 277.6,318.5 L 279.2,315.3 L 279.9,312.6 L 280.9,311.2 L 280.1,310.0 L 279.5,308.4 L 279.8,306.1 L 280.6,305.1 L 280.6,304.3 L 281.1,304.0 L 281.6,303.1 L 281.2,302.0 L 281.5,301.7 L 281.3,299.9 L 281.8,299.1 L 281.4,298.1 L 281.6,297.0 L 282.6,296.0 L 283.0,294.2 L 283.7,293.6 L 284.5,291.9 L 285.3,290.9 L 284.5,289.8 L 283.5,289.6 L 283.1,290.0 L 282.8,289.1 L 282.5,288.9 L 281.4,289.2 L 280.1,288.8 L 280.8,286.0 L 280.5,283.9 L 280.9,283.2 L 281.6,282.7 L 280.4,282.2 L 280.1,282.4 L 280.3,283.5 L 279.9,282.9 L 280.1,282.4 L 279.6,282.0 L 279.7,281.7 L 280.4,280.9 L 279.8,280.7 L 280.0,279.4 L 279.3,278.9 L 278.1,279.9 L 277.8,279.8 L 277.9,280.0 L 277.2,281.2 L 275.8,282.6 L 274.1,285.5 L 272.7,285.3 L 272.1,286.2 L 272.0,285.9 L 271.0,286.0 L 270.1,286.9 L 268.6,286.5 L 267.9,287.7 L 266.2,288.4 L 265.9,288.3 L 265.9,288.6 L 265.0,288.5 L 265.4,287.9 L 267.2,286.7 L 267.6,285.4 L 269.6,284.1 L 270.4,284.1 L 270.5,284.5 L 270.5,284.1 L 270.9,284.0 L 271.1,283.5 L 272.2,283.4 L 272.5,282.2 L 271.7,280.8 L 270.0,280.7 L 269.9,280.1 L 269.2,279.2 L 268.9,280.5 L 268.3,280.1 L 268.1,279.7 L 268.7,277.7 L 268.0,276.9 L 267.7,277.5 L 267.5,279.9 L 267.3,278.3 L 267.0,278.3 L 266.9,278.6 L 267.1,278.8 L 267.2,281.2 L 267.6,280.9 L 268.0,282.1 L 266.9,281.9 L 266.7,281.7 L 267.0,281.2 L 267.0,280.3 L 266.7,281.2 L 266.3,281.0 L 265.8,279.8 L 266.0,279.0 L 266.4,278.9 L 265.5,277.9 L 265.7,277.7 L 266.0,277.9 L 266.3,276.6 L 265.6,276.1 L 265.2,277.0 L 264.8,276.8 L 264.3,277.1 L 263.9,275.7 L 264.1,273.6 L 264.8,271.4 L 265.4,270.9 L 265.5,270.0 L 265.7,270.2 L 266.3,269.9 L 267.7,272.0 L 267.2,272.9 L 267.1,274.0 L 268.8,275.1 L 268.7,277.0 L 269.2,277.5 L 269.5,278.7 L 270.6,280.0 L 272.3,280.6 L 273.3,282.3 L 274.0,282.2 L 275.6,278.4 L 275.6,278.0 L 275.0,277.1 L 275.7,272.0 L 275.4,271.7 L 274.7,271.8 L 274.5,270.9 L 273.2,270.0 L 272.8,270.1 L 271.8,269.7 L 272.9,269.9 L 273.4,269.4 L 273.5,268.0 L 272.9,263.6 L 273.1,263.3 L 272.9,262.8 L 273.0,263.2 L 272.6,263.4 L 272.4,263.2 L 273.3,262.7 L 273.4,262.3 L 272.8,261.8 L 271.7,261.7 L 271.5,262.2 L 272.1,262.5 L 272.0,262.9 L 272.0,262.6 L 271.3,262.7 L 270.8,262.4 L 271.1,262.2 L 271.2,260.7 L 270.7,261.8 L 270.4,260.5 L 270.1,260.5 L 270.0,261.1 L 269.6,259.7 L 269.5,259.9 L 269.3,259.4 L 269.1,259.7 L 268.6,258.2 L 269.5,255.5 L 269.9,257.1 L 270.5,258.4 L 271.5,259.3 L 272.5,259.8 L 272.5,260.2 L 272.0,260.3 L 272.1,261.3 L 272.8,260.7 L 273.4,260.6 L 274.4,261.8 L 274.4,263.0 L 275.4,263.3 L 275.9,263.9 L 276.2,263.0 L 276.6,262.7 L 276.6,261.9 L 278.4,260.1 L 278.7,259.1 L 279.2,258.8 L 279.8,257.7 L 279.8,256.3 L 278.7,254.9 L 279.3,253.5 L 278.7,252.9 L 278.9,251.9 L 278.8,252.9 L 279.6,253.4 L 279.8,254.8 L 280.4,255.4 L 279.3,255.3 L 279.5,255.6 L 281.0,255.3 L 282.8,255.5 L 283.4,255.9 L 285.3,255.7 L 285.9,255.9 L 287.2,255.6 L 287.6,255.0 L 287.6,252.6 L 287.0,252.2 L 286.5,251.1 L 286.5,250.4 L 284.8,249.4 L 284.1,248.3 L 284.6,247.8 L 285.3,248.1 L 286.2,246.8 L 286.6,245.3 L 286.4,244.9 L 284.6,243.7 L 284.1,242.7 L 284.2,240.2 L 283.3,237.7 L 283.4,235.4 L 282.0,232.4 L 282.2,230.7 L 280.8,230.6 L 279.9,229.7 L 275.8,229.3 L 274.8,228.2 L 274.2,226.4 L 273.1,226.7 L 272.7,227.7 L 273.5,228.0 L 273.1,228.7 L 275.2,229.5 L 276.2,230.7 L 276.3,231.0 L 275.8,231.1 L 276.4,231.2 L 276.6,231.6 L 276.3,231.5 L 276.3,232.0 L 276.0,231.3 L 275.6,231.6 L 276.2,232.3 L 277.5,236.2 L 277.6,238.0 L 277.2,239.2 L 277.6,239.4 L 278.1,241.3 L 278.2,242.3 L 277.9,243.1 L 278.2,243.9 L 278.4,243.4 L 278.4,244.2 L 277.4,244.7 L 277.2,245.3 L 276.9,245.3 L 276.7,245.7 L 276.6,245.3 L 276.9,244.9 L 277.0,245.2 L 277.0,244.9 L 276.4,243.9 L 276.2,241.2 L 276.6,239.4 L 276.9,239.2 L 276.8,238.8 L 274.0,239.0 L 272.5,242.0 L 271.7,242.3 L 270.8,243.0 L 270.0,243.8 L 269.3,245.3 L 268.3,245.6 L 267.5,246.8 L 266.6,247.4 L 265.9,250.7 L 265.4,251.1 L 264.6,251.3 L 264.1,252.1 L 263.3,252.3 L 262.7,254.1 L 262.6,255.1 L 262.1,255.4 L 261.9,256.3 L 261.5,256.9 L 260.8,257.1 L 260.9,257.6 L 260.4,258.0 L 260.3,259.0 L 259.9,259.5 L 259.9,261.2 L 260.3,262.6 L 260.3,265.0 L 259.6,267.3 L 257.2,268.4 L 256.5,269.1 L 255.9,269.0 L 255.5,269.4 L 254.2,269.8 L 251.3,272.0 L 251.1,271.2 L 252.0,269.3 L 249.6,270.2 L 248.6,272.2 L 248.9,272.3 L 248.7,272.5 L 248.5,272.3 L 248.0,272.9 L 247.2,272.5 L 245.1,273.8 L 243.2,274.2 L 243.2,274.6 L 242.9,275.0 L 243.3,276.1 L 242.7,277.7 L 242.0,278.1 L 241.2,279.0 L 240.4,279.7 L 238.4,279.7 L 237.7,281.9 L 237.9,282.5 L 237.2,282.6 L 237.4,283.6 L 236.4,283.8 L 234.4,287.3 L 233.5,288.1 L 233.1,288.2 L 231.8,290.8 L 231.4,293.6 L 230.6,295.2 L 228.9,296.9 L 228.1,298.7 L 228.7,299.4 L 229.7,299.8 L 228.8,299.9 L 228.1,299.4 L 228.0,299.7 L 227.4,299.8 L 226.7,300.6 L 226.8,300.9 L 226.5,300.9 L 226.1,302.1 L 224.8,304.5 L 224.6,305.7 L 223.8,307.0 L 223.6,307.9 L 223.0,308.8 L 223.1,309.2 L 223.6,309.4 L 223.5,309.6 L 223.7,309.5 L 223.7,311.3 L 225.7,311.6 L 226.7,311.2 L 228.8,312.0 L 229.8,311.9 L 230.0,313.1 L 230.7,313.6 L 231.9,313.6 L 232.4,313.2 L 233.6,310.6 L 235.1,309.6 L 236.3,309.1 L 237.0,308.1 L 238.3,308.0 L 238.6,307.5 L 240.5,307.0 L 243.4,305.2 L 244.3,305.1 L 244.7,304.2 L 245.3,304.0 L 245.6,303.5 L 246.5,303.7 L 247.3,303.2 L 247.4,302.8 L 248.0,302.8 L 247.9,302.6 L 249.2,301.6 L 249.1,301.4 L 249.6,301.3 L 249.7,300.8 L 249.9,301.2 L 250.1,300.7 L 250.2,301.1 L 250.7,300.7 L 250.4,301.2 L 250.8,300.9 L 250.6,301.2 L 250.0,301.6 L 250.3,302.0 L 250.6,301.9 L 250.3,302.1 L 250.6,302.5 L 250.1,302.8 L 250.3,302.4 L 249.7,302.6 L 247.0,306.2 L 246.4,306.2 L 245.7,306.7 L 243.7,309.1 L 242.8,309.1 L 238.9,310.6 L 237.8,310.8 L 237.6,310.5 L 236.7,311.3 L 236.0,311.5 L 232.8,314.4 L 231.9,314.9 L 227.5,315.3 L 227.6,314.7 L 226.8,314.6 L 226.6,314.1 L 224.4,313.9 L 223.7,316.9 L 223.0,317.4 L 222.9,316.5 L 222.7,316.6 L 222.9,316.8 L 222.3,316.7 L 221.9,317.2 L 222.1,316.5 L 221.7,316.3 L 221.9,316.0 L 220.9,315.7 L 221.8,316.0 L 220.9,316.1 L 220.7,316.5 L 220.7,316.0 L 220.2,315.8 L 220.3,315.6 L 218.9,314.4 L 219.3,313.3 L 218.9,312.0 L 220.0,311.2 L 219.9,310.3 L 220.7,306.9 L 221.7,305.0 L 222.0,303.8 L 222.6,303.1 L 222.8,301.7 L 223.2,301.5 L 223.7,300.0 L 223.7,298.6 L 223.2,297.8 L 224.0,298.3 L 224.7,298.1 L 225.9,296.6 L 226.1,295.9 L 226.8,295.2 L 227.3,295.1 L 227.4,294.1 L 229.0,292.5 L 229.4,291.4 L 229.1,291.0 L 230.1,288.8 L 229.9,288.1 L 230.5,287.4 L 231.1,285.7 L 230.6,285.6 L 230.9,285.3 L 230.6,285.0 L 231.6,284.9 L 233.4,282.7 L 234.4,280.0 L 236.0,277.2 L 236.6,277.0 L 236.7,276.6 L 236.0,276.7 L 236.5,276.1 L 236.5,275.4 L 237.3,274.8 L 238.1,274.7 L 238.6,274.0 L 239.2,273.8 L 238.9,273.3 L 239.5,273.4 L 240.7,272.7 L 240.6,272.0 L 241.2,271.7 L 241.2,270.6 L 241.6,270.5 L 241.2,269.9 L 241.8,270.5 L 242.0,269.8 L 242.7,269.9 L 243.1,270.5 L 244.4,270.5 L 244.3,270.2 L 244.7,269.6 L 244.2,268.7 L 244.6,268.2 L 244.5,267.8 L 243.9,267.8 L 243.4,268.3 L 242.7,268.5 L 244.0,267.5 L 245.0,265.7 L 244.9,265.1 L 245.8,264.3 L 245.6,263.0 L 245.2,262.7 L 245.3,261.7 L 246.2,260.7 L 246.5,257.7 L 246.9,257.5 L 246.6,257.5 L 246.9,257.1 L 246.9,257.5 L 247.5,257.9 L 247.3,255.7 L 248.1,255.9 L 248.6,255.7 L 249.1,257.0 L 249.6,256.7 L 249.5,255.7 L 249.9,254.7 L 249.8,253.3 L 248.9,252.8 L 248.4,252.1 L 247.9,248.5 L 248.2,247.3 L 248.1,246.4 L 247.6,246.0 L 247.8,245.7 L 248.0,246.0 L 248.3,245.8 L 248.6,245.0 L 249.1,244.8 L 248.8,244.5 L 248.8,243.9 L 249.2,243.6 L 249.0,243.4 L 249.8,243.9 L 249.9,244.8 L 249.7,245.2 L 250.4,246.8 L 249.9,248.1 L 249.5,250.4 L 250.6,250.6 L 251.2,250.2 L 252.5,249.1 L 253.3,245.9 L 252.8,246.0 L 252.2,244.5 L 252.7,243.3 L 252.7,241.6 L 253.4,240.6 L 253.9,240.6 L 253.8,240.3 L 253.5,240.4 L 254.3,239.9 L 253.5,240.0 L 253.4,238.5 L 253.7,238.5 L 254.4,239.8 L 254.2,240.4 L 254.5,241.1 L 254.4,242.7 L 255.4,244.1 L 255.3,245.7 L 256.2,246.9 L 256.0,249.6 L 255.2,251.5 L 255.3,251.9 L 254.9,253.9 L 253.8,255.5 L 254.2,257.5 L 253.5,258.6 L 253.6,259.9 L 253.3,260.5 L 252.5,260.7 L 252.3,261.0 L 252.0,263.0 L 251.6,263.6 L 253.8,265.2 L 254.8,264.6 L 256.3,264.4 L 257.7,263.5 L 256.4,261.9 L 256.7,260.5 L 256.5,259.2 L 257.5,256.7 L 258.9,255.6 L 259.2,254.8 L 259.0,253.8 L 259.5,252.5 L 260.0,252.3 L 259.7,251.5 L 260.2,251.0 L 259.8,250.4 L 259.9,249.4 L 260.4,248.5 L 260.0,247.2 L 260.4,246.0 L 261.7,246.0 L 263.0,245.4 L 264.3,243.8 L 265.9,242.9 L 266.4,241.7 L 266.4,241.3 L 266.0,242.1 L 266.7,239.9 L 266.4,239.8 L 266.3,240.9 L 266.2,239.3 L 265.5,237.3 L 268.1,237.3 L 269.7,237.9 L 271.2,237.6 L 272.1,234.2 L 271.5,234.8 L 271.2,234.1 L 272.3,234.1 L 272.5,235.9 L 273.3,234.5 L 273.8,234.4 L 272.9,234.0 L 271.2,234.1 L 270.1,233.2 L 270.1,232.6 L 269.3,231.7 L 269.7,229.4 L 269.2,228.8 L 268.9,227.9 L 268.5,228.0 L 267.3,230.0 L 266.1,230.3 L 265.9,229.8 L 265.4,229.8 L 265.5,230.3 L 264.7,230.4 L 265.0,229.9 L 264.4,229.8 L 266.1,229.0 L 266.6,229.3 L 266.8,227.7 L 266.4,225.9 L 266.9,224.3 L 267.3,224.1 L 267.2,223.7 L 266.8,223.2 L 266.3,223.2 L 266.3,223.8 L 266.5,223.9 L 266.2,224.0 L 266.2,224.9 L 265.8,224.9 L 265.6,224.2 L 265.3,224.1 L 265.7,223.6 L 266.0,223.9 L 266.3,223.1 L 266.9,223.0 L 266.9,222.3 L 266.5,221.6 L 264.6,221.5 L 263.0,219.3 L 262.6,216.5 L 262.0,215.4 L 262.1,214.9 L 261.7,214.8 L 261.9,214.2 L 262.3,213.9 L 261.5,212.6 L 261.1,212.5 L 259.8,213.6 L 259.5,212.7 L 259.9,213.1 L 259.6,212.3 L 258.4,211.5 L 257.6,210.2 L 258.2,208.8 L 257.3,208.4 L 256.3,207.0 L 256.0,205.8 L 254.7,204.5 L 255.5,203.0 L 256.6,201.8 L 259.3,200.4 L 259.8,200.1 L 259.6,199.8 L 259.9,199.9 L 258.6,197.9 L 258.7,196.9 L 259.4,195.9 L 256.3,196.1 L 251.8,197.3 L 251.0,197.1 L 249.8,198.7 L 246.4,201.7 L 246.4,202.2 L 246.9,202.9 L 246.9,204.0 L 245.7,206.1 L 246.3,205.8 L 247.4,206.2 L 249.1,207.6 L 249.2,208.3 L 249.9,209.4 L 251.9,210.3 L 252.2,210.9 L 251.5,216.0 L 250.9,217.1 L 249.7,218.2 L 247.9,218.5 L 247.1,218.4 L 246.6,218.8 L 246.0,218.8 L 246.8,217.8 L 246.5,217.9 L 246.7,217.6 L 247.0,217.8 L 248.2,216.9 L 248.7,216.2 L 248.8,215.2 L 249.2,214.9 L 248.6,214.4 L 248.3,212.3 L 247.3,210.9 L 247.6,210.4 L 245.7,210.1 L 243.3,208.9 L 242.1,207.8 L 242.5,205.2 L 243.3,203.2 L 240.2,202.8 L 237.2,203.0 L 230.7,205.5 L 232.6,205.1 L 232.9,205.4 L 232.7,205.7 L 232.5,205.1 L 232.8,205.8 L 234.1,207.1 L 234.3,208.1 L 233.7,209.4 L 234.8,211.4 L 235.0,213.6 L 235.0,213.0 L 235.2,213.4 L 235.0,214.0 L 234.6,214.1 L 234.2,213.9 L 234.1,214.3 L 233.8,213.5 L 233.5,213.5 L 232.8,212.7 L 233.0,212.1 L 232.2,211.3 L 231.1,209.5 L 230.2,208.9 L 230.5,208.3 L 231.1,208.1 L 230.8,207.8 L 231.1,208.2 L 230.8,208.1 L 230.4,207.2 L 230.3,205.1 L 229.8,205.5 L 229.5,205.0 L 230.2,204.5 L 230.2,203.9 L 230.3,205.0 L 230.7,205.1 L 230.7,204.6 L 229.7,201.9 L 228.3,199.5 L 226.0,198.1 L 222.9,194.6 L 222.5,194.7 L 221.9,194.4 L 221.9,194.7 L 221.8,194.5 L 221.6,194.9 L 221.0,194.9 L 221.1,195.3 L 220.7,195.0 L 221.0,194.9 L 220.0,194.7 L 219.8,194.2 L 219.5,195.0 L 216.2,195.6 L 218.3,192.9 L 219.8,191.5 L 220.5,191.1 L 221.0,191.5 L 220.8,191.2 L 221.4,191.2 L 220.7,192.6 L 220.9,191.8 L 220.8,191.4 L 220.6,191.6 L 220.3,193.7 L 220.5,194.0 L 221.6,191.3 L 222.4,190.9 L 222.2,191.1 L 222.4,191.1 L 223.3,190.4 L 224.7,190.1 L 224.7,189.8 L 222.3,190.9 L 220.4,191.1 L 219.6,191.5 L 213.7,198.0 L 211.0,199.8 L 210.1,200.1 L 209.4,199.9 L 207.1,200.0 L 206.0,199.4 L 203.0,200.5 L 201.1,200.5 L 200.0,199.8 L 197.4,200.4 L 195.3,200.4 L 194.1,199.8 L 193.6,200.1 L 192.4,199.8 L 192.0,199.4 L 191.0,199.2 L 190.6,198.8 L 189.7,198.6 L 189.8,199.0 L 189.1,198.5 L 189.3,198.3 L 188.4,197.4 L 188.9,196.8 L 191.1,196.3 L 194.6,196.7 L 194.8,196.5 L 194.3,196.3 L 191.0,196.2 L 189.0,196.7 L 187.5,197.5 L 184.1,197.7 L 182.6,197.2 L 181.0,195.5 L 179.2,194.8 L 178.3,195.2 L 177.8,196.1 L 176.5,197.1 L 175.6,197.3 L 173.6,196.7 L 172.4,196.8 L 170.8,195.6 L 170.7,195.3 L 171.1,194.9 L 170.4,194.3 L 169.7,193.9 L 169.3,194.1 L 168.9,193.6 L 167.7,193.1 L 166.0,193.0 L 164.4,192.4 L 164.2,192.5 L 164.5,193.1 L 163.0,193.8 L 162.1,193.5 L 162.0,193.1 L 162.2,192.9 L 161.9,192.7 L 161.7,193.0 L 161.4,192.9 L 161.0,193.5 L 159.2,193.4 L 157.0,194.2 L 153.6,194.3 L 152.2,193.5 L 150.7,194.2 L 148.9,194.4 L 148.1,194.3 L 147.7,193.6 L 146.8,193.3 L 143.3,193.6 L 141.2,193.4 L 140.9,192.8 L 140.4,192.6 L 139.0,192.7 L 138.8,192.5 L 138.7,192.8 L 136.8,192.8 L 135.3,192.3 L 134.9,191.7 L 133.4,191.8 L 132.6,191.6 L 132.4,191.2 L 131.7,191.4 L 129.8,190.8 L 128.8,190.1 L 128.7,189.4 L 128.7,189.6 L 128.3,189.5 L 125.7,188.0 L 124.0,187.4 L 124.1,186.3 L 124.4,186.5 L 124.3,185.6 L 124.7,185.4 L 124.7,185.0 L 123.7,184.4 L 122.0,184.5 L 120.9,183.4 L 119.6,182.9 L 115.8,180.7 L 113.3,179.6 L 112.7,179.0 L 111.8,178.8 L 111.2,178.2 L 109.9,177.9 L 109.6,178.5 L 108.9,179.1 L 107.4,179.4 L 106.5,178.8 L 106.8,178.8 L 105.9,178.8 L 105.1,178.5 L 104.9,178.0 L 105.1,177.6 L 105.2,177.9 L 104.9,177.2 L 100.9,176.1 L 100.1,175.0 L 98.9,174.3 L 97.0,174.8 L 95.6,174.3 L 95.2,174.5 L 95.0,174.3 L 95.3,174.4 L 95.3,174.2 L 94.2,173.0 L 92.1,171.6 L 91.1,171.4 L 90.1,170.0 L 88.0,169.0 L 86.5,167.7 L 85.9,167.7 L 85.4,166.9 L 84.8,166.8 L 83.7,165.8 L 82.4,165.1 L 81.2,165.1 L 80.3,164.5 L 79.4,163.5 L 79.1,163.6 L 79.3,163.3 L 78.5,162.3 L 77.6,162.6 L 77.2,161.9 L 76.3,161.8 L 75.9,161.5 L 74.1,162.5 L 73.0,162.5 L 72.1,161.8 L 71.9,161.0 L 71.1,160.1 L 71.2,159.3 L 70.2,159.2 L 69.7,158.9 L 69.4,159.1 L 69.0,158.8 L 68.2,159.3 L 67.2,158.7 L 66.5,159.1 L 65.4,159.0 L 65.5,159.4 L 65.0,159.2 L 64.4,159.6 L 63.1,159.1 L 62.9,159.5 L 62.6,159.4 L 62.5,159.8 L 62.3,159.6 L 62.5,160.0 L 61.9,160.1 L 62.1,160.3 L 61.8,160.3 L 62.0,161.0 L 61.7,160.9 L 62.3,161.4 L 62.2,161.8 L 63.6,162.6 L 64.3,163.7 L 64.2,164.3 L 65.2,164.9 L 65.4,165.9 L 66.2,166.7 L 66.6,166.5 L 66.9,165.9 L 67.4,165.9 L 67.4,166.2 L 68.4,166.8 L 69.1,167.8 L 68.9,168.3 L 69.1,168.8 L 68.2,169.6 L 68.7,170.5 L 68.4,172.5 L 68.1,173.0 L 67.4,173.2 L 66.8,172.8 L 66.8,173.7 L 66.2,174.0 L 66.2,174.5 L 66.7,174.8 L 66.5,175.1 L 67.0,176.3 L 66.5,179.2 L 64.9,180.5 L 65.0,181.0 L 64.4,181.6 L 64.7,181.6 L 64.5,181.9 L 64.8,181.9 L 64.6,182.1 L 65.9,184.6 L 65.4,187.6 L 64.5,189.8 L 63.8,190.3 L 63.4,190.2 L 63.3,190.7 L 61.7,192.0 L 61.6,192.9 L 62.8,194.6 L 63.3,196.2 L 64.2,197.7 L 64.1,198.4 L 63.7,198.6 L 64.4,198.9 L 65.3,199.9 L 65.8,201.0 L 65.6,201.9 L 66.3,202.9 L 66.2,203.6 L 65.5,204.4 L 65.3,206.8 L 65.7,207.7 L 65.6,208.7 L 66.5,210.0 L 66.8,211.9 L 66.9,213.9 L 66.7,214.3 L 67.1,214.9 L 67.2,216.2 L 67.0,217.3 L 67.3,218.2 L 67.1,218.7 L 67.6,219.0 L 67.9,220.1 L 67.8,221.1 L 67.5,221.4 L 67.8,222.2 L 67.3,222.4 L 67.7,222.8 L 68.5,222.8 L 68.7,223.5 L 68.3,223.9 L 68.8,224.4 L 68.8,225.4 L 69.7,225.8 L 70.6,227.3 L 71.2,229.8 L 70.5,231.7 L 71.0,231.4 L 71.8,232.1 L 72.1,232.9 L 71.7,233.7 L 71.9,233.6 L 72.5,234.5 L 74.1,235.7 L 73.9,236.0 L 74.1,236.3 L 73.7,236.6 L 73.9,236.8 L 74.5,236.6 L 74.9,236.7 L 74.8,236.3 L 75.1,236.4 L 75.4,235.7 L 76.8,236.2 L 77.5,237.6 L 77.8,237.8 L 78.3,237.4 L 79.0,237.9 L 79.1,239.5 L 79.7,239.9 L 79.8,240.6 L 80.4,240.7 L 81.0,241.3 L 80.7,242.4 L 82.7,242.8 L 83.5,244.1 L 84.6,243.9 L 85.8,244.6 L 86.6,247.5 L 86.7,249.5 L 87.3,250.7 L 87.3,251.3 L 87.8,251.7 L 86.9,252.3 L 87.6,252.5 L 88.1,252.3 L 88.7,252.8 L 89.5,252.6 L 90.2,254.1 L 91.6,255.3 L 92.3,256.5 L 93.8,264.3 L 95.3,267.9 L 96.1,270.4 L 97.2,276.7 L 98.2,280.1 L 99.2,286.6 L 99.5,286.8 L 100.6,294.3 L 101.3,306.7 L 102.1,307.9 L 102.6,312.1 L 103.1,313.9 L 102.8,314.2 L 104.2,314.6 L 105.0,315.3 L 106.5,319.1 L 107.2,321.5 L 107.0,321.9 L 107.7,322.3 L 107.5,322.1 L 107.7,321.7 L 109.0,321.8 L 110.1,322.5 L 111.0,323.7 L 111.5,324.8 L 112.8,330.0 L 113.3,330.6 L 113.2,332.0 L 114.4,336.4 L 114.8,336.9 L 114.6,337.7 L 115.6,343.3 L 115.8,343.6 L 115.9,345.0 L 116.2,346.2 L 116.7,346.7 L 116.3,347.9 L 117.7,361.1 L 117.6,368.4 M -1.2,66.5 L -1.1,64.9 L -0.8,64.6 L -1.4,63.8 L -1.4,63.0 L -0.7,62.5 L -0.7,61.8 L -0.0,61.6 L -0.2,61.4 L 1.2,61.9 L 1.9,62.9 L 2.8,62.5 L 3.0,62.2 L 3.6,62.4 L 3.4,62.7 L 4.2,63.4 L 4.5,63.3 L 4.9,63.8 L 5.2,63.6 L 6.0,64.0 L 8.6,63.5 L 8.8,63.2 L 10.8,62.7 L 12.1,61.9 L 12.6,61.9 L 12.9,62.3 L 15.1,61.5 L 14.8,62.0 L 13.8,62.5 L 13.6,62.3 L 11.4,63.3 L 9.5,63.4 L 9.5,63.7 L 7.1,64.3 L 7.4,64.5 L 7.3,64.8 L 6.8,64.4 L 7.1,65.1 L 5.8,64.5 L 5.5,65.1 L 5.0,64.9 L 4.3,65.3 L 3.9,65.0 L 2.6,65.7 L 2.8,65.7 L 2.6,66.1 L 3.5,66.6 L 3.0,66.6 L 3.1,67.0 L 3.3,66.8 L 3.6,67.3 L 4.4,67.6 L 5.3,67.5 L 5.8,66.6 L 5.6,66.3 L 6.1,66.5 L 5.4,67.6 L 5.6,68.1 L 5.3,68.6 L 5.8,69.3 L 5.6,69.7 L 5.6,70.5 L 6.3,71.4 L 4.9,71.1 L 2.6,72.1 L 3.4,72.1 L 4.0,72.6 L 4.9,72.3 L 6.4,72.5 L 6.6,72.3 L 7.1,72.7 L 7.3,72.3 L 7.8,72.7 L 7.5,72.6 L 7.3,72.9 L 8.2,73.8 L 8.2,73.4 L 8.8,73.9 L 9.4,73.9 L 9.7,74.4 L 10.1,74.3 L 10.0,75.2 L 10.4,75.3 L 10.8,75.9 L 11.4,75.7 L 11.7,75.2 L 12.8,74.8 L 13.4,74.2 L 13.1,73.8 L 13.7,73.5 L 14.0,73.6 L 14.8,73.1 L 15.7,71.0 L 16.1,70.8 L 16.3,71.0 L 16.6,70.7 L 15.5,69.9 L 15.7,66.4 L 16.4,65.8 L 16.7,66.3 L 17.2,65.6 L 16.8,65.5 L 16.9,64.9 L 17.4,64.6 L 17.8,65.2 L 18.5,65.1 L 18.4,64.8 L 19.3,63.4 L 19.4,62.1 L 18.6,61.2 L 18.7,60.6 L 18.1,59.7 L 19.6,59.8 L 19.6,59.2 L 20.4,59.5 L 19.6,57.7 L 18.2,56.4 L 17.6,55.1 L 16.7,54.5 L 15.3,54.0 L 14.2,53.3 L 14.9,53.7 L 15.0,52.8 L 16.1,53.6 L 16.1,53.9 L 16.7,53.8 L 17.8,54.5 L 18.7,55.8 L 19.7,56.3 L 20.3,58.5 L 21.2,60.3 L 21.2,60.7 L 20.9,60.6 L 21.1,61.1 L 20.6,60.9 L 21.3,61.6 L 20.5,62.1 L 20.4,62.7 L 19.9,63.5 L 20.2,64.1 L 20.0,64.6 L 16.8,67.6 L 16.4,69.0 L 17.2,69.2 L 18.0,69.0 L 18.7,69.7 L 19.1,68.1 L 19.5,67.9 L 19.1,67.6 L 18.9,67.0 L 19.7,66.5 L 19.9,66.0 L 20.6,65.9 L 20.9,66.3 L 20.7,66.6 L 19.9,67.0 L 20.1,67.2 L 19.7,67.5 L 20.4,67.9 L 20.6,67.6 L 20.2,67.3 L 20.4,67.1 L 21.8,68.0 L 21.7,68.8 L 22.4,69.2 L 22.3,70.6 L 23.0,70.5 L 23.2,71.1 L 24.0,71.5 L 24.7,71.2 L 25.5,71.6 L 26.6,71.0 L 28.3,68.9 L 29.0,68.8 L 29.7,67.9 L 30.3,67.7 L 30.2,68.1 L 30.6,68.4 L 30.3,68.9 L 30.6,69.0 L 31.1,68.6 L 31.2,68.8 L 31.3,68.5 L 31.5,68.9 L 31.9,68.3 L 31.9,68.5 L 32.5,68.3 L 32.5,68.7 L 31.4,69.3 L 31.9,69.3 L 32.4,69.8 L 32.8,69.7 L 32.9,69.4 L 33.8,69.9 L 33.9,70.5 L 33.6,70.7 L 32.9,70.3 L 32.6,70.6 L 32.5,70.8 L 33.1,71.0 L 33.3,71.4 L 31.9,73.4 L 31.7,74.0 L 32.0,74.2 L 32.6,72.9 L 33.5,73.2 L 34.8,72.6 L 34.7,72.2 L 35.3,71.8 L 35.1,71.4 L 35.6,70.9 L 35.1,70.5 L 34.8,69.0 L 33.7,68.0 L 33.7,67.5 L 33.4,67.6 L 29.8,65.4 L 30.2,65.3 L 29.9,65.0 L 30.7,64.4 L 31.5,64.7 L 31.8,63.7 L 32.2,63.3 L 32.6,63.8 L 32.1,64.6 L 31.6,64.6 L 31.6,65.1 L 32.3,65.2 L 32.6,65.7 L 33.3,65.7 L 33.2,66.1 L 33.7,66.1 L 34.0,66.6 L 34.5,66.7 L 34.5,66.9 L 35.3,67.3 L 37.4,69.3 L 36.5,69.6 L 36.5,70.4 L 37.2,69.8 L 37.5,69.9 L 37.5,69.5 L 38.3,70.0 L 40.0,69.5 L 41.4,70.1 L 43.8,69.8 L 45.4,68.2 L 45.7,67.1 L 47.7,65.6 L 48.4,63.4 L 48.3,62.2 L 48.8,61.5 L 48.7,59.2 L 46.8,58.6 L 46.5,58.3 L 46.6,57.9 L 46.4,57.9 L 46.6,57.7 L 48.3,57.7 L 49.4,57.0 L 49.1,56.5 L 49.4,56.1 L 51.8,54.3 L 51.2,52.2 L 52.3,51.6 L 52.5,50.4 L 52.1,50.2 L 53.3,49.4 L 53.7,45.5 L 54.1,44.2 L 53.5,43.4 L 52.1,42.3 L 52.0,41.4 L 51.7,41.1 L 52.0,40.0 L 52.7,39.8 L 52.6,39.1 L 52.1,35.1 L 51.2,33.4 L 51.0,32.5 L 51.3,31.8 L 51.0,29.8 L 52.5,29.4 L 52.6,29.8 L 51.2,30.1 L 51.3,30.5 L 51.5,30.4 L 51.2,30.9 L 51.6,30.9 L 51.9,30.3 L 52.5,30.8 L 52.9,30.5 L 54.0,30.8 L 53.7,30.9 L 53.4,31.5 L 53.8,32.1 L 53.3,32.2 L 53.7,32.7 L 53.5,33.7 L 53.7,34.1 L 53.2,35.1 L 53.9,36.7 L 53.8,38.8 L 53.3,39.9 L 54.1,42.0 L 55.7,43.5 L 55.8,43.9 L 55.4,44.3 L 55.9,44.6 L 55.2,44.5 L 55.2,44.3 L 55.2,44.6 L 55.9,45.0 L 56.2,46.2 L 55.7,46.1 L 55.3,47.7 L 54.9,48.0 L 54.5,49.3 L 53.5,50.6 L 53.8,51.3 L 53.0,52.4 L 53.6,53.2 L 52.9,53.9 L 53.1,54.1 L 52.7,54.9 L 51.4,56.9 L 51.4,58.1 L 50.9,58.6 L 51.2,59.1 L 51.2,61.0 L 50.7,61.3 L 50.2,62.7 L 50.3,63.2 L 49.6,63.8 L 49.2,65.1 L 49.1,66.9 L 48.0,67.7 L 46.8,68.2 L 46.7,68.7 L 45.6,69.5 L 45.5,70.8 L 44.4,71.5 L 41.1,71.2 L 40.3,70.9 L 40.0,71.3 L 39.4,71.2 L 38.6,71.5 L 36.9,72.8 L 36.7,73.2 L 37.0,73.5 L 36.1,74.0 L 36.8,74.0 L 36.7,74.3 L 37.4,74.6 L 36.3,74.9 L 36.5,75.9 L 36.3,76.3 L 36.8,77.1 L 35.5,76.5 L 35.1,76.5 L 34.4,75.7 L 34.7,75.4 L 33.1,75.9 L 32.9,76.7 L 33.2,76.8 L 32.4,76.8 L 31.7,77.5 L 32.1,77.9 L 32.9,78.1 L 32.5,78.5 L 33.0,79.4 L 33.5,79.1 L 33.8,79.6 L 33.5,79.8 L 33.9,79.9 L 34.4,79.6 L 34.3,80.2 L 34.6,80.6 L 34.2,80.7 L 33.9,81.5 L 34.0,82.1 L 34.4,82.0 L 34.8,82.7 L 34.4,82.4 L 34.0,82.7 L 33.3,82.7 L 33.2,83.1 L 32.1,84.1 L 31.7,85.0 L 31.5,84.8 L 31.1,85.2 L 30.2,84.9 L 30.4,85.6 L 30.2,85.9 L 29.7,85.9 L 30.0,84.9 L 29.5,85.2 L 28.1,84.7 L 27.5,84.8 L 27.8,85.2 L 27.5,85.4 L 27.0,85.5 L 26.3,86.0 L 26.1,85.8 L 25.2,87.4 L 24.3,87.9 L 24.5,88.1 L 24.4,88.7 L 24.9,88.2 L 25.2,88.3 L 24.2,88.9 L 23.7,90.1 L 23.6,89.7 L 22.1,90.3 L 22.2,90.7 L 21.5,91.5 L 22.3,92.7 L 22.8,92.5 L 22.7,93.0 L 23.1,92.7 L 23.6,91.7 L 24.4,91.8 L 24.0,92.6 L 23.5,92.9 L 23.1,92.9 L 23.2,93.1 L 23.7,93.1 L 23.2,93.3 L 23.1,93.0 L 22.1,93.2 L 22.2,92.8 L 21.5,92.0 L 21.3,92.3 L 21.5,94.1 L 20.3,95.2 L 19.4,95.2 L 19.3,95.6 L 18.7,95.4 L 18.9,95.0 L 19.5,95.0 L 19.6,94.6 L 20.8,93.8 L 21.1,92.4 L 20.9,91.6 L 20.5,92.3 L 20.1,92.4 L 19.5,93.7 L 18.9,93.9 L 18.9,94.3 L 18.5,94.4 L 18.6,94.9 L 18.0,94.8 L 18.2,95.2 L 18.0,95.5 L 17.6,95.1 L 17.5,95.5 L 17.1,95.4 L 17.0,95.9 L 16.4,96.2 L 17.0,96.6 L 16.8,97.3 L 16.3,97.5 L 15.8,97.3 L 15.8,98.0 L 14.5,97.7 L 13.8,98.2 L 14.0,98.7 L 13.8,98.7 L 14.6,99.0 L 13.6,98.8 L 13.5,99.0 L 13.8,99.2 L 13.8,100.2 L 14.0,100.0 L 14.2,100.3 L 14.9,99.6 L 15.1,100.5 L 16.1,99.6 L 16.3,99.9 L 16.7,99.5 L 17.4,99.4 L 18.4,100.0 L 18.4,100.9 L 19.0,101.0 L 18.9,101.8 L 19.5,102.0 L 19.4,101.2 L 20.3,100.9 L 20.3,100.6 L 20.8,100.2 L 20.7,99.5 L 22.3,97.7 L 23.4,98.9 L 23.4,99.4 L 21.7,101.5 L 21.9,102.3 L 21.7,102.8 L 22.4,103.5 L 22.2,104.0 L 21.7,103.9 L 22.3,104.8 L 22.0,105.3 L 22.8,106.5 L 23.2,106.6 L 23.3,107.8 L 24.6,108.6 L 24.4,108.7 L 25.0,109.3 L 25.6,109.2 L 26.0,109.6 L 27.1,108.9 L 28.8,109.2 L 33.2,110.5 L 34.4,111.2 L 34.4,111.5 L 35.6,111.5 L 35.7,111.7 L 36.3,111.7 L 37.5,112.3 L 39.8,112.5 L 41.4,113.7 L 42.1,113.8 L 43.2,114.5 L 43.9,115.1 L 43.8,115.3 L 45.0,115.4 L 45.7,116.0 L 46.5,116.2 L 47.8,116.1 L 49.4,117.2 L 49.8,116.8 L 50.0,117.4 L 50.7,117.5 L 52.1,118.6 L 52.4,118.6 L 52.6,118.2 L 52.8,118.4 L 53.0,118.1 L 53.4,118.2 L 54.5,119.6 L 54.6,120.2 L 55.5,121.5 L 56.6,121.8 L 57.3,122.9 L 58.4,123.5 L 58.6,124.7 L 59.2,125.1 L 59.2,125.4 L 59.8,125.9 L 60.5,125.5 L 61.2,125.7 L 62.1,126.7 L 62.4,127.7 L 63.3,128.5 L 66.1,129.0 L 67.2,129.9 L 69.5,130.7 L 70.5,131.5 L 72.1,131.8 L 72.6,132.2 L 73.3,132.0 L 73.3,132.3 L 74.8,132.9 L 75.0,132.7 L 75.4,133.0 L 75.9,132.9 L 77.9,133.7 L 79.5,134.1 L 79.8,134.0 L 79.9,134.2 L 85.2,136.1 L 87.4,134.4 L 88.0,133.5 L 90.4,132.8 L 91.3,132.0 L 93.6,131.1 L 94.6,132.4 L 94.5,133.5 L 95.1,133.6 L 94.3,133.7 L 94.1,134.1 L 93.5,134.0 L 92.8,134.5 L 92.8,134.3 L 92.3,134.4 L 91.9,135.0 L 91.1,135.5 L 90.7,135.4 L 89.6,136.6 L 89.1,137.7 L 90.3,138.4 L 90.3,138.7 L 91.3,138.7 L 92.0,139.1 L 93.0,139.0 L 94.3,139.7 L 94.9,139.3 L 95.1,139.9 L 98.4,141.2 L 104.0,141.9 L 104.5,142.1 L 105.8,143.8 L 105.5,144.2 L 105.7,144.8 L 107.6,145.4 L 109.8,146.9 L 114.2,148.9 L 118.4,149.8 L 119.8,150.7 L 120.1,150.5 L 120.8,151.0 L 123.3,151.6 L 124.2,152.7 L 125.3,152.2 L 126.0,152.9 L 127.9,154.1 L 129.3,154.2 L 130.2,154.5 L 131.2,154.4 L 131.8,154.9 L 132.9,155.1 L 133.8,155.9 L 135.6,156.5 L 136.1,157.3 L 136.3,158.3 L 136.7,158.1 L 137.3,158.6 L 137.8,158.3 L 140.0,158.2 L 140.8,159.7 L 142.8,161.0 L 145.2,160.2 L 147.3,160.3 L 148.0,160.6 L 148.3,160.3 L 148.2,160.6 L 151.3,162.0 L 152.7,164.0 L 155.1,162.9 L 156.3,162.8 L 157.0,162.2 L 158.7,161.8 L 158.9,162.0 L 158.4,161.9 L 159.2,162.6 L 159.5,163.6 L 161.4,164.4 L 162.8,164.0 L 163.0,163.7 L 163.8,163.7 L 163.3,163.5 L 162.3,164.0 L 162.3,163.5 L 161.7,163.0 L 162.3,161.8 L 164.2,160.1 L 165.1,159.8 L 165.7,160.8 L 166.4,159.4 L 166.7,159.2 L 168.5,159.1 L 168.9,159.5 L 169.4,159.5 L 169.4,158.9 L 168.8,159.4 L 168.6,159.2 L 169.4,158.3 L 170.1,159.6 L 170.5,159.6 L 171.0,159.0 L 171.6,159.1 L 171.4,160.0 L 171.1,160.2 L 171.5,160.8 L 171.2,161.4 L 172.5,162.0 L 171.2,161.7 L 171.5,162.6 L 171.3,163.1 L 171.1,162.8 L 170.4,163.0 L 169.9,162.7 L 169.6,163.0 L 169.7,163.8 L 169.5,163.5 L 169.0,163.6 L 168.7,163.3 L 169.6,162.9 L 169.7,162.6 L 169.2,162.3 L 168.6,163.0 L 167.5,162.4 L 167.1,162.4 L 166.7,162.0 L 166.6,161.0 L 165.8,161.4 L 164.7,161.3 L 164.1,161.7 L 163.5,162.7 L 163.2,162.6 L 163.2,163.0 L 163.6,162.8 L 164.4,163.0 L 164.6,163.7 L 163.3,164.5 L 163.3,165.1 L 163.0,165.5 L 163.2,165.3 L 163.8,166.1 L 163.5,166.7 L 164.0,166.6 L 164.1,167.0 L 164.4,166.5 L 165.3,166.7 L 165.7,167.2 L 166.3,167.1 L 166.7,168.0 L 167.9,168.7 L 167.8,169.2 L 168.0,169.0 L 168.1,169.5 L 169.4,170.0 L 169.5,170.4 L 171.1,170.0 L 171.3,168.8 L 171.9,168.6 L 171.4,168.3 L 171.6,167.3 L 172.2,166.9 L 172.3,167.2 L 173.4,167.0 L 174.0,167.4 L 174.5,167.3 L 174.5,166.8 L 174.8,166.9 L 175.3,166.6 L 175.5,166.8 L 176.0,166.1 L 176.0,167.1 L 175.6,167.8 L 175.7,168.3 L 174.5,169.5 L 175.0,170.0 L 174.8,170.3 L 175.2,170.0 L 175.8,170.1 L 176.2,171.0 L 177.1,170.2 L 177.2,170.5 L 178.4,170.4 L 178.5,171.1 L 178.8,171.2 L 179.1,170.5 L 180.8,169.5 L 180.9,168.8 L 180.1,167.7 L 179.6,167.5 L 178.9,166.1 L 177.0,165.1 L 177.8,165.3 L 177.5,164.8 L 179.3,166.0 L 179.4,166.4 L 180.2,166.4 L 180.7,166.9 L 180.9,166.7 L 181.3,167.0 L 182.1,166.3 L 182.2,166.0 L 181.7,166.0 L 181.2,166.5 L 180.9,166.5 L 180.9,165.5 L 180.4,164.9 L 180.5,164.1 L 181.2,163.6 L 181.9,161.9 L 183.8,159.5 L 182.8,159.5 L 182.6,159.2 L 183.0,159.4 L 183.3,159.1 L 184.2,160.0 L 184.4,159.4 L 186.5,159.8 L 187.1,159.6 L 187.0,159.0 L 186.6,159.1 L 186.2,158.7 L 186.0,158.1 L 187.4,155.4 L 189.2,152.9 L 187.6,154.9 L 187.8,154.2 L 187.4,153.7 L 187.5,153.2 L 188.9,152.6 L 190.1,152.9 L 189.9,152.3 L 190.2,151.6 L 189.8,151.3 L 189.9,150.1 L 189.1,149.2 L 189.4,148.7 L 190.1,149.6 L 190.5,149.4 L 190.4,149.8 L 190.9,149.9 L 190.9,150.2 L 191.5,150.0 L 191.6,150.3 L 191.3,150.6 L 191.8,151.1 L 191.2,151.4 L 191.8,151.6 L 191.7,151.8 L 192.1,152.0 L 192.0,152.2 L 192.6,152.1 L 192.5,152.3 L 192.8,152.4 L 191.9,152.9 L 191.0,152.6 L 191.1,153.3 L 191.5,153.5 L 191.7,153.3 L 192.4,153.7 L 193.0,153.6 L 192.8,154.2 L 193.7,154.4 L 193.7,154.7 L 193.5,154.5 L 193.9,155.0 L 194.7,154.5 L 195.2,154.6 L 195.1,153.9 L 195.5,153.9 L 195.0,153.3 L 195.6,153.0 L 196.1,153.4 L 196.4,153.1 L 197.0,153.6 L 197.3,153.7 L 197.6,153.2 L 196.8,151.9 L 196.1,151.8 L 195.7,151.2 L 195.0,151.0 L 194.9,150.6 L 194.1,150.5 L 193.9,150.1 L 192.6,149.8 L 192.2,149.3 L 192.7,148.4 L 191.9,149.5 L 191.6,149.0 L 191.9,149.1 L 191.8,148.5 L 192.1,148.8 L 192.1,148.2 L 193.0,147.9 L 193.8,148.6 L 193.1,149.1 L 192.9,148.7 L 192.6,149.7 L 194.4,150.2 L 196.0,151.4 L 196.9,151.1 L 196.9,151.7 L 197.3,151.7 L 197.0,151.8 L 197.1,152.4 L 197.7,152.2 L 198.0,152.4 L 197.7,152.5 L 197.9,154.3 L 197.2,153.8 L 196.7,154.2 L 196.1,154.0 L 196.0,154.5 L 196.3,154.7 L 195.7,155.0 L 196.0,155.1 L 195.7,155.3 L 196.5,155.3 L 197.2,156.1 L 198.4,156.6 L 199.3,156.5 L 199.9,157.1 L 200.0,156.6 L 200.8,156.0 L 201.7,156.3 L 201.9,155.8 L 202.2,155.8 L 202.7,156.7 L 203.3,156.2 L 203.1,155.9 L 203.4,155.6 L 203.9,155.6 L 204.5,156.1 L 205.0,155.7 L 205.5,155.8 L 205.1,154.4 L 204.7,154.1 L 204.9,153.6 L 204.3,153.9 L 204.1,153.4 L 204.9,151.9 L 205.7,151.8 L 205.5,151.3 L 205.8,151.0 L 205.5,150.4 L 205.7,149.9 L 205.3,150.0 L 205.0,149.2 L 205.4,148.7 L 206.0,148.6 L 206.2,149.3 L 206.5,149.4 L 206.8,150.0 L 207.7,149.8 L 207.7,150.0 L 208.3,149.8 L 208.4,149.3 L 208.0,149.1 L 207.3,147.9 L 207.0,147.7 L 206.8,147.9 L 206.8,147.5 L 206.3,147.4 L 206.1,146.9 L 205.3,146.4 L 205.0,146.5 L 204.9,146.0 L 204.6,146.0 L 204.6,144.5 L 204.8,144.2 L 204.5,144.0 L 204.2,143.0 L 203.8,143.2 L 203.4,142.8 L 203.1,143.4 L 202.1,143.2 L 198.3,140.0 L 198.2,137.7 L 198.7,136.1 L 198.3,135.1 L 198.7,133.8 L 198.1,133.5 L 198.2,131.4 L 197.7,130.1 L 197.8,129.3 L 197.6,128.7 L 197.9,128.0 L 197.7,127.8 L 197.1,128.8 L 197.4,128.7 L 197.6,129.1 L 195.6,128.4 L 196.0,127.6 L 195.6,127.4 L 195.3,126.1 L 193.8,123.2 L 195.5,120.6 L 195.5,119.8 L 195.1,119.6 L 195.6,118.2 L 194.7,118.6 L 194.5,117.7 L 195.2,117.4 L 194.5,117.1 L 194.5,117.4 L 194.0,117.7 L 193.4,117.0 L 193.3,116.6 L 193.0,116.6 L 193.1,116.8 L 192.7,116.7 L 192.8,116.2 L 193.4,116.2 L 193.4,115.7 L 192.6,116.0 L 192.6,116.3 L 192.3,116.0 L 193.5,115.2 L 193.8,116.3 L 194.1,116.1 L 195.2,116.3 L 194.3,115.0 L 194.8,114.7 L 194.6,114.2 L 194.1,114.5 L 190.8,112.6 L 187.3,113.2 L 186.5,113.6 L 186.4,114.2 L 187.3,114.2 L 187.5,114.5 L 187.3,115.1 L 187.5,115.4 L 187.1,115.6 L 186.8,115.4 L 186.0,116.0 L 186.7,116.3 L 186.6,116.7 L 187.0,117.2 L 187.6,117.2 L 187.5,117.7 L 187.8,117.9 L 188.6,117.6 L 189.3,117.7 L 190.3,119.3 L 190.3,119.5 L 189.9,119.5 L 189.9,119.8 L 188.8,120.2 L 187.5,121.3 L 187.1,122.0 L 186.9,123.2 L 187.0,123.6 L 188.1,122.9 L 188.4,123.2 L 186.8,126.5 L 186.9,127.4 L 187.4,127.6 L 186.8,127.9 L 187.7,128.2 L 188.4,129.0 L 188.3,130.1 L 187.8,130.5 L 188.3,130.9 L 188.7,131.9 L 187.8,132.0 L 188.0,132.4 L 187.5,132.3 L 187.3,132.9 L 188.4,133.6 L 188.2,133.8 L 187.3,133.5 L 187.2,132.5 L 187.5,131.5 L 186.1,130.8 L 185.2,133.0 L 184.3,133.9 L 184.3,134.5 L 181.2,135.5 L 181.0,136.7 L 181.4,138.7 L 181.4,139.9 L 180.1,142.7 L 179.8,143.9 L 180.1,144.7 L 179.7,144.7 L 179.5,142.5 L 179.7,141.5 L 180.1,141.3 L 179.9,140.6 L 180.5,140.3 L 180.6,139.7 L 180.4,138.5 L 179.2,136.9 L 179.1,135.0 L 180.1,133.8 L 181.0,133.7 L 182.0,133.2 L 182.8,133.4 L 182.9,132.7 L 183.4,132.2 L 182.7,130.1 L 182.5,127.7 L 182.7,126.6 L 183.0,126.2 L 183.0,125.3 L 181.9,123.0 L 182.0,122.7 L 179.8,120.6 L 179.4,119.1 L 178.9,119.2 L 179.5,118.6 L 180.9,119.4 L 181.5,118.5 L 181.4,117.9 L 181.7,116.9 L 181.4,113.4 L 179.4,111.8 L 179.4,110.1 L 176.2,107.4 L 170.4,105.5 L 170.9,105.4 L 170.7,104.9 L 171.0,104.6 L 172.5,105.2 L 172.3,104.9 L 171.2,104.7 L 171.1,103.8 L 171.6,103.4 L 170.9,103.6 L 170.5,103.4 L 171.8,103.4 L 172.4,102.5 L 174.3,104.1 L 174.7,104.1 L 175.2,103.8 L 174.9,103.7 L 174.8,103.3 L 175.1,102.2 L 175.1,102.7 L 175.6,103.2 L 176.1,104.3 L 176.3,104.6 L 176.8,104.5 L 177.2,105.6 L 177.9,106.1 L 177.9,105.1 L 177.1,103.5 L 176.8,102.3 L 177.0,102.0 L 177.2,102.1 L 177.2,101.6 L 177.5,101.7 L 178.3,100.5 L 179.0,100.5 L 179.1,100.3 L 178.7,99.4 L 178.3,99.3 L 178.6,97.7 L 177.5,97.3 L 176.0,96.2 L 176.0,96.7 L 175.5,96.7 L 175.1,97.4 L 175.0,99.3 L 174.6,98.1 L 174.7,97.3 L 173.9,95.2 L 174.8,94.2 L 175.3,94.1 L 176.0,94.4 L 176.5,93.8 L 175.9,92.2 L 176.2,91.6 L 175.6,90.3 L 173.4,89.4 L 172.8,88.3 L 171.8,88.0 L 171.3,88.2 L 170.5,86.4 L 170.4,85.0 L 169.8,84.8 L 169.8,85.3 L 169.0,85.4 L 168.5,85.8 L 168.9,85.5 L 168.4,85.4 L 168.9,85.2 L 168.2,85.2 L 168.7,84.8 L 168.3,84.4 L 168.1,84.5 L 168.2,83.9 L 167.8,84.0 L 167.9,84.2 L 167.7,84.0 L 168.3,83.8 L 167.6,83.8 L 167.0,83.1 L 167.5,83.3 L 167.7,82.8 L 167.1,82.2 L 167.0,82.5 L 167.0,82.1 L 166.6,81.8 L 166.2,81.8 L 166.2,82.0 L 165.8,81.6 L 165.8,82.0 L 165.6,81.9 L 164.3,78.0 L 164.5,79.7 L 163.9,79.8 L 163.3,78.3 L 161.1,76.8 L 160.0,74.5 L 159.3,73.8 L 157.9,72.9 L 157.5,72.9 L 157.5,73.2 L 157.4,72.6 L 155.5,71.6 L 155.0,70.6 L 154.5,70.5 L 154.1,69.2 L 154.1,68.2 L 153.7,68.4 L 153.4,68.2 L 152.9,67.2 L 152.5,67.3 L 152.4,66.8 L 150.5,65.2 L 150.1,65.4 L 150.3,64.7 L 149.8,64.6 L 149.3,64.9 L 149.1,64.6 L 149.4,64.5 L 148.9,64.3 L 149.3,63.9 L 149.2,63.5 L 149.5,63.6 L 149.8,63.2 L 149.8,64.0 L 149.9,63.7 L 150.4,63.7 L 151.4,64.9 L 152.8,65.8 L 153.1,65.7 L 155.2,68.0 L 155.3,67.6 L 156.0,68.1 L 156.2,68.7 L 157.0,68.7 L 157.8,70.2 L 158.1,70.3 L 157.8,69.9 L 158.0,69.6 L 157.6,69.4 L 157.7,69.2 L 159.2,69.5 L 158.8,69.1 L 159.1,68.4 L 158.5,66.1 L 157.3,64.9 L 155.9,64.4 L 155.7,63.5 L 155.9,63.2 L 156.0,63.6 L 157.1,63.0 L 158.0,63.2 L 158.2,62.8 L 158.2,63.1 L 158.5,63.3 L 159.1,62.8 L 159.0,62.4 L 159.3,62.5 L 159.2,62.3 L 159.5,62.2 L 159.4,62.0 L 160.2,61.9 L 160.2,61.3 L 159.4,60.8 L 158.8,60.1 L 159.3,60.1 L 158.8,59.3 L 157.8,58.6 L 158.1,58.5 L 158.1,58.2 L 157.3,57.8 L 157.1,57.0 L 156.4,56.5 L 156.7,56.5 L 156.5,55.8 L 155.5,54.0 L 153.9,53.4 L 154.8,53.8 L 154.4,53.2 L 154.6,52.9 L 154.8,53.0 L 154.3,50.5 L 154.4,49.5 L 153.1,47.2 L 151.7,47.1 L 151.7,47.3 L 150.5,46.8 L 150.4,46.4 L 150.0,46.7 L 149.2,46.5 L 148.7,46.6 L 147.7,46.2 L 147.0,45.1 L 146.2,44.6 L 145.4,42.5 L 145.6,43.9 L 146.9,46.9 L 146.3,46.4 L 146.4,46.8 L 146.0,47.2 L 146.3,46.9 L 146.2,46.2 L 145.7,46.7 L 144.7,46.4 L 145.1,47.3 L 144.8,46.6 L 144.6,47.1 L 144.2,47.3 L 143.8,46.9 L 144.0,47.4 L 143.2,47.1 L 143.4,47.9 L 142.1,45.7 L 142.1,44.3 L 142.8,43.8 L 142.6,43.2 L 142.0,43.0 L 141.7,42.3 L 141.4,42.6 L 141.1,41.6 L 140.5,41.6 L 140.8,41.7 L 140.8,41.0 L 140.0,39.5 L 140.1,38.5 L 139.3,38.6 L 138.0,37.4 L 137.9,36.8 L 138.3,36.5 L 138.2,36.3 L 140.9,35.5 L 140.1,33.2 L 139.6,33.3 L 140.1,33.5 L 140.0,34.0 L 139.7,33.4 L 139.2,33.5 L 138.4,33.0 L 138.5,32.6 L 138.7,32.5 L 138.5,32.0 L 137.9,32.1 L 137.9,32.3 L 136.8,31.7 L 134.1,31.7 L 132.4,31.0 L 131.5,30.2 L 129.6,30.3 L 128.5,29.7 L 127.4,29.6 L 126.6,28.9 L 125.8,29.4 L 123.9,29.1 L 122.5,29.4 L 122.3,28.7 L 122.3,29.4 L 122.0,29.3 L 121.4,29.7 L 117.9,29.5 L 116.0,28.3 L 115.7,27.2 L 117.4,27.0 L 117.6,26.5 L 118.5,27.0 L 121.1,27.8 L 122.4,27.7 L 122.8,27.2 L 124.0,27.0 L 123.9,26.7 L 123.1,26.8 L 123.2,26.1 L 122.9,26.0 L 122.9,25.6 L 121.9,25.1 L 121.6,24.3 L 121.6,24.6 L 121.1,24.5 L 121.5,24.2 L 121.3,23.9 L 120.8,24.0 L 120.4,23.5 L 119.9,23.5 L 119.3,23.9 L 118.7,23.4 L 118.3,23.4 L 118.0,22.3 L 117.6,22.3 L 117.5,21.9 L 117.0,21.6 L 117.0,21.1 L 116.4,21.0 L 116.4,20.6 L 115.9,20.7 L 116.3,21.4 L 116.0,21.3 L 115.6,21.9 L 113.9,20.3 L 113.5,20.2 L 113.5,20.6 L 115.1,22.6 L 115.1,23.2 L 114.2,23.4 L 113.9,23.1 L 114.2,22.9 L 113.6,22.2 L 113.0,22.0 L 113.0,22.4 L 112.6,22.4 L 110.8,20.5 L 110.7,20.7 L 111.2,21.3 L 110.8,21.5 L 111.1,21.9 L 110.9,21.7 L 109.7,21.7 L 108.7,20.6 L 108.6,18.7 L 106.5,17.8 L 105.7,17.9 L 106.3,17.9 L 106.3,18.5 L 105.8,18.1 L 105.8,18.7 L 105.3,18.3 L 104.7,18.5 L 105.3,18.2 L 104.9,18.0 L 105.1,17.8 L 103.6,19.0 L 102.9,19.0 L 101.6,17.0 L 99.2,15.7 L 99.2,15.4 L 99.6,15.3 L 99.5,14.8 L 99.3,15.2 L 99.0,15.2 L 99.3,14.7 L 98.8,15.2 L 98.6,15.1 L 98.9,14.7 L 98.5,14.4 L 97.1,14.4 L 93.3,13.5 L 89.1,14.4 L 86.4,12.1 L 85.1,12.4 L 85.4,12.8 L 84.7,12.7 L 81.2,11.0 L 77.6,10.5 L 74.7,8.5 L 74.3,7.7 L 73.9,7.8 L 74.0,7.4 L 72.0,6.8 L 71.4,6.1 L 70.8,4.2 L 69.5,3.6 L 66.4,0.2 L 64.8,-0.5 M 280.7,222.3 L 280.7,222.3 M 210.8,-0.4 L 210.9,1.8 L 211.5,3.7 L 211.4,4.9 L 210.5,6.0 L 210.3,7.1 L 209.7,7.6 L 209.7,8.2 L 207.6,11.3 L 207.3,11.1 L 207.4,10.4 L 206.1,11.2 L 205.9,10.9 L 205.5,11.6 L 206.4,11.7 L 206.4,12.2 L 206.1,12.8 L 206.2,13.2 L 206.6,13.2 L 206.4,13.8 L 207.2,14.2 L 207.9,13.8 L 208.0,14.1 L 207.7,14.2 L 207.7,14.6 L 208.0,14.5 L 207.9,15.2 L 207.6,15.4 L 208.1,15.9 L 207.9,16.9 L 208.2,17.9 L 208.5,18.0 L 208.7,17.6 L 209.2,17.6 L 209.4,17.2 L 209.3,16.7 L 209.8,16.9 L 210.0,16.4 L 210.8,16.8 L 211.9,16.3 L 212.9,16.8 L 213.7,16.4 L 214.2,16.5 L 215.4,17.2 L 217.2,17.7 L 217.9,18.4 L 219.6,18.5 L 220.0,19.3 L 220.9,19.2 L 220.7,19.5 L 221.1,19.4 L 221.1,20.0 L 223.3,21.2 L 223.5,20.5 L 223.5,20.9 L 223.8,21.0 L 224.2,20.4 L 224.5,20.4 L 224.6,20.9 L 224.6,19.9 L 224.7,20.5 L 225.7,20.5 L 225.8,20.2 L 225.7,20.6 L 225.8,20.3 L 226.1,20.4 L 226.4,21.1 L 226.7,21.0 L 227.3,21.4 L 227.2,21.7 L 227.4,21.5 L 227.7,21.8 L 229.2,21.6 L 229.7,22.0 L 230.2,21.9 L 230.0,22.2 L 230.7,22.6 L 231.0,21.7 L 230.8,22.7 L 231.9,23.0 L 232.1,22.3 L 232.3,22.9 L 232.6,22.7 L 232.3,22.2 L 232.5,22.0 L 233.0,23.0 L 233.1,22.7 L 233.5,22.8 L 233.5,22.4 L 234.0,22.7 L 233.9,22.1 L 234.5,22.2 L 235.2,21.3 L 237.0,21.5 L 237.7,22.0 L 238.6,22.0 L 239.2,22.4 L 240.0,21.8 L 240.0,20.1 L 240.4,20.0 L 241.2,19.3 L 241.1,18.7 L 240.1,18.6 L 240.0,18.0 L 241.3,17.5 L 242.3,16.5 L 243.6,15.7 L 244.4,13.8 L 245.1,13.5 L 245.4,13.6 L 245.7,13.3 L 245.9,12.2 L 245.7,11.2 L 246.5,10.4 L 246.9,10.4 L 246.1,8.0 L 246.5,7.0 L 246.3,6.0 L 247.5,3.9 L 247.2,3.0 L 247.5,2.7 L 246.8,1.0 L 247.2,0.4 L 246.7,0.0 L 246.7,-0.5 L 246.1,-1.3 L 246.2,-2.1 L 245.8,-2.3 L 246.0,-3.0 L 246.3,-2.8 L 246.5,-3.2 M 190.0,102.3 L 190.0,102.3 M 294.5,201.6 L 294.5,201.6 M 176.0,67.7 L 176.0,67.7 M 233.0,121.8 L 233.0,121.8 M 226.6,145.1 L 226.6,145.1 M 160.5,-2.2 L 161.9,0.3 L 162.3,1.7 L 162.6,1.5 L 162.4,1.9 L 162.8,1.8 L 163.5,2.2 L 163.7,1.9 L 163.6,2.2 L 164.1,1.9 L 166.5,2.1 L 167.6,3.0 L 168.6,3.3 L 170.2,4.6 L 170.7,4.6 L 170.7,4.9 L 171.2,4.6 L 171.7,4.7 L 174.7,6.1 L 176.2,7.1 L 177.9,7.2 L 178.8,7.9 L 179.2,9.1 L 180.5,9.7 L 181.3,10.0 L 183.1,9.5 L 183.8,8.8 L 184.9,8.5 L 184.8,7.9 L 184.3,7.9 L 184.1,7.5 L 185.0,6.6 L 185.3,5.7 L 186.6,5.0 L 187.0,3.3 L 187.7,2.6 L 187.5,1.8 L 188.2,1.0 L 188.1,0.1 L 187.6,-0.5 L 187.4,-1.3 L 186.6,-2.6 L 186.1,-2.6 L 186.5,-4.6 L 187.9,-5.3 L 185.4,-7.5 L 185.6,-9.6 M 290.8,300.1 L 290.8,300.1 M 282.8,161.5 L 282.8,161.5 M 252.2,146.3 L 252.2,146.3 M 277.0,270.9 L 277.0,270.9 M 246.0,324.7 L 246.0,324.7 M 164.8,48.0 L 164.8,48.0 M 174.2,61.1 L 174.2,61.1 M 122.2,375.1 L 121.0,371.5 L 120.9,369.2 L 121.1,367.4 L 120.2,366.1 L 119.8,364.4 L 120.1,362.9 L 121.3,361.9 L 123.1,361.1 L 127.8,361.5 L 128.7,361.1 L 129.4,361.6 L 129.9,362.6 L 130.1,362.2 L 131.5,362.9 L 132.3,363.0 L 133.2,365.5 L 133.1,366.1 L 134.7,366.9 L 134.1,367.2 L 133.0,368.7 M 263.3,105.2 L 263.3,105.2 M 223.0,102.6 L 223.0,102.6 M 201.8,5.3 L 201.8,5.3 M 264.5,209.7 L 264.5,209.7 M 203.9,94.2 L 203.9,94.2 M 210.3,92.1 L 210.3,92.1 M 235.0,130.2 L 235.0,130.2 M 261.0,130.8 L 261.0,130.8 M 270.3,129.2 L 270.3,129.2 M 275.1,333.9 L 275.1,333.9 M 23.8,83.5 L 23.8,83.5 M 264.5,348.8 L 264.5,348.8 M 204.8,125.3 L 204.8,125.3 M 254.6,137.6 L 254.6,137.6 M 266.8,338.8 L 266.8,338.8 M 297.4,189.1 L 297.4,189.1 M 217.5,105.9 L 217.5,105.9 M 166.7,70.3 L 166.7,70.3 M 227.7,112.5 L 227.7,112.5 M 242.0,333.6 L 242.0,333.6 M 218.5,116.4 L 218.5,116.4 M 253.0,145.3 L 253.0,145.3 M 169.1,72.1 L 169.1,72.1 M 194.1,91.0 L 194.1,91.0 M 191.9,7.2 L 191.9,7.2 M 26.7,72.6 L 26.7,72.6 M 216.8,124.3 L 216.8,124.3 M 112.5,-0.9 L 114.2,-0.5 L 114.8,0.1 L 115.2,0.1 L 115.6,0.9 L 117.0,1.7 L 117.1,1.4 L 117.6,1.7 L 117.7,1.2 L 118.3,1.1 L 117.9,0.3 L 118.4,0.2 L 118.0,-0.1 L 118.7,-0.1 M 205.8,110.5 L 205.8,110.5 M 224.2,122.5 L 224.2,122.5 M 200.1,126.6 L 200.1,126.6 M 21.1,83.7 L 21.1,83.7 M 198.7,-0.6 L 198.5,0.1 L 197.4,1.5 L 197.6,2.6 L 198.2,2.9 L 198.7,2.8 L 199.5,1.8 L 200.5,1.2 L 200.8,1.3 L 200.9,1.0 L 201.3,1.1 L 201.7,-0.1 M 180.3,76.5 L 180.3,76.5 M 158.0,49.2 L 158.0,49.2 M 271.5,110.9 L 271.5,110.9 M 215.9,95.3 L 215.9,95.3 M 265.0,125.0 L 265.0,125.0 M 225.0,97.9 L 225.0,97.9 M 243.8,102.7 L 243.8,102.7 M 162.9,53.6 L 162.9,53.6 M 313.1,214.6 L 313.1,214.6 M 142.4,38.2 L 142.4,38.2 M 192.9,83.0 L 192.9,83.0 M 241.6,197.8 L 241.6,197.8 M 302.6,214.4 L 302.6,214.4 M 16.7,90.3 L 16.7,90.3 M 190.7,-0.2 L 191.0,0.3 L 190.3,1.3 L 190.2,1.9 L 190.5,1.9 L 190.1,2.3 L 190.8,2.4 L 192.1,1.2 L 192.6,-0.7 M 3.2,86.3 L 3.2,86.3 M 8.6,76.9 L 8.6,76.9 M 198.3,109.3 L 198.3,109.3 M 219.0,117.6 L 219.0,117.6 M 14.7,73.6 L 14.7,73.6 M 265.8,144.4 L 265.8,144.4 M 286.7,286.2 L 286.7,286.2 M 13.9,75.9 L 13.9,75.9 M 299.0,279.8 L 299.0,279.8 M -0.1,81.4 L -0.1,81.4 M 239.0,100.1 L 239.0,100.1 M 14.6,92.7 L 14.6,92.7 M 271.6,342.4 L 271.6,342.4 M 276.7,100.8 L 276.7,100.8 M 296.3,183.3 L 296.3,183.3 M 165.4,56.0 L 165.4,56.0 M 8.7,79.9 L 8.7,79.9 M 173.1,67.5 L 173.1,67.5 M 196.2,115.7 L 196.2,115.7 M 213.2,49.9 L 213.2,49.9 M 212.3,154.0 L 212.3,154.0 M 247.6,1.5 L 247.6,1.5 M 251.5,320.3 L 251.5,320.3 M 3.9,81.3 L 3.9,81.3 M 276.5,120.0 L 276.5,120.0 M 188.7,11.9 L 188.7,11.9 M 208.6,3.6 L 208.6,3.6 M 252.5,129.3 L 252.5,129.3 M 251.6,328.1 L 251.6,328.1 M 204.8,118.1 L 204.8,118.1 M 168.6,82.6 L 168.6,82.6"/>
+    <circle class="city" cx="222.7" cy="25.1" r="3"/>
+    <text class="label" x="229.7" y="28.3" text-anchor="start">Vancouver</text>
+    <circle class="city" cx="198.4" cy="153.3" r="3"/>
+    <text class="label" x="205.4" y="156.5" text-anchor="start">Victoria</text>
+    <circle class="city" cx="301.6" cy="276.6" r="3"/>
+    <text class="label" x="294.6" y="279.8" text-anchor="end">Seattle</text>
+  </svg>
+      </div>
+    </div>
+
+    <!-- services -->
+    <div class="band" id="services">
+      <div class="cell svc-lead">
+        <div class="free-strip">
+          <p><span class="ln"><strong>Free Diagnostic</strong> — a short, no-cost conversation to spot where AI could help.</span> <span class="ln">Not a deep audit, just enough to point you toward the right next step.</span> <a href="mailto:theo@taylorintelligence.ai">Book it →</a></p>
+        </div>
+      </div>
+      <div class="cells svc-grid" style="grid-template-columns:1fr 1fr 1fr;">
+        <div class="cell svc">
+          <h2>Consulting</h2>
+          <p><span class="ln">We go deep.</span> <span class="ln">A paid, comprehensive review of your business — every workflow, every tool, ranked and costed</span> <span class="ln">— for teams who want the full picture before they build.</span></p>
+          <a class="role" href="#/contact">Get in touch</a>
+        </div>
+        <div class="cell svc">
+          <h2>Integration</h2>
+          <p><span class="ln">We build it.</span> <span class="ln">A receptionist and ops layer that answers, books, chases, and remembers</span> <span class="ln">— running your front desk around the clock, without adding a hire.</span></p>
+          <a class="role" href="#/contact">Get in touch</a>
+        </div>
+        <div class="cell svc">
+          <h2>Education</h2>
+          <p><span class="ln">We hand you the keys.</span> <span class="ln">Your team trained on your own workflows</span> <span class="ln">— not generic tips —</span> <span class="ln">so the system keeps compounding long after we leave.</span></p>
+          <a class="role" href="#/contact">Get in touch</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- home closing CTA -->
+    <div class="band contact" id="home-cta">
+      <div>
+        <p class="lead"><span class="ln">Find your highest-ROI use of AI</span> <span class="ln">— free.</span></p>
+        <p><span class="ln">Then decide.</span></p>
+      </div>
+      <a class="cta" href="#/card">Book a diagnostic ↗</a>
+    </div>
+
+    </div>
+    <!-- ============ /PAGE: HOME ============ -->
+
+    <!-- ============ PAGE: PORTFOLIO ============ -->
+    <div class="page is-hidden" id="page-portfolio">
+
+    <div class="band pf-lead">
+      <span class="eyebrow">Our portfolio</span>
+      <h1>What we've shipped.</h1>
+      <p class="sub"><span class="ln">Every build below is live, running, and handed off</span> <span class="ln">— not a mockup.</span> <span class="ln">A sample of the systems and campaigns we've put into production.</span></p>
+    </div>
+
+    <div class="band">
+      <div class="cells pf-grid" style="grid-template-columns:1fr 1fr;">
+        <a class="pf" href="#">
+          <div class="pf-vis" aria-hidden="true">SD</div>
+          <div class="pf-meta">
+            <span class="pf-tag">Ads · Web</span>
+            <h3>Stone Design Concrete</h3>
+            <p><span class="ln">A repeatable short-form ad pipeline and a new site for a terrazzo &amp; polished-concrete studio.</span></p>
+          </div>
+        </a>
+        <a class="pf" href="#">
+          <div class="pf-vis" aria-hidden="true">SZ</div>
+          <div class="pf-meta">
+            <span class="pf-tag">Brand · Web</span>
+            <h3>Szolyd</h3>
+            <p><span class="ln">Full brand system and website build, from wordmark to launch.</span></p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="band pf-close">
+      <p><span class="ln">Want results like these in your business?</span></p>
+      <a class="cta" href="#/contact">Book a diagnostic ↗</a>
+    </div>
+
+    </div>
+    <!-- ============ /PAGE: PORTFOLIO ============ -->
+
+    <!-- ============ PAGE: APPROACH ============ -->
+    <div class="page is-hidden" id="page-approach">
+
+    <div class="band pf-lead">
+      <span class="eyebrow">Approach</span>
+      <h1>How we work.</h1>
+      <p class="sub"><span class="ln">Three services, one path.</span> <span class="ln">Every engagement starts with a free conversation and ends with a system you own.</span> <span class="ln">Here's the method — and exactly what each service does.</span></p>
+    </div>
+
+    <!-- methodology: the path -->
+    <div class="band">
+      <div class="cell" style="padding-bottom:0;">
+        <span class="eyebrow" style="margin:0;">The method</span>
+      </div>
+      <div class="cells method-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="cell step">
+          <span class="step-num">01 — Diagnose</span>
+          <h3>Find where AI pays off</h3>
+          <p><span class="ln">Start free: a short conversation to spot the obvious wins.</span> <span class="ln">Want the full picture first? That's Consulting — a paid, deeper audit.</span></p>
+        </div>
+        <div class="cell step">
+          <span class="step-num">02 — Build</span>
+          <h3>Put it into the business</h3>
+          <p><span class="ln">Integration: we build the system on your accounts and run it.</span> <span class="ln">When it ships, you own it.</span></p>
+        </div>
+        <div class="cell step">
+          <span class="step-num">03 — Train</span>
+          <h3>Hand over the keys</h3>
+          <p><span class="ln">Education: your team learns to run it on their real work,</span> <span class="ln">so it keeps paying off after we leave.</span></p>
+        </div>
+      </div>
+      <p class="method-note"><span class="ln"><strong>One path, not a menu.</strong></span> <span class="ln">Each stage's output is the next stage's starting point — nothing wasted, and every road leads to the build.</span></p>
+    </div>
+
+    <!-- deep dive: Consulting -->
+    <div class="band">
+      <div class="cells detail-grid" style="grid-template-columns:1fr 1.7fr;">
+        <div class="cell detail-head">
+          <span class="eyebrow" style="margin:0;">Service 01</span>
+          <h2>Consulting</h2>
+          <p class="summary"><span class="ln">The full picture, before you commit to a build.</span></p>
+          <span class="role-tag">Paid · Deep dive</span>
+        </div>
+        <div class="cell detail-body">
+          <div class="detail-item">
+            <span class="lbl">What it is</span>
+            <p><span class="ln">A paid, comprehensive review of your business — every workflow, every tool, every place a machine could carry the load.</span> <span class="ln">Deeper than the free diagnostic: this is the one that produces a real plan.</span></p>
+          </div>
+          <div class="detail-item">
+            <span class="lbl">What you get</span>
+            <p><span class="ln">A ranked, costed roadmap of the highest-ROI AI opportunities in your business — each with a rough build cost and timeline.</span> <span class="ln">One document, not a slide deck. Yours to keep and act on, with us or without us.</span></p>
+          </div>
+          <div class="detail-item">
+            <span class="lbl">How it works</span>
+            <p><span class="ln">A few hours inside your business: interviews, watching how work actually flows, and reviewing the tools you already pay for.</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- deep dive: Integration -->
+    <div class="band">
+      <div class="cells detail-grid" style="grid-template-columns:1fr 1.7fr;">
+        <div class="cell detail-head">
+          <span class="eyebrow" style="margin:0;">Service 02</span>
+          <h2>Integration</h2>
+          <p class="summary"><span class="ln">Where AI stops being a recommendation and starts doing the work.</span></p>
+          <span class="role-tag">The build</span>
+        </div>
+        <div class="cell detail-body">
+          <div class="detail-item">
+            <span class="lbl">What it is</span>
+            <p><span class="ln">We build the system into your business and run it — and you own it.</span> <span class="ln">The flagship is Conduit: a receptionist and operations layer for service businesses.</span></p>
+          </div>
+          <div class="detail-item">
+            <span class="lbl">Conduit — four parts</span>
+            <div class="modules">
+              <div class="module"><span class="mname">Front Desk</span><p class="mdesc">Answers every call and message, books the job, never misses after hours.</p></div>
+              <div class="module"><span class="mname">Chaser</span><p class="mdesc">Follows up on every lead and unpaid invoice, so nothing slips.</p></div>
+              <div class="module"><span class="mname">Memory</span><p class="mdesc">Remembers every customer, quote, and conversation — one brain for the business.</p></div>
+              <div class="module"><span class="mname">Dispatch</span><p class="mdesc">Routes the right job to the right person at the right time.</p></div>
+            </div>
+          </div>
+          <div class="detail-item">
+            <span class="lbl">How it works</span>
+            <p><span class="ln">Built on your accounts and your numbers — nothing rented, nothing held hostage.</span> <span class="ln">When it ships, it's yours to keep running.</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- deep dive: Education -->
+    <div class="band">
+      <div class="cells detail-grid" style="grid-template-columns:1fr 1.7fr;">
+        <div class="cell detail-head">
+          <span class="eyebrow" style="margin:0;">Service 03</span>
+          <h2>Education</h2>
+          <p class="summary"><span class="ln">Your team, fluent in the tools you already have.</span></p>
+          <span class="role-tag">Team training</span>
+        </div>
+        <div class="cell detail-body">
+          <div class="detail-item">
+            <span class="lbl">What it is</span>
+            <p><span class="ln">Hands-on AI training for your front-line team — on your real, day-to-day work, not a generic webinar.</span></p>
+          </div>
+          <div class="detail-item">
+            <span class="lbl">What you get</span>
+            <p><span class="ln">People who can actually use AI on the problems they face every day</span> <span class="ln">— so the skills stick and get used the Monday after we leave.</span></p>
+          </div>
+          <div class="detail-item">
+            <span class="lbl">How it works</span>
+            <p><span class="ln">We learn how your team actually works first, then train on those workflows.</span> <span class="ln">Grounded in your ops, not slideware.</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- principles -->
+    <div class="band approach">
+      <div class="cell" style="padding-bottom:0;">
+        <span class="eyebrow" style="margin:0;">What holds across all of it</span>
+      </div>
+      <div class="cells approach-grid" style="grid-template-columns:1fr 1fr 1fr;">
+        <div class="cell">
+          <h2>You own it</h2>
+          <p><span class="ln">The system runs on your accounts, your numbers.</span> <span class="ln">Nothing rented, nothing held hostage.</span></p>
+        </div>
+        <div class="cell">
+          <h2>Founder-built</h2>
+          <p><span class="ln">The person who scopes your diagnostic is the one who ships the build</span> <span class="ln">— no handoff to a junior team.</span></p>
+        </div>
+        <div class="cell">
+          <h2>No contract to start</h2>
+          <p><span class="ln">It begins with a free conversation.</span> <span class="ln">Everything after that is your call.</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="band pf-close">
+      <p><span class="ln">Sound like a fit?</span></p>
+      <a class="cta" href="#/card">Book a diagnostic ↗</a>
+    </div>
+
+    </div>
+    <!-- ============ /PAGE: APPROACH ============ -->
+
+    <!-- ============ PAGE: CONTACT (also the /card landing) ============ -->
+    <div class="page is-hidden" id="page-contact">
+
+    <div class="band pf-lead">
+      <span class="eyebrow">Contact</span>
+      <h1>Let's talk.</h1>
+      <p class="sub"><span class="ln">Tell us what you're working on.</span> <span class="ln">We'll reply within a day — usually the same one.</span></p>
+    </div>
+
+    <div class="band">
+      <div class="cells contact-grid" style="grid-template-columns: 1.5fr 1fr;">
+        <!-- form: each field is a cell in the hairline grid -->
+        <form class="form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="3d97d841-4c10-4ecf-9b00-248974f688a3">
+          <input type="hidden" name="subject" value="New enquiry — taylorintelligence.ai/card">
+          <div class="field">
+            <label for="f-name">Name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="f-biz">Business</label>
+            <input id="f-biz" name="business" type="text" autocomplete="organization">
+          </div>
+          <div class="field">
+            <label for="f-msg">What do you want AI to do?</label>
+            <textarea id="f-msg" name="message" rows="4" required></textarea>
+          </div>
+          <button class="form-submit" type="submit">Send it →</button>
+        </form>
+
+        <!-- direct + pointer to the deep-dive Approach page -->
+        <div class="cell contact-side">
+          <div>
+            <span class="eyebrow">Direct</span>
+            <p class="contact-line"><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a></p>
+            <p class="contact-line"><a href="tel:+12502997815">+1 250 299 7815</a></p>
+          </div>
+          <div>
+            <span class="eyebrow">Before you write</span>
+            <p class="contact-note"><span class="ln">See exactly how each service works and the method behind them.</span></p>
+            <a class="deep-link" href="#/approach">Read our approach →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+    <!-- ============ /PAGE: CONTACT ============ -->
+
+    <!-- footer (shared) -->
+    <div class="band foot">
+      <span><span class="ln">Taylor Intelligence</span> <span class="ln">· taylorintelligence.ai</span></span>
+      <span class="ln">Simple by design</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    var pages = {
+      home: document.getElementById('page-home'),
+      portfolio: document.getElementById('page-portfolio'),
+      approach: document.getElementById('page-approach'),
+      contact: document.getElementById('page-contact')
+    };
+    var standalone = { portfolio: true, approach: true, contact: true }; // own page; else a home section
+    var alias = { card: 'contact' }; // taylorintelligence.ai/card → contact page
+    var navLinks = document.querySelectorAll('nav a[data-nav]');
+
+    // route from the hash, or from the last path segment so a bare /card (no hash) works when deployed
+    function readRoute() {
+      var h = location.hash.replace(/^#\/?/, '');
+      if (h) return h;
+      var path = location.pathname.replace(/\/+$/, '');
+      return path.substring(path.lastIndexOf('/') + 1);
+    }
+
+    function route() {
+      var raw = alias[readRoute()] || readRoute();
+      var target = standalone[raw] ? raw : 'home';
+
+      Object.keys(pages).forEach(function (key) {
+        pages[key].classList.toggle('is-hidden', key !== target);
+      });
+      navLinks.forEach(function (a) {
+        if (a.getAttribute('data-nav') === target) { a.setAttribute('aria-current', 'page'); }
+        else { a.removeAttribute('aria-current'); }
+      });
+
+      if (target !== 'home') {
+        window.scrollTo(0, 0);
+      } else if (raw && !standalone[raw]) {
+        var el = document.getElementById(raw);
+        if (el) requestAnimationFrame(function () { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+      } else {
+        window.scrollTo(0, 0);
+      }
+    }
+
+    window.addEventListener('hashchange', route);
+    document.addEventListener('DOMContentLoaded', route);
+    route();
+  })();
+</script>
