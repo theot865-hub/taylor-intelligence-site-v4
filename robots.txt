@@ -1,0 +1,5 @@
+# taylorintelligence.ai
+User-agent: *
+Allow: /
+
+Sitemap: https://taylorintelligence.ai/sitemap.xml

@@ -1,6 +1,66 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Taylor Intelligence — Simple by design</title>
+<title>Taylor Intelligence — AI as a service for the PNW</title>
+<meta name="description" content="Taylor Intelligence is an AI agency for the Pacific Northwest — AI consulting, integration, and team training for businesses in Victoria, Vancouver, and beyond. Simple by design.">
+<link rel="canonical" href="https://taylorintelligence.ai/">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c0c0c" media="(prefers-color-scheme: dark)">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Taylor Intelligence">
+<meta property="og:title" content="Taylor Intelligence — AI as a service for the PNW">
+<meta property="og:description" content="AI consulting, integration, and team training for businesses across the Pacific Northwest. Simple by design.">
+<meta property="og:url" content="https://taylorintelligence.ai/">
+<meta property="og:image" content="https://taylorintelligence.ai/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_CA">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Taylor Intelligence — AI as a service for the PNW">
+<meta name="twitter:description" content="AI consulting, integration, and team training for businesses across the Pacific Northwest.">
+<meta name="twitter:image" content="https://taylorintelligence.ai/og.png">
+
+<!-- Structured data: agency + site (facts only; no invented address/reviews) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": "https://taylorintelligence.ai/#org",
+  "name": "Taylor Intelligence",
+  "url": "https://taylorintelligence.ai/",
+  "image": "https://taylorintelligence.ai/og.png",
+  "description": "AI agency for the Pacific Northwest — AI consulting, integration, and team training.",
+  "email": "theo@taylorintelligence.ai",
+  "telephone": "+1-250-299-7815",
+  "founder": { "@type": "Person", "name": "Theo Taylor" },
+  "areaServed": [
+    { "@type": "City", "name": "Victoria", "containedInPlace": { "@type": "AdministrativeArea", "name": "British Columbia" } },
+    { "@type": "City", "name": "Vancouver" },
+    { "@type": "Place", "name": "Pacific Northwest" }
+  ],
+  "knowsAbout": ["Artificial intelligence", "AI automation", "AI consulting", "AI integration", "Team training"],
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Consulting", "description": "A paid, comprehensive review of your business — every workflow and tool, ranked and costed." } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Integration", "description": "We build and run an AI ops layer — a receptionist and back office that answers, books, chases, and remembers." } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Education", "description": "Hands-on AI training for your team, on your own real workflows." } }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://taylorintelligence.ai/#website",
+  "url": "https://taylorintelligence.ai/",
+  "name": "Taylor Intelligence",
+  "publisher": { "@id": "https://taylorintelligence.ai/#org" }
+}
+</script>
 <style>
   :root {
     color-scheme: light dark;
@@ -855,6 +915,26 @@
     var alias = { card: 'contact' }; // taylorintelligence.ai/card → contact page
     var navLinks = document.querySelectorAll('nav a[data-nav]');
 
+    // per-route <title> + meta description + canonical (SEO for JS-executing crawlers)
+    var meta = {
+      home:      { t: 'Taylor Intelligence — AI as a service for the PNW', d: 'AI agency for the Pacific Northwest — AI consulting, integration, and team training for businesses in Victoria, Vancouver, and beyond. Simple by design.', u: 'https://taylorintelligence.ai/' },
+      portfolio: { t: 'Portfolio — Taylor Intelligence', d: 'Selected AI systems and campaigns Taylor Intelligence has shipped — live, running, and handed off. Not mockups.', u: 'https://taylorintelligence.ai/portfolio' },
+      approach:  { t: 'Approach — Taylor Intelligence', d: 'How we work: a three-step method — Diagnose, Build, Train — with deep dives on AI Consulting, Integration, and Education.', u: 'https://taylorintelligence.ai/approach' },
+      contact:   { t: 'Contact — Taylor Intelligence', d: 'Get in touch about AI consulting, integration, or training for your business in Victoria BC and the Pacific Northwest.', u: 'https://taylorintelligence.ai/contact' }
+    };
+    function setMeta(key) {
+      var m = meta[key] || meta.home;
+      document.title = m.t;
+      var set = function (sel, attr, val) { var el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
+      set('meta[name="description"]', 'content', m.d);
+      set('meta[property="og:title"]', 'content', m.t);
+      set('meta[property="og:description"]', 'content', m.d);
+      set('meta[property="og:url"]', 'content', m.u);
+      set('meta[name="twitter:title"]', 'content', m.t);
+      set('meta[name="twitter:description"]', 'content', m.d);
+      set('link[rel="canonical"]', 'href', m.u);
+    }
+
     // route from the hash, or from the last path segment so a bare /card (no hash) works when deployed
     function readRoute() {
       var h = location.hash.replace(/^#\/?/, '');
@@ -874,6 +954,7 @@
         if (a.getAttribute('data-nav') === target) { a.setAttribute('aria-current', 'page'); }
         else { a.removeAttribute('aria-current'); }
       });
+      setMeta(target);
 
       if (target !== 'home') {
         window.scrollTo(0, 0);
