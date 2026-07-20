@@ -1,4 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <rect width="32" height="32" fill="#ffffff"/>
-  <text x="16" y="16" fill="#000000" font-family="Georgia, 'Times New Roman', serif" font-size="18" font-weight="700" text-anchor="middle" dominant-baseline="central">TI</text>
+  <g transform="translate(3.290 24.934) scale(0.0256 -0.0256)" fill="#000000">
+    <path d="M557 563H368V0H216V563H27V698H557Z"/>
+    <path transform="translate(584 0)" d="M382 0H50V121H140V577H50V698H382V577H292V121H382Z"/>
+  </g>
 </svg>
