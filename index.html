@@ -324,6 +324,15 @@
     outline-offset: 3px;
   }
 
+  /* desktop grid defaults — kept here (not inline) so the mobile
+     media queries below can actually override them */
+  .cells.svc-grid      { grid-template-columns: 1fr 1fr 1fr; }
+  .cells.pf-grid       { grid-template-columns: 1fr 1fr; }
+  .cells.method-grid   { grid-template-columns: repeat(3, 1fr); }
+  .cells.detail-grid   { grid-template-columns: 1fr 1.7fr; }
+  .cells.approach-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .cells.contact-grid  { grid-template-columns: 1.5fr 1fr; }
+
   @media (max-width: 820px) {
     .cells.pf-grid { grid-template-columns: 1fr 1fr; }
   }
@@ -551,7 +560,7 @@
           <p><span class="ln"><strong>Free Diagnostic</strong> — a short, no-cost conversation to spot where AI could help.</span> <span class="ln">Not a deep audit, just enough to point you toward the right next step.</span> <a href="mailto:theo@taylorintelligence.ai">Book it →</a></p>
         </div>
       </div>
-      <div class="cells svc-grid" style="grid-template-columns:1fr 1fr 1fr;">
+      <div class="cells svc-grid">
         <div class="cell svc">
           <h2>Consulting</h2>
           <p><span class="ln">We go deep.</span> <span class="ln">A paid, comprehensive review of your business — every workflow, every tool, ranked and costed</span> <span class="ln">— for teams who want the full picture before they build.</span></p>
@@ -592,7 +601,7 @@
     </div>
 
     <div class="band">
-      <div class="cells pf-grid" style="grid-template-columns:1fr 1fr;">
+      <div class="cells pf-grid">
         <a class="pf" href="#">
           <div class="pf-vis" aria-hidden="true">SD</div>
           <div class="pf-meta">
@@ -634,7 +643,7 @@
       <div class="cell" style="padding-bottom:0;">
         <span class="eyebrow" style="margin:0;">The method</span>
       </div>
-      <div class="cells method-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="cells method-grid">
         <div class="cell step">
           <span class="step-num">01 — Diagnose</span>
           <h3>Find where AI pays off</h3>
@@ -656,7 +665,7 @@
 
     <!-- deep dive: Consulting -->
     <div class="band">
-      <div class="cells detail-grid" style="grid-template-columns:1fr 1.7fr;">
+      <div class="cells detail-grid">
         <div class="cell detail-head">
           <span class="eyebrow" style="margin:0;">Service 01</span>
           <h2>Consulting</h2>
@@ -682,7 +691,7 @@
 
     <!-- deep dive: Integration -->
     <div class="band">
-      <div class="cells detail-grid" style="grid-template-columns:1fr 1.7fr;">
+      <div class="cells detail-grid">
         <div class="cell detail-head">
           <span class="eyebrow" style="margin:0;">Service 02</span>
           <h2>Integration</h2>
@@ -713,7 +722,7 @@
 
     <!-- deep dive: Education -->
     <div class="band">
-      <div class="cells detail-grid" style="grid-template-columns:1fr 1.7fr;">
+      <div class="cells detail-grid">
         <div class="cell detail-head">
           <span class="eyebrow" style="margin:0;">Service 03</span>
           <h2>Education</h2>
@@ -742,7 +751,7 @@
       <div class="cell" style="padding-bottom:0;">
         <span class="eyebrow" style="margin:0;">What holds across all of it</span>
       </div>
-      <div class="cells approach-grid" style="grid-template-columns:1fr 1fr 1fr;">
+      <div class="cells approach-grid">
         <div class="cell">
           <h2>You own it</h2>
           <p><span class="ln">The system runs on your accounts, your numbers.</span> <span class="ln">Nothing rented, nothing held hostage.</span></p>
@@ -776,7 +785,7 @@
     </div>
 
     <div class="band">
-      <div class="cells contact-grid" style="grid-template-columns: 1.5fr 1fr;">
+      <div class="cells contact-grid">
         <!-- form: each field is a cell in the hairline grid -->
         <form class="form" action="https://api.web3forms.com/submit" method="POST">
           <input type="hidden" name="access_key" value="3d97d841-4c10-4ecf-9b00-248974f688a3">
