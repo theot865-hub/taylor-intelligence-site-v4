@@ -217,7 +217,7 @@
     flex: none;
   }
 
-  .svc { display: flex; flex-direction: column; min-height: 280px; }
+  .svc { display: flex; flex-direction: column; min-height: 280px; text-decoration: none; color: var(--ink); }
   .svc-title { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
   .svc h2 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); letter-spacing: -0.02em; }
   .svc p { flex: 1; font-size: 14.5px; margin-top: 16px; }
@@ -340,6 +340,12 @@
     .cells.svc-grid { grid-template-columns: 1fr; }
     .cells.approach-grid { grid-template-columns: 1fr; }
     .cells.contact-grid { grid-template-columns: 1fr; }
+    /* mobile: collapse each service to a single tappable button (name only) */
+    .svc { min-height: 0; flex-direction: row; align-items: center; justify-content: space-between; }
+    .svc p { display: none; }
+    .svc .role { display: none; }
+    .svc h2 { margin: 0; }
+    .svc::after { content: "→"; font-family: var(--mono); color: var(--muted); }
   }
   @media (max-width: 520px) {
     .cells.pf-grid { grid-template-columns: 1fr; }
@@ -561,21 +567,21 @@
         </div>
       </div>
       <div class="cells svc-grid">
-        <div class="cell svc">
+        <a class="cell svc" href="#/contact">
           <h2>Consulting</h2>
           <p><span class="ln">We go deep.</span> <span class="ln">A paid, comprehensive review of your business — every workflow, every tool, ranked and costed</span> <span class="ln">— for teams who want the full picture before they build.</span></p>
-          <a class="role" href="#/contact">Get in touch</a>
-        </div>
-        <div class="cell svc">
+          <span class="role">Get in touch</span>
+        </a>
+        <a class="cell svc" href="#/contact">
           <h2>Integration</h2>
           <p><span class="ln">We build it.</span> <span class="ln">A receptionist and ops layer that answers, books, chases, and remembers</span> <span class="ln">— running your front desk around the clock, without adding a hire.</span></p>
-          <a class="role" href="#/contact">Get in touch</a>
-        </div>
-        <div class="cell svc">
+          <span class="role">Get in touch</span>
+        </a>
+        <a class="cell svc" href="#/contact">
           <h2>Education</h2>
           <p><span class="ln">We hand you the keys.</span> <span class="ln">Your team trained on your own workflows</span> <span class="ln">— not generic tips —</span> <span class="ln">so the system keeps compounding long after we leave.</span></p>
-          <a class="role" href="#/contact">Get in touch</a>
-        </div>
+          <span class="role">Get in touch</span>
+        </a>
       </div>
     </div>
 
