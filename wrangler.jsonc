@@ -1,0 +1,13 @@
+{
+  // Assets-only Worker for taylorintelligence.ai. No build step — the whole
+  // site is inlined in index.html. Deploy with: wrangler deploy
+  "name": "taylor-intelligence-site-v4",
+  "compatibility_date": "2026-05-01",
+  "assets": {
+    "directory": ".",
+    // Serve index.html (200) for any path that doesn't match a file, so the
+    // client-side router in index.html can resolve /contact, /card, /approach,
+    // etc. This is the idiomatic SPA setup and makes _redirects belt-and-suspenders.
+    "not_found_handling": "single-page-application"
+  }
+}

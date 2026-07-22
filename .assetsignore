@@ -1,0 +1,7 @@
+# Files in this dir that should NOT be uploaded/served as static assets.
+.git
+.gitignore
+.claude
+wrangler.jsonc
+README.md
+map

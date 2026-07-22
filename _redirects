@@ -1,6 +1,9 @@
-# Cloudflare Pages — serve index.html for the client-side routes so the
-# hash/path router can render them (200 = rewrite, URL stays put).
-# This is what makes the bare path taylorintelligence.ai/card work.
-/card       /index.html   200
-/approach   /index.html   200
-/contact    /index.html   200
+# Cloudflare Workers static-assets rewrites so the client-side router can render
+# bare paths (200 = rewrite, URL stays put — no browser redirect).
+# NOTE: rewrite to "/" NOT "/index.html". Cloudflare auto-redirects any
+# request that resolves to /index.html back to / (a 307), which would strip the
+# path before the router sees it and bounce every route to Home.
+/card       /   200
+/services   /   200
+/approach   /   200
+/contact    /   200

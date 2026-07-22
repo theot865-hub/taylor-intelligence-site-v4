@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Taylor Intelligence — AI as a service for the PNW</title>
-<meta name="description" content="Taylor Intelligence is an AI agency for the Pacific Northwest — AI consulting, integration, and team training for businesses in Victoria, Vancouver, and beyond. Simple by design.">
+<meta name="description" content="AI agency for the Pacific Northwest — AI consulting, integration, and team training in Victoria, Vancouver, and beyond. Simple by design.">
 <link rel="canonical" href="https://taylorintelligence.ai/">
 <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0c0c0c" media="(prefers-color-scheme: dark)">
@@ -476,6 +476,10 @@
     padding-bottom: 2px;
   }
   .deep-link:hover { color: var(--muted); border-bottom-color: var(--muted); }
+  /* two actions under a service: primary "get in touch" + softer "full breakdown" */
+  .detail-links { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: baseline; }
+  .deep-link--soft { color: var(--muted); border-bottom-color: var(--line); }
+  .deep-link--soft:hover { color: var(--ink); border-bottom-color: var(--ink); }
 
   /* ---- approach: methodology + service deep-dives ---- */
   .step .step-num { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.04em; }
@@ -557,7 +561,7 @@
         <span class="word">Taylor Intelligence</span>
       </a>
       <nav>
-        <a href="#/services" data-nav="home">Services</a>
+        <a href="#/services" data-nav="services">Services</a>
         <a href="#/approach" data-nav="approach">Approach</a>
         <a href="#/contact" data-nav="contact">Contact</a>
       </nav>
@@ -593,17 +597,17 @@
         </div>
       </div>
       <div class="cells svc-grid">
-        <a class="cell svc" href="#/contact">
+        <a class="cell svc" href="#/contact?s=consulting">
           <h2>Consulting</h2>
           <p><span class="ln">We go deep.</span> <span class="ln">A paid, comprehensive review of your business — every workflow, every tool, ranked and costed</span> <span class="ln">— for teams who want the full picture before they build.</span></p>
           <span class="role">Get in touch</span>
         </a>
-        <a class="cell svc" href="#/contact">
+        <a class="cell svc" href="#/contact?s=integration">
           <h2>Integration</h2>
           <p><span class="ln">We build it.</span> <span class="ln">A receptionist and ops layer that answers, books, chases, and remembers</span> <span class="ln">— running your front desk around the clock, without adding a hire.</span></p>
           <span class="role">Get in touch</span>
         </a>
-        <a class="cell svc" href="#/contact">
+        <a class="cell svc" href="#/contact?s=education">
           <h2>Education</h2>
           <p><span class="ln">We hand you the keys.</span> <span class="ln">Your team trained on your own workflows</span> <span class="ln">— not generic tips —</span> <span class="ln">so the system keeps compounding long after we leave.</span></p>
           <span class="role">Get in touch</span>
@@ -622,6 +626,110 @@
 
     </div>
     <!-- ============ /PAGE: HOME ============ -->
+
+    <!-- ============ PAGE: SERVICES ============ -->
+    <div class="page is-hidden" id="page-services">
+
+    <div class="band pf-lead">
+      <span class="eyebrow">Services</span>
+      <h1>AI, delivered three ways.</h1>
+      <p class="sub"><span class="ln">Consulting to find the opportunities, Integration to build the system, Education to hand it over.</span> <span class="ln">Every engagement starts with a free diagnostic — no contract to begin.</span></p>
+    </div>
+
+    <!-- free diagnostic -->
+    <div class="band">
+      <div class="cell svc-lead">
+        <div class="free-strip">
+          <p><span class="ln"><strong>Free Diagnostic</strong> — a short, no-cost conversation to spot where AI could help.</span> <span class="ln">Not a deep audit, just enough to point you toward the right next step.</span> <a href="mailto:theo@taylorintelligence.ai">Book it →</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- service: Consulting -->
+    <div class="band">
+      <div class="cells detail-grid">
+        <div class="cell detail-head">
+          <span class="eyebrow" style="margin:0;">Service 01</span>
+          <h2>Consulting</h2>
+          <p class="summary"><span class="ln">The full picture, before you commit to a build.</span></p>
+          <span class="role-tag">Paid · Deep dive</span>
+        </div>
+        <div class="cell detail-body">
+          <div class="detail-item">
+            <span class="lbl">What it is</span>
+            <p><span class="ln">A paid, comprehensive review of your business — every workflow, every tool, every place a machine could carry the load.</span> <span class="ln">Deeper than the free diagnostic: this is the one that produces a real plan.</span></p>
+          </div>
+          <div class="detail-item">
+            <span class="lbl">What you get</span>
+            <p><span class="ln">A ranked, costed roadmap of the highest-ROI AI opportunities in your business — one document, yours to keep and act on, with us or without us.</span></p>
+          </div>
+          <div class="detail-links">
+            <a class="deep-link" href="#/contact?s=consulting">Get in touch about Consulting →</a>
+            <a class="deep-link deep-link--soft" href="#/approach">Full breakdown on Approach →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- service: Integration -->
+    <div class="band">
+      <div class="cells detail-grid">
+        <div class="cell detail-head">
+          <span class="eyebrow" style="margin:0;">Service 02</span>
+          <h2>Integration</h2>
+          <p class="summary"><span class="ln">Where AI stops being a recommendation and starts doing the work.</span></p>
+          <span class="role-tag">The build</span>
+        </div>
+        <div class="cell detail-body">
+          <div class="detail-item">
+            <span class="lbl">What it is</span>
+            <p><span class="ln">We build the system into your business and run it — and you own it.</span> <span class="ln">The flagship is Conduit: a receptionist and operations layer for service businesses.</span></p>
+          </div>
+          <div class="detail-item">
+            <span class="lbl">What you get</span>
+            <p><span class="ln">A front desk that answers, books, chases, and remembers</span> <span class="ln">— running around the clock without adding a hire.</span></p>
+          </div>
+          <div class="detail-links">
+            <a class="deep-link" href="#/contact?s=integration">Get in touch about Integration →</a>
+            <a class="deep-link deep-link--soft" href="#/approach">Full breakdown on Approach →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- service: Education -->
+    <div class="band">
+      <div class="cells detail-grid">
+        <div class="cell detail-head">
+          <span class="eyebrow" style="margin:0;">Service 03</span>
+          <h2>Education</h2>
+          <p class="summary"><span class="ln">Your team, fluent in the tools you already have.</span></p>
+          <span class="role-tag">Team training</span>
+        </div>
+        <div class="cell detail-body">
+          <div class="detail-item">
+            <span class="lbl">What it is</span>
+            <p><span class="ln">Hands-on AI training for your front-line team — on your real, day-to-day work, not a generic webinar.</span></p>
+          </div>
+          <div class="detail-item">
+            <span class="lbl">What you get</span>
+            <p><span class="ln">People who can actually use AI on the problems they face every day</span> <span class="ln">— so the skills stick and get used the Monday after we leave.</span></p>
+          </div>
+          <div class="detail-links">
+            <a class="deep-link" href="#/contact?s=education">Get in touch about Education →</a>
+            <a class="deep-link deep-link--soft" href="#/approach">Full breakdown on Approach →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="band pf-close">
+      <p><span class="ln">Not sure which fits?</span></p>
+      <a class="cta" href="#/card">Book a diagnostic ↗</a>
+    </div>
+
+    </div>
+    <!-- ============ /PAGE: SERVICES ============ -->
 
     <!-- ============ PAGE: APPROACH ============ -->
     <div class="page is-hidden" id="page-approach">
@@ -773,9 +881,9 @@
     <div class="page is-hidden" id="page-contact">
 
     <div class="band pf-lead">
-      <span class="eyebrow">Contact</span>
-      <h1>Let's talk.</h1>
-      <p class="sub"><span class="ln">Tell us what you're working on.</span> <span class="ln">We'll reply within a day — usually the same one.</span></p>
+      <span class="eyebrow" id="contact-eyebrow">Contact</span>
+      <h1 id="contact-h1">Let's talk.</h1>
+      <p class="sub" id="contact-sub"><span class="ln">Tell us what you're working on.</span> <span class="ln">We'll reply within a day — usually the same one.</span></p>
     </div>
 
     <div class="band">
@@ -783,7 +891,7 @@
         <!-- form: each field is a cell in the hairline grid -->
         <form class="form" action="https://api.web3forms.com/submit" method="POST">
           <input type="hidden" name="access_key" value="3d97d841-4c10-4ecf-9b00-248974f688a3">
-          <input type="hidden" name="subject" value="New enquiry — taylorintelligence.ai/card">
+          <input type="hidden" name="subject" id="contact-subject" value="New enquiry — taylorintelligence.ai/card">
           <div class="field">
             <label for="f-name">Name</label>
             <input id="f-name" name="name" type="text" autocomplete="name" required>
@@ -797,7 +905,7 @@
             <input id="f-biz" name="business" type="text" autocomplete="organization">
           </div>
           <div class="field">
-            <label for="f-msg">What do you want AI to do?</label>
+            <label for="f-msg" id="contact-q">What do you want AI to do?</label>
             <textarea id="f-msg" name="message" rows="4" required></textarea>
           </div>
           <button class="form-submit" type="submit">Send it →</button>
@@ -835,16 +943,18 @@
   (function () {
     var pages = {
       home: document.getElementById('page-home'),
+      services: document.getElementById('page-services'),
       approach: document.getElementById('page-approach'),
       contact: document.getElementById('page-contact')
     };
-    var standalone = { approach: true, contact: true }; // own page; else a home section
+    var standalone = { services: true, approach: true, contact: true }; // own page; else a home section
     var alias = { card: 'contact' }; // taylorintelligence.ai/card → contact page
     var navLinks = document.querySelectorAll('nav a[data-nav]');
 
     // per-route <title> + meta description + canonical (SEO for JS-executing crawlers)
     var meta = {
-      home:      { t: 'Taylor Intelligence — AI as a service for the PNW', d: 'AI agency for the Pacific Northwest — AI consulting, integration, and team training for businesses in Victoria, Vancouver, and beyond. Simple by design.', u: 'https://taylorintelligence.ai/' },
+      home:      { t: 'Taylor Intelligence — AI as a service for the PNW', d: 'AI agency for the Pacific Northwest — AI consulting, integration, and team training in Victoria, Vancouver, and beyond. Simple by design.', u: 'https://taylorintelligence.ai/' },
+      services:  { t: 'Services — Taylor Intelligence', d: 'Three AI services for PNW businesses: Consulting to find the opportunities, Integration to build the system, Education to train your team.', u: 'https://taylorintelligence.ai/services' },
       approach:  { t: 'Approach — Taylor Intelligence', d: 'How we work: a three-step method — Diagnose, Build, Train — with deep dives on AI Consulting, Integration, and Education.', u: 'https://taylorintelligence.ai/approach' },
       contact:   { t: 'Contact — Taylor Intelligence', d: 'Get in touch about AI consulting, integration, or training for your business in Victoria BC and the Pacific Northwest.', u: 'https://taylorintelligence.ai/contact' }
     };
@@ -864,9 +974,31 @@
     // route from the hash, or from the last path segment so a bare /card (no hash) works when deployed
     function readRoute() {
       var h = location.hash.replace(/^#\/?/, '');
-      if (h) return h;
-      var path = location.pathname.replace(/\/+$/, '');
-      return path.substring(path.lastIndexOf('/') + 1);
+      var raw = h || location.pathname.replace(/\/+$/, '').split('/').pop();
+      return raw.split('?')[0]; // drop any ?s=… service param
+    }
+
+    // which service the visitor came from (e.g. #/contact?s=integration), if any
+    function readService() {
+      var m = location.hash.match(/[?&]s=([a-z]+)/i);
+      return m ? m[1].toLowerCase() : '';
+    }
+
+    // contact page copy, tailored to the service the visitor clicked
+    var contactCopy = {
+      '':          { eyebrow: 'Contact',                h1: 'Let’s talk.',            sub: 'Tell us what you’re working on. We’ll reply within a day — usually the same one.',                     q: 'What do you want AI to do?',                          subject: 'New enquiry — taylorintelligence.ai/card' },
+      consulting:  { eyebrow: 'Contact · Consulting',   h1: 'Let’s scope your review.', sub: 'Tell us about your business and we’ll frame what a full review would cover. We reply within a day — usually the same one.', q: 'What would you want a full AI review to cover?',      subject: 'New enquiry — Consulting' },
+      integration: { eyebrow: 'Contact · Integration',  h1: 'Let’s build it.',         sub: 'Tell us what your front desk and operations need to handle. We reply within a day — usually the same one.',            q: 'What should the system answer, book, or chase for you?', subject: 'New enquiry — Integration' },
+      education:   { eyebrow: 'Contact · Education',     h1: 'Let’s train your team.',   sub: 'Tell us about your team and the work they do every day. We reply within a day — usually the same one.',                q: 'What work should your team be able to do with AI?',   subject: 'New enquiry — Education' }
+    };
+    function personalizeContact(service) {
+      var c = contactCopy[service] || contactCopy[''];
+      var set = function (id, prop, val) { var el = document.getElementById(id); if (el) el[prop] = val; };
+      set('contact-eyebrow', 'textContent', c.eyebrow);
+      set('contact-h1', 'textContent', c.h1);
+      set('contact-sub', 'textContent', c.sub);
+      set('contact-q', 'textContent', c.q);
+      set('contact-subject', 'value', c.subject);
     }
 
     function route() {
@@ -880,6 +1012,7 @@
         if (a.getAttribute('data-nav') === target) { a.setAttribute('aria-current', 'page'); }
         else { a.removeAttribute('aria-current'); }
       });
+      if (target === 'contact') { personalizeContact(readService()); }
       setMeta(target);
 
       if (target !== 'home') {
