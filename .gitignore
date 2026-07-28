@@ -3,3 +3,4 @@
 
 # wrangler / Cloudflare local cache
 .wrangler/
+media/_originals/

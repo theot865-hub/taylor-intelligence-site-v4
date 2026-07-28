@@ -54,6 +54,43 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoObject",
+      "name": "Julian on Consulting — Taylor Intelligence",
+      "description": "Julian Bezeau explains Taylor Intelligence's AI Consulting service: a review of the work moving through your business, and a ranked plan of what's worth automating.",
+      "thumbnailUrl": "https://taylorintelligence.ai/media/video/consulting.jpg",
+      "contentUrl": "https://taylorintelligence.ai/media/video/consulting.mp4",
+      "uploadDate": "2026-07-22",
+      "duration": "PT46S",
+      "publisher": { "@id": "https://taylorintelligence.ai/#org" }
+    },
+    {
+      "@type": "VideoObject",
+      "name": "Julian on Integration — Taylor Intelligence",
+      "description": "Julian Bezeau explains Taylor Intelligence's AI Integration service: systems that handle calls, bookings, routing, and lead follow-up in the background.",
+      "thumbnailUrl": "https://taylorintelligence.ai/media/video/integration.jpg",
+      "contentUrl": "https://taylorintelligence.ai/media/video/integration.mp4",
+      "uploadDate": "2026-07-22",
+      "duration": "PT52S",
+      "publisher": { "@id": "https://taylorintelligence.ai/#org" }
+    },
+    {
+      "@type": "VideoObject",
+      "name": "Julian on Education — Taylor Intelligence",
+      "description": "Julian Bezeau explains Taylor Intelligence's AI Education service: hands-on team training on real scenarios, building practical AI fluency.",
+      "thumbnailUrl": "https://taylorintelligence.ai/media/video/education.jpg",
+      "contentUrl": "https://taylorintelligence.ai/media/video/education.mp4",
+      "uploadDate": "2026-07-22",
+      "duration": "PT57S",
+      "publisher": { "@id": "https://taylorintelligence.ai/#org" }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
   "@type": "WebSite",
   "@id": "https://taylorintelligence.ai/#website",
   "url": "https://taylorintelligence.ai/",
@@ -280,7 +317,35 @@
   .svc { display: flex; flex-direction: column; min-height: 280px; text-decoration: none; color: var(--ink); }
   .svc-title { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
   .svc h2 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); letter-spacing: -0.02em; }
-  .svc p { flex: 1; font-size: 14.5px; margin-top: 16px; }
+  .svc-title-link { color: inherit; text-decoration: none; }
+  .svc-title-link:hover { color: var(--muted); }
+  .svc p { font-size: 14.5px; margin-top: 0; }
+  /* video sits directly under the service title */
+  .svc video {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 16px;
+    border: 1px solid var(--line);
+    background: var(--hover);
+  }
+  /* body copy behind a Read more disclosure */
+  .svc-more { flex: 1; margin-top: 14px; }
+  .svc-more summary {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    cursor: pointer;
+    list-style: none;
+  }
+  .svc-more summary::-webkit-details-marker { display: none; }
+  .svc-more summary::before { content: "+ "; }
+  .svc-more[open] summary::before { content: "– "; }
+  .svc-more[open] summary { color: var(--ink); }
+  .svc-more summary:hover { color: var(--ink); }
+  .svc-more p { margin-top: 12px; color: var(--muted); }
   .svc .role {
     margin-top: 22px;
     font-size: 13.5px;
@@ -356,6 +421,7 @@
   /* desktop grid defaults — kept here (not inline) so the mobile
      media queries below can actually override them */
   .cells.svc-grid      { grid-template-columns: 1fr 1fr 1fr; }
+  .cells.home-vid-grid { grid-template-columns: 1fr 1fr 1fr; }
   .cells.method-grid   { grid-template-columns: repeat(3, 1fr); }
   .cells.detail-grid   { grid-template-columns: 1fr 1.7fr; }
   .cells.approach-grid { grid-template-columns: 1fr 1fr 1fr; }
@@ -365,12 +431,36 @@
     .cells.svc-grid { grid-template-columns: 1fr; }
     .cells.approach-grid { grid-template-columns: 1fr; }
     .cells.contact-grid { grid-template-columns: 1fr; }
-    /* mobile: collapse each service to a single tappable button (name only) */
-    .svc { min-height: 0; flex-direction: row; align-items: center; justify-content: space-between; }
-    .svc p { display: none; }
+    /* mobile: cards stay stacked — each one now holds a video and a Read more
+       disclosure, so the old collapse-to-a-single-tappable-row treatment no
+       longer applies (the card is a container now, not one big link).
+       Spacing is tightened hard here: three stacked videos are already ~510px
+       of unavoidable height, so every margin that isn't earning its keep goes. */
+    .svc { min-height: 0; padding-top: 16px; padding-bottom: 16px; }
+    .svc h2 { margin: 0; font-size: 1.25rem; }
+    .svc video { margin-top: 10px; }
+    .svc-more { flex: none; margin-top: 10px; }
+    .svc-more p { margin-top: 8px; }
+    /* the title carries the contact link on mobile (as the old whole-card link
+       did), so the repeated button comes out — it was ~46px per card. */
+    /* hero: keep copy and map on one row as on desktop, so the services sit
+       higher up the page. Both sides have to give — the copy's 240px min-width
+       and the map's 220px clamp floor are what forced the wrap. */
+    .statement-grid { gap: 14px; flex-wrap: nowrap; align-items: center; }
+    .statement-copy { flex: 1 1 auto; min-width: 0; }
+    .statement-map { width: 96px; }
+    .statement h1 { font-size: 1.35rem; max-width: none; }
+    .statement .sub { margin-top: 10px; font-size: 14px; }
+    /* mobile: the video hides behind the disclosure so all three services fit
+       on one screen. :has() looks forward to the sibling <details>, which a
+       plain sibling combinator can't do (the video precedes it in the DOM). */
+    .svc video { display: none; }
+    .svc:has(.svc-more[open]) video { display: block; }
+    .more-label::after { content: " + watch"; }
     .svc .role { display: none; }
-    .svc h2 { margin: 0; }
-    .svc::after { content: "→"; font-family: var(--mono); color: var(--muted); }
+    /* the title is the only tap target now, so give it a real touch height */
+    .svc h2 a { display: block; padding: 10px 0; }
+    .svc h2 a::after { content: " →"; font-family: var(--mono); color: var(--muted); font-size: 0.8em; }
   }
   @media (prefers-reduced-motion: no-preference) {
     .band, .cell, .rowline, .cta, .svc .role, nav a { transition: background .12s ease, color .12s ease, border-color .12s ease; }
@@ -519,6 +609,46 @@
   }
   .detail-item p { margin: 0; font-size: 14.5px; color: var(--muted); max-width: 62ch; }
 
+  /* service video + transcript. The video sits above .detail-links on purpose:
+     Julian's Education take ends on "train them below", so the CTA has to
+     follow the player, not precede it. */
+  .svc-video { max-width: 62ch; }
+  .svc-video video {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    background: var(--hover);
+  }
+  .svc video::cue,
+  .svc-video video::cue {
+    font-family: var(--sans);
+    font-size: 88%;
+    line-height: 1.35;
+    background: rgba(12, 12, 12, 0.78);
+    color: #fff;
+  }
+  .svc-transcript { margin-top: 10px; }
+  .svc-transcript summary {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    cursor: pointer;
+    list-style: none;
+  }
+  .svc-transcript summary::-webkit-details-marker { display: none; }
+  .svc-transcript summary::before { content: "+ "; }
+  .svc-transcript[open] summary::before { content: "– "; }
+  .svc-transcript summary:hover { color: var(--ink); }
+  .svc-transcript p {
+    margin: 12px 0 0;
+    font-size: 14.5px;
+    color: var(--muted);
+    max-width: 62ch;
+  }
+
   /* Conduit modules — hairline mini-table */
   .modules { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 4px; }
   .module { background: var(--ground); padding: 13px 16px; display: flex; gap: 16px; align-items: baseline; }
@@ -597,21 +727,45 @@
         </div>
       </div>
       <div class="cells svc-grid">
-        <a class="cell svc" href="#/contact?s=consulting">
-          <h2>Consulting</h2>
-          <p><span class="ln">We go deep.</span> <span class="ln">A paid, comprehensive review of your business — every workflow, every tool, ranked and costed</span> <span class="ln">— for teams who want the full picture before they build.</span></p>
-          <span class="role">Get in touch</span>
-        </a>
-        <a class="cell svc" href="#/contact?s=integration">
-          <h2>Integration</h2>
-          <p><span class="ln">We build it.</span> <span class="ln">A receptionist and ops layer that answers, books, chases, and remembers</span> <span class="ln">— running your front desk around the clock, without adding a hire.</span></p>
-          <span class="role">Get in touch</span>
-        </a>
-        <a class="cell svc" href="#/contact?s=education">
-          <h2>Education</h2>
-          <p><span class="ln">We hand you the keys.</span> <span class="ln">Your team trained on your own workflows</span> <span class="ln">— not generic tips —</span> <span class="ln">so the system keeps compounding long after we leave.</span></p>
-          <span class="role">Get in touch</span>
-        </a>
+        <div class="cell svc">
+          <h2><a class="svc-title-link" href="#/contact?s=consulting">Consulting</a></h2>
+          <video controls preload="none" playsinline poster="/media/video/consulting.jpg" width="1280" height="720">
+            <source src="/media/video/consulting.mp4" type="video/mp4">
+            <track kind="captions" src="/media/video/consulting.vtt" srclang="en" label="English" default>
+          </video>
+          <details class="svc-more">
+            <summary><span class="more-label">Read more</span></summary>
+            <p><span class="ln">We go deep.</span> <span class="ln">A paid, comprehensive review of your business — every workflow, every tool, ranked and costed</span> <span class="ln">— for teams who want the full picture before they build.</span></p>
+          </details>
+          <a class="role" href="#/contact?s=consulting">Get in touch</a>
+        </div>
+        <div class="cell svc">
+          <h2><a class="svc-title-link" href="#/contact?s=integration">Integration</a></h2>
+          <video controls preload="none" playsinline poster="/media/video/integration.jpg" width="1280" height="720">
+            <source src="/media/video/integration.mp4" type="video/mp4">
+            <track kind="captions" src="/media/video/integration.vtt" srclang="en" label="English" default>
+          </video>
+          <details class="svc-more">
+            <summary><span class="more-label">Read more</span></summary>
+            <p><span class="ln">We build it.</span> <span class="ln">A receptionist and ops layer that answers, books, chases, and remembers</span> <span class="ln">— running your front desk around the clock, without adding a hire.</span></p>
+          </details>
+          <a class="role" href="#/contact?s=integration">Get in touch</a>
+        </div>
+        <div class="cell svc">
+          <h2><a class="svc-title-link" href="#/contact?s=education">Education</a></h2>
+          <video controls preload="none" playsinline poster="/media/video/education.jpg" width="1280" height="720">
+            <source src="/media/video/education.mp4" type="video/mp4">
+            <track kind="captions" src="/media/video/education.vtt" srclang="en" label="English" default>
+          </video>
+          <details class="svc-more">
+            <summary><span class="more-label">Read more</span></summary>
+            <p><span class="ln">We hand you the keys.</span> <span class="ln">Your team trained on your own workflows</span> <span class="ln">— not generic tips —</span> <span class="ln">so the system keeps compounding long after we leave.</span></p>
+          </details>
+          <a class="role" href="#/contact?s=education">Get in touch</a>
+        </div>
+      </div>
+      <div class="cell svc-lead">
+        <a class="deep-link deep-link--soft" href="#/services">Read the transcripts on Services →</a>
       </div>
     </div>
 
@@ -663,6 +817,17 @@
             <span class="lbl">What you get</span>
             <p><span class="ln">A ranked, costed roadmap of the highest-ROI AI opportunities in your business — one document, yours to keep and act on, with us or without us.</span></p>
           </div>
+          <div class="detail-item svc-video">
+            <span class="lbl">Julian on Consulting</span>
+            <video controls preload="none" playsinline poster="/media/video/consulting.jpg" width="1280" height="720">
+              <source src="/media/video/consulting.mp4" type="video/mp4">
+              <track kind="captions" src="/media/video/consulting.vtt" srclang="en" label="English" default>
+            </video>
+            <details class="svc-transcript">
+              <summary>Transcript</summary>
+              <p>Hi, I'm Julian from Taylor Intelligence. Most business owners know that AI can save them time, but they don't know what to automate, what it would cost, or if it would even make a meaningful difference at all. That's where our consultation comes in. We take a look at the work moving through your business — all of the missed calls, the leads that may go cold, or staff repeating the same repetitive tasks every day. We then create you a specific automated plan. We'll show you what we can improve, we'll filter out what doesn't need automation now, and we'll show you the impact that we can make. Leaving the call, you will have a better understanding of how AI can help you in your business — and that you won't have to deal with such technologies yourself, if we can handle them for you.</p>
+            </details>
+          </div>
           <div class="detail-links">
             <a class="deep-link" href="#/contact?s=consulting">Get in touch about Consulting →</a>
             <a class="deep-link deep-link--soft" href="#/approach">Full breakdown on Approach →</a>
@@ -689,6 +854,17 @@
             <span class="lbl">What you get</span>
             <p><span class="ln">A front desk that answers, books, chases, and remembers</span> <span class="ln">— running around the clock without adding a hire.</span></p>
           </div>
+          <div class="detail-item svc-video">
+            <span class="lbl">Julian on Integration</span>
+            <video controls preload="none" playsinline poster="/media/video/integration.jpg" width="1280" height="720">
+              <source src="/media/video/integration.mp4" type="video/mp4">
+              <track kind="captions" src="/media/video/integration.vtt" srclang="en" label="English" default>
+            </video>
+            <details class="svc-transcript">
+              <summary>Transcript</summary>
+              <p>Hi, I'm Julian from Taylor Intelligence. Now, the last thing that a business owner needs is another piece of software. You just need your important work to stop being missed. That's what we build. We build AI systems that help take care of the background tasks that are so repetitive — for example, the phone calls, the booking system, routing inquiries to the right people, or even following up with your leads. We make sure there's nothing lost in translation between the systems and the people. Instead of having someone manually move information from one place to another, you don't have to worry about it, because the system can handle it consistently. We build around the way your business currently operates, and we can even educate your team on how to use it after. What are you waiting for? Start a build today.</p>
+            </details>
+          </div>
           <div class="detail-links">
             <a class="deep-link" href="#/contact?s=integration">Get in touch about Integration →</a>
             <a class="deep-link deep-link--soft" href="#/approach">Full breakdown on Approach →</a>
@@ -714,6 +890,17 @@
           <div class="detail-item">
             <span class="lbl">What you get</span>
             <p><span class="ln">People who can actually use AI on the problems they face every day</span> <span class="ln">— so the skills stick and get used the Monday after we leave.</span></p>
+          </div>
+          <div class="detail-item svc-video">
+            <span class="lbl">Julian on Education</span>
+            <video controls preload="none" playsinline poster="/media/video/education.jpg" width="1280" height="720">
+              <source src="/media/video/education.mp4" type="video/mp4">
+              <track kind="captions" src="/media/video/education.vtt" srclang="en" label="English" default>
+            </video>
+            <details class="svc-transcript">
+              <summary>Transcript</summary>
+              <p>Hi, I'm Julian from Taylor Intelligence, and the third thing that we offer is Education. Just because we deliver AI to your team does not mean everyone's going to know how to use it. Most employees now may avoid AI, kind of know how to use it, or experiment inefficiently. Let's get past that, and have us educate your team. We work through real scenarios with customers to make sure you're actually learning the spots where AI can help — it's not just a generic presentation. Our goal is not to have your whole team be AI experts, but to have everyone have a certain fluency in AI: that they can tell when to use it, how to be responsible with its use, and even when human judgment is necessary. If you want to have your team learn about AI today, then train them below.</p>
+            </details>
           </div>
           <div class="detail-links">
             <a class="deep-link" href="#/contact?s=education">Get in touch about Education →</a>
