@@ -128,6 +128,9 @@
   }
 
   * { box-sizing: border-box; }
+  /* stop the rubber-band overscroll past the footer — without this you can drag
+     the whole page up and sit looking at empty background */
+  html, body { overscroll-behavior-y: none; }
   html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
