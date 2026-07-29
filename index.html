@@ -428,6 +428,9 @@
   .cells.contact-grid  { grid-template-columns: 1.5fr 1fr; }
 
   @media (max-width: 720px) {
+    /* nav wraps onto its own line here; span the full width so the four links
+       distribute evenly instead of bunching left with dead space at the right */
+    nav { width: 100%; justify-content: space-between; gap: 0; flex-wrap: nowrap; }
     .cells.svc-grid { grid-template-columns: 1fr; }
     .cells.approach-grid { grid-template-columns: 1fr; }
     .cells.contact-grid { grid-template-columns: 1fr; }
@@ -620,6 +623,15 @@
     border: 1px solid var(--line);
     background: var(--hover);
   }
+  #contact-video-wrap video {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border: 1px solid var(--line);
+    background: var(--hover);
+  }
+  #contact-video-wrap video::cue,
   .svc video::cue,
   .svc-video video::cue {
     font-family: var(--sans);
@@ -691,6 +703,7 @@
         <span class="word">Taylor Intelligence</span>
       </a>
       <nav>
+        <a href="#/" data-nav="home">Home</a>
         <a href="#/services" data-nav="services">Services</a>
         <a href="#/approach" data-nav="approach">Approach</a>
         <a href="#/contact" data-nav="contact">Contact</a>
@@ -723,7 +736,7 @@
     <div class="band" id="services">
       <div class="cell svc-lead">
         <div class="free-strip">
-          <p><span class="ln"><strong>Free Diagnostic</strong> — a short, no-cost conversation to spot where AI could help.</span> <span class="ln">Not a deep audit, just enough to point you toward the right next step.</span> <a href="mailto:theo@taylorintelligence.ai">Book it →</a></p>
+          <p><strong>Free Diagnostic</strong> <a href="mailto:theo@taylorintelligence.ai">Book it →</a></p>
         </div>
       </div>
       <div class="cells svc-grid">
@@ -1105,6 +1118,13 @@
             <p class="contact-line"><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a></p>
             <p class="contact-line"><a href="tel:+12502997815">+1 250 299 7815</a></p>
           </div>
+          <!-- shown only when the visitor arrived from a service (?s=…) -->
+          <div id="contact-video-wrap" hidden>
+            <span class="eyebrow">Julian on <span id="contact-video-name"></span></span>
+            <video id="contact-video" controls preload="none" playsinline width="1280" height="720">
+              <track id="contact-video-track" kind="captions" srclang="en" label="English" default>
+            </video>
+          </div>
           <div>
             <span class="eyebrow">Before you write</span>
             <p class="contact-note"><span class="ln">See exactly how each service works and the method behind them.</span></p>
@@ -1178,6 +1198,39 @@
       integration: { eyebrow: 'Contact · Integration',  h1: 'Let’s build it.',         sub: 'Tell us what your front desk and operations need to handle. We reply within a day — usually the same one.',            q: 'What should the system answer, book, or chase for you?', subject: 'New enquiry — Integration' },
       education:   { eyebrow: 'Contact · Education',     h1: 'Let’s train your team.',   sub: 'Tell us about your team and the work they do every day. We reply within a day — usually the same one.',                q: 'What work should your team be able to do with AI?',   subject: 'New enquiry — Education' }
     };
+    // Julian's clip for the service the visitor came from. Same three files the
+    // homepage and /services use, so nothing extra is downloaded site-wide.
+    var contactVideo = {
+      consulting:  { file: 'consulting',  name: 'Consulting' },
+      integration: { file: 'integration', name: 'Integration' },
+      education:   { file: 'education',   name: 'Education' }
+    };
+    function setContactVideo(service) {
+      var wrap = document.getElementById('contact-video-wrap');
+      var vid = document.getElementById('contact-video');
+      var trk = document.getElementById('contact-video-track');
+      var name = document.getElementById('contact-video-name');
+      if (!wrap || !vid) { return; }
+      var v = contactVideo[service];
+      if (!v) {
+        // clear everything, not just src — otherwise the previous service's
+        // poster/captions/label sit there stale behind the hidden wrapper
+        vid.removeAttribute('src');
+        vid.removeAttribute('poster');
+        if (trk) { trk.removeAttribute('src'); }
+        if (name) { name.textContent = ''; }
+        wrap.hidden = true;
+        vid.load();
+        return;
+      }
+      vid.src = '/media/video/' + v.file + '.mp4';
+      vid.poster = '/media/video/' + v.file + '.jpg';
+      if (trk) { trk.src = '/media/video/' + v.file + '.vtt'; }
+      if (name) { name.textContent = v.name; }
+      wrap.hidden = false;
+      vid.load();
+    }
+
     function personalizeContact(service) {
       var c = contactCopy[service] || contactCopy[''];
       var set = function (id, prop, val) { var el = document.getElementById(id); if (el) el[prop] = val; };
@@ -1186,6 +1239,7 @@
       set('contact-sub', 'textContent', c.sub);
       set('contact-q', 'textContent', c.q);
       set('contact-subject', 'value', c.subject);
+      setContactVideo(service);
     }
 
     function route() {
