@@ -643,6 +643,14 @@
     background: rgba(12, 12, 12, 0.78);
     color: #fff;
   }
+  /* Cues default to ~5% of video height — on small inline players that's ~7px. */
+  @media (max-width: 600px) {
+    #contact-video-wrap video::cue,
+    .svc video::cue,
+    .svc-video video::cue {
+      font-size: 14px;
+    }
+  }
   .svc-transcript { margin-top: 10px; }
   .svc-transcript summary {
     font-family: var(--mono);
