@@ -41,71 +41,65 @@ The existing contact form uses Web3Forms with its public client access key
 already in the HTML. `_redirects` and the Worker's SPA fallback support the main
 site's bare routes. Keep offer/copy changes on a review branch until approved.
 
-## AI intensive landing page — campaign draft (2026-10-06)
+## AI guided implementation — campaign draft (2026-10-06)
 
-- URL after an approved deployment: `/ai-intensive/`.
-- `ai-intensive/index.html`: independent static document, course copy, price,
-  schedule, direct booking CTAs and search/social metadata.
-- `ai-intensive/style.css`: compact cream page with plain dark typography,
-  a restrained orange-gradient rule, square controls and readable original-color
-  client logos in one small horizontal band near the top. This supersedes the decorative gradient versions
-  after Theo’s October 6 feedback. The actual current business-card artwork was
-  not located, so the orange palette is an approximation, not an exact match.
-- `ai-intensive/logos/`: four unmodified official client assets, hosted locally.
-- `ai-intensive/og.png`: campaign-specific 1200×630 social preview.
-- Linked from the Education section of `/services`; included in `sitemap.xml`.
+- Route after approved deployment: `/ai-intensive/`. The existing route is retained for continuity; its offer is now a four-week programme.
+- `ai-intensive/index.html`: standalone document, owner-facing offer, scope, price, booking links, FAQs and search/social metadata.
+- `ai-intensive/style.css`: independent editorial design with oversized Manrope type, a vivid warm-orange hero, a purposeful workflow diagram, a four-week plan and charcoal investment section. Clear original-color logos remain in one small band near the top. The parent-site design is separate.
+- `ai-intensive/fonts/Manrope.ttf`: self-hosted variable font, no external font request. Original copyright and SIL OFL1.1 retained in `fonts/OFL.txt`. Source: [Google Fonts Manrope](https://github.com/google/fonts/tree/main/ofl/manrope).
+- `ai-intensive/logos/`: original official client assets hosted locally.
+- `ai-intensive/og.png`: current 1200×630 social poster; new offer/price, no fixed workshop date.
+- Education link in `/services` points here; sitemap includes the route.
 
-Draft offer: Friday **October 23, 2026**, **12–5 pm Pacific time**, live on Google Meet,
-**$400 CAD per guest**. CAD is the working currency assumption from the local
-business context; confirm the full offer in review before publishing. Vancouver
-observes PDT (UTC−7) on that date; the page uses “Pacific time” to avoid a fixed
-UTC−8 interpretation of PST.
+**Current authorized draft offer:** four weeks of private guided implementation,
+**$2,500 CAD per business**, one nominated employee and one agreed workflow.
+Owner joins kickoff/outcome review. Four weekly90-minute working sessions,
+three progress reviews between sessions, workflow testing, human review steps,
+an operating guide and handover. Start date/times agreed together after the fit
+call. Tool subscriptions, additional workflows and custom
+software/integrations are scoped separately. This supersedes the earlier
+fixed-date group workshop. No guaranteed savings/ROI or unlimited support.
 
-The buyer is a business owner who sends a nominated employee, or attends
-themselves. The day works through choosing a task, building/reviewing an AI
-workflow, and preparing a first team trial. This is a focused Education offer.
+**Booking:** all three `[data-booking-link]` anchors open Theo’s actual existing
+[30-minute Google Calendar appointment page](https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP) in the same tab. Verified
+in Chrome: Theo Taylor under theo@taylorintelligence.ai, 30min, Vancouver time,
+available appointment times, Google Meet information added after booking.
+Existing schedule and availability were preserved. No appointment/test booking
+or invitation submitted. No API keys, payment code, scheduler embed or third-party
+JavaScript needed. Call is free; programme payment is handled after agreeing the
+scope. An optional choice of direct checkout remains open, but the default
+fit-call-first recommendation is implemented. There is no current programme
+payment link on the page. The superseded course Stripe Payment Link is deactivated; its public checkout now refuses purchases. The product/price are retained historically.
 
-**Logo provenance:** Big O is the Victoria client; its accessible name retains that location. The logos identify
-client work, not course participants, testimonials or a franchise endorsement.
-Original artwork and aspect ratios are preserved. Szolyd’s original symbol is
-paired with a plain-text name; Omen’s official dark mark is shown on a light surface; its transparent source
-padding is compensated in CSS without altering the image file.
+**Logo provenance:** Big O is the Victoria client, retained in its accessible
+name. These marks identify client work, not purchases/testimonials/endorsement of
+this new programme. Artwork/aspect ratios preserved; Szolyd symbol is paired with
+its name; Omen source padding is compensated in CSS.
 
 - Big O Tires Victoria: [official header PNG](https://www.bigotiresvictoria.com/Portals/50/logo.png)
 - Szolyd: [official symbol SVG](https://szolyd.com/assets/img/szolyd-mark.svg)
 - SD Concrete / Stone Design: [official lockup SVG](https://sdconcrete.com/assets/brand/sd-lockup.svg)
 - Omen Foils: [official dark mark PNG](https://omenfoils.com/cdn/shop/files/FINAL_Black_Logo_Social.gif?format=png&v=1674710102)
 
-**Booking flow — live Stripe checkout:** all three `[data-booking-link]`
-anchors open [the course booking link](https://book.stripe.com/cNicN71uu2t2bml2lneIw00)
-in the same tab. Checkout is a one-time CAD $400 for one guest, with email/full
-name required and business name optional. It was created in the Taylor
-Intelligence Stripe merchant and independently opened/read back in live mode.
-No payment was submitted. The landing page needs no API keys or payment script.
+The orange direction follows Theo’s request; exact current business-card artwork
+was not located, so this is not claimed as an exact palette match. Earlier
+purple/decorative cards and faint recolored logos were rejected; do not restore.
 
-Stripe’s successful-payment confirmation is configured with the date/time,
-Google Meet joining URL and attendee follow-up instructions. Standard successful
-payment receipts are enabled and saved. These configurations have been read
-back; actual payment, receipt delivery and the paid confirmation path remain
-untested. The private Meet URL stays outside this public source.
+**Before launch:** review/publish the concrete page; confirm delivery capacity,
+final terms/tax/payment arrangements and Meta readiness. No conversion pixel,
+Conversions API, purchase event or campaign was installed/launched. A fit call is
+not a paid engagement. The earlier workshop Meet event is historical; programme
+calls are scheduled individually. Keep private host links and business/financial
+notes outside public source.
 
-**Before campaign launch:** approve/publish the offer; confirm participant
-logistics; configure/test any desired Meta conversion tracking with the real
-account/pixel details. No Meta pixel, Conversions API or purchase/enquiry event
-is installed by this page. Earlier enquiry-form validation is historical.
-
-**Meet setup:** A private host event with a real Google Meet conference was
-created and read back on Theo’s TI calendar for October 23, 12–5 pm Pacific.
-The host meeting URL is in the private task handoff and the Stripe post-payment
-confirmation, outside this public repository. No external guest invitations were sent.
-
-**Editing checklist:** update date, hours and price consistently in visible copy,
-the external checkout/booking product and title/description/social metadata. Remove or refresh this dated offer after
-October 23. Keep private business/financial notes outside this public repo.
-
-**Local preview:** run `python3 -m http.server 4183 --bind 127.0.0.1` from the
-site root, then open `http://127.0.0.1:4183/ai-intensive/`. No dependency install
-is needed. Verify the booking link without placing a real order as a routine code test.
+**Editing:** update price/scope consistently in visible copy, title/description,
+OG/Twitter metadata, social image and any future payment link. Keep native booking
+links accessible. No install/build step. To preview, run `python3 -m http.server
+4183 --bind 127.0.0.1` from the site root. Open `http://127.0.0.1:4183/ai-intensive/`.
+The main site’s local hash route is `/#/services`; production Workers handles
+bare routes. Check destination and responsive layout without submitting a real
+booking/payment as a routine test. Main auto-deploys; keep this change on draft
+PR#2 until publication is authorized.
 
 ## Regenerating the map
 
