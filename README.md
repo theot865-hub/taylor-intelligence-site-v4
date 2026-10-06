@@ -48,7 +48,7 @@ site's bare routes. Keep offer/copy changes on a review branch until approved.
   schedule, accessible enquiry form and search/social metadata.
 - `ai-intensive/style.css`: compact cream page with plain dark typography,
   a restrained orange-gradient rule, square controls and readable original-color
-  client logos near the top. This supersedes the decorative gradient versions
+  client logos in one small horizontal band near the top. This supersedes the decorative gradient versions
   after Theo’s October 6 feedback. The actual current business-card artwork was
   not located, so the orange palette is an approximation, not an exact match.
 - `ai-intensive/course.js`: enquiry submission and campaign-query capture.
@@ -66,7 +66,7 @@ The buyer is a business owner who sends a nominated employee, or attends
 themselves. The day works through choosing a task, building/reviewing an AI
 workflow, and preparing a first team trial. This is a focused Education offer.
 
-**Logo provenance:** Big O caption is location-specific. The logos identify
+**Logo provenance:** Big O is the Victoria client; its accessible name retains that location. The logos identify
 client work, not course participants, testimonials or a franchise endorsement.
 Original artwork and aspect ratios are preserved. Szolyd’s original symbol is
 paired with a plain-text name; Omen’s official dark mark is shown on a light surface; its transparent source

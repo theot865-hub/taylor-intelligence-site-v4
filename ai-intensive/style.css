@@ -29,15 +29,13 @@ h3 { font-size: 18px; letter-spacing: -.015em; }
 nav { display: flex; gap: 25px; }
 nav a { font-size: 14px; text-decoration: none; }
 nav a:hover { text-decoration: underline; }
-.client-proof { display: flex; align-items: center; gap: 32px; padding: 22px 20px 27px; margin-bottom: 24px; background: #fff; }
-.proof-label { color: var(--muted); font-size: 12px; line-height: 1.4; flex: none; }
-.client-logos { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; gap: 26px; min-width: 0; }
-.logo-item { width: 100%; max-width: 180px; justify-self: center; margin: 0; position: relative; display: flex; justify-content: center; align-items: center; min-width: 0; height: 64px; }
-.logo-item img { display: block; max-width: 180px; width: 100%; height: 48px; object-fit: contain; }
-.logo-item figcaption { position: absolute; bottom: -9px; color: #534c45; font-size: 10px; }
-.logo-szolyd { gap: 7px; }
-.logo-szolyd img { width: 48px; height: 64px; flex: none; }
-.logo-szolyd span { font-size: 25px; color: #252525; }
+.client-proof { padding: 10px 18px; margin-bottom: 18px; background: #fff; }
+.client-logos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: center; gap: 24px; }
+.logo-item { width: 100%; max-width: 120px; justify-self: center; margin: 0; display: flex; justify-content: center; align-items: center; min-width: 0; height: 36px; }
+.logo-item img { display: block; width: 100%; height: 32px; object-fit: contain; }
+.logo-szolyd { gap: 4px; }
+.logo-szolyd img { width: 26px; height: 36px; flex: none; }
+.logo-szolyd span { font-size: 20px; color: #252525; }
 .logo-omen { overflow: hidden; }
 .logo-omen img { max-width: none; width: 220%; height: auto; flex: none; }
 .statement { position: relative; display: grid; grid-template-columns: 1.4fr .8fr; align-items: center; gap: 65px; padding: 38px 0 37px; border-bottom: 1px solid #d8cbbd; }
@@ -95,11 +93,6 @@ form { padding: 0; }
 .skip-link:focus { top: 10px; }
 @media (max-width: 900px) {
   .wrap { padding: 0 30px; }
-  .client-proof { gap: 22px; padding: 20px 12px 24px; }
-  .client-logos { gap: 20px; }
-  .logo-szolyd { gap: 1px; }
-  .logo-szolyd img { width: 35px; }
-  .logo-szolyd span { font-size: 21px; }
   .statement { gap: 35px; }
   h1 { font-size: 39px; }
   .enquiry-grid { gap: 35px; }
@@ -112,15 +105,6 @@ form { padding: 0; }
   .mark { width: 21px; height: 21px; }
   nav { gap: 16px; }
   nav a { font-size: 12px; }
-  .client-proof { display: block; padding: 17px 20px 22px; margin-bottom: 18px; }
-  .proof-label { display: block; font-size: 12px; margin-bottom: 20px; }
-  .proof-label br { display: none; }
-  .client-logos { grid-template-columns: repeat(2, 1fr); gap: 20px 40px; }
-  .logo-item { height: 61px; }
-  .logo-item img { height: 45px; max-width: 180px; }
-  .logo-szolyd img { width: 48px; height: 61px; }
-  .logo-szolyd span { font-size: 25px; }
-  .logo-omen img { max-width: none; width: 220%; height: auto; }
   .statement { grid-template-columns: 1fr; padding: 31px 0; gap: 24px; }
   h1 { font-size: clamp(32px, 6vw, 39px); max-width: 20ch; }
   .intro { font-size: 15px; margin: 18px 0 20px; }
@@ -141,15 +125,26 @@ form { padding: 0; }
   .field label span { display: block; }
   .foot { font-size: 11px; }
 }
+@media (max-width: 600px) {
+  .client-proof { padding: 10px; }
+  .client-logos { gap: 12px; }
+  .logo-item { height: 28px; }
+  .logo-item img { height: 24px; }
+  .logo-szolyd { gap: 2px; }
+  .logo-szolyd img { width: 20px; height: 28px; }
+  .logo-szolyd span { font-size: 16px; }
+  .logo-omen img { height: auto; }
+}
 @media (max-width: 400px) {
   .wrap { padding: 0 18px; }
   .brand { font-size: 13px; }
   nav { gap: 12px; }
   nav a { font-size: 11px; }
-  .client-proof { padding: 16px 16px 22px; }
-  .client-logos { gap: 18px 24px; }
-  .logo-szolyd img { width: 36px; }
-  .logo-szolyd span { font-size: 21px; }
+  .client-proof { padding: 9px 8px; }
+  .client-logos { gap: 6px; }
+  .logo-szolyd { gap: 1px; }
+  .logo-szolyd img { width: 16px; }
+  .logo-szolyd span { font-size: 13px; }
   .course-details dl { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
   .wide { grid-column: auto; }
