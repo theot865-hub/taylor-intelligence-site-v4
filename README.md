@@ -45,15 +45,17 @@ site's bare routes. Keep offer/copy changes on a review branch until approved.
 
 - Route after approved deployment: `/ai-intensive/`. The existing route is retained for continuity; its offer is now a four-week programme.
 - `ai-intensive/index.html`: standalone document, owner-facing offer, scope, price, booking links, FAQs and search/social metadata.
-- `ai-intensive/style.css`: independent editorial design with oversized Manrope type, a vivid warm-orange hero, a purposeful workflow diagram, a four-week plan and charcoal investment section. Clear original-color logos remain in one small band near the top. The parent-site design is separate.
+- `ai-intensive/style.css`: independent, compact mentoring layout. A split orange hero holds the complete offer, inclusion checklist, price and fit-call link next to an original TI video still. FAQs follow immediately. Small original-color logos remain in their white band near the top. The parent-site design is separate.
 - `ai-intensive/fonts/Manrope.ttf`: self-hosted variable font, no external font request. Original copyright and SIL OFL1.1 retained in `fonts/OFL.txt`. Source: [Google Fonts Manrope](https://github.com/google/fonts/tree/main/ofl/manrope).
 - `ai-intensive/logos/`: original official client assets hosted locally.
-- `ai-intensive/og.png`: current 1200×630 social poster; new offer/price, no fixed workshop date.
+- `ai-intensive/images/ti-education-still.jpg`: unchanged poster from the existing TI education video. Source: [TI education still](https://media.taylorintelligence.ai/video/education.jpg); SHA256 `5c494a8f532f5fe0480d8c1c4ed852fa0eadb328c91365204e55614b813c72c2`. Crop uses CSS only. The root site labels this speaker Julian on Education.
+- `ai-intensive/images/orange-mentoring-background.jpg`: web-optimized derivative of one completed Higgsfield image, job `97ab4c12-93b9-4fd7-84d6-cd14ac73994c`, model `gpt_image_2_5`. Orange/apricot pigment and paper-grain background; no generated people. The generation quote was 0.25 credits; an actual debit was not separately checked.
+- `ai-intensive/og.png`: current 1200×630 social poster using the same TI still, current offer/price, no fixed workshop date.
 - Education link in `/services` points here; sitemap includes the route.
 
 **Current authorized draft offer:** four weeks of private guided implementation,
 **$2,500 CAD per business**, one nominated employee and one agreed workflow.
-Owner joins kickoff/outcome review. Four weekly90-minute working sessions,
+Owner joins kickoff/outcome review. Four weekly 90-minute working sessions,
 three progress reviews between sessions, workflow testing, human review steps,
 an operating guide and handover. Start date/times agreed together after the fit
 call. Tool subscriptions, additional workflows and custom
@@ -67,8 +69,7 @@ available appointment times, Google Meet information added after booking.
 Existing schedule and availability were preserved. No appointment/test booking
 or invitation submitted. No API keys, payment code, scheduler embed or third-party
 JavaScript needed. Call is free; programme payment is handled after agreeing the
-scope. An optional choice of direct checkout remains open, but the default
-fit-call-first recommendation is implemented. There is no current programme
+scope. The fit-call-first approach is implemented. There is no current programme
 payment link on the page. The superseded course Stripe Payment Link is deactivated; its public checkout now refuses purchases. The product/price are retained historically.
 
 **Logo provenance:** Big O is the Victoria client, retained in its accessible
@@ -81,9 +82,15 @@ its name; Omen source padding is compensated in CSS.
 - SD Concrete / Stone Design: [official lockup SVG](https://sdconcrete.com/assets/brand/sd-lockup.svg)
 - Omen Foils: [official dark mark PNG](https://omenfoils.com/cdn/shop/files/FINAL_Black_Logo_Social.gif?format=png&v=1674710102)
 
-The orange direction follows Theo’s request; exact current business-card artwork
-was not located, so this is not claimed as an exact palette match. Earlier
-purple/decorative cards and faint recolored logos were rejected; do not restore.
+The compact split hero and inclusion checklist follow Theo’s chosen
+[AIwithMichal mentoring reference](https://aiwithmichal.com/ai-mentoring), using
+original TI copy, branding and imagery. No copied testimonials, credentials,
+subscriptions or recruiting claims. Theo explicitly retained the orange gradient
+and contained logo band, requested more creative artwork, rejected the example
+workflow diagram, numbered programme grid and dark pricing panel, and wanted the
+FAQs higher. Do not restore those sections. Orange follows the business-card
+direction; exact current card artwork was not located, so this is not claimed as
+an exact palette match.
 
 **Before launch:** review/publish the concrete page; confirm delivery capacity,
 final terms/tax/payment arrangements and Meta readiness. No conversion pixel,
