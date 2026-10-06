@@ -30,14 +30,58 @@ segment so bare paths work once `_redirects` is live.
 Add a page: drop a `#page-x` block and add `x: true` to the `standalone` map
 (and a `_redirects` line if it needs a bare path).
 
-## Before deploy — two to-dos
+## Deployment
 
-1. **Web3Forms key.** The contact form posts to Web3Forms. Replace
-   `REPLACE-WITH-WEB3FORMS-KEY` in the form's hidden `access_key` input with the
-   real key (same service the other TI sites use). Until then the form won't send.
-2. **Redirects.** `_redirects` is included for Cloudflare Pages. Confirm it's
-   picked up so `taylorintelligence.ai/card` resolves (200 rewrite to index),
-   not a 404.
+The production domain is **taylorintelligence.ai**. Cloudflare Workers Builds
+deploys pushes to **main** automatically. `wrangler.jsonc` serves static assets
+from this directory; `.assetsignore` excludes README, Git files and the map
+pipeline. There is no application build command.
+
+The existing contact form uses Web3Forms with its public client access key
+already in the HTML. `_redirects` and the Worker's SPA fallback support the main
+site's bare routes. Keep offer/copy changes on a review branch until approved.
+
+## AI intensive landing page — campaign draft (2026-10-06)
+
+- URL after an approved deployment: `/ai-intensive/`.
+- `ai-intensive/index.html`: independent static document, course copy, price,
+  schedule, accessible enquiry form and search/social metadata.
+- `ai-intensive/style.css`: the existing white/black hairline design, responsive.
+- `ai-intensive/course.js`: enquiry submission and campaign-query capture.
+- Linked from the Education section of `/services`; included in `sitemap.xml`.
+
+Draft offer: Friday **October 23, 2026**, **12–5 pm Pacific time**, live on Zoom,
+**$400 CAD per guest**. CAD is the working currency assumption from the local
+business context; confirm the full offer in review before publishing. Vancouver
+observes PDT (UTC−7) on that date; the page uses “Pacific time” to avoid a fixed
+UTC−8 interpretation of PST.
+
+The buyer is a business owner who sends a nominated employee, or attends
+themselves. The day works through choosing a task, building/reviewing an AI
+workflow, and preparing a first team trial. This is a focused Education offer.
+
+**Enquiry flow:** the form uses the same Web3Forms key as the existing site.
+It captures name/email/business plus optional attendee and task, with `utm_*`,
+`fbclid`, `gclid` and `page_path` when present. It checks both HTTP status and
+the provider's `success: true` response before clearing the form. It preserves
+entries on failures and warns when receipt cannot be confirmed. A successful
+response is an accepted enquiry, not a paid seat, confirmed booking or proof
+of inbox delivery.
+
+**Before campaign launch:** approve/publish the offer; verify a controlled real
+enquiry arrives in the intended inbox; settle the booking/payment and course
+logistics; configure/test any desired Meta conversion tracking with the real
+account/pixel details. No Meta pixel or Conversions API is installed by this
+change. `ai_course_enquiry_accepted` is only a local browser event hook.
+
+**Editing checklist:** update date, hours and price consistently in visible copy,
+the form's hidden `course`/`subject` fields, title/description/social metadata,
+and the JS event's course identifier. Remove or refresh this dated offer after
+October 23. Keep private business/financial notes outside this public repo.
+
+**Local preview:** run `python3 -m http.server 4183 --bind 127.0.0.1` from the
+site root, then open `http://127.0.0.1:4183/ai-intensive/`. No dependency install
+is needed. Do not use a live enquiry submission as a routine code test.
 
 ## Regenerating the map
 
@@ -48,5 +92,5 @@ python3 gen_svg.py         # rebuild map_snippet.svg
 # then paste map_snippet.svg over the <svg class="statement-map"> in index.html
 ```
 
-Domain of record: **taylorintelligence.ai**. Status: parallel exploration
-alongside v3 — see the vault note `30 Projects/Taylor Intelligence site.md`.
+Domain of record: **taylorintelligence.ai**. v4 is the production site;
+the AI intensive change remains a draft until the review branch is merged.
