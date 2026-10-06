@@ -46,8 +46,13 @@ site's bare routes. Keep offer/copy changes on a review branch until approved.
 - URL after an approved deployment: `/ai-intensive/`.
 - `ai-intensive/index.html`: independent static document, course copy, price,
   schedule, accessible enquiry form and search/social metadata.
-- `ai-intensive/style.css`: the existing white/black hairline design, responsive.
+- `ai-intensive/style.css`: independent vivid campaign design, responsive; dark
+  purple ground, lime/pink/orange/violet gradients, oversized typography, angled
+  course ticket and rounded sections. Theo explicitly requested this exception
+  to the parent site’s design language on October 6.
 - `ai-intensive/course.js`: enquiry submission and campaign-query capture.
+- `ai-intensive/logos/`: four unmodified official client assets, hosted locally.
+- `ai-intensive/og.png`: campaign-specific 1200×630 social preview.
 - Linked from the Education section of `/services`; included in `sitemap.xml`.
 
 Draft offer: Friday **October 23, 2026**, **12–5 pm Pacific time**, live on Zoom,
@@ -59,6 +64,16 @@ UTC−8 interpretation of PST.
 The buyer is a business owner who sends a nominated employee, or attends
 themselves. The day works through choosing a task, building/reviewing an AI
 workflow, and preparing a first team trial. This is a focused Education offer.
+
+**Logo provenance:** Big O caption is location-specific. The logos identify
+client work, not course participants, testimonials or a franchise endorsement.
+Original artwork and aspect ratios are preserved. Szolyd’s original symbol is
+paired with a plain-text name; Omen’s white mark sits on a dark surface.
+
+- Big O Tires Victoria: [official header PNG](https://www.bigotiresvictoria.com/Portals/50/logo.png)
+- Szolyd: [official symbol SVG](https://szolyd.com/assets/img/szolyd-mark.svg)
+- SD Concrete / Stone Design: [official lockup SVG](https://sdconcrete.com/assets/brand/sd-lockup.svg)
+- Omen Foils: [official header PNG](https://omenfoils.com/cdn/shop/files/White_Omen_Logo_Medium_afab6594-13d8-45d5-bbf0-d399bf237747.png?v=1668811137)
 
 **Enquiry flow:** the form uses the same Web3Forms key as the existing site.
 It captures name/email/business plus optional attendee and task, with `utm_*`,
