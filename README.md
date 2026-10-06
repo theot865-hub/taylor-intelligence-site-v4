@@ -46,16 +46,17 @@ site's bare routes. Keep offer/copy changes on a review branch until approved.
 - URL after an approved deployment: `/ai-intensive/`.
 - `ai-intensive/index.html`: independent static document, course copy, price,
   schedule, accessible enquiry form and search/social metadata.
-- `ai-intensive/style.css`: independent vivid campaign design, responsive; dark
-  purple ground, lime/pink/orange/violet gradients, oversized typography, angled
-  course ticket and rounded sections. Theo explicitly requested this exception
-  to the parent site’s design language on October 6.
+- `ai-intensive/style.css`: compact cream page with plain dark typography,
+  a restrained orange-gradient rule, square controls and readable original-color
+  client logos near the top. This supersedes the decorative gradient versions
+  after Theo’s October 6 feedback. The actual current business-card artwork was
+  not located, so the orange palette is an approximation, not an exact match.
 - `ai-intensive/course.js`: enquiry submission and campaign-query capture.
 - `ai-intensive/logos/`: four unmodified official client assets, hosted locally.
 - `ai-intensive/og.png`: campaign-specific 1200×630 social preview.
 - Linked from the Education section of `/services`; included in `sitemap.xml`.
 
-Draft offer: Friday **October 23, 2026**, **12–5 pm Pacific time**, live on Zoom,
+Draft offer: Friday **October 23, 2026**, **12–5 pm Pacific time**, live on Google Meet,
 **$400 CAD per guest**. CAD is the working currency assumption from the local
 business context; confirm the full offer in review before publishing. Vancouver
 observes PDT (UTC−7) on that date; the page uses “Pacific time” to avoid a fixed
@@ -68,12 +69,13 @@ workflow, and preparing a first team trial. This is a focused Education offer.
 **Logo provenance:** Big O caption is location-specific. The logos identify
 client work, not course participants, testimonials or a franchise endorsement.
 Original artwork and aspect ratios are preserved. Szolyd’s original symbol is
-paired with a plain-text name; Omen’s white mark sits on a dark surface.
+paired with a plain-text name; Omen’s official dark mark is shown on a light surface; its transparent source
+padding is compensated in CSS without altering the image file.
 
 - Big O Tires Victoria: [official header PNG](https://www.bigotiresvictoria.com/Portals/50/logo.png)
 - Szolyd: [official symbol SVG](https://szolyd.com/assets/img/szolyd-mark.svg)
 - SD Concrete / Stone Design: [official lockup SVG](https://sdconcrete.com/assets/brand/sd-lockup.svg)
-- Omen Foils: [official header PNG](https://omenfoils.com/cdn/shop/files/White_Omen_Logo_Medium_afab6594-13d8-45d5-bbf0-d399bf237747.png?v=1668811137)
+- Omen Foils: [official dark mark PNG](https://omenfoils.com/cdn/shop/files/FINAL_Black_Logo_Social.gif?format=png&v=1674710102)
 
 **Enquiry flow:** the form uses the same Web3Forms key as the existing site.
 It captures name/email/business plus optional attendee and task, with `utm_*`,
@@ -84,10 +86,14 @@ response is an accepted enquiry, not a paid seat, confirmed booking or proof
 of inbox delivery.
 
 **Before campaign launch:** approve/publish the offer; verify a controlled real
-enquiry arrives in the intended inbox; settle the booking/payment and course
-logistics; configure/test any desired Meta conversion tracking with the real
+enquiry arrives in the intended inbox; settle the booking/payment and participant logistics; configure/test any desired Meta conversion tracking with the real
 account/pixel details. No Meta pixel or Conversions API is installed by this
 change. `ai_course_enquiry_accepted` is only a local browser event hook.
+
+**Meet setup:** A private host event with a real Google Meet conference was
+created and read back on Theo’s TI calendar for October 23, 12–5 pm Pacific.
+The host meeting URL is intentionally in the private task handoff, not this
+public repository. No external guest invitations were sent.
 
 **Editing checklist:** update date, hours and price consistently in visible copy,
 the form's hidden `course`/`subject` fields, title/description/social metadata,
