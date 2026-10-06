@@ -76,24 +76,28 @@ padding is compensated in CSS without altering the image file.
 - SD Concrete / Stone Design: [official lockup SVG](https://sdconcrete.com/assets/brand/sd-lockup.svg)
 - Omen Foils: [official dark mark PNG](https://omenfoils.com/cdn/shop/files/FINAL_Black_Logo_Social.gif?format=png&v=1674710102)
 
-**Booking flow — destination pending:** Theo replaced the enquiry flow with
-“Book your seat” links. The course page no longer loads Web3Forms, contains a
-form, or sends enquiries. The real booking/payment URL has not been supplied.
-All three `[data-booking-link]` anchors therefore have `aria-disabled="true"`
-and no `href` in this unpublished draft. Once the verified course booking URL
-is available, add it as `href` to all three anchors and remove `aria-disabled`.
-Do not use the private Google Meet host URL as a booking destination.
+**Booking flow — live Stripe checkout:** all three `[data-booking-link]`
+anchors open [the course booking link](https://book.stripe.com/cNicN71uu2t2bml2lneIw00)
+in the same tab. Checkout is a one-time CAD $400 for one guest, with email/full
+name required and business name optional. It was created in the Taylor
+Intelligence Stripe merchant and independently opened/read back in live mode.
+No payment was submitted. The landing page needs no API keys or payment script.
 
-**Before campaign launch:** connect and verify the real booking/payment link;
-approve/publish the offer; confirm participant logistics; configure/test any
-desired Meta conversion tracking with the real account/pixel details. No Meta
-pixel, Conversions API or purchase/enquiry event is installed by this page.
-The earlier enquiry form validation is historical and no longer applies.
+Stripe’s successful-payment confirmation is configured with the date/time,
+Google Meet joining URL and attendee follow-up instructions. Standard successful
+payment receipts are enabled and saved. These configurations have been read
+back; actual payment, receipt delivery and the paid confirmation path remain
+untested. The private Meet URL stays outside this public source.
+
+**Before campaign launch:** approve/publish the offer; confirm participant
+logistics; configure/test any desired Meta conversion tracking with the real
+account/pixel details. No Meta pixel, Conversions API or purchase/enquiry event
+is installed by this page. Earlier enquiry-form validation is historical.
 
 **Meet setup:** A private host event with a real Google Meet conference was
 created and read back on Theo’s TI calendar for October 23, 12–5 pm Pacific.
-The host meeting URL is intentionally in the private task handoff, not this
-public repository. No external guest invitations were sent.
+The host meeting URL is in the private task handoff and the Stripe post-payment
+confirmation, outside this public repository. No external guest invitations were sent.
 
 **Editing checklist:** update date, hours and price consistently in visible copy,
 the external checkout/booking product and title/description/social metadata. Remove or refresh this dated offer after

@@ -64,7 +64,6 @@ nav a:hover { text-decoration: underline; }
 .booking-copy .eyebrow { margin-bottom: 12px; }
 .booking-copy > p:not(.eyebrow) { color: var(--muted); font-size: 15px; max-width: 44ch; margin-top: 17px; }
 .booking-copy .button { margin-top: 5px; }
-.booking-link[aria-disabled="true"] { cursor: default; }
 .faq-list details { border-bottom: 1px solid #d8cbbd; padding: 12px 0; }
 .faq-list details:last-child { border-bottom: 0; }
 summary { font-size: 14px; font-weight: 600; cursor: pointer; min-height: 26px; padding: 2px 0; }
