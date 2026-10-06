@@ -11,8 +11,7 @@
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 20px; }
 body { margin: 0; color: var(--ink); background: var(--ground); font: 16px/1.55 var(--sans); overflow-wrap: break-word; }
 a { color: inherit; text-underline-offset: 4px; }
-button, input, textarea { font: inherit; }
-button, a, input, textarea, summary { touch-action: manipulation; }
+a, summary { touch-action: manipulation; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 [hidden] { display: none !important; }
 p { margin: 0 0 16px; }
@@ -42,8 +41,8 @@ nav a:hover { text-decoration: underline; }
 .statement::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 7px; background: linear-gradient(100deg, #ad451b, #ec7738 50%, #ffc079); }
 .eyebrow { color: var(--accent); font-size: 13px; line-height: 1.5; margin-bottom: 15px; }
 .intro { max-width: 45ch; color: var(--muted); font-size: 16px; margin: 18px 0 23px; }
-.button, .submit { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; min-height: 46px; padding: 12px 19px; color: #fff; background: var(--accent); border: 1px solid var(--accent); border-radius: 0; font-size: 14px; font-weight: 600; text-decoration: none; cursor: pointer; }
-.button:hover, .submit:hover { background: #723010; border-color: #723010; }
+.button { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; min-height: 46px; padding: 12px 19px; color: #fff; background: var(--accent); border: 1px solid var(--accent); border-radius: 0; font-size: 14px; font-weight: 600; text-decoration: none; cursor: pointer; }
+.button[href]:hover { background: #723010; border-color: #723010; }
 .hero-note { margin-top: 11px; color: var(--muted); font-size: 12px; }
 .course-details { padding-left: 30px; border-left: 1px solid #d8cbbd; }
 .course-details .eyebrow { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
@@ -61,10 +60,11 @@ nav a:hover { text-decoration: underline; }
 .agenda-item { display: flex; gap: 12px; }
 .number { color: var(--accent); font-size: 13px; padding-top: 2px; }
 .agenda-item p { color: var(--muted); font-size: 14px; margin-top: 9px; max-width: 36ch; }
-.enquiry-grid { display: grid; grid-template-columns: 1fr 1.1fr; align-items: start; gap: 65px; padding: 36px 0; }
-.enquiry-copy .eyebrow { margin-bottom: 12px; }
-.enquiry-copy > p:not(.eyebrow) { color: var(--muted); font-size: 15px; max-width: 44ch; margin-top: 17px; }
-.faq-list { margin-top: 22px; }
+.booking-section { display: grid; grid-template-columns: 1fr 1.1fr; align-items: start; gap: 65px; padding: 36px 0; }
+.booking-copy .eyebrow { margin-bottom: 12px; }
+.booking-copy > p:not(.eyebrow) { color: var(--muted); font-size: 15px; max-width: 44ch; margin-top: 17px; }
+.booking-copy .button { margin-top: 5px; }
+.booking-link[aria-disabled="true"] { cursor: default; }
 .faq-list details { border-bottom: 1px solid #d8cbbd; padding: 12px 0; }
 .faq-list details:last-child { border-bottom: 0; }
 summary { font-size: 14px; font-weight: 600; cursor: pointer; min-height: 26px; padding: 2px 0; }
@@ -72,30 +72,15 @@ summary::marker { color: var(--accent); }
 details p { font-size: 14px; color: var(--muted); margin-top: 12px; max-width: 46ch; }
 .email-note { font-size: 13px !important; }
 .email-note a { color: var(--accent); overflow-wrap: anywhere; }
-form { padding: 0; }
-.form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px 14px; }
-.field { min-width: 0; }
-.wide { grid-column: 1 / -1; }
-.field label { display: block; font-size: 13px; margin-bottom: 6px; }
-.field label span { color: var(--muted); font-size: 11px; }
-.field input, .field textarea { width: 100%; display: block; min-height: 43px; color: var(--ink); background: #fff; border: 1px solid #bcae9e; border-radius: 0; padding: 9px 11px; font-size: 16px; resize: vertical; }
-.field input:focus, .field textarea:focus { border-color: var(--accent); outline: 2px solid #963e1825; outline-offset: 1px; }
-.field input::placeholder, .field textarea::placeholder { color: #776759; opacity: 1; font-size: 13px; }
-.form-note { color: var(--muted); font-size: 11px; margin: 15px 0; }
-.submit { width: 100%; }
-.submit:disabled { cursor: wait; opacity: .65; }
-.form-status { color: #442c1e; border-left: 3px solid var(--accent); background: #f5e7d5; padding: 13px; margin-top: 14px; font-size: 14px; }
-.form-status[data-state="error"] { background: #f6e3dc; }
 .foot { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; padding: 18px 0 25px; border-top: 1px solid #d8cbbd; color: var(--muted); font-size: 12px; }
 .foot a { text-decoration: none; }
-.honeypot { display: none; }
 .skip-link { position: absolute; left: 20px; top: -100px; padding: 10px 15px; background: var(--accent); color: #fff; z-index: 10; }
 .skip-link:focus { top: 10px; }
 @media (max-width: 900px) {
   .wrap { padding: 0 30px; }
   .statement { gap: 35px; }
   h1 { font-size: 39px; }
-  .enquiry-grid { gap: 35px; }
+  .booking-section { gap: 35px; }
   .course-details { padding-left: 20px; }
 }
 @media (max-width: 760px) {
@@ -119,10 +104,8 @@ form { padding: 0; }
   .section-heading h2 { font-size: 23px; }
   .agenda { grid-template-columns: 1fr; gap: 20px; }
   .agenda-item p { max-width: 60ch; margin-top: 7px; }
-  .enquiry-grid { grid-template-columns: 1fr; gap: 28px; padding: 30px 0; }
-  .enquiry-copy > p:not(.eyebrow) { max-width: 55ch; }
-  .form-grid { gap: 14px; }
-  .field label span { display: block; }
+  .booking-section { grid-template-columns: 1fr; gap: 28px; padding: 30px 0; }
+  .booking-copy > p:not(.eyebrow) { max-width: 55ch; }
   .foot { font-size: 11px; }
 }
 @media (max-width: 600px) {
@@ -146,8 +129,6 @@ form { padding: 0; }
   .logo-szolyd img { width: 16px; }
   .logo-szolyd span { font-size: 13px; }
   .course-details dl { grid-template-columns: 1fr; }
-  .form-grid { grid-template-columns: 1fr; }
-  .wide { grid-column: auto; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 @media (forced-colors: active) {

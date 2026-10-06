@@ -21,7 +21,6 @@
   <meta name="twitter:description" content="Train your team's go-to AI person. October 23, 2026 · Live on Google Meet · $400 CAD per guest.">
   <meta name="twitter:image" content="https://taylorintelligence.ai/ai-intensive/og.png">
   <link rel="stylesheet" href="/ai-intensive/style.css">
-  <script src="/ai-intensive/course.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -31,7 +30,7 @@
         <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><g transform="translate(3.290 24.934) scale(0.0256 -0.0256)"><path d="M557 563H368V0H216V563H27V698H557Z"/><path transform="translate(584 0)" d="M382 0H50V121H140V577H50V698H382V577H292V121H382Z"/></g></svg>
         <span>Taylor Intelligence</span>
       </a>
-      <nav aria-label="Course navigation"><a href="#the-day">The intensive</a><a href="#enquire">Enquire ↗</a></nav>
+      <nav aria-label="Course navigation"><a href="#the-day">The intensive</a><a class="booking-link" data-booking-link role="link" aria-disabled="true">Book your seat ↗</a></nav>
     </header>
 
     <div class="client-proof" role="group" aria-label="A few businesses we work with">
@@ -49,7 +48,7 @@
           <p class="eyebrow">One-day AI intensive · Google Meet</p>
           <h1 id="course-title">Train your team’s <span class="gradient-text">go-to AI person.</span></h1>
           <p class="intro">Send someone who already knows your business. We’ll help them practise using AI on everyday work and bring that approach back to the team.</p>
-          <a class="button" href="#enquire">Enquire about a seat <span aria-hidden="true">↗</span></a>
+          <a class="button booking-link" data-booking-link role="link" aria-disabled="true">Book your seat <span aria-hidden="true">↗</span></a>
           <p class="hero-note">No coding experience needed.</p>
         </div>
         <aside class="course-details" aria-label="Course details">
@@ -73,35 +72,19 @@
         </div>
       </section>
 
-      <section id="enquire" class="enquiry-grid" aria-labelledby="enquire-title">
-        <div class="enquiry-copy">
+      <section id="booking" class="booking-section" aria-labelledby="booking-title">
+        <div class="booking-copy">
           <p class="eyebrow">October 23 / $400 CAD per guest</p>
-          <h2 id="enquire-title">Who’s your<br><span class="gradient-text">AI person?</span></h2>
-          <p>Tell us about your business and who you’d like to send. We’ll reply with availability and booking details.</p>
-          <div id="questions" class="faq-list">
-            <details><summary>Who should attend?</summary><p>A curious team member who knows how the business runs, or the owner. No coding experience is needed. The aim is practical everyday AI use, rather than expertise in a day.</p></details>
-            <details><summary>What should they bring?</summary><p>A laptop, reliable connection, and a routine task using a non-sensitive example. We’ll confirm any tool setup before booking.</p></details>
-            <details><summary>Does this reserve a seat?</summary><p>No. This form sends an enquiry and does not reserve a seat or take payment. We’ll confirm booking details separately and provide the Google Meet link to confirmed guests.</p></details>
-          </div>
-          <p class="email-note">Prefer email? <a href="mailto:theo@taylorintelligence.ai?subject=AI%20Intensive%20%E2%80%94%20October%2023">theo@taylorintelligence.ai</a></p>
+          <h2 id="booking-title">Send your team’s AI person.</h2>
+          <p>One day of practical AI training for someone who already knows your business.</p>
+          <a class="button booking-link" data-booking-link role="link" aria-disabled="true">Book your seat <span aria-hidden="true">↗</span></a>
+          <p class="email-note">Questions? <a href="mailto:theo@taylorintelligence.ai?subject=AI%20Intensive%20%E2%80%94%20October%2023">theo@taylorintelligence.ai</a></p>
         </div>
-        <form id="course-form" action="https://api.web3forms.com/submit" method="post">
-          <input type="hidden" name="access_key" value="3d97d841-4c10-4ecf-9b00-248974f688a3">
-          <input type="hidden" name="subject" value="AI Intensive enquiry — October 23, 2026">
-          <input type="hidden" name="from_name" value="Taylor Intelligence AI Intensive">
-          <input type="hidden" name="course" value="AI Intensive · October 23, 2026 · Google Meet · $400 CAD per guest">
-          <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" aria-hidden="true">
-          <div class="form-grid">
-            <div class="field"><label for="owner-name">Your name <span>(required)</span></label><input id="owner-name" name="name" type="text" autocomplete="name" maxlength="120" required></div>
-            <div class="field"><label for="owner-email">Email <span>(required)</span></label><input id="owner-email" name="email" type="email" autocomplete="email" maxlength="254" required></div>
-            <div class="field wide"><label for="business">Business <span>(required)</span></label><input id="business" name="business" type="text" autocomplete="organization" maxlength="160" required></div>
-            <div class="field wide"><label for="guest">Who would attend? <span>(optional)</span></label><input id="guest" name="attendee" type="text" placeholder="You, a team member, or still deciding" maxlength="160"></div>
-            <div class="field wide"><label for="workflow">What task would they bring? <span>(optional)</span></label><textarea id="workflow" name="message" rows="2" maxlength="3000" placeholder="For example, preparing quotes or meeting notes"></textarea></div>
-          </div>
-          <p class="form-note">We’ll use these details to respond to your enquiry. Web3Forms processes the form. Please leave out confidential information.</p>
-          <button class="submit" type="submit">Send my enquiry <span aria-hidden="true">→</span></button>
-          <p id="form-status" class="form-status" role="status" aria-live="polite" tabindex="-1" hidden></p>
-        </form>
+        <div id="questions" class="faq-list">
+          <details><summary>Who should attend?</summary><p>A curious team member who knows how the business runs, or the owner. No coding experience is needed. The aim is practical everyday AI use, rather than expertise in a day.</p></details>
+          <details><summary>What should they bring?</summary><p>A laptop, reliable connection, and a routine task using a non-sensitive example.</p></details>
+          <details><summary>How do I join?</summary><p>The intensive takes place live on Google Meet. Confirmed guests will receive the joining link before the session.</p></details>
+        </div>
       </section>
     </main>
     <footer class="foot"><span>Taylor Intelligence · Education for real work.</span><a href="/">Meet Taylor Intelligence ↗</a></footer>

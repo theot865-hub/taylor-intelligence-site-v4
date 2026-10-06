@@ -45,13 +45,12 @@ site's bare routes. Keep offer/copy changes on a review branch until approved.
 
 - URL after an approved deployment: `/ai-intensive/`.
 - `ai-intensive/index.html`: independent static document, course copy, price,
-  schedule, accessible enquiry form and search/social metadata.
+  schedule, direct booking CTAs and search/social metadata.
 - `ai-intensive/style.css`: compact cream page with plain dark typography,
   a restrained orange-gradient rule, square controls and readable original-color
   client logos in one small horizontal band near the top. This supersedes the decorative gradient versions
   after Theo’s October 6 feedback. The actual current business-card artwork was
   not located, so the orange palette is an approximation, not an exact match.
-- `ai-intensive/course.js`: enquiry submission and campaign-query capture.
 - `ai-intensive/logos/`: four unmodified official client assets, hosted locally.
 - `ai-intensive/og.png`: campaign-specific 1200×630 social preview.
 - Linked from the Education section of `/services`; included in `sitemap.xml`.
@@ -77,18 +76,19 @@ padding is compensated in CSS without altering the image file.
 - SD Concrete / Stone Design: [official lockup SVG](https://sdconcrete.com/assets/brand/sd-lockup.svg)
 - Omen Foils: [official dark mark PNG](https://omenfoils.com/cdn/shop/files/FINAL_Black_Logo_Social.gif?format=png&v=1674710102)
 
-**Enquiry flow:** the form uses the same Web3Forms key as the existing site.
-It captures name/email/business plus optional attendee and task, with `utm_*`,
-`fbclid`, `gclid` and `page_path` when present. It checks both HTTP status and
-the provider's `success: true` response before clearing the form. It preserves
-entries on failures and warns when receipt cannot be confirmed. A successful
-response is an accepted enquiry, not a paid seat, confirmed booking or proof
-of inbox delivery.
+**Booking flow — destination pending:** Theo replaced the enquiry flow with
+“Book your seat” links. The course page no longer loads Web3Forms, contains a
+form, or sends enquiries. The real booking/payment URL has not been supplied.
+All three `[data-booking-link]` anchors therefore have `aria-disabled="true"`
+and no `href` in this unpublished draft. Once the verified course booking URL
+is available, add it as `href` to all three anchors and remove `aria-disabled`.
+Do not use the private Google Meet host URL as a booking destination.
 
-**Before campaign launch:** approve/publish the offer; verify a controlled real
-enquiry arrives in the intended inbox; settle the booking/payment and participant logistics; configure/test any desired Meta conversion tracking with the real
-account/pixel details. No Meta pixel or Conversions API is installed by this
-change. `ai_course_enquiry_accepted` is only a local browser event hook.
+**Before campaign launch:** connect and verify the real booking/payment link;
+approve/publish the offer; confirm participant logistics; configure/test any
+desired Meta conversion tracking with the real account/pixel details. No Meta
+pixel, Conversions API or purchase/enquiry event is installed by this page.
+The earlier enquiry form validation is historical and no longer applies.
 
 **Meet setup:** A private host event with a real Google Meet conference was
 created and read back on Theo’s TI calendar for October 23, 12–5 pm Pacific.
@@ -96,13 +96,12 @@ The host meeting URL is intentionally in the private task handoff, not this
 public repository. No external guest invitations were sent.
 
 **Editing checklist:** update date, hours and price consistently in visible copy,
-the form's hidden `course`/`subject` fields, title/description/social metadata,
-and the JS event's course identifier. Remove or refresh this dated offer after
+the external checkout/booking product and title/description/social metadata. Remove or refresh this dated offer after
 October 23. Keep private business/financial notes outside this public repo.
 
 **Local preview:** run `python3 -m http.server 4183 --bind 127.0.0.1` from the
 site root, then open `http://127.0.0.1:4183/ai-intensive/`. No dependency install
-is needed. Do not use a live enquiry submission as a routine code test.
+is needed. Verify the booking link without placing a real order as a routine code test.
 
 ## Regenerating the map
 
