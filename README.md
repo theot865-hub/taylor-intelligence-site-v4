@@ -45,12 +45,12 @@ site's bare routes. Keep offer/copy changes on a review branch until approved.
 
 - Route after approved deployment: `/ai-intensive/`. The existing route is retained for continuity; its offer is now a four-week programme.
 - `ai-intensive/index.html`: standalone document, owner-facing offer, scope, price, booking links, FAQs and search/social metadata.
-- `ai-intensive/style.css`: independent, compact mentoring layout. A split orange hero holds the complete offer, inclusion checklist, price and fit-call link next to an original TI video still. FAQs follow immediately. Small original-color logos remain in their white band near the top. The parent-site design is separate.
+- `ai-intensive/style.css`: independent, compact mentoring layout. A split orange hero holds the complete offer, inclusion checklist, price and fit-call link next to Theo’s supplied image of himself and Julian. FAQs follow immediately. Small original-color logos remain in their white band near the top. The parent-site design is separate.
 - `ai-intensive/fonts/Manrope.ttf`: self-hosted variable font, no external font request. Original copyright and SIL OFL1.1 retained in `fonts/OFL.txt`. Source: [Google Fonts Manrope](https://github.com/google/fonts/tree/main/ofl/manrope).
 - `ai-intensive/logos/`: original official client assets hosted locally.
-- `ai-intensive/images/ti-education-still.jpg`: unchanged poster from the existing TI education video. Source: [TI education still](https://media.taylorintelligence.ai/video/education.jpg); SHA256 `5c494a8f532f5fe0480d8c1c4ed852fa0eadb328c91365204e55614b813c72c2`. Crop uses CSS only. The root site labels this speaker Julian on Education.
+- `ai-intensive/images/theo-julian-call.png`: Theo’s supplied image of himself and Julian in a two-person video call. Original PNG bytes preserved, SHA256 `ac41e043e4f3f04ec0e626128396d026a166b21e5d23abc1c3cc2ebbbec6facc`. CSS crops the outer application chrome while keeping both video tiles and name labels. No face/scene alterations. Current hero/social use this image; it supersedes the earlier single-speaker education still.
 - `ai-intensive/images/orange-mentoring-background.jpg`: web-optimized derivative of one completed Higgsfield image, job `97ab4c12-93b9-4fd7-84d6-cd14ac73994c`, model `gpt_image_2_5`. Orange/apricot pigment and paper-grain background; no generated people. The generation quote was 0.25 credits; an actual debit was not separately checked.
-- `ai-intensive/og.png`: current 1200×630 social poster using the same TI still, current offer/price, no fixed workshop date.
+- `ai-intensive/og.png`: current 1200×630 social poster using the same supplied two-person image, current offer/price, no fixed workshop date.
 - Education link in `/services` points here; sitemap includes the route.
 
 **Current authorized draft offer:** four weeks of private guided implementation,
