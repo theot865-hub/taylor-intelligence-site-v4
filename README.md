@@ -41,9 +41,9 @@ The existing contact form uses Web3Forms with its public client access key
 already in the HTML. `_redirects` and the Worker's SPA fallback support the main
 site's bare routes. Keep offer/copy changes on a review branch until approved.
 
-## AI guided implementation — campaign draft (2026-10-06)
+## AI guided implementation — live (2026-10-06)
 
-- Route after approved deployment: `/ai-intensive/`. The existing route is retained for continuity; its offer is now a four-week programme.
+- Live route: [taylorintelligence.ai/ai-intensive/](https://taylorintelligence.ai/ai-intensive/). The existing route is retained for continuity; its offer is now a four-week programme.
 - `ai-intensive/index.html`: standalone document, owner-facing offer, scope, price, booking links, FAQs and search/social metadata.
 - `ai-intensive/style.css`: independent, compact mentoring layout. A split orange hero holds the complete offer, inclusion checklist, price and fit-call link next to Theo’s supplied image of himself and Julian. The final design pass retains this split layout and modestly enlarges the full, uncropped photo: about10% on desktop/tablet, with16px extra width on phones. FAQs follow immediately. Small original-color logos remain in their white band near the top. The parent-site design is separate.
 - Load motion is CSS-only: one staggered fade/rise on each page load, a full-frame photo entrance and small hover-arrow movement. Everything settles in about1.25seconds. No motion library or JavaScript required. `prefers-reduced-motion` disables entrances/hover movement; keyboard focus immediately reveals the focused animated group. Keep the static final layout/content visible when animations are unavailable.
@@ -54,7 +54,7 @@ site's bare routes. Keep offer/copy changes on a review branch until approved.
 - `ai-intensive/og.png`: current 1200×630 social poster using the same supplied two-person image, current offer/price, no fixed workshop date.
 - Education link in `/services` points here; sitemap includes the route.
 
-**Current authorized draft offer:** four weeks of private guided implementation,
+**Current published offer:** four weeks of private guided implementation,
 **$2,500 CAD per business**, one nominated employee and one agreed workflow.
 Owner joins kickoff/outcome review. Four weekly 90-minute working sessions,
 three progress reviews between sessions, workflow testing, human review steps,
@@ -93,7 +93,9 @@ FAQs higher. Do not restore those sections. Orange follows the business-card
 direction; exact current card artwork was not located, so this is not claimed as
 an exact palette match.
 
-**Before launch:** review/publish the concrete page; confirm delivery capacity,
+**Published October 6, 2026:** Theo explicitly authorized publication. PR#2 was merged at `56a6a4f39dfe19089a8e0af36f994b02e30e2d29`, including reviewed source `0ec5ae03e1eaadddf1fce3e56d5a2bfca1f68a16`. Cloudflare Workers Builds succeeded; the public route, original full-frame image/logos/font, current price, load motion and three booking links were verified live.
+
+**Operations to confirm:** delivery capacity,
 final terms/tax/payment arrangements and Meta readiness. No conversion pixel,
 Conversions API, purchase event or campaign was installed/launched. A fit call is
 not a paid engagement. The earlier workshop Meet event is historical; programme
@@ -106,8 +108,7 @@ links accessible. No install/build step. To preview, run `python3 -m http.server
 4183 --bind 127.0.0.1` from the site root. Open `http://127.0.0.1:4183/ai-intensive/`.
 The main site’s local hash route is `/#/services`; production Workers handles
 bare routes. Check destination and responsive layout without submitting a real
-booking/payment as a routine test. Main auto-deploys; keep this change on draft
-PR#2 until publication is authorized.
+booking/payment as a routine test. Main auto-deploys; use a review branch for future changes. PR#2 is merged and the page is live.
 
 ## Regenerating the map
 
@@ -119,4 +120,4 @@ python3 gen_svg.py         # rebuild map_snippet.svg
 ```
 
 Domain of record: **taylorintelligence.ai**. v4 is the production site;
-the AI intensive change remains a draft until the review branch is merged.
+the AI mentoring landing page is live at `/ai-intensive/`.
