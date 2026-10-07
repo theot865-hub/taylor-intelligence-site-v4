@@ -30,14 +30,84 @@ segment so bare paths work once `_redirects` is live.
 Add a page: drop a `#page-x` block and add `x: true` to the `standalone` map
 (and a `_redirects` line if it needs a bare path).
 
-## Before deploy — two to-dos
+## Deployment
 
-1. **Web3Forms key.** The contact form posts to Web3Forms. Replace
-   `REPLACE-WITH-WEB3FORMS-KEY` in the form's hidden `access_key` input with the
-   real key (same service the other TI sites use). Until then the form won't send.
-2. **Redirects.** `_redirects` is included for Cloudflare Pages. Confirm it's
-   picked up so `taylorintelligence.ai/card` resolves (200 rewrite to index),
-   not a 404.
+The production domain is **taylorintelligence.ai**. Cloudflare Workers Builds
+deploys pushes to **main** automatically. `wrangler.jsonc` serves static assets
+from this directory; `.assetsignore` excludes README, Git files and the map
+pipeline. There is no application build command.
+
+The existing contact form uses Web3Forms with its public client access key
+already in the HTML. `_redirects` and the Worker's SPA fallback support the main
+site's bare routes. Keep offer/copy changes on a review branch until approved.
+
+## AI guided implementation — campaign draft (2026-10-06)
+
+- Route after approved deployment: `/ai-intensive/`. The existing route is retained for continuity; its offer is now a four-week programme.
+- `ai-intensive/index.html`: standalone document, owner-facing offer, scope, price, booking links, FAQs and search/social metadata.
+- `ai-intensive/style.css`: independent, compact mentoring layout. A split orange hero holds the complete offer, inclusion checklist, price and fit-call link next to Theo’s supplied image of himself and Julian. The final design pass retains this split layout and modestly enlarges the full, uncropped photo: about10% on desktop/tablet, with16px extra width on phones. FAQs follow immediately. Small original-color logos remain in their white band near the top. The parent-site design is separate.
+- Load motion is CSS-only: one staggered fade/rise on each page load, a full-frame photo entrance and small hover-arrow movement. Everything settles in about1.25seconds. No motion library or JavaScript required. `prefers-reduced-motion` disables entrances/hover movement; keyboard focus immediately reveals the focused animated group. Keep the static final layout/content visible when animations are unavailable.
+- `ai-intensive/fonts/Manrope.ttf`: self-hosted variable font, no external font request. Original copyright and SIL OFL1.1 retained in `fonts/OFL.txt`. Source: [Google Fonts Manrope](https://github.com/google/fonts/tree/main/ofl/manrope).
+- `ai-intensive/logos/`: original official client assets hosted locally.
+- `ai-intensive/images/theo-julian-call.png`: Theo’s supplied image of himself and Julian in a two-person video call. Original PNG bytes preserved, SHA256 `ac41e043e4f3f04ec0e626128396d026a166b21e5d23abc1c3cc2ebbbec6facc`. Display the entire image at its original aspect ratio, including all application chrome and call controls. Theo explicitly rejected cropping; do not crop, clip or round its corners. Current hero/social use this image; it supersedes the earlier single-speaker education still.
+- `ai-intensive/images/orange-mentoring-background.jpg`: web-optimized derivative of one completed Higgsfield image, job `97ab4c12-93b9-4fd7-84d6-cd14ac73994c`, model `gpt_image_2_5`. Orange/apricot pigment and paper-grain background; no generated people. The generation quote was 0.25 credits; an actual debit was not separately checked.
+- `ai-intensive/og.png`: current 1200×630 social poster using the same supplied two-person image, current offer/price, no fixed workshop date.
+- Education link in `/services` points here; sitemap includes the route.
+
+**Current authorized draft offer:** four weeks of private guided implementation,
+**$2,500 CAD per business**, one nominated employee and one agreed workflow.
+Owner joins kickoff/outcome review. Four weekly 90-minute working sessions,
+three progress reviews between sessions, workflow testing, human review steps,
+an operating guide and handover. Start date/times agreed together after the fit
+call. Tool subscriptions, additional workflows and custom
+software/integrations are scoped separately. This supersedes the earlier
+fixed-date group workshop. No guaranteed savings/ROI or unlimited support.
+
+**Booking:** all three `[data-booking-link]` anchors open Theo’s actual existing
+[30-minute Google Calendar appointment page](https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP) in the same tab. Verified
+in Chrome: Theo Taylor under theo@taylorintelligence.ai, 30min, Vancouver time,
+available appointment times, Google Meet information added after booking.
+Existing schedule and availability were preserved. No appointment/test booking
+or invitation submitted. No API keys, payment code, scheduler embed or third-party
+JavaScript needed. Call is free; programme payment is handled after agreeing the
+scope. The fit-call-first approach is implemented. There is no current programme
+payment link on the page. The superseded course Stripe Payment Link is deactivated; its public checkout now refuses purchases. The product/price are retained historically.
+
+**Logo provenance:** Big O is the Victoria client, retained in its accessible
+name. These marks identify client work, not purchases/testimonials/endorsement of
+this new programme. Artwork/aspect ratios preserved; Szolyd symbol is paired with
+its name; Omen source padding is compensated in CSS.
+
+- Big O Tires Victoria: [official header PNG](https://www.bigotiresvictoria.com/Portals/50/logo.png)
+- Szolyd: [official symbol SVG](https://szolyd.com/assets/img/szolyd-mark.svg)
+- SD Concrete / Stone Design: [official lockup SVG](https://sdconcrete.com/assets/brand/sd-lockup.svg)
+- Omen Foils: [official dark mark PNG](https://omenfoils.com/cdn/shop/files/FINAL_Black_Logo_Social.gif?format=png&v=1674710102)
+
+The compact split hero and inclusion checklist follow Theo’s chosen
+[AIwithMichal mentoring reference](https://aiwithmichal.com/ai-mentoring), using
+original TI copy, branding and imagery. Theo’s final design pass reverts the larger image-centered rearrangement, keeping this split layout with only a modest photo enlargement. No copied testimonials, credentials,
+subscriptions or recruiting claims. Theo explicitly retained the orange gradient
+and contained logo band, requested more creative artwork, rejected the example
+workflow diagram, numbered programme grid and dark pricing panel, and wanted the
+FAQs higher. Do not restore those sections. Orange follows the business-card
+direction; exact current card artwork was not located, so this is not claimed as
+an exact palette match.
+
+**Before launch:** review/publish the concrete page; confirm delivery capacity,
+final terms/tax/payment arrangements and Meta readiness. No conversion pixel,
+Conversions API, purchase event or campaign was installed/launched. A fit call is
+not a paid engagement. The earlier workshop Meet event is historical; programme
+calls are scheduled individually. Keep private host links and business/financial
+notes outside public source.
+
+**Editing:** update price/scope consistently in visible copy, title/description,
+OG/Twitter metadata, social image and any future payment link. Keep native booking
+links accessible. No install/build step. To preview, run `python3 -m http.server
+4183 --bind 127.0.0.1` from the site root. Open `http://127.0.0.1:4183/ai-intensive/`.
+The main site’s local hash route is `/#/services`; production Workers handles
+bare routes. Check destination and responsive layout without submitting a real
+booking/payment as a routine test. Main auto-deploys; keep this change on draft
+PR#2 until publication is authorized.
 
 ## Regenerating the map
 
@@ -48,5 +118,5 @@ python3 gen_svg.py         # rebuild map_snippet.svg
 # then paste map_snippet.svg over the <svg class="statement-map"> in index.html
 ```
 
-Domain of record: **taylorintelligence.ai**. Status: parallel exploration
-alongside v3 — see the vault note `30 Projects/Taylor Intelligence site.md`.
+Domain of record: **taylorintelligence.ai**. v4 is the production site;
+the AI intensive change remains a draft until the review branch is merged.
