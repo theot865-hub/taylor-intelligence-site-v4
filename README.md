@@ -45,7 +45,7 @@ site's bare routes. Keep offer/copy changes on a review branch until approved.
 
 - Route after approved deployment: `/ai-intensive/`. The existing route is retained for continuity; its offer is now a four-week programme.
 - `ai-intensive/index.html`: standalone document, owner-facing offer, scope, price, booking links, FAQs and search/social metadata.
-- `ai-intensive/style.css`: independent, compact mentoring layout. A split orange hero holds the complete offer, inclusion checklist, price and fit-call link next to Theo’s supplied image of himself and Julian. FAQs follow immediately. Small original-color logos remain in their white band near the top. The parent-site design is separate.
+- `ai-intensive/style.css`: independent, compact mentoring layout. A split orange hero holds the complete offer, inclusion checklist, price and fit-call link next to Theo’s supplied image of himself and Julian. The final design pass retains this split layout and modestly enlarges the full, uncropped photo: about10% on desktop/tablet, with16px extra width on phones. FAQs follow immediately. Small original-color logos remain in their white band near the top. The parent-site design is separate.
 - `ai-intensive/fonts/Manrope.ttf`: self-hosted variable font, no external font request. Original copyright and SIL OFL1.1 retained in `fonts/OFL.txt`. Source: [Google Fonts Manrope](https://github.com/google/fonts/tree/main/ofl/manrope).
 - `ai-intensive/logos/`: original official client assets hosted locally.
 - `ai-intensive/images/theo-julian-call.png`: Theo’s supplied image of himself and Julian in a two-person video call. Original PNG bytes preserved, SHA256 `ac41e043e4f3f04ec0e626128396d026a166b21e5d23abc1c3cc2ebbbec6facc`. Display the entire image at its original aspect ratio, including all application chrome and call controls. Theo explicitly rejected cropping; do not crop, clip or round its corners. Current hero/social use this image; it supersedes the earlier single-speaker education still.
@@ -84,7 +84,7 @@ its name; Omen source padding is compensated in CSS.
 
 The compact split hero and inclusion checklist follow Theo’s chosen
 [AIwithMichal mentoring reference](https://aiwithmichal.com/ai-mentoring), using
-original TI copy, branding and imagery. No copied testimonials, credentials,
+original TI copy, branding and imagery. Theo’s final design pass reverts the larger image-centered rearrangement, keeping this split layout with only a modest photo enlargement. No copied testimonials, credentials,
 subscriptions or recruiting claims. Theo explicitly retained the orange gradient
 and contained logo band, requested more creative artwork, rejected the example
 workflow diagram, numbered programme grid and dark pricing panel, and wanted the
