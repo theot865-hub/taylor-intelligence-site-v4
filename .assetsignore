@@ -6,3 +6,12 @@ wrangler.jsonc
 README.md
 map
 media/_originals
+# Server implementation, local credentials, tooling and tests are not assets.
+worker
+tests
+node_modules
+.wrangler
+.env*
+.dev.vars*
+package.json
+package-lock.json
