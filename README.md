@@ -33,7 +33,10 @@ Add a page: drop a `#page-x` block and add `x: true` to the `standalone` map
 ## Deployment
 
 The production domain is **taylorintelligence.ai**. Cloudflare Workers Builds
-deploys pushes to **main** automatically. `wrangler.jsonc` serves static assets
+deploys repository pushes automatically. On October9, the review branch
+`codex/company-ai-intensive` deployed to the canonical domain before PR5 merged.
+**A draft PR is not a deployment barrier with the current Cloudflare settings.**
+Check the actual build and public URL after any push. `wrangler.jsonc` serves static assets
 from this directory and routes `/api/checkout` to the server-only Worker.
 `.assetsignore` excludes the Worker source, tests, credentials, README, Git files
 and map pipeline from public assets. There is no frontend build command.
@@ -44,8 +47,10 @@ site's bare routes. Keep offer/copy changes on a review branch until approved.
 
 ## AI intensive — current revision (2026-10-09)
 
-**Revision status:** built and locally verified on `codex/company-ai-intensive`;
-Stripe prices saved. Restricted API access and production deployment are pending.
+**Revision status:** copy and assets live from `codex/company-ai-intensive`,
+verified October9 at source `ca3eec9`; PR5 remains draft. Stripe prices saved.
+Restricted API access is pending; the live booking button safely stays disabled
+while `/api/checkout/status` reports `ready: false`. Payment is not connected yet.
 
 - Live route: [taylorintelligence.ai/ai-intensive/](https://taylorintelligence.ai/ai-intensive/). The existing route is retained for continuity; the current revision is a two-week group intensive for business owners.
 - `ai-intensive/index.html`: standalone document, owner-facing offer, scope, price, booking links, FAQs and search/social metadata.
@@ -133,8 +138,9 @@ the full approved portrait, orange artwork, logo band and existing motion. Run
 its booking button safely stays unavailable. For end-to-end local development,
 use official Wrangler (`npx wrangler dev`) with a separate local test secret in
 ignored `.dev.vars` and test Price IDs. Never use a real payment as routine QA.
-No client Stripe SDK or publishable key is needed. Main auto-deploys; use a review
-branch and retain the portable handoff outside public hosting.
+No client Stripe SDK or publishable key is needed. Repository pushes can
+auto-deploy review branches too; retain the portable handoff outside public
+hosting and verify the actual public state after each push.
 
 ## Regenerating the map
 
