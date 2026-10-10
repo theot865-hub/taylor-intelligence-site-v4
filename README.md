@@ -43,7 +43,7 @@ site's bare routes. Keep offer/copy changes on a review branch until approved.
 
 ## AI guided implementation — live (2026-10-06)
 
-- Live route: [taylorintelligence.ai/ai-intensive/](https://taylorintelligence.ai/ai-intensive/). The existing route is retained for continuity; its offer is now a four-week programme.
+- Live route: [taylorintelligence.ai/ai-intensive/](https://taylorintelligence.ai/ai-intensive/). The existing route is retained for continuity; its offer is now a three-week programme.
 - `ai-intensive/index.html`: standalone document, owner-facing offer, scope, price, booking links, FAQs and search/social metadata.
 - `ai-intensive/style.css`: independent, compact mentoring layout. A split orange hero holds the complete offer, inclusion checklist, price and fit-call link next to Theo’s supplied image of himself and Julian. The final design pass retains this split layout and modestly enlarges the full, uncropped photo: about10% on desktop/tablet, with16px extra width on phones. FAQs follow immediately. Small original-color logos remain in their white band near the top. The parent-site design is separate.
 - Load motion is CSS-only: one staggered fade/rise on each page load, a full-frame photo entrance and small hover-arrow movement. Everything settles in about1.25seconds. No motion library or JavaScript required. `prefers-reduced-motion` disables entrances/hover movement; keyboard focus immediately reveals the focused animated group. Keep the static final layout/content visible when animations are unavailable.
@@ -51,13 +51,14 @@ site's bare routes. Keep offer/copy changes on a review branch until approved.
 - `ai-intensive/logos/`: original official client assets hosted locally.
 - `ai-intensive/images/theo-julian-call.png`: October 9, 2026 portrait revision approved for publication. Theo’s actual supplied white-shirt photo and real expression are preserved over a generated, softly unfocused brutalist-apartment backdrop in the left video tile. No face or mouth edit is used. All pixels outside the left tile, Julian’s portrait, call controls and Theo’s original label are unchanged. Final 1672×941 PNG SHA256 `1e4adc34634f59e601893702dc4793e3bed1ee94da7b59ca48d7475c56f2df04`; original call image SHA256 `ac41e043e4f3f04ec0e626128396d026a166b21e5d23abc1c3cc2ebbbec6facc`. The background is generated; this composite is not an actual call recorded in that apartment. Private source photo, generation prompts, native Vision mask, reconstruction scripts and pixel audits remain in Theo’s local portable handoff, outside the public repository. Display the complete outer call frame at its original aspect ratio, including all application chrome and call controls; do not crop, clip or round its corners.
 - `ai-intensive/images/orange-mentoring-background.jpg`: web-optimized derivative of one completed Higgsfield image, job `97ab4c12-93b9-4fd7-84d6-cd14ac73994c`, model `gpt_image_2_5`. Orange/apricot pigment and paper-grain background; no generated people. The generation quote was 0.25 credits; an actual debit was not separately checked.
-- `ai-intensive/og.png`: current 1200×630 social poster using the same October 9 call composite. Poster layout, text and other pixels outside the embedded call image are preserved. Current offer/price and no fixed workshop date are retained. This referenced social poster is included in the deployed static assets.
+- `ai-intensive/images/orange-mentoring-background-mobile.jpg`: separate portrait orange mesh gradient for phones, generated with Higgsfield on October 9, 2026 (completed job `26dcde81-b555-45b6-b22e-a9600e814f24`, model `gpt_image_2_5`). Light peach/orange behind the offer flows into richer tangerine below. The `max-width: 640px` rule selects it; larger screens use the original desktop artwork. The source PNG and exact prompt are retained in Theo's local portable handoff. No generated text or people. The generation quote was 0.25 credits; an actual debit was not separately checked.
+- `ai-intensive/og.png`: current 1200×630 social poster using the same October 9 call composite and three-week offer. This referenced social poster is included in the deployed static assets.
 - Education link in `/services` points here; sitemap includes the route.
 
-**Current published offer:** four weeks of private guided implementation,
+**Current published offer:** three weeks of private guided implementation,
 **$2,500 CAD per business**, one nominated employee and one agreed workflow.
-Owner joins kickoff/outcome review. Four weekly 90-minute working sessions,
-three progress reviews between sessions, workflow testing, human review steps,
+Owner joins kickoff/outcome review. Three weekly 90-minute working sessions,
+two progress reviews between sessions, workflow testing, human review steps,
 an operating guide and handover. Start date/times agreed together after the fit
 call. Tool subscriptions, additional workflows and custom
 software/integrations are scoped separately. This supersedes the earlier
