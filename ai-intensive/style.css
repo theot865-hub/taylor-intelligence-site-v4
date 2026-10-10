@@ -120,10 +120,13 @@ details > p { font-size: 13px; color: var(--muted); padding: 0 24px 20px 0; max-
 @media (max-width: 640px) {
   nav > a:first-child { display: none; }
   .hero { grid-template-columns: 1fr; gap: 25px; padding: 28px 24px; background-image: url('/ai-intensive/images/orange-mentoring-background-mobile.jpg'); background-position: center; }
-  .mentor-photo { width: calc(100% + 16px); margin-inline: -8px; }
+  .hero-copy { display: contents; }
+  .hero-heading { order: 1; }
+  .mentor-photo { order: 2; width: calc(100% + 16px); margin-inline: -8px; }
+  .booking { order: 3; }
   h1 { font-size: clamp(32px, 8vw, 43px); max-width: 16ch; }
-  .hero-intro { font-size: 14px; max-width: 43ch; }
-  .inclusions { grid-template-columns: 1fr 1fr; gap: 13px 16px; font-size: 11px; }
+  .hero-intro { order: 4; font-size: 14px; max-width: 43ch; margin: 0; }
+  .inclusions { order: 5; grid-template-columns: 1fr 1fr; gap: 13px 16px; font-size: 11px; margin: 0; }
   .price { margin-bottom: 17px; }
   .price strong { font-size: 27px; }
   .price span { font-size: 12px; }
