@@ -100,7 +100,7 @@ details > p { font-size: 13px; color: var(--muted); padding: 0 24px 20px 0; max-
 }
 @media (max-width: 640px) {
   nav > a:first-child { display: none; }
-  .hero { grid-template-columns: 1fr; gap: 25px; padding: 28px 24px; background-position: 42% center; }
+  .hero { grid-template-columns: 1fr; gap: 25px; padding: 28px 24px; background-image: url('/ai-intensive/images/orange-mentoring-background-mobile.jpg'); background-position: center; }
   .mentor-photo { width: calc(100% + 16px); margin-inline: -8px; }
   h1 { font-size: clamp(32px, 8vw, 43px); max-width: 16ch; }
   .hero-intro { font-size: 14px; max-width: 43ch; }
