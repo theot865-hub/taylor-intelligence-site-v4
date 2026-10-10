@@ -43,6 +43,25 @@ h1 { max-width: 14ch; font-size: clamp(36px, 3.5vw, 48px); }
 .button span { font-size: 21px; line-height: 1; }
 .button:hover { background: #454139; }
 .hero-note { max-width: 44ch; margin-top: 11px; font-size: 11px; line-height: 1.6; }
+.booking { border-top: 1px solid #6f471a55; padding-top: 20px; scroll-margin-top: 25px; }
+.booking-title { font-size: 13px; letter-spacing: 0; margin-bottom: 9px; }
+.booking .price { margin-bottom: 7px; }
+.seat-note { max-width: 48ch; font-size: 12px; line-height: 1.65; margin-bottom: 16px; }
+.seat-row { display: flex; justify-content: space-between; align-items: center; gap: 14px; font-size: 12px; font-weight: 650; }
+.seat-stepper { display: flex; align-items: center; border: 1px solid #786144; border-radius: 5px; background: #fff5e2; }
+.seat-stepper button { min-width: 40px; min-height: 40px; border: 0; background: transparent; color: var(--ink); font: 22px/1 var(--sans); cursor: pointer; }
+.seat-stepper button:disabled { opacity: .35; cursor: default; }
+.seat-stepper input { width: 44px; min-height: 40px; padding: 0; border: 0; border-inline: 1px solid #78614455; border-radius: 0; background: transparent; color: var(--ink); text-align: center; font: 650 14px var(--sans); appearance: textfield; }
+.seat-stepper input::-webkit-inner-spin-button, .seat-stepper input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.seat-unit { margin-top: 6px; font-size: 10px; }
+.order-total { display: flex; align-items: baseline; justify-content: space-between; gap: 15px; margin: 15px 0; padding-top: 12px; border-top: 1px solid #6f471a33; font-size: 13px; }
+.order-total strong { font-size: 23px; letter-spacing: -.03em; }
+.order-total strong span { font-size: 11px; font-weight: 500; letter-spacing: 0; }
+.checkout-button { width: 100%; border: 0; font-family: var(--sans); cursor: pointer; }
+.checkout-button:disabled { opacity: .65; cursor: wait; }
+.checkout-status { margin-top: 12px; font-size: 12px; line-height: 1.6; }
+.private-option { max-width: 48ch; margin-top: 16px; padding-top: 14px; border-top: 1px solid #6f471a33; font-size: 11px; line-height: 1.7; }
+.private-option a { font-weight: 700; white-space: normal; }
 .mentor-photo { align-self: center; min-width: 0; }
 .mentor-photo img { display: block; width: 100%; height: auto; }
 .mentor-photo figcaption { display: flex; justify-content: space-between; gap: 16px; margin-top: 13px; font-size: 10px; font-weight: 650; }
@@ -166,6 +185,7 @@ details > p { font-size: 13px; color: var(--muted); padding: 0 24px 20px 0; max-
   .button span, .nav-cta span, .text-link span { transition: transform .25s cubic-bezier(.22, 1, .36, 1); }
   .site-header .brand:focus-within, .site-header nav:focus-within,
   .hero-copy > *:focus-within, .questions-intro:focus-within, .faq-list:focus-within { opacity: 1 !important; translate: 0 0 !important; }
+  .booking { --enter-delay: .47s; }
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .button:hover { transform: translateY(-2px); }
@@ -176,6 +196,8 @@ details > p { font-size: 13px; color: var(--muted); padding: 0 24px 20px 0; max-
 @media (forced-colors: active) {
   .hero { background: Canvas; color: CanvasText; }
   .button { background: ButtonFace; color: ButtonText; border: 1px solid ButtonText; }
+  .seat-stepper, .seat-stepper input { background: Canvas; color: CanvasText; border-color: CanvasText; }
+  .seat-stepper button { color: ButtonText; }
   .eyebrow, .hero-note, .questions-intro > p, details > p, .site-footer > a:last-child { color: CanvasText; }
   .inclusions li::before, .text-link, .faq-list, details, .site-footer { border-color: CanvasText; }
   .mark { fill: CanvasText; }

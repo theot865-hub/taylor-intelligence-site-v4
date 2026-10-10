@@ -1,10 +1,22 @@
 {
-  // Assets-only Worker for taylorintelligence.ai. No build step — the whole
-  // site is inlined in index.html. Deploy with: wrangler deploy
+  // Static site plus a server-only Stripe Checkout API. No frontend build step.
+  // Configure STRIPE_SECRET_KEY as a Cloudflare secret, and owned one-time CAD
+  // prices as STRIPE_COMPANY_PRICE_ID / STRIPE_EMPLOYEE_PRICE_ID bindings.
+  // Optional CHECKOUT_ALLOWED_ORIGINS: comma-separated exact HTTPS preview
+  // origins. Canonical/www TI and loopback development hosts are already allowed.
+  // See worker/checkout.mjs. Deploy with: wrangler deploy
   "name": "taylor-intelligence-site-v4",
+  "main": "worker/checkout.mjs",
   "compatibility_date": "2026-05-01",
+  "vars": {
+    "STRIPE_COMPANY_PRICE_ID": "price_1UOoahPUw9hCFj9HxsHEVgWH",
+    "STRIPE_EMPLOYEE_PRICE_ID": "price_1UOodyPUw9hCFj9HNbLHQYbx"
+  },
   "assets": {
     "directory": ".",
+    "binding": "ASSETS",
+    // API routes must bypass the SPA fallback, including native form POSTs.
+    "run_worker_first": ["/api/checkout", "/api/checkout/*"],
     // Serve index.html (200) for any path that doesn't match a file, so the
     // client-side router in index.html can resolve /contact, /card, /approach,
     // etc. This is the idiomatic SPA setup and makes _redirects belt-and-suspenders.
