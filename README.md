@@ -47,10 +47,17 @@ site's bare routes. Keep offer/copy changes on a review branch until approved.
 
 ## AI intensive — current revision (2026-10-09)
 
-**Revision status:** copy and assets live from `codex/company-ai-intensive`,
-verified October9 at source `ca3eec9`; PR5 remains draft. Stripe prices saved.
-Restricted API access is pending; the live booking button safely stays disabled
-while `/api/checkout/status` reports `ready: false`. Payment is not connected yet.
+**Revision status:** offer, assets and live Stripe checkout verified October9,
+2026. PR5 integrates the approved revision into `main`. `/api/checkout/status`
+reports `ready: true`; the booking button opens live Stripe-hosted checkout.
+The restricted key is stored only as Cloudflare secret `STRIPE_SECRET_KEY`.
+Its only permission is Checkout Sessions: Write (includes Read), verified in
+Stripe. Real unpaid hosted sessions showed CAD2,000 for the company seat and
+CAD2,300 for one company plus three employee observers, with quantities1 and3.
+Server confirmation returned the same totals/currency/counts and `unpaid/open`.
+No card details, actual payment, paid receipt or meeting invitation were tested.
+Historical October9 logs with `ready: false` describe the earlier unconfigured
+state; they do not describe the current live checkout.
 
 - Live route: [taylorintelligence.ai/ai-intensive/](https://taylorintelligence.ai/ai-intensive/). The existing route is retained for continuity; the current revision is a two-week group intensive for business owners.
 - `ai-intensive/index.html`: standalone document, owner-facing offer, scope, price, booking links, FAQs and search/social metadata.
