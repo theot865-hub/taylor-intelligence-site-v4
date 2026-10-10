@@ -127,6 +127,9 @@ details > p { font-size: 13px; color: var(--muted); padding: 0 24px 20px 0; max-
   h1 { font-size: clamp(32px, 8vw, 43px); max-width: 16ch; }
   .hero-intro { order: 4; font-size: 14px; max-width: 43ch; margin: 0; }
   .inclusions { order: 5; grid-template-columns: 1fr 1fr; gap: 13px 16px; font-size: 11px; margin: 0; }
+  .inclusions li { padding-left: 0; }
+  .inclusions li::before, .inclusions li::after { content: none; }
+  .nav-cta span, .button span, .text-link span, .private-option a span, .site-footer > a:last-child span { display: none; }
   .price { margin-bottom: 17px; }
   .price strong { font-size: 27px; }
   .price span { font-size: 12px; }
