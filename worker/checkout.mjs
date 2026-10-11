@@ -243,12 +243,18 @@ async function confirmation(request, config, fetchStripe) {
     throw new RequestError(404, "This checkout could not be confirmed.");
   }
   // No names, emails, card details, metadata, or meeting URLs leave the server.
+  let purchaseEventId;
+  if (session.payment_status === 'paid' && session.status === 'complete') {
+    const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`ti-purchase:${sessionID}`));
+    purchaseEventId = `ti-purchase-${Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('')}`;
+  }
   return json({
     paymentStatus: session.payment_status,
     status: session.status,
     extraEmployees: extras,
     amountTotal: session.amount_total,
     currency: session.currency,
+    ...(purchaseEventId ? { purchaseEventId } : {}),
   });
 }
 
