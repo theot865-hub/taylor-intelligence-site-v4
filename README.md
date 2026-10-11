@@ -98,9 +98,12 @@ configuration readiness. A return URL alone is not payment proof:
 `GET /api/checkout/confirmation` checks the owned Stripe Session and exact total
 before the page confirms a completed paid booking. No purchase is made by QA.
 
-**Private enquiries:** [Theo’s existing 30-minute Google Calendar appointment
-page](https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP)
-remains the destination for “Ask about private sessions”. Its prior Chrome
+**Free fit calls and private enquiries:** A secondary outline button below
+the payment controls says **“Not sure yet? Book a free fit call”**. It opens
+[Theo’s existing 30-minute Google Calendar appointment
+page](https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP),
+also used by “Ask about private sessions”. It is outside the checkout form
+and does not fire payment or purchase events. Its prior Chrome
 read-back showed Theo Taylor, theo@taylorintelligence.ai, Vancouver time and
 Meet information after booking. No new private booking was submitted. The
 superseded $400 workshop Payment Link remains deactivated.
