@@ -230,7 +230,12 @@ test("paid confirmation returns only verified payment and public offer informati
   const { worker, calls } = stripeStub(() => session(2, { status: "complete", payment_status: "paid" }));
   const response = await worker.fetch(getRequest(`/api/checkout/confirmation?session_id=${ID}`), env);
   assert.equal(response.status, 200);
-  assert.deepEqual(await response.json(), { paymentStatus: "paid", status: "complete", extraEmployees: 2, amountTotal: 220000, currency: "cad" });
+  const result = await response.json();
+  assert.match(result.purchaseEventId, /^ti-purchase-[a-f0-9]{64}$/);
+  assert.equal(JSON.stringify(result).includes(ID), false, 'raw checkout token never becomes an ad event ID');
+  assert.deepEqual(result, { paymentStatus: "paid", status: "complete", extraEmployees: 2, amountTotal: 220000, currency: "cad", purchaseEventId: result.purchaseEventId });
+  const again = await worker.fetch(getRequest(`/api/checkout/confirmation?session_id=${ID}`), env);
+  assert.equal((await again.json()).purchaseEventId, result.purchaseEventId, 'refreshes share a stable deduplication ID');
   assert.equal(calls[0].url, `https://api.stripe.com/v1/checkout/sessions/${ID}`);
   assert.equal(calls[0].options.method, "GET");
 });

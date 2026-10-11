@@ -45,7 +45,7 @@ The existing contact form uses Web3Forms with its public client access key
 already in the HTML. `_redirects` and the Worker's SPA fallback support the main
 site's bare routes. Keep offer/copy changes on a review branch until approved.
 
-## AI intensive — current revision (2026-10-09)
+## AI intensive — current revision (2026-10-10)
 
 **Revision status:** offer, assets and live Stripe checkout verified October9,
 2026. PR5 integrates the approved revision into `main`. `/api/checkout/status`
@@ -131,15 +131,15 @@ an exact palette match.
 terms/tax arrangements. Checkout is fixed at the displayed CAD total, with no
 automatic tax or optional invoice added by this integration. Purchased companies
 and employee quantities are in Stripe; Theo must send group call details and
-manage delivery. No automatic meeting invitation, conversion pixel, Conversions
-API, purchase event or Meta campaign was installed/launched. The former workshop
+manage delivery. No automatic meeting invitation, Conversions API or Meta campaign was
+installed/launched. The October10 consent-based Meta Pixel is documented below. The former workshop
 Meet event is historical and must not be used as the new group schedule. Keep
 private links and funding notes outside public source.
 
 **Editing and validation:** update scope/prices consistently in visible copy,
 SEO metadata, social poster, server total checks and Stripe owned prices. Preserve
 the full approved portrait, orange artwork, logo band and existing motion. Run
-`node --test tests/checkout.test.mjs` for checkout validation. Static preview:
+`node --test tests/*.test.mjs` for checkout and ad-measurement validation. Static preview:
 `python3 -m http.server 4183 --bind 127.0.0.1` from the site root, then
 `http://127.0.0.1:4183/ai-intensive/`. A static server cannot run the checkout API;
 its booking button safely stays unavailable. For end-to-end local development,
@@ -148,6 +148,40 @@ ignored `.dev.vars` and test Price IDs. Never use a real payment as routine QA.
 No client Stripe SDK or publishable key is needed. Repository pushes can
 auto-deploy review branches too; retain the portable handoff outside public
 hosting and verify the actual public state after each push.
+
+## Meta ad measurement (October10,2026)
+
+Pixel **1281844947404157** came from Julian's email to Theo dated October10,
+2026 at22:43:55−07:00 (Gmail message `1a1297d6d54b3768`). Its base code was
+adapted into `ai-intensive/tracking.js`, on the intensive page only.
+
+- No Meta SDK, beacon or cookies load until a visitor allows optional measurement.
+  Decline and Allow are both available; footer **Ad choices** changes the decision.
+  Consent lasts180days, and Global Privacy Control / Do Not Track override it.
+- Only HTTPS canonical/www production hosts send events. Local/preview QA does
+  not contaminate the pixel. Automatic events and advanced matching are disabled;
+  no manual name, email, phone, form data or Stripe session token is sent to Meta.
+- `PageView` and `ViewContent` identify the intensive after consent.
+- `InitiateCheckout` fires only after the server returns a valid Stripe checkout
+  destination, with the exact CAD2,000 + CAD100 per observer total and quantities.
+  Repeated submission of the same attempt does not create another browser event.
+- `Purchase` requires the server to verify paid + complete, the owned live offer,
+  exact amount/currency and employee count. It uses a stable SHA256-derived opaque
+  event ID, browser-persisted deduplication under a cross-tab Web Lock.
+  No event is fabricated from a success query parameter or an unpaid session.
+- The Stripe return token is removed from the visible URL before the Pixel loads.
+  It stays in that tab's history state so confirmation can survive reload. Raw or
+  encoded session tokens in the URL/referrer suppress the Pixel entirely.
+- SDK loading, consent withdrawal, storage failure and ad blockers cannot prevent
+  booking. Purchase is skipped when Web Locks or a durable deduplication claim are unavailable.
+  The consent panel links to a short privacy disclosure and Meta's policy.
+
+This is browser measurement, not Conversions API or a payment webhook. Purchases
+can be missed when people decline, block Meta, close Stripe without returning,
+or lack usable browser storage. Deduplication covers the current browser, not
+other devices or cleared storage; events queued to Meta are not a delivery
+receipt. No real paid purchase is submitted as routine verification, and Meta
+Events Manager attribution/reporting must not be claimed from source tests alone.
 
 ## Regenerating the map
 

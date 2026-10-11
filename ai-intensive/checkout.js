@@ -9,6 +9,12 @@
   const steppers = [...form.querySelectorAll('[data-seat-step]')];
   const format = new Intl.NumberFormat('en-CA', { maximumFractionDigits: 0 });
   const params = new URLSearchParams(location.search);
+  // Keep the token locally for server verification, never in Meta's page URL.
+  if (params.has('session_id')) {
+    const clean = new URL(location.href);
+    clean.searchParams.delete('session_id');
+    try { history.replaceState({ ...history.state, tiCheckoutSession: params.get('session_id') }, '', clean.href); } catch { /* Tracking refuses token-bearing URLs. */ }
+  }
   let ready = false;
   let busy = params.get('checkout') === 'success';
   let paid = false;
@@ -51,6 +57,7 @@
       if (!response.ok || !result.url) throw new Error('Checkout unavailable');
       const destination = new URL(result.url);
       if (destination.protocol !== 'https:' || destination.hostname !== 'checkout.stripe.com') throw new Error('Invalid checkout destination');
+      try { await window.TIAds?.checkoutStarted(selection, attempt.value); } catch { /* Booking must work without tracking. */ }
       location.assign(destination.href);
     } catch {
       busy = false;
@@ -69,7 +76,7 @@
     if (!ready) say('Booking is temporarily unavailable. Please try again shortly.');
     else if (params.get('checkout') === 'cancelled') say('Checkout was cancelled. Adjust your seats and try again when you’re ready.');
     if (params.get('checkout') !== 'success') return;
-    const session = params.get('session_id');
+    const session = params.get('session_id') || history.state?.tiCheckoutSession;
     if (!session || !/^cs_[A-Za-z0-9_]+$/.test(session)) {
       say('We couldn’t confirm this booking. Check your Stripe receipt or contact theo@taylorintelligence.ai.');
       return;
@@ -84,6 +91,7 @@
         update(result.extraEmployees, false);
         submit.textContent = 'Company seat booked';
         say('You’re booked. Check your Stripe receipt; we’ll email you with the group call details.');
+        try { window.TIAds?.confirmedPurchase(result); } catch { /* Payment confirmation is independent of ads. */ }
       } else {
         say('Your payment is still processing. Please wait for confirmation from Stripe before trying again.');
         busy = true;

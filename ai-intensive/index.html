@@ -21,7 +21,7 @@
   <meta name="twitter:title" content="Put AI to work in your business.">
   <meta name="twitter:description" content="Hands-on AI advice for business owners. Four live group calls over two weeks. $2,000 CAD per company seat, plus $100 per additional employee.">
   <meta name="twitter:image" content="https://taylorintelligence.ai/ai-intensive/og.png?v=20261009-company-intensive">
-  <link rel="stylesheet" href="/ai-intensive/style.css?v=20261009-company-intensive-mobile-clean">
+  <link rel="stylesheet" href="/ai-intensive/style.css?v=20261010-ad-measurement">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -100,7 +100,14 @@
       </div>
     </section>
   </main>
-  <footer class="site-footer shell"><a class="brand" href="/"><span class="footer-ti" aria-hidden="true">TI</span><span>Taylor Intelligence</span></a><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai <span aria-hidden="true">↗</span></a></footer>
-  <script src="/ai-intensive/checkout.js?v=20261009-company-intensive" defer></script>
+  <footer class="site-footer shell"><a class="brand" href="/"><span class="footer-ti" aria-hidden="true">TI</span><span>Taylor Intelligence</span></a><button type="button" id="ad-choice" class="ad-choice">Ad choices: off</button><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai <span aria-hidden="true">↗</span></a></footer>
+  <details id="ad-privacy" class="ad-privacy shell"><summary>Privacy &amp; ad measurement</summary><p>With your permission, we use Meta Pixel to measure visits to this page, checkout starts and completed bookings. Meta receives event details, page and referral information, browser/device information and cookie identifiers, and processes your IP address. Booking events include the total and number of seats. We do not send names, email addresses, card details or Stripe checkout tokens to Meta through this integration. See <a href="https://www.facebook.com/privacy/policy/" rel="noreferrer">Meta’s Privacy Policy</a>. You can change your choice using “Ad choices” above. Your choice is saved in this browser for up to 180 days; supported browser privacy signals keep tracking off. Stripe processes payments separately. Questions: <a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a>.</p></details>
+  <section id="ad-notice" class="ad-notice" aria-label="Optional ad measurement" hidden>
+    <p id="ad-notice-text">Allow Meta cookies to measure our ads using page visits and booking events? You can book either way.</p>
+    <a id="ad-privacy-link" href="#ad-privacy">Privacy details</a>
+    <div class="ad-actions"><button id="ad-decline" type="button">Decline</button><button id="ad-allow" type="button">Allow</button></div>
+  </section>
+  <script src="/ai-intensive/tracking.js?v=20261010-meta" defer></script>
+  <script src="/ai-intensive/checkout.js?v=20261010-meta" defer></script>
 </body>
 </html>
