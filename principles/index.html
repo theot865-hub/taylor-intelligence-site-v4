@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ============================================================
+       DOCKING-PANELS SITE TEMPLATE
+       A fixed full-screen background with two curved white containers
+       floating in the foreground:
+         1. a fixed header strip with a curved/stepped bottom edge
+         2. a scrolling content panel that rises and DOCKS under it
+       All brand-specific content has been replaced with placeholders —
+       search for "CUSTOMIZE" comments to find every slot.
+       ============================================================ -->
+  <title>Our principles — Taylor Intelligence</title>
+  <meta name="description" content="A few ideas that guide the way we think, build and work with people." />
+  <link rel="icon" href="/favicon.svg?v=ti-monogram" type="image/svg+xml" />
+  <link rel="canonical" href="https://taylorintelligence.ai/principles/" />
+  <!-- social share (Open Graph + Twitter) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Taylor Intelligence" />
+  <meta property="og:url" content="https://taylorintelligence.ai/principles/" />
+  <meta property="og:title" content="Our principles — Taylor Intelligence" />
+  <meta property="og:description" content="A few ideas that guide the way we think, build and work with people." />
+
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Taylor Intelligence — AI Automation Studio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Our principles — Taylor Intelligence" />
+  <meta name="twitter:description" content="A few ideas that guide the way we think, build and work with people." />
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"LocalBusiness","@id":"https://taylorintelligence.ai/#business","name":"Taylor Intelligence","description":"Independent studio building websites, AI systems and software for businesses.","url":"https://taylorintelligence.ai/","email":"theo@taylorintelligence.ai","telephone":"+1-250-299-7815","founder":{"@type":"Person","name":"Theo Taylor"},"address":{"@type":"PostalAddress","addressLocality":"Victoria","addressRegion":"BC","addressCountry":"CA"},"areaServed":["Victoria BC","Vancouver Island","British Columbia","Canada"]},
+    {"@type":"WebSite","@id":"https://taylorintelligence.ai/#website","url":"https://taylorintelligence.ai/","name":"Taylor Intelligence"}
+  ]}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- CUSTOMIZE: display font (used for headlines + ticker) -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
+
+
+
+
+
+<link rel="stylesheet" href="/site-base.css"><link rel="stylesheet" href="/green.css"><link rel="stylesheet" href="/service-pages.css">
+</head>
+<body class="service-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- ===== fixed full-screen BACKGROUND =====
+       Ships with a self-contained SVG landscape so the template works with zero
+       assets. CUSTOMIZE: to use a video, fill the data-src-* attributes below
+       (largest first) — the loader fades it in over the poster automatically.
+       To use a photo instead, replace the <svg> with
+       <img class="hero-video-poster" src="assets/background.jpg" alt="" /> -->
+  <div class="hero-video-bg" id="hero-video-bg" aria-hidden="true">
+    <!-- generative "living terrain": a slowly drifting topographic point-cloud
+         rendered in the brand palette, with occasional neural links riding the
+         landscape toward the camera. Pure canvas — zero assets, recolorable via
+         the TERRAIN config below. Renders a single static frame on mobile and
+         for prefers-reduced-motion. A video dropped into the data-src-* slots
+         still fades in over it, exactly like the old poster. -->
+    <canvas class="hero-video-poster" id="terrain-gl"></canvas>
+    <canvas class="hero-video-poster" id="terrain-bg"></canvas>
+    <video class="hero-video" muted loop playsinline preload="auto"
+      data-src-4k=""
+      data-src-2k=""
+      data-src-fallback=""></video>
+  </div>
+
+  <script src="/terrain.js"></script>
+
+  <!-- ===== FOREGROUND CONTAINER 1: fixed top header strip ===== -->
+  <div class="topbar-wrap">
+    <svg class="topbar" viewBox="0 0 1400 100" preserveAspectRatio="none" aria-hidden="true">
+      <!-- solid white header strip with the curved/stepped bottom edge -->
+      <path d="M0,0 L1400,0 L1400,62 L700,62 C588,62 588,100 448,100 L112,100 C56,100 0,86 0,60 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+
+  <!-- brand lockup: the network-node mark + wordmark, top-left of header -->
+  <a class="brand-lockup" href="/" aria-label="Taylor Intelligence — home">
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <g transform="translate(3.290 24.934) scale(0.0256 -0.0256)">
+            <path d="M557 563H368V0H216V563H27V698H557Z"/>
+            <path transform="translate(584 0)" d="M382 0H50V121H140V577H50V698H382V577H292V121H382Z"/>
+          </g>
+        </svg>
+        <span class="word">Taylor Intelligence</span>
+      </a>
+
+  <!-- top-right navigation — the pill holds the studio phone line -->
+  <nav id="top-nav" class="top-nav" aria-label="Primary"><details class="nav-disclosure services-menu"><summary>Services <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></div></details><a href="/#studio">Team</a><details class="nav-disclosure socials-menu"><summary>Our Socials <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a><p class="dropdown-note">More on the way.</p></div></details><details class="nav-disclosure principles-menu"><summary>Principles <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/principles/#people">People first</a><a href="/principles/#useful">Make it useful</a><a href="/principles/#clarity">Keep it clear</a><a href="/principles/#learning">Keep learning</a></div></details><a class="nav-contact" href="/#start">Let’s talk ↗</a></nav>
+
+  <!-- mobile-only hamburger (toggles .top-nav); hidden on desktop via CSS -->
+  <button class="m-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="top-nav">
+    <span></span><span></span><span></span>
+  </button>
+
+
+<button class="terrain-toggle" type="button" aria-pressed="false">Pause motion</button>
+<div class="scroll-shadow"><div class="scroll-area"><div class="hero-spacer"></div><div class="panel-wrap">
+<main class="panel" id="main-content"><header class="page-hero"><p class="page-kicker">Our principles / Taylor Intelligence</p><h1 class="page-title">Good work starts<br> with good principles.</h1><div class="page-intro"><p>A few ideas that guide the way we think, build and work with people.</p><a class="green-link" href="#page-details">Explore <span aria-hidden="true">↓</span></a></div></header><div id="page-details"><div class="principle-list"><section id="people" class="principle"><span>01</span><div><h2>Start with people.</h2><p>Good tools fit the people using them. We want to understand your customers, your team and the work they already do before we decide what to build.</p><p class="principle-practice">In practice: start with a conversation about the business.</p></div></section><section id="useful" class="principle"><span>02</span><div><h2>Make it useful.</h2><p>A beautiful website should help someone take the next step. An agent should have a clear job. We care about what the work does for your business as much as how it looks.</p><p class="principle-practice">In practice: give each project a clear purpose.</p></div></section><section id="clarity" class="principle"><span>03</span><div><h2>Keep it clear.</h2><p>You should understand what we’re building, what it costs and where a person is still involved. Plain language and visible review points make better working relationships.</p><p class="principle-practice">In practice: agree the scope and explain the trade-offs.</p></div></section><section id="learning" class="principle"><span>04</span><div><h2>Keep learning.</h2><p>Technology changes. So do businesses. We build, try, review and teach along the way, so your team becomes more confident using the things we create.</p><p class="principle-practice">In practice: turn what we learn into the next useful improvement.</p></div></section></div><section class="detail-call"><div><h2>A good fit starts here.</h2><p>If this sounds like how you want to work, let’s talk.</p></div><a class="purchase-button" href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP" target="_blank" rel="noopener noreferrer">Book a free fit call <span aria-hidden="true">↗</span></a></section></div><section class="start" id="start" aria-label="Start a project"><p class="green-eyebrow">Start a conversation</p><h2>Let’s build something useful.</h2><p class="lede">A website, a workflow, or an idea you want to explore. Tell us where you’d like to go.</p><form action="https://api.web3forms.com/submit" method="POST" data-lead-form>
+            <input type="hidden" name="access_key" value="3d97d841-4c10-4ecf-9b00-248974f688a3">
+            <input type="hidden" name="subject" value="New project inquiry — taylorintelligence.ai">
+            <input type="hidden" name="page_path" value="">
+            <input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_term" value=""><input type="hidden" name="utm_content" value=""><input type="hidden" name="gclid" value="">
+            <input type="checkbox" name="botcheck" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="f-row">
+              <label>Name<input type="text" name="name" required autocomplete="name"></label>
+              <label>Email<input type="email" name="email" required autocomplete="email"></label>
+            </div>
+            <label class="block">What would you like to build?<textarea name="message" rows="4" required></textarea></label>
+            <button type="submit" class="submit">Send it</button>
+          </form><p class="direct"><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a> · <a href="tel:+12502997815">+1 250 299 7815</a></p></section><footer class="green-footer"><span>Taylor Intelligence © 2026</span><span>Built in Victoria, BC.</span><div><a href="https://taylorintelligence.ai/privacy/">Privacy</a><a href="https://taylorintelligence.ai/terms/">Terms</a></div></footer></main></div></div></div><script src="/lead-form.js"></script><script src="/green.js" defer></script></body></html>

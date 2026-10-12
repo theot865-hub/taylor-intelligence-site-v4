@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ============================================================
+       DOCKING-PANELS SITE TEMPLATE
+       A fixed full-screen background with two curved white containers
+       floating in the foreground:
+         1. a fixed header strip with a curved/stepped bottom edge
+         2. a scrolling content panel that rises and DOCKS under it
+       All brand-specific content has been replaced with placeholders —
+       search for "CUSTOMIZE" comments to find every slot.
+       ============================================================ -->
+  <title>Website design — Taylor Intelligence</title>
+  <meta name="description" content="Distinctive websites, built around your business. Design, development and ongoing care from one team." />
+  <link rel="icon" href="/favicon.svg?v=ti-monogram" type="image/svg+xml" />
+  <link rel="canonical" href="https://taylorintelligence.ai/websites/" />
+  <!-- social share (Open Graph + Twitter) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Taylor Intelligence" />
+  <meta property="og:url" content="https://taylorintelligence.ai/websites/" />
+  <meta property="og:title" content="Website design — Taylor Intelligence" />
+  <meta property="og:description" content="Distinctive websites, built around your business. Design, development and ongoing care from one team." />
+
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Taylor Intelligence — AI Automation Studio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Website design — Taylor Intelligence" />
+  <meta name="twitter:description" content="Distinctive websites, built around your business. Design, development and ongoing care from one team." />
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"LocalBusiness","@id":"https://taylorintelligence.ai/#business","name":"Taylor Intelligence","description":"Independent studio building websites, AI systems and software for businesses.","url":"https://taylorintelligence.ai/","email":"theo@taylorintelligence.ai","telephone":"+1-250-299-7815","founder":{"@type":"Person","name":"Theo Taylor"},"address":{"@type":"PostalAddress","addressLocality":"Victoria","addressRegion":"BC","addressCountry":"CA"},"areaServed":["Victoria BC","Vancouver Island","British Columbia","Canada"]},
+    {"@type":"WebSite","@id":"https://taylorintelligence.ai/#website","url":"https://taylorintelligence.ai/","name":"Taylor Intelligence"}
+  ]}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- CUSTOMIZE: display font (used for headlines + ticker) -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
+
+
+
+
+
+<link rel="stylesheet" href="/site-base.css"><link rel="stylesheet" href="/green.css"><link rel="stylesheet" href="/service-pages.css">
+</head>
+<body class="service-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- ===== fixed full-screen BACKGROUND =====
+       Ships with a self-contained SVG landscape so the template works with zero
+       assets. CUSTOMIZE: to use a video, fill the data-src-* attributes below
+       (largest first) — the loader fades it in over the poster automatically.
+       To use a photo instead, replace the <svg> with
+       <img class="hero-video-poster" src="assets/background.jpg" alt="" /> -->
+  <div class="hero-video-bg" id="hero-video-bg" aria-hidden="true">
+    <!-- generative "living terrain": a slowly drifting topographic point-cloud
+         rendered in the brand palette, with occasional neural links riding the
+         landscape toward the camera. Pure canvas — zero assets, recolorable via
+         the TERRAIN config below. Renders a single static frame on mobile and
+         for prefers-reduced-motion. A video dropped into the data-src-* slots
+         still fades in over it, exactly like the old poster. -->
+    <canvas class="hero-video-poster" id="terrain-gl"></canvas>
+    <canvas class="hero-video-poster" id="terrain-bg"></canvas>
+    <video class="hero-video" muted loop playsinline preload="auto"
+      data-src-4k=""
+      data-src-2k=""
+      data-src-fallback=""></video>
+  </div>
+
+  <script src="/terrain.js"></script>
+
+  <!-- ===== FOREGROUND CONTAINER 1: fixed top header strip ===== -->
+  <div class="topbar-wrap">
+    <svg class="topbar" viewBox="0 0 1400 100" preserveAspectRatio="none" aria-hidden="true">
+      <!-- solid white header strip with the curved/stepped bottom edge -->
+      <path d="M0,0 L1400,0 L1400,62 L700,62 C588,62 588,100 448,100 L112,100 C56,100 0,86 0,60 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+
+  <!-- brand lockup: the network-node mark + wordmark, top-left of header -->
+  <a class="brand-lockup" href="/" aria-label="Taylor Intelligence — home">
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <g transform="translate(3.290 24.934) scale(0.0256 -0.0256)">
+            <path d="M557 563H368V0H216V563H27V698H557Z"/>
+            <path transform="translate(584 0)" d="M382 0H50V121H140V577H50V698H382V577H292V121H382Z"/>
+          </g>
+        </svg>
+        <span class="word">Taylor Intelligence</span>
+      </a>
+
+  <!-- top-right navigation — the pill holds the studio phone line -->
+  <nav id="top-nav" class="top-nav" aria-label="Primary"><details class="nav-disclosure services-menu"><summary>Services <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></div></details><a href="/#studio">Team</a><details class="nav-disclosure socials-menu"><summary>Our Socials <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a><p class="dropdown-note">More on the way.</p></div></details><details class="nav-disclosure principles-menu"><summary>Principles <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/principles/#people">People first</a><a href="/principles/#useful">Make it useful</a><a href="/principles/#clarity">Keep it clear</a><a href="/principles/#learning">Keep learning</a></div></details><a class="nav-contact" href="/#start">Let’s talk ↗</a></nav>
+
+  <!-- mobile-only hamburger (toggles .top-nav); hidden on desktop via CSS -->
+  <button class="m-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="top-nav">
+    <span></span><span></span><span></span>
+  </button>
+
+
+<button class="terrain-toggle" type="button" aria-pressed="false">Pause motion</button>
+<div class="scroll-shadow"><div class="scroll-area"><div class="hero-spacer"></div><div class="panel-wrap">
+<main class="panel" id="main-content"><header class="page-hero"><p class="page-kicker">Websites / Taylor Intelligence</p><h1 class="page-title">A better place<br> to be found.</h1><div class="page-intro"><p>Distinctive websites, built around your business. Design, development and ongoing care from one team.</p><a class="green-link" href="#page-details">Explore <span aria-hidden="true">↓</span></a></div></header><div id="page-details"><section class="green-work" id="websites" aria-labelledby="work-heading">
+<div class="green-heading"><div><p class="green-eyebrow">Selected websites</p><h2 id="work-heading">A few places we’ve built.</h2></div><p>Designed to stand out.<br> Built to work for your business.</p></div>
+<div class="website-gallery"><div class="work-grid"><article class="work-card"><a href="https://sdconcrete.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit website: Stone Design Concrete (opens in new tab)"><div class="work-image stone-design"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Stone Design Concrete</span></div>
+<img src="/assets/work/stone-design.jpg" alt="Stone Design Concrete website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website ↗</span></div>
+<div class="work-caption"><div><h3>Stone Design Concrete</h3>
+<p>Website design · Development</p>
+</div>
+<span class="work-status">Live website</span></div>
+</a></article><article class="work-card"><a href="https://szolyd.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit website: Szolyd (opens in new tab)"><div class="work-image szolyd"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Szolyd</span></div>
+<img src="/assets/work/szolyd.jpg" alt="Szolyd website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website ↗</span></div>
+<div class="work-caption"><div><h3>Szolyd</h3>
+<p>Website design · Development</p>
+</div>
+<span class="work-status">Live website</span></div>
+</a></article><article class="work-card"><a href="https://knot-normal.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit website: Knot Normal (opens in new tab)"><div class="work-image knot-normal"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Knot Normal</span></div>
+<img src="/assets/work/knot-normal.jpg" alt="Knot Normal website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website ↗</span></div>
+<div class="work-caption"><div><h3>Knot Normal</h3>
+<p>Brand experience · Storefront</p>
+</div>
+<span class="work-status">Live website</span></div>
+</a></article></div>
+<div class="additional-work"><div class="work-grid"><article class="work-card"><a href="https://taylorintelligence-test.ca/tirex/site-preview/" target="_blank" rel="noopener noreferrer" aria-label="Explore preview: Tire X Canada (opens in new tab)"><div class="work-image tire-x"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Tire X Canada</span></div>
+<img src="/assets/work/tire-x.jpg" alt="Tire X Canada website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Explore preview ↗</span></div>
+<div class="work-caption"><div><h3>Tire X Canada</h3>
+<p>Automotive · Commerce experience</p>
+</div>
+<span class="work-status">Review build</span></div>
+</a></article></div></div></div>
+<div class="website-offer offer-panel">
+<div class="website-offer-intro"><h3>Your next website.</h3><p>Designed &amp; built for your business.</p></div>
+<div class="website-price"><p class="offer-price">$1,500 <span>CAD / one-time</span></p><p class="offer-small">Website design &amp; development</p></div>
+<div class="website-care"><p class="offer-recurring">+ $500 CAD/month</p><p class="offer-small">Maintenance &amp; SEO.<br> Billed separately, starting at launch.</p></div>
+<a class="purchase-button" href="https://buy.stripe.com/aFa14pa10ffO1LLgcdeIw01">Purchase now <span aria-hidden="true">↗</span></a>
+</div>
+</section><section class="detail-section"><div class="detail-heading"><p class="green-eyebrow">From first conversation to launch</p><h2>A clear path to your next website.</h2></div><div class="detail-grid"><article><span class="detail-number">01</span><h3>Start with your business</h3><p>We work through your audience, your offer and what a visitor should do next. That gives the site a purpose before we start designing.</p></article><article><span class="detail-number">02</span><h3>Make it feel like you</h3><p>We bring the structure, words and visual direction together, then build a responsive site for phones and larger screens. You review it before it goes live.</p></article><article><span class="detail-number">03</span><h3>Launch, then look after it</h3><p>Once the site launches, ongoing maintenance and SEO begin. Your website stays part of the business, with a team you can come back to.</p></article></div></section><section class="detail-section"><div class="detail-heading"><p class="green-eyebrow">A few useful answers</p><h2>Before we start.</h2></div><div class="service-faq"><details><summary>What does the purchase cover?<span aria-hidden="true">+</span></summary><p>The checkout collects CAD $1,500 for website design and development. We’ll talk through your business, content and requirements with you. If you need a store, custom software or a more involved integration, speak to us first so we can confirm the scope.</p></details><details><summary>When does the monthly fee start?<span aria-hidden="true">+</span></summary><p>Maintenance and SEO are CAD $500 per month, billed separately starting when your website launches. The initial checkout does not start that monthly subscription.</p></details><details><summary>Can you work with an existing website?<span aria-hidden="true">+</span></summary><p>Yes. Bring the site you already have to a fit call. We’ll discuss whether a focused improvement or a new build makes more sense.</p></details></div></section><section class="detail-call"><div><h2>Have something specific in mind?</h2><p>Let’s talk through the site, the scope and the next step.</p></div><a class="purchase-button" href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP" target="_blank" rel="noopener noreferrer">Book a free fit call <span aria-hidden="true">↗</span></a></section></div><section class="start" id="start" aria-label="Start a project"><p class="green-eyebrow">Start a conversation</p><h2>Let’s build something useful.</h2><p class="lede">A website, a workflow, or an idea you want to explore. Tell us where you’d like to go.</p><form action="https://api.web3forms.com/submit" method="POST" data-lead-form>
+            <input type="hidden" name="access_key" value="3d97d841-4c10-4ecf-9b00-248974f688a3">
+            <input type="hidden" name="subject" value="New project inquiry — taylorintelligence.ai">
+            <input type="hidden" name="page_path" value="">
+            <input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_term" value=""><input type="hidden" name="utm_content" value=""><input type="hidden" name="gclid" value="">
+            <input type="checkbox" name="botcheck" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="f-row">
+              <label>Name<input type="text" name="name" required autocomplete="name"></label>
+              <label>Email<input type="email" name="email" required autocomplete="email"></label>
+            </div>
+            <label class="block">What would you like to build?<textarea name="message" rows="4" required></textarea></label>
+            <button type="submit" class="submit">Send it</button>
+          </form><p class="direct"><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a> · <a href="tel:+12502997815">+1 250 299 7815</a></p></section><footer class="green-footer"><span>Taylor Intelligence © 2026</span><span>Built in Victoria, BC.</span><div><a href="https://taylorintelligence.ai/privacy/">Privacy</a><a href="https://taylorintelligence.ai/terms/">Terms</a></div></footer></main></div></div></div><script src="/lead-form.js"></script><script src="/green.js" defer></script></body></html>

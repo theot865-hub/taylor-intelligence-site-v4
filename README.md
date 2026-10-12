@@ -1,30 +1,32 @@
-# Taylor Intelligence — Green portfolio review
+# Taylor Intelligence — Portfolio review
 
-Local branch `codex/green-portfolio`, built from v4 review `3ae0462` and the authored green v3 `0df7132`.
+Local branch `codex/green-portfolio`, built from v4 review `3ae0462` and authored green v3 `0df7132`.
 **Not published. Do not push until approved for production:** Cloudflare has deployed review branches to the canonical domain before a PR merge.
 
-## Direction approved for this review
+## Current review direction
 
-Theo revisited the shelved v3 and explicitly chose “Keep the green animated terrain” on October12. This draft retains its Archivo Black type, living landscape and curved white panels. Theo then requested the professional TI monogram/Manrope wordmark from the orange draft (also used for the favicon), and monochrome terrain with many shades. The terrain layer uses grayscale with modest luminance/contrast tuning, retaining the authored depth bands, fog and highlights; the text accents remain green. It adds the current five-client strip and a compact Websites → Marketing → Software & agents → Education sequence, followed by the studio and contact form. The black curved headline reads “One agency for everything.” Old Conduit product claims, statistics carousel, demo claims and draggable editor are removed from this draft.
+Theo's October12 direction combines the original curved white panels, Archivo Black typography and animated terrain with monochrome shading, birds and the professional TI monogram/Manrope wordmark. The black curved homepage headline reads “One agency for everything.” The homepage is a compact overview: Websites → Marketing → Education → Software & agents → Team → Contact.
 
-The animated terrain retains the authored landscape and birds, with pause and hidden-tab suspension. Neural chains, explorer routes and ridge pulses are removed at Theo’s request. Its world width now follows the viewport at the far plane, with 100px of edge overscan and a denser mesh/point field to avoid exposed boundaries. Phones/tablets up to1100px retain v3’s lighter static terrain; reduced motion also uses a still frame. The shortened opening exposes client logos and work earlier. The original green source remains at4190 and the previous orange draft at4188.
-
-- Review folder: `/Users/theotaylor/Work/Sites/ti-green-review-20261012`
-- Updated preview: http://127.0.0.1:4191/
-- Homepage sections: websites, services (Marketing), software, education, studio, start.
-- `/websites` and `/portfolio`: open the website gallery section.
-- `/services`, `/approach`, `/contact`, `/card`: open their corresponding sections.
-- `/ai-intensive/`, `worker/`, `wrangler.jsonc`, checkout and tracking: unchanged from v4 base `5d09f1a`.
+- Local review: `/Users/theotaylor/Work/Sites/ti-green-review-20261012`, http://127.0.0.1:4191/.
+- Dedicated pages: `/websites/`, `/marketing/`, `/education/`, `/software/` and `/principles/`.
+- Header: Services, Team, Our Socials, Principles, Let’s talk. Each dropdown matches its trigger width. Team links to the homepage studio section; Principles links to four principles on its own page.
+- Our Socials currently links only to the confirmed `https://www.instagram.com/taylorintelligence/` profile. Other agency profile URLs are pending Theo/Julian; no personal or guessed profiles added.
+- `/portfolio` redirects to `/websites/`. Legacy `/services`, `/approach`, `/contact`, `/card` retain homepage section behavior.
+- Original green reference remains at4190; previous orange review at4188.
 
 ## Assets and code
 
-`index.html` contains the authored terrain and panel system, current content and markup. `green.css` contains portfolio/responsive overrides; `green.js` handles section aliases, mobile navigation and contact feedback. `lead-form.js` retains v3’s UTM/page metadata behavior. Form success requires both HTTP success and `{success:true}`; QA intercepts requests and never sends an enquiry.
+Static HTML, no frontend build step. `site-base.css` contains the extracted original panel/terrain styles; `terrain.js` contains the unchanged terrain script. `green.css` adds the portfolio layout; `service-pages.css` adds shared navigation and standalone service layouts. `green.js` handles disclosures, mobile navigation, legacy section aliases and contact feedback. `lead-form.js` retains UTM/page metadata behavior. Form success requires both HTTP success and `{success:true}`; test requests are intercepted, never sent.
 
-The client strip uses original logos. `assets/logos/tire-x-outlined.svg` preserves the established Tire X shapes/red X with black wireframe TIRE/CANADA lettering on transparent ground, explicitly requested by Theo. Its source SVG remains intact. The three-column gallery initially shows Stone Design, Szolyd and Knot Normal. A native details control expands the panel for Tire X (review build). Adam’s Tires is removed at Theo’s request. Big O/Omen are client logos, not website credits. Sasquatch/CCT concepts are excluded.
+The landscape keeps its birds, pause control and hidden-tab suspension. Neural chains, explorer routes and ridge pulses are removed. Viewport-aware world width and100px overscan prevent exposed edges. Screens up to1100px and reduced-motion preferences use a still frame.
 
-Marketing uses four original coded SVG illustrations for Meta Ads, Google Ads, social media and brand scaling. Software uses clearly labelled illustrative workspace/agent diagrams, with Tire X shop software still described as in development. Education links to the existing AI Intensive landing page and reuses its full Theo/Julian call image. All six new illustrations are under `assets/services/`.
+The client strip uses five original logos. Tire X preserves the red X with black wireframe TIRE/CANADA lettering on transparent ground. The homepage initially shows Stone Design, Szolyd and Knot Normal; a right-side disclosure reveals Tire X, labelled as a review build. The dedicated Websites page shows all four. Adam’s Tires, Sasquatch and CCT concepts are excluded. Big O and Omen are client logos, not website credits.
 
-Orange-theme/three-body source files remain available in history and the orange review folder; they are not loaded by this green page. Review scripts and screenshots live outside the deploy bundle in `/Users/theotaylor/Documents/Codex/2026-10-12/ti-orange-review/`.
+Marketing cards use original colour Meta, Google Ads, Instagram, TikTok and Facebook vector marks (`assets/brands/SOURCES.md`), plus the coded Brand scaling illustration. Software uses clearly labelled illustrative workspace/agent diagrams and explains Agentic as a Service; Tire X software remains in development. Education reuses the full Theo/Julian call image and existing checkout script. Principles are draft brand copy for review: people, usefulness, clarity and learning.
+
+Website purchase is CAD1,500 upfront; CAD500/month maintenance and SEO must be activated separately at launch (see `docs/website-checkout.md`). Education remains CAD1,200/company plus CAD100/employee observer for four calls over two weeks. Marketing and software are scoped individually; fit-call links use the existing Google Calendar schedule. The campaign `/ai-intensive/`, Worker, Stripe configuration and checkout script are unchanged by the multipage work.
+
+Review scripts and screenshots live outside the deploy bundle in `/Users/theotaylor/Documents/Codex/2026-10-12/ti-orange-review/`. October12 multipage QA covered six routes at320/390/800/1150/1625px, image decoding, no horizontal overflow/runtime errors, education selector readiness/totals, exact dropdown dimensions, Escape dismissal and navigation. No payment or enquiry submitted.
 
 ## Deployment
 
