@@ -17,7 +17,7 @@ const json = value => JSON.parse(JSON.stringify(value));
 const storedConsent = value => new Map([[CONSENT_KEY, JSON.stringify({ value, at: Date.now() })]]);
 const confirmed = (extras = 3, overrides = {}) => ({
   paymentStatus: "paid", status: "complete", extraEmployees: extras,
-  amountTotal: 200000 + extras * 10000, currency: "cad", purchaseEventId: HASH_ID,
+  amountTotal: 120000 + extras * 10000, currency: "cad", purchaseEventId: HASH_ID,
   ...overrides,
 });
 
@@ -259,7 +259,7 @@ test("accepting loads one SDK and emits PageView/ViewContent once across repeat 
   assert.deepEqual(fixture.events().map(event => event.name), ["PageView", "ViewContent"]);
   assert.equal(fixture.calls().filter(args => args[0] === "init").length, 1);
   const view = fixture.events()[1].data;
-  assert.equal(view.value, 2000);
+  assert.equal(view.value, 1200);
   assert.equal(view.currency, "CAD");
   assert.deepEqual(view.content_ids, ["ti-company-intensive"]);
   assert.equal(fixture.elements["ad-choice"].textContent, "Ad choices: on");
@@ -328,10 +328,10 @@ test("InitiateCheckout uses exact CAD order totals and deduplicates the same att
   await fixture.context.TIAds.checkoutStarted(-1, "bad");
   const events = fixture.events().filter(event => event.name === "InitiateCheckout");
   assert.equal(events.length, 2);
-  assert.deepEqual(events.map(event => [event.data.value, event.data.currency, event.data.num_items]), [[2000, "CAD", 1], [2300, "CAD", 4]]);
-  assert.deepEqual(events[0].data.contents, [{ id: "ti-company-intensive", quantity: 1, item_price: 2000 }]);
+  assert.deepEqual(events.map(event => [event.data.value, event.data.currency, event.data.num_items]), [[1200, "CAD", 1], [1500, "CAD", 4]]);
+  assert.deepEqual(events[0].data.contents, [{ id: "ti-company-intensive", quantity: 1, item_price: 1200 }]);
   assert.deepEqual(events[1].data.contents, [
-    { id: "ti-company-intensive", quantity: 1, item_price: 2000 },
+    { id: "ti-company-intensive", quantity: 1, item_price: 1200 },
     { id: "ti-employee-observer", quantity: 3, item_price: 100 },
   ]);
   assert.deepEqual(events.map(event => event.eventId), [`ti-checkout-${ATTEMPT}`, `ti-checkout-${OTHER_ATTEMPT}`]);
@@ -343,7 +343,8 @@ test("Purchase requires paid complete exact amount and a hashed event ID", async
   await fixture.boot();
   for (const invalid of [
     { paymentStatus: "unpaid" }, { status: "open" }, { status: "cancelled" },
-    { amountTotal: 1 }, { currency: "usd" }, { extraEmployees: 100 },
+    { amountTotal: 1 }, { amountTotal: 229999 }, { amountTotal: "150000" },
+    { currency: "usd" }, { extraEmployees: 100 },
     { purchaseEventId: SESSION }, { purchaseEventId: "ti-purchase-bad" },
   ]) fixture.context.TIAds.confirmedPurchase(confirmed(3, invalid));
   await fixture.flush();
@@ -354,11 +355,29 @@ test("Purchase requires paid complete exact amount and a hashed event ID", async
   const purchases = fixture.events().filter(event => event.name === "Purchase");
   assert.equal(purchases.length, 1);
   assert.equal(purchases[0].eventId, HASH_ID);
-  assert.equal(purchases[0].data.value, 2300);
+  assert.equal(purchases[0].data.value, 1500);
   assert.equal(purchases[0].data.currency, "CAD");
   assert.equal(purchases[0].data.num_items, 4);
   assert.deepEqual(JSON.parse(fixture.storage.get(PURCHASES_KEY)), [HASH_ID]);
   assert.equal(JSON.stringify(purchases).includes(SESSION), false);
+});
+
+test("historical paid orders report CAD 2000 or 2300 without changing current checkout values", async () => {
+  for (const extras of [0, 3]) {
+    const fixture = browserFixture({ storage: storedConsent("granted") });
+    await fixture.boot();
+    fixture.context.TIAds.confirmedPurchase(confirmed(extras, { amountTotal: 200000 + extras * 10000 }));
+    await fixture.flush();
+    const purchase = fixture.events().find(event => event.name === "Purchase");
+    assert.equal(purchase.data.value, 2000 + extras * 100);
+    assert.equal(purchase.data.contents[0].item_price, 2000);
+    assert.equal(purchase.data.currency, "CAD");
+    assert.equal(purchase.data.num_items, 1 + extras);
+    await fixture.context.TIAds.checkoutStarted(extras, ATTEMPT);
+    const checkout = fixture.events().find(event => event.name === "InitiateCheckout");
+    assert.equal(checkout.data.value, 1200 + extras * 100);
+    assert.equal(checkout.data.contents[0].item_price, 1200);
+  }
 });
 
 test("Purchase deduplication survives reload with shared local storage", async () => {
@@ -489,7 +508,7 @@ test("InitiateCheckout fires only after a valid accepted checkout destination", 
   await fixture.boot({ checkout: true });
   await fixture.select(3);
   await fixture.submitCheckout();
-  assert.equal(fixture.events().filter(event => event.name === "InitiateCheckout")[0].data.value, 2300);
+  assert.equal(fixture.events().filter(event => event.name === "InitiateCheckout")[0].data.value, 1500);
   assert.deepEqual(fixture.redirects, [DESTINATION]);
 });
 

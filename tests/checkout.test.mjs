@@ -6,6 +6,7 @@ const ORIGIN = "https://taylorintelligence.ai";
 const ATTEMPT = "831fa0cb-9fbf-47a9-9a4f-784361d8700e";
 const ID = "cs_live_abcdefghijklm123456789";
 const CHECKOUT_URL = `https://checkout.stripe.com/c/pay/${ID}`;
+const LEGACY_COMPANY_PRICE = "price_1UOoahPUw9hCFj9HxsHEVgWH";
 const env = {
   STRIPE_SECRET_KEY: "rk_live_dummyfixture123456789",
   STRIPE_COMPANY_PRICE_ID: "price_companyFixture",
@@ -17,8 +18,8 @@ function session(extras = 0, overrides = {}) {
   return {
     id: ID, url: CHECKOUT_URL, mode: "payment", currency: "cad", livemode: true,
     status: "open", payment_status: "unpaid",
-    amount_subtotal: 200000 + extras * 10000,
-    amount_total: 200000 + extras * 10000,
+    amount_subtotal: 120000 + extras * 10000,
+    amount_total: 120000 + extras * 10000,
     metadata: {
       offer: "ti-company-ai-intensive-v2", extra_employees: String(extras),
       company_price_id: env.STRIPE_COMPANY_PRICE_ID,
@@ -233,7 +234,7 @@ test("paid confirmation returns only verified payment and public offer informati
   const result = await response.json();
   assert.match(result.purchaseEventId, /^ti-purchase-[a-f0-9]{64}$/);
   assert.equal(JSON.stringify(result).includes(ID), false, 'raw checkout token never becomes an ad event ID');
-  assert.deepEqual(result, { paymentStatus: "paid", status: "complete", extraEmployees: 2, amountTotal: 220000, currency: "cad", purchaseEventId: result.purchaseEventId });
+  assert.deepEqual(result, { paymentStatus: "paid", status: "complete", extraEmployees: 2, amountTotal: 140000, currency: "cad", purchaseEventId: result.purchaseEventId });
   const again = await worker.fetch(getRequest(`/api/checkout/confirmation?session_id=${ID}`), env);
   assert.equal((await again.json()).purchaseEventId, result.purchaseEventId, 'refreshes share a stable deduplication ID');
   assert.equal(calls[0].url, `https://api.stripe.com/v1/checkout/sessions/${ID}`);
@@ -244,6 +245,62 @@ test("unpaid asynchronous checkout remains unpaid in confirmation", async () => 
   const { worker } = stripeStub(() => session(0, { status: "complete", payment_status: "unpaid" }));
   const response = await worker.fetch(getRequest(`/api/checkout/confirmation?session_id=${ID}`), env);
   assert.equal((await response.json()).paymentStatus, "unpaid");
+});
+
+test("historical paid CAD 2000 company sessions retain their exact original totals", async () => {
+  for (const extras of [0, 3]) {
+    const oldSession = session(extras, {
+      status: "complete", payment_status: "paid",
+      amount_subtotal: 200000 + extras * 10000,
+      amount_total: 200000 + extras * 10000,
+      metadata: { ...session(extras).metadata, company_price_id: LEGACY_COMPANY_PRICE },
+    });
+    const { worker } = stripeStub(() => oldSession);
+    const response = await worker.fetch(getRequest(`/api/checkout/confirmation?session_id=${ID}`), env);
+    assert.equal(response.status, 200);
+    const result = await response.json();
+    assert.equal(result.paymentStatus, "paid");
+    assert.equal(result.amountTotal, 200000 + extras * 10000);
+    assert.equal(result.extraEmployees, extras);
+    assert.equal(result.currency, "cad");
+    assert.match(result.purchaseEventId, /^ti-purchase-[a-f0-9]{64}$/);
+  }
+});
+
+test("current and historical prices cannot borrow one another's totals or employee price", async () => {
+  const oldMetadata = { ...session(3).metadata, company_price_id: LEGACY_COMPANY_PRICE };
+  for (const overrides of [
+    { amount_subtotal: 230000, amount_total: 230000 },
+    { metadata: oldMetadata },
+    { metadata: oldMetadata, amount_subtotal: 230000, amount_total: 150000 },
+    { metadata: oldMetadata, amount_subtotal: 150000, amount_total: 230000 },
+    { metadata: { ...oldMetadata, employee_price_id: "price_other" }, amount_subtotal: 230000, amount_total: 230000 },
+  ]) {
+    const { worker } = stripeStub(() => session(3, { status: "complete", payment_status: "paid", ...overrides }));
+    const response = await worker.fetch(getRequest(`/api/checkout/confirmation?session_id=${ID}`), env);
+    assert.equal(response.status, 404);
+  }
+  const sandboxEnv = { ...env, STRIPE_SECRET_KEY: "rk_test_dummyfixture123456789" };
+  const { worker } = stripeStub(() => session(3, {
+    livemode: false, status: "complete", payment_status: "paid", metadata: oldMetadata,
+    amount_subtotal: 230000, amount_total: 230000,
+  }));
+  const response = await worker.fetch(new Request(`http://127.0.0.1/api/checkout/confirmation?session_id=${ID}`, {
+    headers: { "Sec-Fetch-Site": "same-origin" },
+  }), sandboxEnv);
+  assert.equal(response.status, 404, "the historical live price is never a sandbox price");
+});
+
+test("new checkout rejects historical CAD 2000 sessions even though confirmation supports them", async () => {
+  for (const metadata of [session().metadata, { ...session().metadata, company_price_id: LEGACY_COMPANY_PRICE }]) {
+    const { worker } = stripeStub(() => session(0, {
+      metadata, amount_subtotal: 200000, amount_total: 200000,
+    }));
+    const response = await worker.fetch(jsonRequest(), env);
+    assert.equal(response.status, 503);
+    assert.equal(response.headers.has("Location"), false);
+    assert.equal((await response.text()).includes('"url"'), false);
+  }
 });
 
 test("foreign offers, wrong currency/prices/count/amount cannot appear paid", async () => {
