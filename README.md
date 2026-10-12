@@ -15,7 +15,7 @@ The current homepage uses a new, compact canvas interpretation: three mutually g
 - `/services`, `/approach`, `/contact`, `/card`: existing routes and contact behavior, with shared styling.
 - `/ai-intensive/`, `worker/`, checkout and tracking: unchanged from base.
 
-`orange.css` owns the theme; `orbit.js` owns the scene and `three-body.js` its physics. `assets/work/` contains actual site screenshots captured October 12. The Tire X logo is the exact established white/red lockup retrieved from `https://taylorintelligence-test.ca/wp-content/themes/webdesignsun/assets/img/logo.svg`, replacing an obsolete concept in the local brand kit. Other original logos remain in `ai-intensive/logos/`.
+`orange.css` owns the theme; `orbit.js` owns the scene and `three-body.js` its physics. `assets/work/` contains actual site screenshots captured October 12. The Tire X logo is the exact established white/red lockup retrieved from `https://taylorintelligence-test.ca/wp-content/themes/webdesignsun/assets/img/logo.svg`, replacing an obsolete concept in the local brand kit. At Theo’s request the client strip uses `tire-x-outlined.svg`: the same paths with black wireframe TIRE/CANADA lettering, transparent interiors and the original red X, without a black plate. Other original logos remain in `ai-intensive/logos/`.
 
 Screenshots are dated portfolio snapshots. Big O and Omen are client logos; their sites are not attributed to TI. Sasquatch and CCT review builds remain excluded at Theo’s request (live sites plus Tire X only).
 
