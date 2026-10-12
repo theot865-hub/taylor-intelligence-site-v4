@@ -7,7 +7,7 @@ Local redesign on `codex/orange-portfolio`, based on main `5d09f1a` (October 12,
 
 The initial cream/editorial/tilted-card design was rejected. Theo explicitly requested something closer to TI v1: minimal but visually present, with orbiting elements. The original `f0269c5` Celestial Atlas was found in the iCloud v1 checkout and rendered as reference.
 
-The current homepage uses a new, compact canvas interpretation: procedural orange sun, four orbiting worlds, pointer-driven perspective, hover emphasis, clickable destinations, keyboard-equivalent links and a pause button. Reduced-motion preference renders a still scene; animation stops offscreen and in hidden tabs. No new frontend dependency or image-generation service.
+The current homepage uses a new, compact canvas interpretation: three mutually gravitating bodies with orange trails, compact destination links and a pause button. `three-body.js` integrates Newtonian gravity with fixed-step velocity Verlet using the Simó figure-eight initial conditions ([source](https://people.ucsc.edu/~rmont/talks/Heidelberg2Problems.pdf)); paths are sampled from the simulation. Reduced-motion preference renders a still scene; animation stops offscreen and in hidden tabs. No new frontend dependency or image-generation service.
 
 - `/`: orbital homepage, five client logos and four featured websites.
 - `/websites`: Stone Design Concrete, Szolyd, Knot Normal, Tire X preview, and Adam’s Tires (past project).
@@ -15,7 +15,7 @@ The current homepage uses a new, compact canvas interpretation: procedural orang
 - `/services`, `/approach`, `/contact`, `/card`: existing routes and contact behavior, with shared styling.
 - `/ai-intensive/`, `worker/`, checkout and tracking: unchanged from base.
 
-`orange.css` owns the theme; `orbit.js` owns the scene. `assets/work/` contains actual site screenshots captured October 12. The Tire X logo is the exact established white/red lockup retrieved from `https://taylorintelligence-test.ca/wp-content/themes/webdesignsun/assets/img/logo.svg`, replacing an obsolete concept in the local brand kit. Other original logos remain in `ai-intensive/logos/`.
+`orange.css` owns the theme; `orbit.js` owns the scene and `three-body.js` its physics. `assets/work/` contains actual site screenshots captured October 12. The Tire X logo is the exact established white/red lockup retrieved from `https://taylorintelligence-test.ca/wp-content/themes/webdesignsun/assets/img/logo.svg`, replacing an obsolete concept in the local brand kit. Other original logos remain in `ai-intensive/logos/`.
 
 Screenshots are dated portfolio snapshots. Big O and Omen are client logos; their sites are not attributed to TI. Sasquatch and CCT review builds remain excluded at Theo’s request (live sites plus Tire X only).
 
@@ -28,7 +28,8 @@ Serve the folder with SPA fallback for the extensionless routes. The review serv
 ```
 index.html     routed page content and existing contact/router logic
 orange.css     restrained orange atlas / portfolio design
-orbit.js       procedural interactive orbital canvas
+orbit.js       three-body canvas rendering and motion controls
+three-body.js  fixed-step Newtonian gravity integrator
 assets/        original logo and actual website screenshots
 _redirects     Cloudflare Pages rewrites so /card etc. serve index.html
 map/           build pipeline for the hairline Salish Sea coastline map
@@ -221,3 +222,5 @@ python3 gen_svg.py         # rebuild map_snippet.svg
 
 Domain of record: **taylorintelligence.ai**. v4 is the production site;
 the AI intensive landing page uses `/ai-intensive/`.
+
+Three-body stability check: `node tests/three-body.test.mjs`. Checks energy, momentum, centre of mass, boundedness and finite state over 1,000 simulated time units. Opening hero is 420px desktop / 475px mobile to expose client logos and project imagery earlier.
