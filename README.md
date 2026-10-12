@@ -1,13 +1,30 @@
-# Taylor Intelligence — site v4 · "Simple by design"
+# Taylor Intelligence — Orange portfolio review
 
-A lean, self-contained agency site. Pure white ground, single black hairline
-weight, no frameworks, no build step. Everything (CSS, JS, the map SVG) is
-inlined in `index.html`.
+Local redesign on `codex/orange-portfolio`, based on main `5d09f1a` (October 12, 2026).
+**Not published. Do not push until the redesign is approved for production:** Cloudflare has deployed review branches to the canonical domain before a PR merge.
+
+Warm orange gradients, five original client logos, a website collection and a Tire X in-development feature. Static HTML/CSS; no build step or new runtime dependencies.
+
+- `/`: homepage and four featured websites.
+- `/websites`: Stone Design Concrete, Szolyd, Knot Normal, Tire X preview, and Adam’s Tires (past project).
+- `/portfolio`: alias for `/websites`.
+- `/services`, `/approach`, `/contact`, `/card`: existing routes and contact behavior, with shared warm styling.
+- `/ai-intensive/`, `worker/`, checkout and tracking: unchanged from base.
+
+`orange.css` owns the new theme. `assets/work/` contains screenshots of the actual sites captured October 12; `assets/logos/tire-x.svg` is the existing Tire X wordmark. Other original client logos remain in `ai-intensive/logos/`. Sasquatch and CCT review builds excluded at Theo’s request (live sites plus Tire X only).
+
+Screenshots are a dated portfolio snapshot, not live embeds. Recapture from the actual website when a project changes. Big O and Omen are client logos; their own sites are not attributed to TI.
+
+## Local review
+
+Serve the folder with SPA fallback for the extensionless routes. The review server and QA evidence are outside the published assets at `/Users/theotaylor/Documents/Codex/2026-10-12/ti-orange-review/`. Preview: http://127.0.0.1:4188 . The public contact form is real; verification must not submit enquiries.
 
 ## Structure
 
 ```
-index.html     the entire site — inline CSS + JS + SVG, no dependencies
+index.html     routed page content and existing contact/router logic
+orange.css     warm orange portfolio design
+assets/        original logo and actual website screenshots
 _redirects     Cloudflare Pages rewrites so /card etc. serve index.html
 map/           build pipeline for the hairline Salish Sea coastline map
   build_map.py   fetch OSM coastline (Overpass) → stitch → simplify → map_data.json
@@ -22,7 +39,7 @@ Client-side router (bottom of `index.html`). Reads the hash, or the last path
 segment so bare paths work once `_redirects` is live.
 
 - `/`            Home — statement + map, Services, closing CTA
-- `/portfolio`   Selected work
+- `/websites`    Website collection; `/portfolio` is an alias
 - `/approach`    In-depth: 3-step method + per-service deep dives + Conduit + principles
 - `/contact`     Contact form + direct details
 - `/card`        alias → Contact (the QR / business-card landing)
