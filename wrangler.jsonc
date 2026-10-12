@@ -9,7 +9,7 @@
   "main": "worker/checkout.mjs",
   "compatibility_date": "2026-05-01",
   "vars": {
-    "STRIPE_COMPANY_PRICE_ID": "price_1UOoahPUw9hCFj9HxsHEVgWH",
+    "STRIPE_COMPANY_PRICE_ID": "price_1UPpAmPUw9hCFj9HMR2kugF2",
     "STRIPE_EMPLOYEE_PRICE_ID": "price_1UOodyPUw9hCFj9HNbLHQYbx"
   },
   "assets": {

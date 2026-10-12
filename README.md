@@ -45,7 +45,9 @@ The existing contact form uses Web3Forms with its public client access key
 already in the HTML. `_redirects` and the Worker's SPA fallback support the main
 site's bare routes. Keep offer/copy changes on a review branch until approved.
 
-## AI intensive — current revision (2026-10-10)
+## AI intensive — current revision (2026-10-12)
+
+**October 12 price revision:** Theo set the company seat to CAD $1,200; additional employee observers remain CAD $100 each. Live one-time Stripe company Price `price_1UPpAmPUw9hCFj9HMR2kugF2` replaces the previous $2,000 Price for new checkouts. Confirmation preserves the exact historical Price and total for existing bookings, and purchase measurement uses the confirmed historical amount. The October 9 verification below is historical.
 
 **Revision status:** offer, assets and live Stripe checkout verified October9,
 2026. PR5 integrates the approved revision into `main`. `/api/checkout/status`
@@ -72,7 +74,7 @@ state; they do not describe the current live checkout.
 - Education link in `/services` points here; sitemap includes the route.
 
 **Current offer:** four live shared group calls over two weeks, giving business
-owners hands-on advice on incorporating AI into their own businesses. **$2,000
+owners hands-on advice on incorporating AI into their own businesses. **$1,200
 CAD per company seat** covers one business owner for all four calls. Additional
 employees from that company can sit in and watch for **$100 CAD each** for the
 full intensive. Dates/times are **to be announced**; do not restore the old
@@ -166,7 +168,7 @@ adapted into `ai-intensive/tracking.js`, on the intensive page only.
   no manual name, email, phone, form data or Stripe session token is sent to Meta.
 - `PageView` and `ViewContent` identify the intensive after consent.
 - `InitiateCheckout` fires only after the server returns a valid Stripe checkout
-  destination, with the exact CAD2,000 + CAD100 per observer total and quantities.
+  destination, with the exact CAD1,200 + CAD100 per observer total and quantities.
   Repeated submission of the same attempt does not create another browser event.
 - `Purchase` requires the server to verify paid + complete, the owned live offer,
   exact amount/currency and employee count. It uses a stable SHA256-derived opaque

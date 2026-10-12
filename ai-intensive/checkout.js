@@ -30,7 +30,7 @@
     if (renew && next !== selection) newAttempt();
     selection = next;
     input.value = String(next);
-    total.value = `$${format.format(2000 + next * 100)}`;
+    total.value = `$${format.format(1200 + next * 100)}`;
     for (const button of steppers) button.disabled = busy || paid || (Number(button.dataset.seatStep) < 0 ? next === 0 : next === 99);
     input.disabled = busy || paid;
     submit.disabled = busy || paid || !ready;
@@ -89,6 +89,8 @@
       if (result.paymentStatus === 'paid' && result.status === 'complete') {
         paid = true;
         update(result.extraEmployees, false);
+        // A previously paid booking keeps its verified historical total.
+        total.value = `$${format.format(result.amountTotal / 100)}`;
         submit.textContent = 'Company seat booked';
         say('You’re booked. Check your Stripe receipt; we’ll email you with the group call details.');
         try { window.TIAds?.confirmedPurchase(result); } catch { /* Payment confirmation is independent of ads. */ }

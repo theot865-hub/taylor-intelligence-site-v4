@@ -33,12 +33,12 @@
   }
   const safeLocation = () => safeURL(location.href) && safeURL(document.referrer);
   const permitted = () => production && consent === 'granted' && !privacySignal() && safeLocation();
-  const order = extras => ({
+  const order = (extras, companyPrice = 1200) => ({
     content_name: 'AI Intensive — Company Seat', content_type: 'product',
     content_ids: extras ? ['ti-company-intensive', 'ti-employee-observer'] : ['ti-company-intensive'],
-    contents: [{ id: 'ti-company-intensive', quantity: 1, item_price: 2000 },
+    contents: [{ id: 'ti-company-intensive', quantity: 1, item_price: companyPrice },
       ...(extras ? [{ id: 'ti-employee-observer', quantity: extras, item_price: 100 }] : [])],
-    num_items: 1 + extras, value: 2000 + 100 * extras, currency: 'CAD'
+    num_items: 1 + extras, value: companyPrice + 100 * extras, currency: 'CAD'
   });
 
   function pixel() {
@@ -119,7 +119,9 @@
         const saved = purchaseClaims();
         if (!saved || saved.includes(id) || sentPurchases.has(id)) return;
         if (!saveClaims([...saved, id].slice(-100))) return;
-        if (track('Purchase', order(result.extraEmployees), id)) {
+        // Historical paid sessions retain their server-verified purchase value.
+        const companyPrice = (result.amountTotal - result.extraEmployees * 10000) / 100;
+        if (track('Purchase', order(result.extraEmployees, companyPrice), id)) {
           sentPurchases.add(id);
         } else {
           // A failed synchronous dispatch has not submitted the event. Remove
@@ -138,7 +140,7 @@
       if (!pageViewed && permitted()) {
         if (track('PageView', {})) {
           pageViewed = true;
-          track('ViewContent', { content_name: 'AI Intensive for Business Owners', content_type: 'product', content_ids: ['ti-company-intensive'], value: 2000, currency: 'CAD' });
+          track('ViewContent', { content_name: 'AI Intensive for Business Owners', content_type: 'product', content_ids: ['ti-company-intensive'], value: 1200, currency: 'CAD' });
         }
       }
     } finally { pageSending = false; }
@@ -178,7 +180,8 @@
     confirmedPurchase(result) {
       if (result?.paymentStatus !== 'paid' || result.status !== 'complete'
           || !validCount(result.extraEmployees) || result.currency !== 'cad'
-          || result.amountTotal !== 200000 + result.extraEmployees * 10000
+          || !Number.isInteger(result.amountTotal)
+          || ![120000, 200000].includes(result.amountTotal - result.extraEmployees * 10000)
           || !/^ti-purchase-[a-f0-9]{64}$/.test(result.purchaseEventId ?? '')) return;
       pendingPurchase = result;
       void purchase();

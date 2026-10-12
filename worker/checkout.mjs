@@ -1,10 +1,13 @@
 // Server-only Stripe Checkout integration. This directory is excluded from assets.
 // Configure secrets/bindings in Cloudflare, never in public source:
 // STRIPE_SECRET_KEY, STRIPE_COMPANY_PRICE_ID, STRIPE_EMPLOYEE_PRICE_ID.
-// The company price must be a one-time CAD 2,000 price; employee price CAD 100.
+// The company price must be a one-time CAD 1,200 price; employee price CAD 100.
 // Capacity is not enforced here: 99 is only the technical purchase cap.
 const SITE_ORIGIN = "https://taylorintelligence.ai";
 const OFFER = "ti-company-ai-intensive-v2";
+// Read-back only: existing CAD 2,000 purchases retain their original amount.
+// This historical price is never accepted when creating a new checkout.
+const LEGACY_COMPANY_PRICE = "price_1UOoahPUw9hCFj9HxsHEVgWH";
 const STRIPE_VERSION = "2026-09-30.endive";
 const MAX_EXTRA_EMPLOYEES = 99;
 const MAX_REQUEST_BYTES = 2048;
@@ -174,17 +177,21 @@ async function stripeRequest(config, path, { body, idempotency } = {}, fetchStri
   }
 }
 
-function expectedTotal(extras) { return 200000 + 10000 * extras; }
+function expectedTotal(extras, companyAmount = 120000) { return companyAmount + 10000 * extras; }
 
-function ownedSession(session, config) {
+function ownedSession(session, config, allowLegacy = false) {
   const metadata = session.metadata;
   if (session.mode !== "payment" || session.currency !== "cad" || session.livemode !== config.live
       || metadata?.offer !== OFFER
-      || metadata.company_price_id !== config.companyPrice
       || metadata.employee_price_id !== config.employeePrice) return null;
+  const companyAmount = metadata.company_price_id === config.companyPrice ? 120000
+    : allowLegacy && config.live && metadata.company_price_id === LEGACY_COMPANY_PRICE ? 200000
+    : null;
+  if (companyAmount === null) return null;
   let extras;
   try { extras = employeeCount(metadata.extra_employees); } catch { return null; }
-  if (session.amount_subtotal !== expectedTotal(extras) || session.amount_total !== expectedTotal(extras)) return null;
+  if (session.amount_subtotal !== expectedTotal(extras, companyAmount)
+      || session.amount_total !== expectedTotal(extras, companyAmount)) return null;
   return extras;
 }
 
@@ -236,7 +243,7 @@ async function confirmation(request, config, fetchStripe) {
     throw new RequestError(400, "The confirmation link is invalid.");
   }
   const session = await stripeRequest(config, `checkout/sessions/${sessionID}`, {}, fetchStripe);
-  const extras = ownedSession(session, config);
+  const extras = ownedSession(session, config, true);
   if (session.id !== sessionID || extras === null
       || !["paid", "unpaid", "no_payment_required"].includes(session.payment_status)
       || !["open", "complete", "expired"].includes(session.status)) {
