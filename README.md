@@ -3,17 +3,21 @@
 Local redesign on `codex/orange-portfolio`, based on main `5d09f1a` (October 12, 2026).
 **Not published. Do not push until the redesign is approved for production:** Cloudflare has deployed review branches to the canonical domain before a PR merge.
 
-Warm orange gradients, five original client logos, a website collection and a Tire X in-development feature. Static HTML/CSS; no build step or new runtime dependencies.
+## Current direction: Celestial Atlas reference
 
-- `/`: homepage and four featured websites.
+The initial cream/editorial/tilted-card design was rejected. Theo explicitly requested something closer to TI v1: minimal but visually present, with orbiting elements. The original `f0269c5` Celestial Atlas was found in the iCloud v1 checkout and rendered as reference.
+
+The current homepage uses a new, compact canvas interpretation: procedural orange sun, four orbiting worlds, pointer-driven perspective, hover emphasis, clickable destinations, keyboard-equivalent links and a pause button. Reduced-motion preference renders a still scene; animation stops offscreen and in hidden tabs. No new frontend dependency or image-generation service.
+
+- `/`: orbital homepage, five client logos and four featured websites.
 - `/websites`: Stone Design Concrete, Szolyd, Knot Normal, Tire X preview, and Adam’s Tires (past project).
 - `/portfolio`: alias for `/websites`.
-- `/services`, `/approach`, `/contact`, `/card`: existing routes and contact behavior, with shared warm styling.
+- `/services`, `/approach`, `/contact`, `/card`: existing routes and contact behavior, with shared styling.
 - `/ai-intensive/`, `worker/`, checkout and tracking: unchanged from base.
 
-`orange.css` owns the new theme. `assets/work/` contains screenshots of the actual sites captured October 12; `assets/logos/tire-x.svg` is the existing Tire X wordmark. Other original client logos remain in `ai-intensive/logos/`. Sasquatch and CCT review builds excluded at Theo’s request (live sites plus Tire X only).
+`orange.css` owns the theme; `orbit.js` owns the scene. `assets/work/` contains actual site screenshots captured October 12. The Tire X logo is the exact established white/red lockup retrieved from `https://taylorintelligence-test.ca/wp-content/themes/webdesignsun/assets/img/logo.svg`, replacing an obsolete concept in the local brand kit. Other original logos remain in `ai-intensive/logos/`.
 
-Screenshots are a dated portfolio snapshot, not live embeds. Recapture from the actual website when a project changes. Big O and Omen are client logos; their own sites are not attributed to TI.
+Screenshots are dated portfolio snapshots. Big O and Omen are client logos; their sites are not attributed to TI. Sasquatch and CCT review builds remain excluded at Theo’s request (live sites plus Tire X only).
 
 ## Local review
 
@@ -23,7 +27,8 @@ Serve the folder with SPA fallback for the extensionless routes. The review serv
 
 ```
 index.html     routed page content and existing contact/router logic
-orange.css     warm orange portfolio design
+orange.css     restrained orange atlas / portfolio design
+orbit.js       procedural interactive orbital canvas
 assets/        original logo and actual website screenshots
 _redirects     Cloudflare Pages rewrites so /card etc. serve index.html
 map/           build pipeline for the hairline Salish Sea coastline map
