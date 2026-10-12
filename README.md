@@ -5,13 +5,13 @@ Local branch `codex/green-portfolio`, built from v4 review `3ae0462` and the aut
 
 ## Direction approved for this review
 
-Theo revisited the shelved v3 and explicitly chose “Keep the green animated terrain” on October12. This draft retains its Archivo Black type, living landscape and curved white panels. Theo then requested the professional TI monogram/Manrope wordmark from the orange draft (also used for the favicon), and monochrome terrain with many shades. The terrain layer uses grayscale with modest luminance/contrast tuning, retaining the authored depth bands, fog and highlights; the text accents remain green. It adds the current five-client strip, all five approved website entries, consulting/integration/education, Tire X software marked in development and a contact form. Old Conduit product claims, statistics carousel, demo claims and draggable editor are removed from this draft.
+Theo revisited the shelved v3 and explicitly chose “Keep the green animated terrain” on October12. This draft retains its Archivo Black type, living landscape and curved white panels. Theo then requested the professional TI monogram/Manrope wordmark from the orange draft (also used for the favicon), and monochrome terrain with many shades. The terrain layer uses grayscale with modest luminance/contrast tuning, retaining the authored depth bands, fog and highlights; the text accents remain green. It adds the current five-client strip and a compact Websites → Marketing → Software & agents → Education sequence, followed by the studio and contact form. The black curved headline reads “One agency for everything.” Old Conduit product claims, statistics carousel, demo claims and draggable editor are removed from this draft.
 
 The animated terrain retains the authored landscape and birds, with pause and hidden-tab suspension. Neural chains, explorer routes and ridge pulses are removed at Theo’s request. Its world width now follows the viewport at the far plane, with 100px of edge overscan and a denser mesh/point field to avoid exposed boundaries. Phones/tablets up to1100px retain v3’s lighter static terrain; reduced motion also uses a still frame. The shortened opening exposes client logos and work earlier. The original green source remains at4190 and the previous orange draft at4188.
 
 - Review folder: `/Users/theotaylor/Work/Sites/ti-green-review-20261012`
 - Updated preview: http://127.0.0.1:4191/
-- Homepage sections: websites, services, software, studio, start.
+- Homepage sections: websites, services (Marketing), software, education, studio, start.
 - `/websites` and `/portfolio`: open the website gallery section.
 - `/services`, `/approach`, `/contact`, `/card`: open their corresponding sections.
 - `/ai-intensive/`, `worker/`, `wrangler.jsonc`, checkout and tracking: unchanged from v4 base `5d09f1a`.
@@ -20,7 +20,9 @@ The animated terrain retains the authored landscape and birds, with pause and hi
 
 `index.html` contains the authored terrain and panel system, current content and markup. `green.css` contains portfolio/responsive overrides; `green.js` handles section aliases, mobile navigation and contact feedback. `lead-form.js` retains v3’s UTM/page metadata behavior. Form success requires both HTTP success and `{success:true}`; QA intercepts requests and never sends an enquiry.
 
-The client strip uses original logos. `assets/logos/tire-x-outlined.svg` preserves the established Tire X shapes/red X with black wireframe TIRE/CANADA lettering on transparent ground, explicitly requested by Theo. Its source SVG remains intact. Gallery includes Stone Design, Szolyd, Knot Normal, Tire X (review build), Adam’s Tires (past project at a live URL). Big O/Omen are client logos, not website credits. Sasquatch/CCT concepts are excluded.
+The client strip uses original logos. `assets/logos/tire-x-outlined.svg` preserves the established Tire X shapes/red X with black wireframe TIRE/CANADA lettering on transparent ground, explicitly requested by Theo. Its source SVG remains intact. The three-column gallery initially shows Stone Design, Szolyd and Knot Normal. A native details control expands the panel for Tire X (review build). Adam’s Tires is removed at Theo’s request. Big O/Omen are client logos, not website credits. Sasquatch/CCT concepts are excluded.
+
+Marketing uses four original coded SVG illustrations for Meta Ads, Google Ads, social media and brand scaling. Software uses clearly labelled illustrative workspace/agent diagrams, with Tire X shop software still described as in development. Education links to the existing AI Intensive landing page and reuses its full Theo/Julian call image. All six new illustrations are under `assets/services/`.
 
 Orange-theme/three-body source files remain available in history and the orange review folder; they are not loaded by this green page. Review scripts and screenshots live outside the deploy bundle in `/Users/theotaylor/Documents/Codex/2026-10-12/ti-orange-review/`.
 
