@@ -27,3 +27,17 @@
 .principle{display:grid;grid-template-columns:1fr 5fr;gap:30px;border-top:1px solid #ddd;padding:48px 0;scroll-margin-top:32vh}.principle>span{font:12px Manrope,sans-serif;color:#888}.principle h2{font:clamp(30px,3vw,43px)/1.2 'Archivo Black',sans-serif;letter-spacing:-.04em;margin-bottom:20px}.principle p{font-size:16px;line-height:1.85;color:#666;max-width:65ch}.principle .principle-practice{font-size:12px;color:#999;margin-top:22px}
 @media(max-width:1100px){.brand-lockup{top:0}.brand-lockup .mark{width:29px;height:29px}.brand-lockup .word{font-size:16px}.top-nav{top:58px;gap:0;max-height:calc(100dvh - 58px);overflow:auto}.nav-disclosure{width:100%}.nav-disclosure summary{padding:15px 22px;font-size:16px;border:0;border-top:1px solid #eee}.nav-dropdown{position:static;border:0;box-shadow:none;padding:0 14px 10px}.top-nav .nav-dropdown a{font-size:14px;padding:13px 20px}.top-nav>a{font-size:16px;padding:15px 22px}.dropdown-note{padding-left:12px;font-size:12px}.service-page .panel{padding:30px 26px}.page-kicker,.page-title,.page-intro{position:static;width:auto}.page-kicker{margin-bottom:18px}.page-title{font-size:clamp(38px,5.5vw,60px);margin-bottom:23px}.page-intro{max-width:65ch;margin-bottom:32px}.service-page #page-details,.principle{scroll-margin-top:85px}.detail-grid{gap:25px}.workflow-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-call{padding:25px;align-items:flex-start;flex-direction:column}}
 @media(max-width:600px){.brand-lockup .word{font-size:15px}.brand-lockup .mark{width:27px;height:27px}.service-page .panel{padding:25px 20px}.page-title{font-size:clamp(30px,8.5vw,48px)}.page-title br{display:none}.page-title br:after{content:' '}.detail-section{padding:32px 0}.detail-grid,.agent-explainer{grid-template-columns:1fr;gap:25px}.detail-grid h3{margin-top:14px}.scope-list>p{grid-template-columns:1fr;gap:10px}.workflow-steps{grid-template-columns:1fr}.workflow-steps li{display:flex;gap:20px}.workflow-steps h3{margin-top:0}.detail-call{padding:24px 20px;gap:22px}.detail-call h2{font-size:24px}.detail-call .purchase-button{width:100%}.principle{grid-template-columns:1fr;gap:20px;padding:32px 0}.principle p{font-size:14px}.service-page .green-heading h2{font-size:28px}}
+
+/* Carry the homepage's curved headline treatment into every full service page. */
+.page-title-contour{top:52px;width:59%;max-width:760px;line-height:1}
+.page-type{display:block;width:100%;height:auto;overflow:visible;fill:currentColor;font-family:'Archivo Black',sans-serif}
+.page-type-curve{font-size:var(--curve-size);letter-spacing:0}
+.page-type-main{font-size:var(--base-size);letter-spacing:-.025em}
+.page-type-mobile{display:none}
+@media(max-width:1100px){
+ .page-title-contour{width:auto;max-width:100%}
+ .page-type{display:none}
+ .page-type-mobile{display:flex;flex-direction:column;gap:5px}
+ .page-type-mobile>span{font-size:clamp(30px,5.8vw,58px);letter-spacing:-.025em}
+ .page-type-mobile>strong{font:inherit;font-size:clamp(30px,6.6vw,66px);letter-spacing:-.035em}
+}
