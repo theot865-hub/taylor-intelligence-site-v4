@@ -641,14 +641,12 @@
         rampLow: [44, 82, 62],          /* valley-floor point colour */
         rampHigh: [168, 248, 200],      /* ridge-line point colour */
         wire: "rgba(104, 182, 138, 0.16)", /* faint contour lines between points */
-        link: "150, 240, 186",          /* neural-link lines + nodes (r,g,b) */
         farTint: [96, 148, 152],        /* atmospheric haze colour near the horizon */
         mote: "170, 240, 200",          /* drifting data-motes (r,g,b) */
-        agent: "242, 206, 132",         /* the explorer + its trail (warm gold) */
         speed: 0.72                     /* forward drift, world-units/sec */
       };
 
-      var ROWS = 52, COLS = 76, NEAR = 3.2, FAR = 34, SPAN = 15, CAMH = 4.2;
+      var ROWS = 52, COLS = 128, NEAR = 3.2, FAR = 34, SPAN = 15, CAMH = 4.2;
       var DPR, W, H, cx, horizon, focal;
 
       function resize() {
@@ -666,6 +664,9 @@
            several ridge lines stay in frame instead of sparse near-field. */
         horizon = H * (W / H < 1.2 ? 0.2 : 0.09);
         focal = H * 1.0;
+        /* Cover the far plane, including pointer parallax and drifting edge
+           points. A fixed world width exposed the left/right mesh boundary. */
+        SPAN = Math.max(15, (W * 0.5 + 100) * FAR / focal);
         if (GLR) GLR.resize();
       }
 
@@ -726,22 +727,6 @@
         RAMPW.push(wband);
       }
 
-      /* neural chains: 2-4 linked nodes anchored to fixed noise coordinates,
-         so they ride the terrain toward the viewer and die at the near plane */
-      var links = [], lastSpawn = -10;
-      function spawnLink(t, travel) {
-        var n = 2 + Math.floor(Math.random() * 3);
-        var x = -SPAN * 0.75 + Math.random() * SPAN * 1.5;
-        var zn = travel + 9 + Math.random() * 13;
-        var nodes = [{ x: x, zn: zn }];
-        for (var s = 1; s < n; s++) {
-          x += Math.random() * 7 - 3.5;
-          zn += Math.random() * 4 - 2;
-          nodes.push({ x: x, zn: zn });
-        }
-        links.push({ nodes: nodes, born: t, life: 5.5 + Math.random() * 3.5 });
-      }
-
       /* eased mouse parallax — the canvas sits behind everything, so listen
          on the window; reduced-motion/mobile never registers the listener */
       var mx = 0, my = 0, px = 0, py = 0;
@@ -755,13 +740,6 @@
       for (var m = 0; m < 42; m++) {
         motes.push({ x: Math.random(), y: Math.random(), s: 0.4 + Math.random() * 1.2,
                      v: 0.004 + Math.random() * 0.01, ph: Math.random() * 6.283 });
-      }
-
-      /* ridge shimmers: a lit pulse sweeping along one contour line */
-      var shimmers = [], lastShimmer = -10;
-      function spawnShimmer(t, travel) {
-        shimmers.push({ zn: travel + 7 + Math.random() * 15, born: t,
-                        life: 3.5 + Math.random() * 2, dir: Math.random() < 0.5 ? 1 : -1 });
       }
 
       /* cached soft-glow sprites (one per colour) for the additive bloom pass */
@@ -808,7 +786,7 @@
          Renders the WORLD on the canvas beneath this one: sky, a solid
          terrain mesh that truly occludes (depth buffer), and a dense
          additive point cloud. The 2D canvas on top keeps the STORY layer:
-         explorer, routes, links, contours, fog, birds, vignette.
+         contours, fog, birds and vignette.
          The GLSL noise mirrors the JS hash/noise/terrainH above bit-exactly,
          so both layers agree on every height. If WebGL2 is unavailable this
          returns null and the 2D renderer keeps doing everything itself. */
@@ -844,7 +822,7 @@
           "}\n";
         var COMMON = "\n" +
           "uniform vec2 u_res;\n" +
-          "uniform float u_t, u_travel, u_xdrift, u_camh, u_focal, u_horizon, u_cx, u_panx, u_pany, u_dpr;\n" +
+          "uniform float u_t, u_travel, u_xdrift, u_camh, u_focal, u_horizon, u_cx, u_panx, u_pany, u_dpr, u_span;\n" +
           "vec2 proj(float x, float h, float z) {\n" +
           "  return vec2(u_cx + u_panx + x * u_focal / z, u_horizon + u_pany + (u_camh - h) * u_focal / z);\n" +
           "}\n" +
@@ -887,7 +865,7 @@
           "  float fz = a_ij.y / (u_grid.y - 1.0);\n" +
           "  float z = 3.2 + pow(fz, 1.55) * 30.8;\n" +
           "  float zn = z + u_travel;\n" +
-          "  float x = -15.0 + 30.0 * a_ij.x / (u_grid.x - 1.0);\n" +
+          "  float x = -u_span + 2.0 * u_span * a_ij.x / (u_grid.x - 1.0);\n" +
           "  float xw = x + u_xdrift;\n" +
           "  float h = terrH(xw, zn);\n" +
           "  float hL = terrH(xw - 0.35, zn);\n" +
@@ -914,7 +892,7 @@
           "  float zn = z + u_travel;\n" +
           "  float r1 = uhashf(int(a_ij.x) * 2 + 1, int(a_ij.y));\n" +
           "  float r2 = uhashf(int(a_ij.x), int(a_ij.y) * 2 + 1);\n" +
-          "  float x = -15.0 + 30.0 * a_ij.x / (u_grid.x - 1.0) + (r1 - 0.5) * 0.36;\n" +
+          "  float x = -u_span + 2.0 * u_span * a_ij.x / (u_grid.x - 1.0) + (r1 - 0.5) * 0.36;\n" +
           "  float zj = z + (r2 - 0.5) * 0.4;\n" +
           "  float znj = zn + (r2 - 0.5) * 0.4;\n" +
           "  float xw = x + u_xdrift;\n" +
@@ -972,7 +950,7 @@
         var skyP = prog(skyVS, skyFS), meshP = prog(meshVS, meshFS), ptsP = prog(ptsVS, ptsFS);
         if (!skyP || !meshP || !ptsP) { cv.style.display = "none"; return null; }
 
-        var PC = 190, PR = 120, MC = 140, MR = 90;
+        var PC = 360, PR = 120, MC = 240, MR = 90;
         function makeVAO(p, cols, rows) {
           var arr = new Float32Array(cols * rows * 2), k = 0;
           for (var jj = 0; jj < rows; jj++) for (var ii = 0; ii < cols; ii++) { arr[k++] = ii; arr[k++] = jj; }
@@ -1027,6 +1005,7 @@
           gl.uniform1f(loc(p, "u_panx"), panx);
           gl.uniform1f(loc(p, "u_pany"), pany);
           gl.uniform1f(loc(p, "u_dpr"), DPR);
+          gl.uniform1f(loc(p, "u_span"), SPAN);
         }
 
         return {
@@ -1084,167 +1063,7 @@
         };
       })();
 
-      /* boot-sequence state: 0-2s the terrain assembles, then the first
-         synapses fire in sequence (fired 0..3) */
-      var fired = 0;
       function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
-
-      /* ---- the inhabited world: an explorer agent lives on the terrain.
-         Its loop is perceive -> plan -> act: a forward A* search runs over a
-         coarse grid of the actual heightfield (preferring low ground), the
-         exploration is replayed as tendrils fanning out, the winning route
-         snaps bright, and the explorer walks it, surveys, and plans again. */
-      var explorer = { x: 0, zn: 0, trail: [] };
-      var episode = null;
-
-      function planEpisode(t, travel) {
-        var sx = explorer.x, szn = explorer.zn;
-        var gx = Math.max(-9, Math.min(9, sx + (Math.random() * 12 - 6)));
-        var gzn = travel + 18 + Math.random() * 3;
-        var STEP = 1.2, half = 9;
-        var depth = Math.max(3, Math.round((gzn - szn) / STEP));
-        function nodeAt(i, jj) {
-          return { x: sx + (gx - sx) * (jj / depth) + i * STEP, zn: szn + jj * STEP };
-        }
-        function hcost(n) { var dx = n.x - gx, dz = n.zn - gzn; return Math.sqrt(dx * dx + dz * dz); }
-        var open = [], closedOrder = [], seen = {};
-        var s0 = nodeAt(0, 0);
-        open.push({ i: 0, j: 0, x: s0.x, zn: s0.zn, g: 0, f: hcost(s0), p: null });
-        seen["0:0"] = true;
-        var goalNode = null, guard = 0;
-        while (open.length && guard++ < 900) {
-          var bi = 0;
-          for (var oi = 1; oi < open.length; oi++) if (open[oi].f < open[bi].f) bi = oi;
-          var cur = open.splice(bi, 1)[0];
-          closedOrder.push(cur);
-          if (cur.j >= depth) { goalNode = cur; break; }
-          for (var di = -1; di <= 1; di++) {
-            var ni = cur.i + di, nj = cur.j + 1;
-            if (ni < -half || ni > half) continue;
-            var kk = ni + ":" + nj;
-            if (seen[kk]) continue;
-            seen[kk] = true;
-            var nn = nodeAt(ni, nj);
-            var g = cur.g + STEP + terrainH(nn.x, nn.zn) * 1.5 + Math.abs(di) * 0.3;
-            open.push({ i: ni, j: nj, x: nn.x, zn: nn.zn, g: g, f: g + hcost(nn), p: cur });
-          }
-        }
-        if (!goalNode) goalNode = closedOrder[closedOrder.length - 1];
-        var path = [];
-        for (var pn = goalNode; pn; pn = pn.p) path.unshift(pn);
-        episode = { phase: "think", planT: t, closed: closedOrder, path: path,
-                    thinkDur: 2.2, walkDur: Math.max(2, path.length * 0.55) };
-      }
-
-      function updateExplorer(t, travel) {
-        if (!episode) {
-          if (t > 4.2) {           /* first plan right after the boot sequence */
-            explorer.x = Math.random() * 4 - 2;
-            explorer.zn = travel + 10;
-            planEpisode(t, travel);
-          }
-          return;
-        }
-        var e = episode;
-        if (e.phase === "think" && t - e.planT > e.thinkDur) { e.phase = "commit"; e.commitT = t; }
-        else if (e.phase === "commit" && t - e.commitT > 0.6) { e.phase = "walk"; e.walkT = t; }
-        else if (e.phase === "walk") {
-          var u = clamp01((t - e.walkT) / e.walkDur);
-          var fu = u * (e.path.length - 1);
-          var si = Math.min(e.path.length - 2, Math.floor(fu)), sf = fu - si;
-          explorer.x = e.path[si].x + (e.path[si + 1].x - e.path[si].x) * sf;
-          explorer.zn = e.path[si].zn + (e.path[si + 1].zn - e.path[si].zn) * sf;
-          if (!e.lastCrumb || t - e.lastCrumb > 0.12) {
-            e.lastCrumb = t;
-            explorer.trail.push({ x: explorer.x, zn: explorer.zn, t: t });
-            if (explorer.trail.length > 70) explorer.trail.shift();
-          }
-          if (u >= 1) {
-            e.phase = "survey"; e.arriveT = t;
-            /* survey burst: synapses radiate from the arrival point */
-            for (var bb = 0; bb < 3; bb++) {
-              links.push({ nodes: [{ x: explorer.x, zn: explorer.zn },
-                                   { x: explorer.x + (Math.random() * 8 - 4),
-                                     zn: explorer.zn + (Math.random() * 6 - 3) }],
-                           born: t, life: 2.2 + bb * 0.5 });
-            }
-          }
-        }
-        else if (e.phase === "survey" && t - e.arriveT > 2.4) { e.phase = "idle"; e.idleT = t; }
-        else if (e.phase === "idle" && (t - e.idleT > 1.6 || explorer.zn - travel < 6)) planEpisode(t, travel);
-      }
-
-      function drawExplorer(t, travel, camh, xdrift) {
-        if (!episode) return;
-        var e = episode;
-
-        /* search tendrils fan out in exploration order; dead ends dim away */
-        for (var ci = 0; ci < e.closed.length; ci++) {
-          var n = e.closed[ci];
-          if (!n.p) continue;
-          var r = e.planT + (ci / e.closed.length) * e.thinkDur;
-          var a = clamp01((t - r) / 0.12) * clamp01(1 - (t - r - 0.45) / 1.1);
-          if (a <= 0) continue;
-          var z1 = n.zn - travel, z2 = n.p.zn - travel;
-          if (z1 < NEAR + 0.4 || z1 > FAR - 1 || z2 < NEAR + 0.4 || z2 > FAR - 1) continue;
-          var p1 = project(n.x, terrainH(n.x + xdrift, n.zn) + 0.12, z1, camh);
-          var p2 = project(n.p.x, terrainH(n.p.x + xdrift, n.p.zn) + 0.12, z2, camh);
-          ctx.strokeStyle = "rgba(" + TERRAIN.link + "," + (0.22 * a).toFixed(3) + ")";
-          ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.moveTo(p2.x, p2.y); ctx.lineTo(p1.x, p1.y); ctx.stroke();
-        }
-
-        /* the committed route */
-        if (e.commitT !== undefined) {
-          var pa = clamp01((t - e.commitT) / 0.4);
-          if (e.arriveT !== undefined) pa *= clamp01(1 - (t - e.arriveT) / 2.2);
-          if (pa > 0) {
-            ctx.strokeStyle = "rgba(" + TERRAIN.link + "," + (0.55 * pa).toFixed(3) + ")";
-            ctx.lineWidth = 1.5;
-            ctx.beginPath();
-            var pen = false;
-            for (var pi = 0; pi < e.path.length; pi++) {
-              var pz = e.path[pi].zn - travel;
-              if (pz < NEAR + 0.4 || pz > FAR - 1) { pen = false; continue; }
-              var pj = project(e.path[pi].x, terrainH(e.path[pi].x + xdrift, e.path[pi].zn) + 0.12, pz, camh);
-              if (!pen) { ctx.moveTo(pj.x, pj.y); pen = true; } else ctx.lineTo(pj.x, pj.y);
-            }
-            ctx.stroke();
-          }
-        }
-
-        /* breadcrumb trail */
-        for (var ti = explorer.trail.length - 1; ti >= 0; ti--) {
-          var c = explorer.trail[ti];
-          var ca = (1 - (t - c.t) / 3.5) * 0.45;
-          if (ca <= 0) { explorer.trail.splice(ti, 1); continue; }
-          var cz = c.zn - travel;
-          if (cz < NEAR + 0.4 || cz > FAR - 1) continue;
-          var cp = project(c.x, terrainH(c.x + xdrift, c.zn) + 0.14, cz, camh);
-          ctx.fillStyle = "rgba(" + TERRAIN.agent + "," + ca.toFixed(3) + ")";
-          ctx.beginPath(); ctx.arc(cp.x, cp.y, 1.2, 0, 6.2832); ctx.fill();
-        }
-
-        /* the explorer itself: gold core + halo, bobbing as it walks,
-           an expanding survey ring while it thinks, a slow blink at rest */
-        var ez = explorer.zn - travel;
-        if (ez > NEAR + 0.5 && ez < FAR - 1) {
-          var eb = e.phase === "idle" ? 0.55 + 0.45 * Math.sin(t * 2.6) : 1;
-          var ep = project(explorer.x, terrainH(explorer.x + xdrift, explorer.zn) + 0.2 + 0.05 * Math.sin(t * 2.1), ez, camh);
-          if (e.phase === "think" || e.phase === "commit") {
-            var rr = ((t - e.planT) % 0.9) / 0.9;
-            ctx.strokeStyle = "rgba(" + TERRAIN.agent + "," + (0.3 * (1 - rr)).toFixed(3) + ")";
-            ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.arc(ep.x, ep.y, 3 + rr * 24, 0, 6.2832); ctx.stroke();
-          }
-          ctx.fillStyle = "rgba(" + TERRAIN.agent + "," + (0.14 * eb).toFixed(3) + ")";
-          ctx.beginPath(); ctx.arc(ep.x, ep.y, 8, 0, 6.2832); ctx.fill();
-          ctx.fillStyle = "rgba(" + TERRAIN.agent + "," + (0.55 * eb).toFixed(3) + ")";
-          ctx.beginPath(); ctx.arc(ep.x, ep.y, 3.4, 0, 6.2832); ctx.fill();
-          ctx.fillStyle = "rgba(255, 246, 220," + (0.95 * eb).toFixed(3) + ")";
-          ctx.beginPath(); ctx.arc(ep.x, ep.y, 1.8, 0, 6.2832); ctx.fill();
-        }
-      }
 
       function project(x, h, z, camh) {
         return { x: cx + px + (x * focal) / z, y: horizon + py + ((camh - h) * focal) / z };
@@ -1329,7 +1148,7 @@
               p.x += (r1 - 0.5) * 2 * (scat + fray * 26 * wob);
               p.y += -r2 * scat * 0.9 + (r1 - 0.5) * 2 * fray * 18 * wob;
             }
-            if (p.x < -24 || p.x > W + 24) { pts.push(null); continue; }
+            if (p.x < -100 || p.x > W + 100) { pts.push(null); continue; }
             /* luminance = altitude + sunlight - cloud shadow */
             var lum = 0.14 + (h / 3.1) * 0.72 + lit * 0.3 - (cloudV - 0.5) * 0.3;
             pts.push([p.x, p.y, Math.max(0, Math.min(16, Math.round(lum * 16))),
@@ -1429,48 +1248,6 @@
           }
         }
 
-        /* first-fire: the moment assembly completes, the first synapses light
-           up one, two, then a shimmer sweeps — "...and it's alive" */
-        if (animate) {
-          if (fired === 0 && t > 2.0) { spawnLink(t, travel); fired = 1; }
-          else if (fired === 1 && t > 2.35) { spawnLink(t, travel); fired = 2; }
-          else if (fired === 2 && t > 2.7) { spawnLink(t, travel); spawnShimmer(t, travel); lastShimmer = t; fired = 3; }
-        }
-        /* ambient neural chains (quiet until the boot sequence finishes) */
-        if (animate && t > 3.2 && t - lastSpawn > 1.5 && links.length < 7) { spawnLink(t, travel); lastSpawn = t; }
-        for (var k = links.length - 1; k >= 0; k--) {
-          var L = links[k];
-          var age = t - L.born;
-          var pp = [], dead = age > L.life;
-          for (var q = 0; q < L.nodes.length && !dead; q++) {
-            var zq = L.nodes[q].zn - travel;
-            if (zq < NEAR + 0.4 || zq > FAR - 1) { dead = true; break; }
-            pp.push(project(L.nodes[q].x, terrainH(L.nodes[q].x + xdrift, L.nodes[q].zn) + 0.25, zq, camh));
-          }
-          if (dead) { links.splice(k, 1); continue; }
-          var env = Math.sin(Math.PI * (age / L.life));
-          ctx.strokeStyle = "rgba(" + TERRAIN.link + "," + (0.36 * env).toFixed(3) + ")";
-          ctx.lineWidth = 1.1;
-          ctx.beginPath();
-          ctx.moveTo(pp[0].x, pp[0].y);
-          for (q = 1; q < pp.length; q++) ctx.lineTo(pp[q].x, pp[q].y);
-          ctx.stroke();
-          /* nodes, each with a soft halo */
-          for (q = 0; q < pp.length; q++) {
-            ctx.fillStyle = "rgba(" + TERRAIN.link + "," + (0.14 * env).toFixed(3) + ")";
-            ctx.beginPath(); ctx.arc(pp[q].x, pp[q].y, 5.5, 0, 6.2832); ctx.fill();
-            ctx.fillStyle = "rgba(" + TERRAIN.link + "," + (0.85 * env).toFixed(3) + ")";
-            ctx.beginPath(); ctx.arc(pp[q].x, pp[q].y, 2.1, 0, 6.2832); ctx.fill();
-          }
-          /* pulse travelling down the chain */
-          var f = (age / L.life * (pp.length - 1)) % (pp.length - 1);
-          var seg = Math.floor(f), ff = f - seg;
-          var ppx = pp[seg].x + (pp[seg + 1].x - pp[seg].x) * ff;
-          var ppy = pp[seg].y + (pp[seg + 1].y - pp[seg].y) * ff;
-          ctx.fillStyle = "rgba(224, 255, 238," + (0.9 * env).toFixed(3) + ")";
-          ctx.beginPath(); ctx.arc(ppx, ppy, 1.7, 0, 6.2832); ctx.fill();
-        }
-
         /* data-motes drifting upward, twinkling — brighter during the boot
            sequence, when they read as the raw material the terrain forms from */
         var moteBoost = 1 + Math.max(0, 1 - t / 2.2) * 0.9;
@@ -1480,25 +1257,6 @@
           var tw = 0.5 + 0.5 * Math.sin(t * 1.7 + M.ph);
           ctx.fillStyle = "rgba(" + TERRAIN.mote + "," + Math.min(0.5, (0.06 + 0.2 * tw) * moteBoost).toFixed(3) + ")";
           ctx.beginPath(); ctx.arc(M.x * W + px * 0.5, yy * H + py * 0.5, M.s, 0, 6.2832); ctx.fill();
-        }
-
-        /* ridge shimmer: a lit pulse sweeping along one contour line */
-        if (animate && t - lastShimmer > 4.5 && shimmers.length < 2) { spawnShimmer(t, travel); lastShimmer = t; }
-        for (var si = shimmers.length - 1; si >= 0; si--) {
-          var S = shimmers[si];
-          var sAge = t - S.born;
-          var sz = S.zn - travel;
-          if (sAge > S.life || sz < NEAR + 0.6 || sz > FAR - 1) { shimmers.splice(si, 1); continue; }
-          var sEnv = Math.sin(Math.PI * (sAge / S.life));
-          var head = S.dir * (sAge / S.life * 2 - 1) * SPAN;
-          for (var w = -8; w <= 8; w++) {
-            var wx = head + w * 0.28;
-            if (wx < -SPAN || wx > SPAN) continue;
-            var fade = 1 - Math.abs(w) / 9;
-            var hp = project(wx, terrainH(wx + xdrift, S.zn) + 0.06, sz, camh);
-            ctx.fillStyle = "rgba(" + TERRAIN.link + "," + (0.5 * sEnv * fade * fade).toFixed(3) + ")";
-            ctx.beginPath(); ctx.arc(hp.x, hp.y, 1.5, 0, 6.2832); ctx.fill();
-          }
         }
 
         /* a passing flock: wing-beat bursts, then glides, in a loose vee */
@@ -1526,10 +1284,6 @@
             }
           }
         }
-
-        /* the inhabited world: plan -> route -> walk -> survey, on loop */
-        if (animate) updateExplorer(t, travel);
-        drawExplorer(t, travel, camh, xdrift);
 
         /* soft vignette so the white panels pop against the edges */
         var vig = ctx.createRadialGradient(cx, H * 0.45, H * 0.3, cx, H * 0.45, H * 0.95);
@@ -1566,36 +1320,11 @@
       resize();
       window.addEventListener("resize", function () { resize(); if (!animate) drawStatic(); });
       function drawStatic() {
-        /* one hand-composed frame: links and a shimmer frozen mid-life so
-           they show at full strength */
+        /* Reduced-motion/mobile still: the same landscape and a passing flock. */
         var t = 11.3;
-        for (var s = 0; s < 5; s++) {
-          spawnLink(t, t * TERRAIN.speed);
-          var L = links[links.length - 1];
-          L.born = t - L.life * (0.3 + Math.random() * 0.4);
-        }
-        spawnShimmer(t, t * TERRAIN.speed);
-        shimmers[0].born = t - shimmers[0].life * 0.45;
-        /* the explorer, frozen mid-journey along a committed route */
-        var tv = t * TERRAIN.speed;
-        explorer.x = -1.5; explorer.zn = tv + 9;
-        planEpisode(t - 8, tv);       /* planT far in the past: tendrils already gone */
-        episode.phase = "walk";
-        episode.commitT = t - 3;
-        var midI = Math.floor(episode.path.length * 0.45);
-        for (var ci = 0; ci <= midI; ci++) {
-          explorer.trail.push({ x: episode.path[ci].x, zn: episode.path[ci].zn, t: t - (midI - ci) * 0.4 });
-        }
-        explorer.x = episode.path[midI].x;
-        explorer.zn = episode.path[midI].zn;
-        /* a flock frozen mid-crossing */
         spawnFlock(t);
         flock.born = t - flock.dur * 0.42;
         draw(t);
-        links.length = 0;
-        shimmers.length = 0;
-        episode = null;
-        explorer.trail.length = 0;
         flock = null;
       }
       if (animate) terrainFrame = requestAnimationFrame(frame);
