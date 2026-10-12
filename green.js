@@ -1,13 +1,26 @@
 (() => {
   const nav = document.querySelector('.top-nav');
   const menu = document.querySelector('.m-nav-toggle');
-  const close = () => { nav.classList.remove('m-open'); menu.classList.remove('is-open'); menu.setAttribute('aria-expanded','false'); menu.setAttribute('aria-label','Open menu'); };
+  const services = nav.querySelector('.services-menu');
+  const serviceTrigger = services.querySelector('summary');
+  const close = () => { services.open = false; nav.classList.remove('m-open'); menu.classList.remove('is-open'); menu.setAttribute('aria-expanded','false'); menu.setAttribute('aria-label','Open menu'); };
   menu.addEventListener('click', () => {
     const open = nav.classList.toggle('m-open'); menu.classList.toggle('is-open',open);
+    if (!open) services.open = false;
     menu.setAttribute('aria-expanded',String(open)); menu.setAttribute('aria-label',open?'Close menu':'Open menu');
   });
   nav.querySelectorAll('a').forEach(a => a.addEventListener('click',close));
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){close();menu.focus();}});
+  document.addEventListener('click', e => {
+    if (!nav.contains(e.target) && !menu.contains(e.target)) close();
+  });
+  nav.addEventListener('focusout', e => {
+    if (e.relatedTarget && !nav.contains(e.relatedTarget)) services.open = false;
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (services.open) { services.open = false; serviceTrigger.focus(); }
+    else if (nav.classList.contains('m-open')) { close(); menu.focus(); }
+  });
   const route={websites:'websites',portfolio:'websites',services:'services',approach:'studio',contact:'start',card:'start'}[location.pathname.split('/').filter(Boolean)[0]];
   if(route&&!location.hash) requestAnimationFrame(()=>document.getElementById(route)?.scrollIntoView());
   const form=document.querySelector('form[data-lead-form]');
