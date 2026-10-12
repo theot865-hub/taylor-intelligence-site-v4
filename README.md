@@ -5,7 +5,7 @@ Local branch `codex/green-portfolio`, built from v4 review `3ae0462` and the aut
 
 ## Direction approved for this review
 
-Theo revisited the shelved v3 and explicitly chose “Keep the green animated terrain” on October12. This draft retains its forest palette, Archivo Black type, network mark, living landscape and curved white panels. It adds the current five-client strip, all five approved website entries, consulting/integration/education, Tire X software marked in development and a contact form. Old Conduit product claims, statistics carousel, demo claims and draggable editor are removed from this draft.
+Theo revisited the shelved v3 and explicitly chose “Keep the green animated terrain” on October12. This draft retains its Archivo Black type, living landscape and curved white panels. Theo then requested the professional TI monogram/Manrope wordmark from the orange draft (also used for the favicon), and monochrome terrain with many shades. The terrain layer uses grayscale with modest luminance/contrast tuning, retaining the authored depth bands, fog and highlights; the text accents remain green. It adds the current five-client strip, all five approved website entries, consulting/integration/education, Tire X software marked in development and a contact form. Old Conduit product claims, statistics carousel, demo claims and draggable editor are removed from this draft.
 
 The full animated terrain remains the original authored renderer, with new pause and hidden-tab suspension. Phones/tablets up to1100px retain v3’s lighter static terrain; reduced motion also uses a still frame. The shortened opening exposes client logos and work earlier. The original green source remains at4190 and the previous orange draft at4188.
 
