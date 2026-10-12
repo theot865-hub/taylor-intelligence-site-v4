@@ -1,57 +1,28 @@
-# Taylor Intelligence — Orange portfolio review
+# Taylor Intelligence — Green portfolio review
 
-Local redesign on `codex/orange-portfolio`, based on main `5d09f1a` (October 12, 2026).
-**Not published. Do not push until the redesign is approved for production:** Cloudflare has deployed review branches to the canonical domain before a PR merge.
+Local branch `codex/green-portfolio`, built from v4 review `3ae0462` and the authored green v3 `0df7132`.
+**Not published. Do not push until approved for production:** Cloudflare has deployed review branches to the canonical domain before a PR merge.
 
-## Current direction: Celestial Atlas reference
+## Direction approved for this review
 
-The initial cream/editorial/tilted-card design was rejected. Theo explicitly requested something closer to TI v1: minimal but visually present, with orbiting elements. The original `f0269c5` Celestial Atlas was found in the iCloud v1 checkout and rendered as reference.
+Theo revisited the shelved v3 and explicitly chose “Keep the green animated terrain” on October12. This draft retains its forest palette, Archivo Black type, network mark, living landscape and curved white panels. It adds the current five-client strip, all five approved website entries, consulting/integration/education, Tire X software marked in development and a contact form. Old Conduit product claims, statistics carousel, demo claims and draggable editor are removed from this draft.
 
-The current homepage uses a new, compact canvas interpretation: three mutually gravitating bodies with orange trails, compact destination links and a pause button. `three-body.js` solves Burrau’s Pythagorean initial-value problem: masses3:4:5 released from rest under unsoftened Newtonian gravity ([source](https://www.ucolick.org/~laugh/oxide/projects/burrau.html)). Adaptive RK4 step doubling resolves close passes; the display samples at120Hz of simulated time, independently of rendering. The scene starts18 simulated units into the run so trajectory history is already visible. Trails are sampled physical positions. The camera fits recent history and never changes the dynamics. There are no prescribed paths, central anchor, restoring force, damping, or automatic resets. The former figure-eight solution was rejected because its periodic appearance missed the intended behavior. Reduced-motion preference renders a still scene; animation stops offscreen and in hidden tabs. No new frontend dependency or image-generation service.
+The full animated terrain remains the original authored renderer, with new pause and hidden-tab suspension. Phones/tablets up to1100px retain v3’s lighter static terrain; reduced motion also uses a still frame. The shortened opening exposes client logos and work earlier. The original green source remains at4190 and the previous orange draft at4188.
 
-- `/`: orbital homepage, five client logos and four featured websites.
-- `/websites`: Stone Design Concrete, Szolyd, Knot Normal, Tire X preview, and Adam’s Tires (past project).
-- `/portfolio`: alias for `/websites`.
-- `/services`, `/approach`, `/contact`, `/card`: existing routes and contact behavior, with shared styling.
-- `/ai-intensive/`, `worker/`, checkout and tracking: unchanged from base.
+- Review folder: `/Users/theotaylor/Work/Sites/ti-green-review-20261012`
+- Updated preview: http://127.0.0.1:4191/
+- Homepage sections: websites, services, software, studio, start.
+- `/websites` and `/portfolio`: open the website gallery section.
+- `/services`, `/approach`, `/contact`, `/card`: open their corresponding sections.
+- `/ai-intensive/`, `worker/`, `wrangler.jsonc`, checkout and tracking: unchanged from v4 base `5d09f1a`.
 
-`orange.css` owns the theme; `orbit.js` owns the scene and `three-body.js` its physics. `assets/work/` contains actual site screenshots captured October 12. The Tire X logo is the exact established white/red lockup retrieved from `https://taylorintelligence-test.ca/wp-content/themes/webdesignsun/assets/img/logo.svg`, replacing an obsolete concept in the local brand kit. At Theo’s request the client strip uses `tire-x-outlined.svg`: the same paths with black wireframe TIRE/CANADA lettering, transparent interiors and the original red X, without a black plate. Other original logos remain in `ai-intensive/logos/`.
+## Assets and code
 
-Screenshots are dated portfolio snapshots. Big O and Omen are client logos; their sites are not attributed to TI. Sasquatch and CCT review builds remain excluded at Theo’s request (live sites plus Tire X only).
+`index.html` contains the authored terrain and panel system, current content and markup. `green.css` contains portfolio/responsive overrides; `green.js` handles section aliases, mobile navigation and contact feedback. `lead-form.js` retains v3’s UTM/page metadata behavior. Form success requires both HTTP success and `{success:true}`; QA intercepts requests and never sends an enquiry.
 
-## Local review
+The client strip uses original logos. `assets/logos/tire-x-outlined.svg` preserves the established Tire X shapes/red X with black wireframe TIRE/CANADA lettering on transparent ground, explicitly requested by Theo. Its source SVG remains intact. Gallery includes Stone Design, Szolyd, Knot Normal, Tire X (review build), Adam’s Tires (past project at a live URL). Big O/Omen are client logos, not website credits. Sasquatch/CCT concepts are excluded.
 
-Serve the folder with SPA fallback for the extensionless routes. The review server and QA evidence are outside the published assets at `/Users/theotaylor/Documents/Codex/2026-10-12/ti-orange-review/`. Preview: http://127.0.0.1:4188 . The public contact form is real; verification must not submit enquiries.
-
-## Structure
-
-```
-index.html     routed page content and existing contact/router logic
-orange.css     restrained orange atlas / portfolio design
-orbit.js       three-body canvas rendering and motion controls
-three-body.js  adaptive Newtonian three-body integrator
-assets/        original logo and actual website screenshots
-_redirects     Cloudflare Pages rewrites so /card etc. serve index.html
-map/           build pipeline for the hairline Salish Sea coastline map
-  build_map.py   fetch OSM coastline (Overpass) → stitch → simplify → map_data.json
-  gen_svg.py     map_data.json → map_snippet.svg (paste into index.html)
-  map_data.json  cached projected paths + city coords
-  map_snippet.svg the <svg> currently embedded in the statement band
-```
-
-## Pages / routing
-
-Client-side router (bottom of `index.html`). Reads the hash, or the last path
-segment so bare paths work once `_redirects` is live.
-
-- `/`            Home — statement + map, Services, closing CTA
-- `/websites`    Website collection; `/portfolio` is an alias
-- `/approach`    In-depth: 3-step method + per-service deep dives + Conduit + principles
-- `/contact`     Contact form + direct details
-- `/card`        alias → Contact (the QR / business-card landing)
-
-Add a page: drop a `#page-x` block and add `x: true` to the `standalone` map
-(and a `_redirects` line if it needs a bare path).
+Orange-theme/three-body source files remain available in history and the orange review folder; they are not loaded by this green page. Review scripts and screenshots live outside the deploy bundle in `/Users/theotaylor/Documents/Codex/2026-10-12/ti-orange-review/`.
 
 ## Deployment
 
@@ -210,17 +181,3 @@ or lack usable browser storage. Deduplication covers the current browser, not
 other devices or cleared storage; events queued to Meta are not a delivery
 receipt. No real paid purchase is submitted as routine verification, and Meta
 Events Manager attribution/reporting must not be claimed from source tests alone.
-
-## Regenerating the map
-
-```
-cd map
-python3 build_map.py      # re-fetch + reproject coastline (needs network)
-python3 gen_svg.py         # rebuild map_snippet.svg
-# then paste map_snippet.svg over the <svg class="statement-map"> in index.html
-```
-
-Domain of record: **taylorintelligence.ai**. v4 is the production site;
-the AI intensive landing page uses `/ai-intensive/`.
-
-Three-body stability check: `node tests/three-body.test.mjs`. Checks energy, linear/angular momentum, centre of mass and finite state through close encounters and escape over150 simulated time units, plus convergence against tighter integration at a different output cadence. Opening hero is 420px desktop / 475px mobile to expose client logos and project imagery earlier.

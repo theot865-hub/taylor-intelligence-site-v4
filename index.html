@@ -1,740 +1,1656 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Taylor Intelligence — Websites, AI & software</title>
-<meta name="description" content="Beautiful websites, useful AI and software built around your business. Independent consulting, integration and education from Victoria, BC.">
-<link rel="canonical" href="https://taylorintelligence.ai/">
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0c0c0c" media="(prefers-color-scheme: dark)">
-<meta name="robots" content="index, follow, max-image-preview:large">
-<link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ============================================================
+       DOCKING-PANELS SITE TEMPLATE
+       A fixed full-screen background with two curved white containers
+       floating in the foreground:
+         1. a fixed header strip with a curved/stepped bottom edge
+         2. a scrolling content panel that rises and DOCKS under it
+       All brand-specific content has been replaced with placeholders —
+       search for "CUSTOMIZE" comments to find every slot.
+       ============================================================ -->
+  <title>Taylor Intelligence — Websites, AI &amp; software</title>
+  <meta name="description" content="Websites, AI systems and software built around your business. Independent studio in Victoria, BC." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="canonical" href="https://taylorintelligence.ai/" />
+  <!-- social share (Open Graph + Twitter) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Taylor Intelligence" />
+  <meta property="og:url" content="https://taylorintelligence.ai/" />
+  <meta property="og:title" content="Taylor Intelligence — Websites, AI &amp; software" />
+  <meta property="og:description" content="Websites, AI systems and software built around your business. Independent studio in Victoria, BC." />
 
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Taylor Intelligence">
-<meta property="og:title" content="Taylor Intelligence — Websites, AI & software">
-<meta property="og:description" content="AI consulting, integration, and team training for businesses across the Pacific Northwest. Simple by design.">
-<meta property="og:url" content="https://taylorintelligence.ai/">
-<meta property="og:image" content="https://taylorintelligence.ai/og.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:locale" content="en_CA">
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Taylor Intelligence — AI Automation Studio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Taylor Intelligence — Websites, AI &amp; software" />
+  <meta name="twitter:description" content="Websites, AI systems and software built around your business. Independent studio in Victoria, BC." />
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Taylor Intelligence — Websites, AI & software">
-<meta name="twitter:description" content="AI consulting, integration, and team training for businesses across the Pacific Northwest.">
-<meta name="twitter:image" content="https://taylorintelligence.ai/og.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"LocalBusiness","@id":"https://taylorintelligence.ai/#business","name":"Taylor Intelligence","description":"Independent studio building websites, AI systems and software for businesses.","url":"https://taylorintelligence.ai/","email":"theo@taylorintelligence.ai","telephone":"+1-250-299-7815","founder":{"@type":"Person","name":"Theo Taylor"},"address":{"@type":"PostalAddress","addressLocality":"Victoria","addressRegion":"BC","addressCountry":"CA"},"areaServed":["Victoria BC","Vancouver Island","British Columbia","Canada"]},
+    {"@type":"WebSite","@id":"https://taylorintelligence.ai/#website","url":"https://taylorintelligence.ai/","name":"Taylor Intelligence"}
+  ]}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- CUSTOMIZE: display font (used for headlines + ticker) -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      background: #0b1612;
+      /* soft edge "gradient": layered zero-offset blurs at increasing radius and
+         decreasing opacity sum to an exponential-style falloff — darkest right at
+         each container's silhouette, fading out naturally. */
+      --edge: 18, 24, 20;
+      --edge-outline:
+        drop-shadow(0 0 1.2px rgba(var(--edge), 0.58))
+        drop-shadow(0 0 3.5px rgba(var(--edge), 0.40))
+        drop-shadow(0 0 7px   rgba(var(--edge), 0.26))
+        drop-shadow(0 0 13px  rgba(var(--edge), 0.15))
+        drop-shadow(0 0 22px  rgba(var(--edge), 0.08));
 
-<!-- Structured data: agency + site (facts only; no invented address/reviews) -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "@id": "https://taylorintelligence.ai/#org",
-  "name": "Taylor Intelligence",
-  "url": "https://taylorintelligence.ai/",
-  "image": "https://taylorintelligence.ai/og.png",
-  "description": "AI agency for the Pacific Northwest — AI consulting, integration, and team training.",
-  "email": "theo@taylorintelligence.ai",
-  "telephone": "+1-250-299-7815",
-  "founder": { "@type": "Person", "name": "Theo Taylor" },
-  "areaServed": [
-    { "@type": "City", "name": "Victoria", "containedInPlace": { "@type": "AdministrativeArea", "name": "British Columbia" } },
-    { "@type": "City", "name": "Vancouver" },
-    { "@type": "Place", "name": "Pacific Northwest" }
-  ],
-  "knowsAbout": ["Artificial intelligence", "AI automation", "AI consulting", "AI integration", "Team training"],
-  "makesOffer": [
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Consulting", "description": "A paid, comprehensive review of your business — every workflow and tool, ranked and costed." } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Integration", "description": "We build and run an AI ops layer — a receptionist and back office that answers, books, chases, and remembers." } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Education", "description": "Hands-on AI training for your team, on your own real workflows." } }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "VideoObject",
-      "name": "Julian on Consulting — Taylor Intelligence",
-      "description": "Julian Bezeau explains Taylor Intelligence's AI Consulting service: a review of the work moving through your business, and a ranked plan of what's worth automating.",
-      "thumbnailUrl": "https://media.taylorintelligence.ai/video/consulting.jpg",
-      "contentUrl": "https://media.taylorintelligence.ai/video/consulting.mp4",
-      "uploadDate": "2026-07-22",
-      "duration": "PT46S",
-      "publisher": { "@id": "https://taylorintelligence.ai/#org" }
-    },
-    {
-      "@type": "VideoObject",
-      "name": "Julian on Integration — Taylor Intelligence",
-      "description": "Julian Bezeau explains Taylor Intelligence's AI Integration service: systems that handle calls, bookings, routing, and lead follow-up in the background.",
-      "thumbnailUrl": "https://media.taylorintelligence.ai/video/integration.jpg",
-      "contentUrl": "https://media.taylorintelligence.ai/video/integration.mp4",
-      "uploadDate": "2026-07-22",
-      "duration": "PT52S",
-      "publisher": { "@id": "https://taylorintelligence.ai/#org" }
-    },
-    {
-      "@type": "VideoObject",
-      "name": "Julian on Education — Taylor Intelligence",
-      "description": "Julian Bezeau explains Taylor Intelligence's AI Education service: hands-on team training on real scenarios, building practical AI fluency.",
-      "thumbnailUrl": "https://media.taylorintelligence.ai/video/education.jpg",
-      "contentUrl": "https://media.taylorintelligence.ai/video/education.mp4",
-      "uploadDate": "2026-07-22",
-      "duration": "PT57S",
-      "publisher": { "@id": "https://taylorintelligence.ai/#org" }
+      /* ---- CUSTOMIZE: brand palette (one place) ---- */
+      --brand-dark: #15241c;     /* headings, nav text */
+      --brand-accent: #2e6f4e;   /* links, buttons, eyebrows */
+      --brand-accent-hover: #245a3f;
+      --body-text: #3a4a40;
+      --muted-text: #7a8a7f;
+      /* warm gold accent (charts, live-dot, footer chevrons). NOTE: the brain
+         canvas paints its one gold node with the literal "#d9a441" — keep in sync. */
+      --gold: #d9a441;
+      --gold-soft: rgba(242, 206, 132, .45);
+      --gold-ink: #8a6a1c;
+
+      /* ---- hero title design tokens (adjust placement & scale in one place) ---- */
+      --title-x: 4%;          /* distance from the panel's left edge */
+      --title-y: 3.5vh;       /* distance from the panel's top */
+      --title-size: clamp(28px, 3.45vw, 58px);
+      --title-leading: 1.03;  /* line spacing */
+      --title-tracking: 0.004em; /* letter spacing */
+      --title-color: #1e3a16;
     }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "@id": "https://taylorintelligence.ai/#website",
-  "url": "https://taylorintelligence.ai/",
-  "name": "Taylor Intelligence",
-  "publisher": { "@id": "https://taylorintelligence.ai/#org" }
-}
-</script>
-<style>
-  :root {
-    color-scheme: light dark;
-    --ground: #ffffff;
-    --ink: #121212;
-    --line: #121212;
-    --muted: #6f6c66;
-    --hover: #f4f2ee;
-    --pad: clamp(20px, 3.2vw, 40px);
-    --maxw: 1120px;
-    --sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
-    --mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ground: #0c0c0c;
-      --ink: #eceae4;
-      --line: #34322d;
-      --muted: #8b877f;
-      --hover: #151513;
+
+    /* wrappers carry the outline filter so it isn't clipped by each container's own mask */
+    .topbar-wrap { position: fixed; top: 0; left: 0; right: 0; z-index: 3; filter: var(--edge-outline); }
+    /* scroll is capped here so the panel rises and PAUSES at the docked position;
+       content scrolling under it comes later. */
+    .panel-wrap { position: relative; z-index: 2; scroll-snap-align: start; }
+
+    /* fixed full-screen backdrop (stays put while everything scrolls over it).
+       Ships with a self-contained SVG scene; drop a video in to replace it. */
+    .hero-video-bg { position: fixed; inset: 0; overflow: hidden; z-index: 0; background: #0b1612; }
+    .hero-video-bg svg.hero-video-poster,
+    .hero-video-bg img.hero-video-poster,
+    .hero-video-bg canvas.hero-video-poster,
+    .hero-video-bg video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
     }
-  }
-  :root[data-theme="light"] {
-    --ground: #ffffff; --ink: #121212; --line: #121212; --muted: #6f6c66; --hover: #f4f2ee;
-  }
-  :root[data-theme="dark"] {
-    --ground: #0c0c0c; --ink: #eceae4; --line: #34322d; --muted: #8b877f; --hover: #151513;
-  }
+    .hero-video-bg video { opacity: 0; transition: opacity 0.7s ease; }
+    .hero-video-bg.is-playing video { opacity: 1; }
+    .hero-video-bg.is-playing .hero-video-poster { opacity: 0; transition: opacity 0.7s ease; }
 
-  * { box-sizing: border-box; }
-  /* stop the rubber-band overscroll past the footer — without this you can drag
-     the whole page up and sit looking at empty background */
-  html, body { overscroll-behavior-y: none; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    margin: 0;
-    background: var(--ground);
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 16px;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    letter-spacing: -0.006em;
-  }
+    /* FIXED top header strip — solid white with a curved/stepped bottom edge */
+    .topbar {
+      display: block;
+      width: 100%;
+      height: 12vh;
+    }
 
-  .wrap {
-    max-width: var(--maxw);
-    margin: 0 auto;
-    padding: clamp(18px, 4vw, 56px) clamp(16px, 4vw, 40px);
-  }
+    .panel-logo {
+      display: block;
+      height: 15vh;
+      width: auto;
+      margin: 0 auto clamp(14px, 2vh, 24px);
+    }
 
-  /* the ledger: sections share hairlines via the gap trick, no outer border */
-  .frame {
-    background: var(--line);
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-  }
-  .band { background: var(--ground); }
+    /* brand lockup (logo + wordmark), stacked inside the header's deep
+       "bubble" (the curve's 12vh-deep bump, x 8%-32%). The size budget totals
+       ~10.6vh so the descriptor line clears the curved edge at every ratio. */
+    .brand-lockup {
+      position: fixed;
+      top: clamp(6px, 0.8vh, 12px);
+      left: 9%;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: clamp(2px, 0.35vh, 5px);
+      pointer-events: none;
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+    .header-scene {
+      display: block;
+      height: clamp(40px, 5.8vh, 70px);
+      width: auto;
+    }
 
-  /* multi-cell rows: 1px gap over ink shows as shared hairlines */
-  .cells {
-    display: grid;
-    gap: 1px;
-    background: var(--line);
-  }
-  .cell { background: var(--ground); padding: var(--pad); }
+    /* top-right navigation links, sitting along the header line */
+    .top-nav {
+      position: fixed;
+      top: 2.7vh;
+      left: 52%;      /* keep all links to the right of this line */
+      right: 3%;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(5px, 0.7vw, 12px);
+    }
+    .top-nav a {
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 600;
+      font-size: clamp(12px, 1.45vh, 15px);
+      letter-spacing: 0.04em;
+      color: var(--brand-dark);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.18s ease;
+    }
+    .top-nav a:hover,
+    .top-nav a:focus-visible { color: var(--brand-accent); }
 
-  /* ---- top bar ---- */
-  .top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: clamp(14px, 1.8vw, 20px) var(--pad);
-    flex-wrap: wrap;
-  }
-  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
-  .mark {
-    width: 20px; height: 20px;
-    fill: var(--ink);
-    flex: none;
-  }
-  .word {
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    font-size: 15px;
-  }
-  nav { display: flex; gap: clamp(14px, 2.4vw, 30px); flex-wrap: wrap; }
-  nav a {
-    color: var(--ink);
-    text-decoration: none;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.02em;
-    padding-bottom: 2px;
-    border-bottom: 1px solid transparent;
-  }
-  nav a:hover { border-bottom-color: var(--ink); }
+    /* hero tagline inside the panel's upper-left (the raised "bump" area) */
+    .hero-title {
+      position: absolute;
+      top: var(--title-y);
+      left: var(--title-x);
+      max-width: 52%;
+      white-space: nowrap;
+      margin: 0;
+      font-family: "Archivo Black", system-ui, sans-serif;
+      font-weight: 400;
+      font-size: var(--title-size);
+      line-height: var(--title-leading);
+      letter-spacing: var(--title-tracking);
+      color: var(--title-color);
+    }
 
-  /* ---- eyebrow label ---- */
-  .eyebrow {
-    font-family: var(--mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--muted);
-    display: block;
-    margin: 0 0 18px;
-  }
+    /* company wordmark under the header logo */
+    .brand-kicker {
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 600;
+      font-size: clamp(10px, 1.25vh, 14px);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #2a4a1f;
+      white-space: nowrap;
+      margin: 0;
+    }
+    .brand-kicker--header {
+      font-size: clamp(15px, 2.4vh, 26px);
+      padding-left: 2px;
+    }
+    /* studio descriptor line under the wordmark */
+    .brand-sub {
+      font-size: clamp(9px, 1.15vh, 13px);
+      letter-spacing: 0.3em;
+      color: #5d7a66;
+      margin-top: -2px;
+      padding-left: 2px;
+    }
 
-  /* ---- statement (no hero: restrained, same weight as the grid) ---- */
-  .statement { padding: clamp(28px, 5vw, 64px) var(--pad); }
-  .statement-grid {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: clamp(24px, 6vw, 64px);
-    flex-wrap: wrap;
-  }
-  .statement-copy { flex: 1 1 320px; min-width: 240px; }
-  .statement h1 {
-    margin: 0;
-    font-weight: 500;
-    font-size: clamp(1.5rem, 3.6vw, 2.45rem);
-    line-height: 1.16;
-    letter-spacing: -0.02em;
-    max-width: 20ch;
-    text-wrap: balance;
-  }
-  .statement h1 em { font-style: normal; color: var(--muted); }
-  .statement .sub {
-    margin: 22px 0 0;
-    max-width: 46ch;
-    color: var(--muted);
-    font-size: 15px;
-  }
-
-  /* Salish Sea map — real coastline (OSM), hairline line-art matching the site */
-  .statement-map { width: clamp(220px, 32vw, 340px); height: auto; flex: none; }
-  .statement-map .coast {
-    fill: none;
-    stroke: var(--line);
-    stroke-width: 0.8;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-  }
-  .statement-map .city {
-    fill: var(--ink);
-    stroke: var(--ground);
-    stroke-width: 1.4;
-    paint-order: stroke;
-  }
-  .statement-map .label {
-    font-family: var(--mono);
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    fill: var(--ink);
-    stroke: var(--ground);
-    stroke-width: 2.6;
-    paint-order: stroke;
-    stroke-linejoin: round;
-  }
-
-  /* ---- section heads ---- */
-  .cell h2 {
-    margin: 0;
-    font-weight: 500;
-    font-size: 1.05rem;
-    letter-spacing: -0.01em;
-  }
-  .cell p { margin: 10px 0 0; color: var(--muted); font-size: 14.5px; }
-
-  .idx { font-family: var(--mono); font-size: 12px; color: var(--muted); }
-
-  /* services — confident */
-  .svc-lead { padding: clamp(24px, 4vw, 44px) var(--pad); }
-  .svc-lead .lead-line {
-    margin: 16px 0 0;
-    font-size: clamp(1.15rem, 2.4vw, 1.6rem);
-    font-weight: 500;
-    letter-spacing: -0.015em;
-    line-height: 1.22;
-    max-width: 26ch;
-    text-wrap: balance;
-  }
-  /* free diagnostic — small, separate, quiet: a lead-in note, not a fourth equal tile */
-  .free-strip {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    flex-wrap: wrap;
-    max-width: 56ch;
-  }
-  .free-strip p { margin: 0; font-size: 13.5px; color: var(--muted); }
-  .free-strip p strong { color: var(--ink); font-weight: 500; }
-  .free-strip a {
-    color: var(--ink);
-    font-family: var(--mono);
-    font-size: 12px;
-    text-decoration: none;
-    border-bottom: 1px solid var(--ink);
-    white-space: nowrap;
-  }
-  .free-strip a:hover { color: var(--muted); border-bottom-color: var(--muted); }
-
-  .badge {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--ink);
-    border: 1px solid var(--ink);
-    padding: 3px 9px;
-    line-height: 1.6;
-    flex: none;
-  }
-
-  .svc { display: flex; flex-direction: column; min-height: 280px; text-decoration: none; color: var(--ink); }
-  .svc-title { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-  .svc h2 { font-size: clamp(1.3rem, 2.2vw, 1.6rem); letter-spacing: -0.02em; }
-  .svc-title-link { color: inherit; text-decoration: none; }
-  .svc-title-link:hover { color: var(--muted); }
-  .svc p { font-size: 14.5px; margin-top: 0; }
-  /* video sits directly under the service title */
-  .svc video {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin-top: 16px;
-    border: 1px solid var(--line);
-    background: var(--hover);
-  }
-  /* body copy behind a Read more disclosure */
-  .svc-more { flex: 1; margin-top: 14px; }
-  .svc-more summary {
-    font-family: var(--mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    cursor: pointer;
-    list-style: none;
-  }
-  .svc-more summary::-webkit-details-marker { display: none; }
-  .svc-more summary::before { content: "+ "; }
-  .svc-more[open] summary::before { content: "– "; }
-  .svc-more[open] summary { color: var(--ink); }
-  .svc-more summary:hover { color: var(--ink); }
-  .svc-more p { margin-top: 12px; color: var(--muted); }
-  .svc .role {
-    margin-top: 22px;
-    font-size: 13.5px;
-    color: var(--ink);
-    align-self: flex-start;
-    border: 1px solid var(--line);
-    padding: 9px 15px;
-    text-decoration: none;
-  }
-  .svc .role:hover { border-color: var(--ink); background: var(--hover); }
-  .svc:hover { background: var(--hover); }
-
-  /* work / index rows */
-  .rows { display: flex; flex-direction: column; gap: 1px; background: var(--line); }
-  .rowline {
-    background: var(--ground);
-    display: grid;
-    grid-template-columns: 1.4fr 2fr auto;
-    gap: 16px;
-    align-items: baseline;
-    padding: 20px var(--pad);
-    text-decoration: none;
-    color: var(--ink);
-  }
-  .rowline:hover { background: var(--hover); }
-  .rowline .who { font-weight: 500; font-size: 15px; }
-  .rowline .what { color: var(--muted); font-size: 14px; }
-  .rowline .yr { font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
-
-  /* approach */
-  .approach .cell h2 { font-size: 0.98rem; }
-
-  /* contact */
-  .contact {
-    padding: clamp(28px, 5vw, 56px) var(--pad);
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-  .contact .lead { font-size: clamp(1.25rem, 2.6vw, 1.7rem); font-weight: 500; letter-spacing: -0.015em; max-width: 18ch; margin: 0; line-height: 1.2; }
-  .contact .lead + p { margin: 14px 0 0; color: var(--muted); font-size: 14.5px; max-width: 34ch; }
-  .cta {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--ink);
-    text-decoration: none;
-    border: 1px solid var(--ink);
-    padding: 14px 22px;
-    white-space: nowrap;
-  }
-  .cta:hover { background: var(--ink); color: var(--ground); }
-
-  /* footer */
-  .foot {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 16px var(--pad);
-    flex-wrap: wrap;
-  }
-  .foot span { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.03em; }
-
-  a:focus-visible, .cta:focus-visible, nav a:focus-visible {
-    outline: 2px solid var(--ink);
-    outline-offset: 3px;
-  }
-
-  /* desktop grid defaults — kept here (not inline) so the mobile
-     media queries below can actually override them */
-  .cells.svc-grid      { grid-template-columns: 1fr 1fr 1fr; }
-  .cells.home-vid-grid { grid-template-columns: 1fr 1fr 1fr; }
-  .cells.method-grid   { grid-template-columns: repeat(3, 1fr); }
-  .cells.detail-grid   { grid-template-columns: 1fr 1.7fr; }
-  .cells.approach-grid { grid-template-columns: 1fr 1fr 1fr; }
-  .cells.contact-grid  { grid-template-columns: 1.5fr 1fr; }
-
-  @media (max-width: 720px) {
-    /* nav wraps onto its own line here; span the full width so the four links
-       distribute evenly instead of bunching left with dead space at the right */
-    nav { width: 100%; justify-content: space-between; gap: 0; flex-wrap: nowrap; }
-    .cells.svc-grid { grid-template-columns: 1fr; }
-    .cells.approach-grid { grid-template-columns: 1fr; }
-    .cells.contact-grid { grid-template-columns: 1fr; }
-    /* mobile: cards stay stacked — each one now holds a video and a Read more
-       disclosure, so the old collapse-to-a-single-tappable-row treatment no
-       longer applies (the card is a container now, not one big link).
-       Spacing is tightened hard here: three stacked videos are already ~510px
-       of unavoidable height, so every margin that isn't earning its keep goes. */
-    .svc { min-height: 0; padding-top: 16px; padding-bottom: 16px; }
-    .svc h2 { margin: 0; font-size: 1.25rem; }
-    .svc video { margin-top: 10px; }
-    .svc-more { flex: none; margin-top: 10px; }
-    .svc-more p { margin-top: 8px; }
-    /* the title carries the contact link on mobile (as the old whole-card link
-       did), so the repeated button comes out — it was ~46px per card. */
-    /* hero: keep copy and map on one row as on desktop, so the services sit
-       higher up the page. Both sides have to give — the copy's 240px min-width
-       and the map's 220px clamp floor are what forced the wrap. */
-    .statement-grid { gap: 14px; flex-wrap: nowrap; align-items: center; }
-    .statement-copy { flex: 1 1 auto; min-width: 0; }
-    .statement-map { width: 96px; }
-    .statement h1 { font-size: 1.35rem; max-width: none; }
-    .statement .sub { margin-top: 10px; font-size: 14px; }
-    /* mobile: the video hides behind the disclosure so all three services fit
-       on one screen. :has() looks forward to the sibling <details>, which a
-       plain sibling combinator can't do (the video precedes it in the DOM). */
-    .svc video { display: none; }
-    .svc:has(.svc-more[open]) video { display: block; }
-    .more-label::after { content: " + watch"; }
-    .svc .role { display: none; }
-    /* the title is the only tap target now, so give it a real touch height */
-    .svc h2 a { display: block; padding: 10px 0; }
-    .svc h2 a::after { content: " →"; font-family: var(--mono); color: var(--muted); font-size: 0.8em; }
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .band, .cell, .rowline, .cta, .svc .role, nav a { transition: background .12s ease, color .12s ease, border-color .12s ease; }
-  }
-
-  /* pages */
-  .page.is-hidden { display: none; }
-  nav a[aria-current="page"] { border-bottom-color: var(--ink); color: var(--ink); }
-
-  .pf-lead { padding: clamp(28px, 5vw, 56px) var(--pad); }
-  .pf-lead h1 {
-    margin: 16px 0 0;
-    font-weight: 500;
-    font-size: clamp(1.5rem, 3.6vw, 2.2rem);
-    line-height: 1.16;
-    letter-spacing: -0.02em;
-    max-width: 22ch;
-    text-wrap: balance;
-  }
-  .pf-lead .sub { margin: 18px 0 0; max-width: 46ch; color: var(--muted); font-size: 15px; }
-
-  .pf-close {
-    padding: clamp(24px, 4vw, 44px) var(--pad);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-  .pf-close p { margin: 0; font-size: 15px; color: var(--muted); }
-  .back-link {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.03em;
-    color: var(--muted);
-    text-decoration: none;
-    padding: 16px var(--pad) 0;
-    display: inline-block;
-  }
-  .back-link:hover { color: var(--ink); }
-
-  /* per-sentence spans: separate DOM nodes for annotation, zero visual change (inline, flows as one paragraph) */
-  .ln { display: inline; }
-
-  /* ---- contact page ---- */
-  .contact-grid > .form,
-  .contact-grid > .cell { background: var(--ground); }
-  .form { display: flex; flex-direction: column; }
-  .field { display: flex; flex-direction: column; border-bottom: 1px solid var(--line); }
-  .field:focus-within { background: var(--hover); }
-  .field label {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    padding: 15px var(--pad) 0;
-  }
-  .field input,
-  .field textarea {
-    border: 0;
-    background: transparent;
-    font-family: var(--sans);
-    font-size: 16px; /* >=16px so iOS Safari doesn't auto-zoom on focus */
-    color: var(--ink);
-    padding: 7px var(--pad) 15px;
-    width: 100%;
-    resize: vertical;
-  }
-  .field input:focus, .field textarea:focus { outline: none; }
-  .field textarea::placeholder, .field input::placeholder { color: var(--muted); opacity: 0.6; }
-  .form-submit {
-    border: 0;
-    background: var(--ink);
-    color: var(--ground);
-    font-family: var(--mono);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 20px var(--pad);
-    text-align: left;
-    cursor: pointer;
-  }
-  .form-submit:hover { background: var(--muted); }
-  .contact-side { display: flex; flex-direction: column; gap: clamp(28px, 5vw, 44px); }
-  .contact-line { margin: 0 0 6px; font-size: 15px; }
-  .contact-line a {
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 1px;
-  }
-  .contact-line a:hover { color: var(--muted); border-bottom-color: var(--muted); }
-  .contact-note { color: var(--muted); font-size: 14px; margin: 0 0 14px; max-width: 30ch; }
-  .deep-link {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--ink);
-    padding-bottom: 2px;
-  }
-  .deep-link:hover { color: var(--muted); border-bottom-color: var(--muted); }
-  /* two actions under a service: primary "get in touch" + softer "full breakdown" */
-  .detail-links { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: baseline; }
-  .deep-link--soft { color: var(--muted); border-bottom-color: var(--line); }
-  .deep-link--soft:hover { color: var(--ink); border-bottom-color: var(--ink); }
-
-  /* ---- approach: methodology + service deep-dives ---- */
-  .step .step-num { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 0.04em; }
-  .step h3 { margin: 20px 0 0; font-size: 1.05rem; font-weight: 500; letter-spacing: -0.01em; }
-  .step p { margin: 9px 0 0; font-size: 14px; color: var(--muted); }
-  .method-note {
-    padding: clamp(18px, 3vw, 26px) var(--pad);
-    font-size: 14.5px;
-    color: var(--muted);
-    margin: 0;
-  }
-  .method-note strong { color: var(--ink); font-weight: 500; }
-
-  .detail-head { display: flex; flex-direction: column; }
-  .detail-head h2 { margin: 12px 0 0; font-size: clamp(1.4rem, 2.6vw, 1.95rem); font-weight: 500; letter-spacing: -0.02em; }
-  .detail-head .summary { margin: 14px 0 0; color: var(--muted); font-size: 15px; max-width: 28ch; }
-  .detail-head .role-tag {
-    margin-top: 20px;
-    font-family: var(--mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--ink);
-    border: 1px solid var(--ink);
-    padding: 4px 10px;
-    align-self: flex-start;
-  }
-  .detail-body { display: flex; flex-direction: column; gap: 24px; }
-  .detail-item .lbl {
-    display: block;
-    font-family: var(--mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--ink);
-    margin-bottom: 8px;
-  }
-  .detail-item p { margin: 0; font-size: 14.5px; color: var(--muted); max-width: 62ch; }
-
-  /* service video + transcript. The video sits above .detail-links on purpose:
-     Julian's Education take ends on "train them below", so the CTA has to
-     follow the player, not precede it. */
-  .svc-video { max-width: 62ch; }
-  .svc-video video {
-    display: block;
-    width: 100%;
-    height: auto;
-    border: 1px solid var(--line);
-    background: var(--hover);
-  }
-  #contact-video-wrap video {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin-top: 10px;
-    border: 1px solid var(--line);
-    background: var(--hover);
-  }
-  #contact-video-wrap video::cue,
-  .svc video::cue,
-  .svc-video video::cue {
-    font-family: var(--sans);
-    font-size: 88%;
-    line-height: 1.35;
-    background: rgba(12, 12, 12, 0.78);
-    color: #fff;
-  }
-  /* Cues default to ~5% of video height — on small inline players that's ~7px. */
-  @media (max-width: 600px) {
-    #contact-video-wrap video::cue,
-    .svc video::cue,
-    .svc-video video::cue {
+    /* stock-ticker pill (optional) — first item in the top-nav row */
+    .brand-ticker {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 7px;
+      white-space: nowrap;
+      padding: 5px 12px;
+      border: 1.5px solid rgba(21, 36, 28, 0.16);
+      border-radius: 100px;
+      background: rgba(21, 36, 28, 0.035);
+    }
+    .brand-ticker .sym {
+      font-family: "Archivo Black", system-ui, sans-serif;
+      font-weight: 400;
       font-size: 14px;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      color: #0e0e0e;
     }
-  }
-  .svc-transcript { margin-top: 10px; }
-  .svc-transcript summary {
-    font-family: var(--mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    cursor: pointer;
-    list-style: none;
-  }
-  .svc-transcript summary::-webkit-details-marker { display: none; }
-  .svc-transcript summary::before { content: "+ "; }
-  .svc-transcript[open] summary::before { content: "– "; }
-  .svc-transcript summary:hover { color: var(--ink); }
-  .svc-transcript p {
-    margin: 12px 0 0;
-    font-size: 14.5px;
-    color: var(--muted);
-    max-width: 62ch;
-  }
+    .brand-ticker .cse {
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--brand-accent);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .brand-ticker .cse:hover,
+    .brand-ticker .cse:focus-visible { text-decoration: underline; }
 
-  /* Conduit modules — hairline mini-table */
-  .modules { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); margin-top: 4px; }
-  .module { background: var(--ground); padding: 13px 16px; display: flex; gap: 16px; align-items: baseline; }
-  .module .mname {
-    font-family: var(--mono);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: var(--ink);
-    flex: none;
-    width: 96px;
-  }
-  .module .mdesc { margin: 0; font-size: 13.5px; color: var(--muted); }
+    /* the scroll region starts just BELOW the fixed header, so nothing ever scrolls
+       behind it. The outer wrapper carries the edge glow; it is applied to the
+       MASKED scroll-area result, so the fixed cut curve and the left rail edge get
+       the soft shadow too. */
+    .scroll-shadow { position: fixed; inset: 0; z-index: 2; filter: var(--edge-outline); pointer-events: none; }
 
-  @media (max-width: 820px) {
-    .cells.method-grid { grid-template-columns: 1fr 1fr; }
-  }
-  @media (max-width: 720px) {
-    .cells.detail-grid { grid-template-columns: 1fr; }
-    .module { flex-direction: column; gap: 4px; }
-    .module .mname { width: auto; }
-  }
-  @media (max-width: 460px) {
-    .cells.method-grid { grid-template-columns: 1fr; }
-  }
-</style>
-<link rel="stylesheet" href="/orange.css">
-</head>
-<body>
+    .scroll-area {
+      pointer-events: auto;
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      /* ease/settle cleanly onto the dock point, then scroll on past */
+      scroll-snap-type: y proximity;
+      scroll-padding-top: 12vh;
+      /* Fixed cut at the dock using the panel's EXACT curve (same path, same 8-100%
+         span, same 18vh zone) pinned at 12vh. Content scrolls UP and is cut off at
+         this curve; the backdrop strip above stays. The panel's own curve locks into it. */
+      --dock-cut: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 100 100'><path fill='%23fff' d='M0,100 L0,44 C0,20 4,6 16,6 L30,6 C46,6 54,94 70,94 L100,94 L100,100 Z'/></svg>");
+      -webkit-mask: var(--dock-cut) right 12vh / 92% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 27vh) no-repeat;
+              mask: var(--dock-cut) right 12vh / 92% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 27vh) no-repeat;
+    }
+
+    /* transparent spacer: the clear backdrop band that shows between the header and the panel at the top */
+    /* transparent spacer: sets where the panel RESTS on load, i.e. where the
+       rise-and-dock scroll animation starts. Bigger = more open terrain above
+       the panel. The dock point, scroll-snap and side-scrollbar all derive
+       from the panel's offset, so this is the single knob. */
+    .hero-spacer { height: 60vh; }
+
+    /* SCROLLING content panel — offset from the left so a clear backdrop rail
+       always shows down its left side. Rounded/stepped top edge. */
+    .panel {
+      position: relative;
+      z-index: 2;
+      margin-left: 8%;
+      min-height: 0;
+      background: #ffffff;
+      padding: 24vh 2.5% 4vh 7%;
+      /* Reserve room for the (width-sized, 4-line) headline so content below can
+         never ride up into it. Keeps 24vh on tall screens but floors at
+         "headline height + 32px" otherwise. */
+      /* TI headline is 3 lines (was 4 on the donor site) — reserve accordingly */
+      padding-top: max(20vh, calc(3.5vh + 32px + 3.4 * clamp(26px, 3.1vw, 52px)));
+      /* curved top-left corner + curved step down to the right; fixed-height "cap"
+         shapes the top while a solid layer fills the rest, so it scrolls cleanly */
+      --cap: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M0,100 L0,44 C0,20 4,6 16,6 L30,6 C46,6 54,94 70,94 L100,94 L100,100 Z' fill='%23fff'/></svg>");
+      -webkit-mask: var(--cap) top / 100% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 16vh) no-repeat;
+              mask: var(--cap) top / 100% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 16vh) no-repeat;
+    }
+
+    /* ===== overview: bordered text card (left) + media placeholder (right) ===== */
+    .overview {
+      /* --ov-shift translates the whole overview (card + media + glued news strip)
+         DOWN; everything below moves with it via normal flow, and the absolutely
+         positioned headline/header above stay put. Tune in one place. */
+      --ov-shift: 26vh;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: clamp(28px, 4vw, 56px);
+      align-items: start;
+      margin-top: var(--ov-shift);
+      margin-bottom: clamp(6px, 1.2vh, 14px);
+    }
+    .ov-text {
+      margin-top: 1.5vh;   /* aligns the card top with the media top (matches .ov-media) */
+      background: transparent;
+      border: 1.5px solid var(--brand-accent);
+      border-radius: 18px;
+      padding: clamp(26px, 3vw, 44px);
+    }
+    .ov-left { display: flex; flex-direction: column; align-items: flex-start; }
+    .ov-allbtn {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: clamp(20px, 3.5vh, 40px);
+      padding: 14px 26px;
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 700; font-size: clamp(14px, 1.05vw, 16px); letter-spacing: 0.01em;
+      color: #fff; background: var(--brand-accent); border: 1.5px solid var(--brand-accent);
+      border-radius: 100px; text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .ov-allbtn svg { width: 20px; height: 20px; transition: transform 0.2s ease; }
+    .ov-allbtn:hover { background: var(--brand-accent-hover); }
+    .ov-allbtn:hover svg { transform: translateX(3px); }
+    .ov-media { margin-top: 1.5vh; }
+    .ov-text .ov-h {
+      font-family: "Archivo Black", system-ui, sans-serif; font-weight: 400;
+      font-size: clamp(22px, 2.6vw, 34px); line-height: 1.16; color: var(--brand-dark); margin: 0 0 18px;
+    }
+    .ov-text p { font-size: clamp(15px, 1.05vw, 17.5px); line-height: 1.62; color: var(--body-text); margin: 0 0 14px; max-width: 58ch; }
+    .ov-text p:last-child { margin-bottom: 0; }
+
+    /* media placeholder box — swap for a map, image, gallery or embed */
+    .media-figure {
+      position: relative;
+      height: clamp(480px, 68vh, 720px);
+      background:
+        repeating-linear-gradient(45deg, rgba(26,42,32,0.045) 0 14px, transparent 14px 28px),
+        #dfe7e4;
+      border: 1px solid rgba(26, 42, 32, 0.16);
+      border-radius: 18px;
+      overflow: hidden;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .media-figure .mf-label {
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 600; font-size: clamp(13px, 1.1vw, 16px);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #5d6f64; text-align: center; padding: 0 20px;
+    }
+    /* the seven services, stacked in the media slot */
+    .svc-list {
+      display: flex; flex-direction: column; justify-content: space-between;
+      width: 100%; height: 100%;
+      padding: clamp(16px, 2vh, 26px) clamp(20px, 1.8vw, 32px);
+      font-family: system-ui, "Segoe UI", sans-serif;
+      background: #fff;
+    }
+    .svc-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: clamp(8px, 1.1vh, 13px) 0;
+      border-top: 1px solid rgba(21, 36, 28, 0.12);
+      text-decoration: none;
+    }
+    .svc-item:first-child { border-top: 0; }
+    .svc-item .si-n { font-family: "Archivo Black", system-ui, sans-serif; font-size: 12px; color: #7a8a7f; flex: none; padding-top: 3px; }
+    .svc-item .si-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .svc-item .si-t { font-family: "Archivo Black", system-ui, sans-serif; font-size: clamp(15px, 1.2vw, 19px); color: var(--brand-dark); transition: color 0.18s ease; }
+    .svc-item .si-d { font-size: clamp(11.5px, 0.85vw, 13.5px); line-height: 1.45; color: #4a5a4f; }
+    .svc-item .si-k { margin-left: auto; flex: none; font-weight: 600; font-size: clamp(11px, 0.85vw, 13px); color: var(--brand-accent); white-space: nowrap; padding-top: 4px; }
+    .svc-item:hover .si-t { color: var(--brand-accent); }
+    @media (max-width: 600px) { .svc-item .si-k { display: none; } }
+    @media (max-width: 820px) { .overview { grid-template-columns: 1fr; } }
+
+    /* ===== second content band (inside the full-width white continuation) ===== */
+    .data {
+      max-width: 1700px; font-family: system-ui, "Segoe UI", sans-serif;
+      display: block;
+    }
+    /* shared eyebrow kicker — one rule for every section (.brain, .shift, .data,
+       .start use .eyebrow; the overview uses .ov-eyebrow) */
+    .eyebrow, .ov-text .ov-eyebrow {
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 700; font-size: clamp(11px, 1.3vh, 14px); letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--brand-accent); margin: 0 0 14px;
+    }
+    .data h2 {
+      font-family: "Archivo Black", system-ui, sans-serif; font-weight: 400;
+      font-size: clamp(23px, 2.9vw, 38px); line-height: 1.16; color: var(--brand-dark); margin: 0 0 14px;
+    }
+    .data .lede { font-size: clamp(15px, 1.05vw, 18px); line-height: 1.62; color: var(--body-text); max-width: 68ch; margin: 0; }
+
+    .data-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: clamp(30px, 4vh, 44px); }
+    /* shared pill-button spec — used by .data-cta and .sh-cta (the AI-shift section) */
+    .data-cta a, .sh-cta a { display: inline-flex; align-items: center; font-family: system-ui, "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(14px, 1.05vw, 16px); letter-spacing: 0.01em; text-decoration: none; border-radius: 100px; padding: 14px 26px; transition: background .2s, border-color .2s, color .2s; }
+    .data-cta .btn-solid, .sh-cta .btn-solid { background: var(--brand-accent); color: #fff; border: 1.5px solid var(--brand-accent); }
+    .data-cta .btn-solid:hover, .sh-cta .btn-solid:hover { background: var(--brand-accent-hover); }
+    .data-cta .btn-outline, .sh-cta .btn-outline { border: 1.5px solid rgba(21,36,28,0.3); color: var(--brand-dark); background: transparent; }
+    .data-cta .btn-outline:hover, .sh-cta .btn-outline:hover { border-color: var(--brand-accent); color: var(--brand-accent); }
+
+    /* INFO container — the white panel's edge continues at the SAME left offset
+       (8%) so the backdrop rail runs continuously down the whole left side. */
+    .info {
+      position: relative;
+      z-index: 2;
+      margin-left: 8%;
+      margin-top: -1px;               /* close the hairline seam with the panel */
+      padding: clamp(8px, 1.6vh, 18px) 2.5% clamp(44px, 7vh, 96px) 7%;
+      background: #ffffff;
+    }
+
+    /* ===== minimalist recent-news strip (above the media box) ===== */
+    .news-strip {
+      /* full-width news bar pinned to the panel, sitting in the band BELOW the
+         headline in the unscrolled/docked view. Bottom-anchored (translateY(-100%))
+         so the bar's bottom stays put however the headline wraps. */
+      position: absolute;
+      top: 33vh;   /* just under the headline, leaving room for the scroll cue */
+      left: 4%;
+      right: 2.5%;
+      transform: translateY(-100%);
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(20px, 2.8vw, 52px);
+      margin-bottom: clamp(16px, 2.6vh, 30px);
+      text-align: center;
+    }
+    .news-arrow {
+      flex: none; background: none; border: 0; cursor: pointer; padding: 6px; line-height: 0;
+    }
+    .news-arrow svg { width: clamp(36px, 4vw, 54px); height: auto; display: block; }
+    .news-arrow svg path {
+      fill: #111111; stroke: #111111; stroke-width: 2.4;
+      stroke-linejoin: round; stroke-linecap: round;
+    }
+    .news-arrow:hover svg path { fill: var(--brand-accent); }
+    .news-item { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: clamp(20px, 2.6vw, 52px); text-decoration: none; text-align: left; min-width: 0; max-width: 1000px; }
+    .news-meta { display: flex; flex-direction: column; gap: 4px; flex: none; align-items: flex-start; }
+    .news-item .news-eyebrow { font-family: system-ui, "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brand-accent); white-space: nowrap; }
+    .news-item .news-date { font-family: system-ui, sans-serif; font-size: 15px; color: #6a766e; white-space: nowrap; }
+    .news-item .news-headline { font-family: "Archivo Black", system-ui, sans-serif; font-weight: 400; font-size: clamp(20px, 1.9vw, 30px); line-height: 1.2; color: var(--brand-dark); max-width: 46ch; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .news-item:hover .news-headline { color: var(--brand-accent); }
+
+    /* scroll cue — centered under the services strip in the on-load view;
+       fades out as soon as the visitor starts scrolling */
+    .scroll-cue {
+      position: absolute;
+      top: 35.5vh;
+      left: 4%;
+      right: 2.5%;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: var(--muted-text);
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .scroll-cue svg { width: 18px; height: 18px; animation: cue-bob 2.2s ease-in-out infinite; }
+    @keyframes cue-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+    @media (prefers-reduced-motion: reduce) { .scroll-cue svg { animation: none; } }
+    .scroll-cue.is-gone { opacity: 0; }
+
+    /* ── Short viewports (wide-but-short windows, smaller laptops) ── */
+    @media (max-height: 820px) {
+      /* news strip: anchor from the TOP so it grows downward on short screens */
+      .news-strip { top: clamp(140px, 26vh, 190px); transform: none; }
+      .scroll-cue { top: clamp(240px, 33.5vh, 275px); }
+      /* brand wordmark + nav: drive off width instead of height so they stay legible */
+      .brand-kicker--header { font-size: clamp(15px, 1.45vw, 20px); }
+      .top-nav a { font-size: clamp(13px, 1.05vw, 16px); }
+    }
+
+    /* hide the native (right) scrollbar — we use a custom short bar on the LEFT */
+    .scroll-area { scrollbar-width: none; }
+    .scroll-area::-webkit-scrollbar { width: 0; height: 0; }
+
+    /* custom SHORT scrollbar on the left edge — fades in only once the panel docks */
+    .side-scroll {
+      position: fixed;
+      left: 7%;
+      top: 20vh;
+      bottom: 1.5vh;
+      width: 6px;
+      z-index: 6;
+      background: rgba(255, 255, 255, 0.32);
+      border-radius: 100px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+    .side-scroll.is-ready { opacity: 1; pointer-events: auto; }
+    .side-scroll-thumb {
+      position: absolute;
+      left: -1px; right: -1px;
+      top: 0;
+      height: 40px;
+      background: var(--brand-dark);
+      border-radius: 100px;
+      box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.55);
+      cursor: grab;
+    }
+    .side-scroll-thumb:active { cursor: grabbing; }
+  </style>
+  <style>
+    .m-nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px;
+      position: fixed; top: 11px; right: 14px; z-index: 8; width: 40px; height: 36px;
+      padding: 7px 6px; background: none; border: 0; cursor: pointer; }
+    .m-nav-toggle span { display: block; height: 2.5px; width: 100%; background: var(--brand-dark);
+      border-radius: 2px; transition: transform .25s ease, opacity .2s ease; }
+    .m-nav-toggle.is-open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .m-nav-toggle.is-open span:nth-child(2) { opacity: 0; }
+    .m-nav-toggle.is-open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+  </style>
 
 
+<style id="mobile-overrides">
+  /* =================================================================
+     MOBILE LAYOUT (<=1100px): the cinematic desktop layout (fixed
+     backdrop, masked side-rail panels, hand-placed header) can't fit a
+     phone, so below this width we take over with a clean, stacked
+     layout: a simple white top bar + hamburger, a full-bleed hero
+     poster, then a single column of content. Static poster (no video).
+     ================================================================= */
+  @media (max-width: 1100px) {
+    /* release the desktop viewport-lock so the page scrolls normally */
+    html, body { height: auto; min-height: 100%; overflow: visible; overflow-x: hidden; }
+
+    /* ---- top bar: white, logo left, hamburger right ---- */
+    .topbar-wrap { position: fixed; top: 0; left: 0; right: 0; height: 58px;
+      filter: none; background: #fff; z-index: 6;
+      box-shadow: 0 1px 0 rgba(21,36,28,.07), 0 8px 20px -14px rgba(21,36,28,.55); }
+    .topbar { display: none; }
+    .brand-ticker { display: none; }
+    .brand-lockup { position: fixed; top: 0; left: 0; right: 0; height: 58px;
+      flex-direction: row; align-items: center; gap: 9px;
+      padding: 0 16px; z-index: 7; }
+    .header-scene { height: 30px; }
+    .brand-kicker--header { font-size: 11px; letter-spacing: .14em; padding-left: 0; }
+    .brand-sub { display: none; }
+
+    .m-nav-toggle { display: flex; }      /* shown only on mobile */
+
+    /* nav: collapses into a dropdown panel under the bar */
+    .top-nav { position: fixed; top: 58px; left: 0; right: 0;
+      flex-direction: column; align-items: stretch; justify-content: flex-start;
+      gap: 0; background: #fff; z-index: 6; padding: 4px 0 10px;
+      box-shadow: 0 16px 26px -18px rgba(21,36,28,.6);
+      opacity: 0; visibility: hidden; transform: translateY(-10px); pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease, visibility .2s; }
+    .top-nav.m-open { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
+    .top-nav a { padding: 14px 22px; font-size: 16px; border-top: 1px solid rgba(21,36,28,.07); }
+
+    /* ---- hero: static full-bleed poster (no video) ---- */
+    .hero-video-bg { position: relative; inset: auto; height: 46vh; margin-top: 58px; z-index: 0; }
+    .hero-video-bg video { display: none; }
+    .hero-video-poster { opacity: 1; }
+
+    /* ---- content: un-fix, un-mask, single column ---- */
+    .scroll-shadow { position: static; inset: auto; filter: none; pointer-events: auto; }
+    .scroll-area { position: static; inset: auto; overflow: visible; height: auto;
+      -webkit-mask: none; mask: none; scroll-snap-type: none; scroll-padding-top: 0; }
+    .hero-spacer { display: none; }
+    .side-scroll { display: none; }
+
+    .panel-wrap { scroll-snap-align: none; }
+    .panel { margin-left: 0; padding: 26px 18px 28px; -webkit-mask: none; mask: none; }
+    .hero-title { position: static; max-width: 100%; white-space: normal;
+      font-size: clamp(26px, 7.4vw, 40px); line-height: 1.12; margin: 0 0 22px; }
+
+    /* brain + overview: stack, drop the desktop strip-clearing offset */
+    .brain { margin-top: 24px; }
+    .shift { margin-top: 24px; padding-top: 24px; }
+    .shift + .overview { padding-top: 24px; }
+    .overview { display: block; margin-top: 0; margin-bottom: 0; }
+    .ov-text { margin-top: 0; }
+    .ov-allbtn { margin-top: 20px; }
+    .ov-media { margin-top: 26px; }
+    .media-figure { height: 56vh; }
+
+    /* recent-news strip: pull it out of its absolute slot, center it full-width */
+    .news-strip { position: static; transform: none; top: auto; left: auto; right: auto;
+      width: 100%; margin: 6px 0 30px; gap: clamp(10px, 4vw, 26px); }
+    .scroll-cue { display: none; }   /* mobile scrolls normally — no cue needed */
+    .news-item .news-headline { font-size: clamp(20px, 5.4vw, 27px); }
+
+    /* second band + footer: drop the left rail, stack grids */
+    .info { margin-left: 0; padding: 8px 18px 36px; }
+    .site-footer-x { margin-left: 0; padding-left: 22px; padding-right: 22px; }
+    .foot-inner { grid-template-columns: 1fr; row-gap: 28px; }
+  }
+  </style>
+<link rel="stylesheet" href="/green.css">
+</head><body>
 <a class="skip-link" href="#main-content">Skip to content</a>
-<div class="wrap" id="main-content" tabindex="-1">
-  <div class="frame">
 
-    <!-- top bar -->
-    <div class="band top">
-      <a class="brand" href="#/" aria-label="Taylor Intelligence — home">
-        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-          <g transform="translate(3.290 24.934) scale(0.0256 -0.0256)">
-            <path d="M557 563H368V0H216V563H27V698H557Z"/>
-            <path transform="translate(584 0)" d="M382 0H50V121H140V577H50V698H382V577H292V121H382Z"/>
-          </g>
-        </svg>
-        <span class="word">Taylor Intelligence</span>
-      </a>
-      <nav>
-        <a href="#/websites" data-nav="websites">Websites</a>
-        <a href="#/services" data-nav="services">Services</a>
-        <a href="#/approach" data-nav="approach">Approach</a>
-        <a href="#/contact" data-nav="contact" class="nav-contact">Let’s talk ↗</a>
-      </nav>
+  <!-- ===== fixed full-screen BACKGROUND =====
+       Ships with a self-contained SVG landscape so the template works with zero
+       assets. CUSTOMIZE: to use a video, fill the data-src-* attributes below
+       (largest first) — the loader fades it in over the poster automatically.
+       To use a photo instead, replace the <svg> with
+       <img class="hero-video-poster" src="assets/background.jpg" alt="" /> -->
+  <div class="hero-video-bg" id="hero-video-bg" aria-hidden="true">
+    <!-- generative "living terrain": a slowly drifting topographic point-cloud
+         rendered in the brand palette, with occasional neural links riding the
+         landscape toward the camera. Pure canvas — zero assets, recolorable via
+         the TERRAIN config below. Renders a single static frame on mobile and
+         for prefers-reduced-motion. A video dropped into the data-src-* slots
+         still fades in over it, exactly like the old poster. -->
+    <canvas class="hero-video-poster" id="terrain-gl"></canvas>
+    <canvas class="hero-video-poster" id="terrain-bg"></canvas>
+    <video class="hero-video" muted loop playsinline preload="auto"
+      data-src-4k=""
+      data-src-2k=""
+      data-src-fallback=""></video>
+  </div>
+
+  <script>
+    (function () {
+      var canvas = document.getElementById("terrain-bg");
+      if (!canvas) return;
+      var ctx = canvas.getContext("2d");
+      var animate = !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+                    !window.matchMedia("(max-width: 1100px)").matches;
+
+      /* ---- CUSTOMIZE: terrain palette + tuning ---- */
+      var TERRAIN = {
+        skyTop: "#040d08", skyBottom: "#0b1612",
+        glow: "138, 226, 172",          /* horizon halo (r,g,b) */
+        rampLow: [44, 82, 62],          /* valley-floor point colour */
+        rampHigh: [168, 248, 200],      /* ridge-line point colour */
+        wire: "rgba(104, 182, 138, 0.16)", /* faint contour lines between points */
+        link: "150, 240, 186",          /* neural-link lines + nodes (r,g,b) */
+        farTint: [96, 148, 152],        /* atmospheric haze colour near the horizon */
+        mote: "170, 240, 200",          /* drifting data-motes (r,g,b) */
+        agent: "242, 206, 132",         /* the explorer + its trail (warm gold) */
+        speed: 0.72                     /* forward drift, world-units/sec */
+      };
+
+      var ROWS = 52, COLS = 76, NEAR = 3.2, FAR = 34, SPAN = 15, CAMH = 4.2;
+      var DPR, W, H, cx, horizon, focal;
+
+      function resize() {
+        DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+        W = canvas.clientWidth || window.innerWidth;
+        H = canvas.clientHeight || window.innerHeight;
+        canvas.width = Math.round(W * DPR);
+        canvas.height = Math.round(H * DPR);
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        cx = W / 2;
+        /* horizon pinned near the very top: the camera looks DOWN at the land,
+           so the point-cloud fills the whole frame like aerial footage — the
+           visible band on load (between header and panel) is all terrain.
+           On squarer canvases (the mobile hero block) drop it a little so
+           several ridge lines stay in frame instead of sparse near-field. */
+        horizon = H * (W / H < 1.2 ? 0.2 : 0.09);
+        focal = H * 1.0;
+        if (GLR) GLR.resize();
+      }
+
+      /* deterministic value noise — terrain is stable in world space, so
+         features glide toward the camera instead of boiling randomly.
+         Integer-lattice hash, mirrored bit-exact in the WebGL shaders so the
+         2D story layer and the GL world agree on every height. */
+      function hash(x, y) {
+        var h = (Math.imul(x | 0, 0x27d4eb2d) ^ Math.imul(y | 0, 0x165667b1)) | 0;
+        h = Math.imul(h ^ (h >>> 15), 0x85ebca6b) | 0;
+        h ^= h >>> 13;
+        return (h >>> 0) / 4294967296;
+      }
+      function noise(x, y) {
+        var xi = Math.floor(x), yi = Math.floor(y), xf = x - xi, yf = y - yi;
+        var u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+        var a = hash(xi, yi), b = hash(xi + 1, yi), c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
+        return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+      }
+      function terrainH(x, zn) {
+        /* fbm base + a ridged, anisotropic octave: sharp crests stretched
+           across the view like real ranges, not rolling math-blobs */
+        var n = noise(x * 0.16, zn * 0.16) * 0.46 + noise(x * 0.34, zn * 0.34) * 0.20 + noise(x * 0.72, zn * 0.72) * 0.09;
+        var rr = 1 - Math.abs(noise(x * 0.11, zn * 0.23) * 2 - 1);
+        n += rr * rr * 0.27;
+        var valley = 1 - Math.exp(-(x * x) / 46);   /* flatten a corridor up the middle */
+        return n * 3.1 * (0.35 + 0.65 * valley);
+      }
+
+      /* precomputed height->colour ramp in six depth bands: far rows blend
+         toward the haze tint (atmospheric perspective), so the scene reads as
+         deep space instead of a flat pattern. No strings built per frame. */
+      var BANDS = 6, RAMP = [];
+      for (var b = 0; b < BANDS; b++) {
+        var haze = (b / (BANDS - 1)) * 0.55, band = [];
+        for (var r = 0; r <= 16; r++) {
+          var e = (r / 16) * (r / 16) * (3 - 2 * r / 16), c = [];
+          for (var ch = 0; ch < 3; ch++) {
+            var base = TERRAIN.rampLow[ch] + (TERRAIN.rampHigh[ch] - TERRAIN.rampLow[ch]) * e;
+            c.push(Math.round(base + (TERRAIN.farTint[ch] - base) * haze));
+          }
+          band.push("rgb(" + c[0] + "," + c[1] + "," + c[2] + ")");
+        }
+        RAMP.push(band);
+      }
+      /* a sparse warm ramp — moss/lichen flecks catching the light */
+      var RAMPW = [];
+      for (var b2 = 0; b2 < BANDS; b2++) {
+        var hz2 = (b2 / (BANDS - 1)) * 0.55, wband = [];
+        for (var r2i = 0; r2i <= 16; r2i++) {
+          var e2 = (r2i / 16) * (r2i / 16) * (3 - 2 * r2i / 16), cc = [];
+          for (var c2 = 0; c2 < 3; c2++) {
+            var bs = [58, 74, 46][c2] + ([214, 196, 122][c2] - [58, 74, 46][c2]) * e2;
+            cc.push(Math.round(bs + (TERRAIN.farTint[c2] - bs) * hz2));
+          }
+          wband.push("rgb(" + cc[0] + "," + cc[1] + "," + cc[2] + ")");
+        }
+        RAMPW.push(wband);
+      }
+
+      /* neural chains: 2-4 linked nodes anchored to fixed noise coordinates,
+         so they ride the terrain toward the viewer and die at the near plane */
+      var links = [], lastSpawn = -10;
+      function spawnLink(t, travel) {
+        var n = 2 + Math.floor(Math.random() * 3);
+        var x = -SPAN * 0.75 + Math.random() * SPAN * 1.5;
+        var zn = travel + 9 + Math.random() * 13;
+        var nodes = [{ x: x, zn: zn }];
+        for (var s = 1; s < n; s++) {
+          x += Math.random() * 7 - 3.5;
+          zn += Math.random() * 4 - 2;
+          nodes.push({ x: x, zn: zn });
+        }
+        links.push({ nodes: nodes, born: t, life: 5.5 + Math.random() * 3.5 });
+      }
+
+      /* eased mouse parallax — the canvas sits behind everything, so listen
+         on the window; reduced-motion/mobile never registers the listener */
+      var mx = 0, my = 0, px = 0, py = 0;
+      if (animate) window.addEventListener("mousemove", function (e) {
+        mx = (e.clientX / window.innerWidth) * 2 - 1;
+        my = (e.clientY / window.innerHeight) * 2 - 1;
+      }, { passive: true });
+
+      /* data-motes drifting slowly upward above the terrain */
+      var motes = [];
+      for (var m = 0; m < 42; m++) {
+        motes.push({ x: Math.random(), y: Math.random(), s: 0.4 + Math.random() * 1.2,
+                     v: 0.004 + Math.random() * 0.01, ph: Math.random() * 6.283 });
+      }
+
+      /* ridge shimmers: a lit pulse sweeping along one contour line */
+      var shimmers = [], lastShimmer = -10;
+      function spawnShimmer(t, travel) {
+        shimmers.push({ zn: travel + 7 + Math.random() * 15, born: t,
+                        life: 3.5 + Math.random() * 2, dir: Math.random() < 0.5 ? 1 : -1 });
+      }
+
+      /* cached soft-glow sprites (one per colour) for the additive bloom pass */
+      var spriteCache = {};
+      function glowSprite(color) {
+        var s = spriteCache[color];
+        if (s) return s;
+        s = document.createElement("canvas");
+        s.width = s.height = 32;
+        var g = s.getContext("2d");
+        var gr = g.createRadialGradient(16, 16, 0, 16, 16, 16);
+        gr.addColorStop(0, color);
+        gr.addColorStop(0.3, color);
+        gr.addColorStop(1, "rgba(0,0,0,0)");
+        g.fillStyle = gr;
+        g.fillRect(0, 0, 32, 32);
+        spriteCache[color] = s;
+        return s;
+      }
+
+      /* low-lying fog banks, anchored to the valley floor; they recycle
+         through the depth range forever */
+      var fogs = [];
+      for (var fg0 = 0; fg0 < 7; fg0++) {
+        fogs.push({ x: Math.random() * 14 - 7, zn: Math.random() * 40,
+                    drift: Math.random() * 6.283, s: 0.7 + Math.random() * 0.9 });
+      }
+
+      /* a passing flock of birds: loose vee, wing-beat bursts, glides */
+      var flock = null, nextFlock = 6.5;
+      function spawnFlock(t) {
+        var n = 9 + Math.floor(Math.random() * 5);
+        var birds = [];
+        for (var bi0 = 0; bi0 < n; bi0++) {
+          birds.push({ ox: (Math.random() - 0.5) * 90 - bi0 * 16,
+                       oy: (Math.random() - 0.5) * 36 + Math.abs((bi0 % 5) - 2) * 9,
+                       ph: Math.random() * 6.283, sz: 0.8 + Math.random() * 0.5 });
+        }
+        flock = { born: t, dur: 16 + Math.random() * 6, dir: Math.random() < 0.5 ? 1 : -1,
+                  y0: H * (0.1 + Math.random() * 0.2), birds: birds };
+      }
+
+      /* ============ WebGL2 luminous renderer ============
+         Renders the WORLD on the canvas beneath this one: sky, a solid
+         terrain mesh that truly occludes (depth buffer), and a dense
+         additive point cloud. The 2D canvas on top keeps the STORY layer:
+         explorer, routes, links, contours, fog, birds, vignette.
+         The GLSL noise mirrors the JS hash/noise/terrainH above bit-exactly,
+         so both layers agree on every height. If WebGL2 is unavailable this
+         returns null and the 2D renderer keeps doing everything itself. */
+      var GLR = (function () {
+        var cv = document.getElementById("terrain-gl");
+        if (!cv) return null;
+        var gl = null;
+        try { gl = cv.getContext("webgl2", { antialias: false, depth: true }); } catch (err) {}
+        if (!gl) { cv.style.display = "none"; return null; }
+
+        var HEAD = "#version 300 es\nprecision highp float;\nprecision highp int;\n";
+        var NOISE = "\n" +
+          "uint uh(int x, int y) {\n" +
+          "  uint h = uint(x) * 0x27d4eb2du ^ uint(y) * 0x165667b1u;\n" +
+          "  h = (h ^ (h >> 15u)) * 0x85ebca6bu;\n" +
+          "  h ^= h >> 13u;\n" +
+          "  return h;\n" +
+          "}\n" +
+          "float uhashf(int x, int y) { return float(uh(x, y)) / 4294967296.0; }\n" +
+          "float vnoise(vec2 p) {\n" +
+          "  vec2 f = floor(p), w = p - f;\n" +
+          "  int xi = int(f.x), yi = int(f.y);\n" +
+          "  w = w * w * (3.0 - 2.0 * w);\n" +
+          "  float a = uhashf(xi, yi), b = uhashf(xi + 1, yi), c = uhashf(xi, yi + 1), d = uhashf(xi + 1, yi + 1);\n" +
+          "  return a + (b - a) * w.x + (c - a) * w.y + (a - b - c + d) * w.x * w.y;\n" +
+          "}\n" +
+          "float terrH(float x, float zn) {\n" +
+          "  float n = vnoise(vec2(x, zn) * 0.16) * 0.46 + vnoise(vec2(x, zn) * 0.34) * 0.20 + vnoise(vec2(x, zn) * 0.72) * 0.09;\n" +
+          "  float rr = 1.0 - abs(vnoise(vec2(x * 0.11, zn * 0.23)) * 2.0 - 1.0);\n" +
+          "  n += rr * rr * 0.27;\n" +
+          "  float valley = 1.0 - exp(-(x * x) / 46.0);\n" +
+          "  return n * 3.1 * (0.35 + 0.65 * valley);\n" +
+          "}\n";
+        var COMMON = "\n" +
+          "uniform vec2 u_res;\n" +
+          "uniform float u_t, u_travel, u_xdrift, u_camh, u_focal, u_horizon, u_cx, u_panx, u_pany, u_dpr;\n" +
+          "vec2 proj(float x, float h, float z) {\n" +
+          "  return vec2(u_cx + u_panx + x * u_focal / z, u_horizon + u_pany + (u_camh - h) * u_focal / z);\n" +
+          "}\n" +
+          "vec4 clipOf(vec2 sp, float z) {\n" +
+          "  float ndz = (z - 2.4) / 32.0;\n" +
+          "  return vec4(sp.x / u_res.x * 2.0 - 1.0, 1.0 - sp.y / u_res.y * 2.0, ndz * 2.0 - 1.0, 1.0);\n" +
+          "}\n" +
+          "float gateOf(float depth) {\n" +
+          "  float g = clamp((u_t - (0.5 + depth * 0.9)) / 0.55, 0.0, 1.0);\n" +
+          "  return g * g * (3.0 - 2.0 * g);\n" +
+          "}\n" +
+          "float frayOf(float fz) { return fz > 0.72 ? pow((fz - 0.72) / 0.28, 1.4) : 0.0; }\n";
+
+        var skyVS = HEAD +
+          "void main() {\n" +
+          "  vec2 P = vec2[3](vec2(-1., -1.), vec2(3., -1.), vec2(-1., 3.))[gl_VertexID];\n" +
+          "  gl_Position = vec4(P, 0.0, 1.0);\n" +
+          "}\n";
+        var skyFS = HEAD +
+          "uniform vec2 u_res, u_glowPos;\n" +
+          "uniform float u_dpr, u_gi, u_glowRad;\n" +
+          "uniform vec3 u_skyTop, u_skyBot, u_glowC;\n" +
+          "out vec4 o;\n" +
+          "void main() {\n" +
+          "  vec2 uv = gl_FragCoord.xy / (u_res * u_dpr);\n" +
+          "  float yy = 1.0 - uv.y;\n" +
+          "  vec3 c = yy < 0.62 ? mix(u_skyTop, u_skyBot, yy / 0.62) : mix(u_skyBot, u_skyTop, (yy - 0.62) / 0.38);\n" +
+          "  float dd = distance(vec2(uv.x * u_res.x, yy * u_res.y), u_glowPos) / u_glowRad;\n" +
+          "  float ga = dd < 0.55 ? mix(0.2, 0.07, dd / 0.55) : mix(0.07, 0.0, clamp((dd - 0.55) / 0.45, 0.0, 1.0));\n" +
+          "  o = vec4(c + u_glowC * ga * u_gi, 1.0);\n" +
+          "}\n";
+
+        var meshVS = HEAD + COMMON + NOISE +
+          "in vec2 a_ij;\n" +
+          "uniform vec2 u_grid;\n" +
+          "uniform vec3 u_haze;\n" +
+          "out vec3 v_c;\n" +
+          "out float v_a;\n" +
+          "void main() {\n" +
+          "  float fz = a_ij.y / (u_grid.y - 1.0);\n" +
+          "  float z = 3.2 + pow(fz, 1.55) * 30.8;\n" +
+          "  float zn = z + u_travel;\n" +
+          "  float x = -15.0 + 30.0 * a_ij.x / (u_grid.x - 1.0);\n" +
+          "  float xw = x + u_xdrift;\n" +
+          "  float h = terrH(xw, zn);\n" +
+          "  float hL = terrH(xw - 0.35, zn);\n" +
+          "  v_a = gateOf(1.0 - fz) * (1.0 - smoothstep(0.62, 0.95, fz));\n" +
+          "  v_c = mix(vec3(5., 13., 9.) / 255.0, u_haze, fz * 0.5) * (0.8 + clamp((h - hL) * 1.2, -0.25, 0.5));\n" +
+          "  gl_Position = clipOf(proj(x, h, z), z);\n" +
+          "}\n";
+        var meshFS = HEAD +
+          "in vec3 v_c;\n" +
+          "in float v_a;\n" +
+          "out vec4 o;\n" +
+          "void main() { if (v_a < 0.03) discard; o = vec4(v_c * v_a, v_a); }\n";
+
+        var ptsVS = HEAD + COMMON + NOISE +
+          "in vec2 a_ij;\n" +
+          "uniform vec2 u_grid;\n" +
+          "uniform vec3 u_lo, u_hi, u_wlo, u_whi, u_haze;\n" +
+          "uniform float u_gain;\n" +
+          "out vec3 v_c;\n" +
+          "void main() {\n" +
+          "  float fz = a_ij.y / (u_grid.y - 1.0);\n" +
+          "  float depth = 1.0 - fz;\n" +
+          "  float z = 3.2 + pow(fz, 1.55) * 30.8;\n" +
+          "  float zn = z + u_travel;\n" +
+          "  float r1 = uhashf(int(a_ij.x) * 2 + 1, int(a_ij.y));\n" +
+          "  float r2 = uhashf(int(a_ij.x), int(a_ij.y) * 2 + 1);\n" +
+          "  float x = -15.0 + 30.0 * a_ij.x / (u_grid.x - 1.0) + (r1 - 0.5) * 0.36;\n" +
+          "  float zj = z + (r2 - 0.5) * 0.4;\n" +
+          "  float znj = zn + (r2 - 0.5) * 0.4;\n" +
+          "  float xw = x + u_xdrift;\n" +
+          "  float h = terrH(xw, znj);\n" +
+          "  float hL = terrH(xw - 0.35, znj);\n" +
+          "  float cloud = vnoise(vec2(xw * 0.07 + u_t * 0.055, zn * 0.07 - u_t * 0.03));\n" +
+          "  float lit = clamp(0.6 + (h - hL) * 2.2, 0.0, 1.0);\n" +
+          "  vec2 sp = proj(x, h, zj);\n" +
+          "  float e = gateOf(depth);\n" +
+          "  float fray = frayOf(fz);\n" +
+          "  if (e < 1.0 || fray > 0.0) {\n" +
+          "    float wob = fray > 0.0 ? 0.4 + 0.6 * sin(u_t * 0.9 + r1 * 6.283) : 1.0;\n" +
+          "    float scat = (1.0 - e) * (40.0 + 140.0 * r2);\n" +
+          "    sp.x += (r1 - 0.5) * 2.0 * (scat + fray * 26.0 * wob);\n" +
+          "    sp.y += -r2 * scat * 0.9 + (r1 - 0.5) * 2.0 * fray * 18.0 * wob;\n" +
+          "  }\n" +
+          "  float lum = clamp(0.14 + h / 3.1 * 0.72 + lit * 0.3 - (cloud - 0.5) * 0.3, 0.0, 1.0);\n" +
+          "  float ec = lum * lum * (3.0 - 2.0 * lum);\n" +
+          "  vec3 col = (r1 > 0.965 ? mix(u_wlo, u_whi, ec) : mix(u_lo, u_hi, ec));\n" +
+          "  col = mix(col, u_haze, fz * 0.55);\n" +
+          "  float alpha = (0.26 + 0.72 * pow(depth, 1.2)) * (0.3 + 0.7 * e) * (1.0 - fray * 0.3);\n" +
+          "  float glowk = 0.5 + 1.2 * smoothstep(0.5, 1.0, lum);\n" +
+          "  v_c = col * alpha * glowk * u_gain;\n" +
+          "  float size = clamp(u_focal / z * 0.013, 1.0, 3.6) * (0.7 + 0.6 * r2);\n" +
+          "  gl_PointSize = size * 3.6 * u_dpr;\n" +
+          "  gl_Position = clipOf(sp, zj - 0.35);\n" +
+          "}\n";
+        var ptsFS = HEAD +
+          "in vec3 v_c;\n" +
+          "out vec4 o;\n" +
+          "void main() {\n" +
+          "  vec2 q = gl_PointCoord * 2.0 - 1.0;\n" +
+          "  float d2 = dot(q, q);\n" +
+          "  if (d2 > 1.0) discard;\n" +
+          "  o = vec4(v_c * exp(-d2 * 4.5), 0.0);\n" +
+          "}\n";
+
+        function sh(type, src) {
+          var s = gl.createShader(type);
+          gl.shaderSource(s, src);
+          gl.compileShader(s);
+          if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.warn("terrain-gl shader:", gl.getShaderInfoLog(s)); return null; }
+          return s;
+        }
+        function prog(vsSrc, fsSrc) {
+          var v = sh(gl.VERTEX_SHADER, vsSrc), f = sh(gl.FRAGMENT_SHADER, fsSrc);
+          if (!v || !f) return null;
+          var p = gl.createProgram();
+          gl.attachShader(p, v);
+          gl.attachShader(p, f);
+          gl.linkProgram(p);
+          if (!gl.getProgramParameter(p, gl.LINK_STATUS)) { console.warn("terrain-gl link:", gl.getProgramInfoLog(p)); return null; }
+          return p;
+        }
+        var skyP = prog(skyVS, skyFS), meshP = prog(meshVS, meshFS), ptsP = prog(ptsVS, ptsFS);
+        if (!skyP || !meshP || !ptsP) { cv.style.display = "none"; return null; }
+
+        var PC = 190, PR = 120, MC = 140, MR = 90;
+        function makeVAO(p, cols, rows) {
+          var arr = new Float32Array(cols * rows * 2), k = 0;
+          for (var jj = 0; jj < rows; jj++) for (var ii = 0; ii < cols; ii++) { arr[k++] = ii; arr[k++] = jj; }
+          var vao = gl.createVertexArray();
+          gl.bindVertexArray(vao);
+          var b = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, b);
+          gl.bufferData(gl.ARRAY_BUFFER, arr, gl.STATIC_DRAW);
+          var a = gl.getAttribLocation(p, "a_ij");
+          gl.enableVertexAttribArray(a);
+          gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
+          return vao;
+        }
+        var ptsVAO = makeVAO(ptsP, PC, PR);
+        var meshVAO = makeVAO(meshP, MC, MR);
+        gl.bindVertexArray(meshVAO);
+        var idx = new Uint16Array((MC - 1) * (MR - 1) * 6), q = 0;
+        for (var mj = 0; mj < MR - 1; mj++) for (var mi = 0; mi < MC - 1; mi++) {
+          var v0 = mj * MC + mi;
+          idx[q++] = v0; idx[q++] = v0 + 1; idx[q++] = v0 + MC;
+          idx[q++] = v0 + 1; idx[q++] = v0 + MC + 1; idx[q++] = v0 + MC;
+        }
+        var ib = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ib);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, idx, gl.STATIC_DRAW);
+        gl.bindVertexArray(null);
+
+        var locCache = {};
+        function loc(p, n) {
+          var key = (p === ptsP ? "p" : p === meshP ? "m" : "s") + n;
+          if (!(key in locCache)) locCache[key] = gl.getUniformLocation(p, n);
+          return locCache[key];
+        }
+        function hex3(hx) {
+          return [parseInt(hx.substr(1, 2), 16) / 255, parseInt(hx.substr(3, 2), 16) / 255, parseInt(hx.substr(5, 2), 16) / 255];
+        }
+        function n3(a) { return [a[0] / 255, a[1] / 255, a[2] / 255]; }
+        var skyTopC = hex3(TERRAIN.skyTop), skyBotC = hex3(TERRAIN.skyBottom);
+        var glowC = TERRAIN.glow.split(",").map(function (v) { return parseFloat(v) / 255; });
+        var loC = n3(TERRAIN.rampLow), hiC = n3(TERRAIN.rampHigh), hazeC = n3(TERRAIN.farTint);
+        var wloC = n3([58, 74, 46]), whiC = n3([214, 196, 122]);
+
+        function common(p, t, travel, xdrift, camh, panx, pany) {
+          gl.uniform2f(loc(p, "u_res"), W, H);
+          gl.uniform1f(loc(p, "u_t"), t);
+          gl.uniform1f(loc(p, "u_travel"), travel);
+          gl.uniform1f(loc(p, "u_xdrift"), xdrift);
+          gl.uniform1f(loc(p, "u_camh"), camh);
+          gl.uniform1f(loc(p, "u_focal"), focal);
+          gl.uniform1f(loc(p, "u_horizon"), horizon);
+          gl.uniform1f(loc(p, "u_cx"), cx);
+          gl.uniform1f(loc(p, "u_panx"), panx);
+          gl.uniform1f(loc(p, "u_pany"), pany);
+          gl.uniform1f(loc(p, "u_dpr"), DPR);
+        }
+
+        return {
+          resize: function () {
+            cv.width = Math.round(W * DPR);
+            cv.height = Math.round(H * DPR);
+          },
+          render: function (t, travel, xdrift, camh, panx, pany, gi) {
+            gl.viewport(0, 0, cv.width, cv.height);
+            gl.clearColor(0, 0, 0, 1);
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+            /* sky + horizon glow */
+            gl.disable(gl.DEPTH_TEST);
+            gl.disable(gl.BLEND);
+            gl.useProgram(skyP);
+            gl.uniform2f(loc(skyP, "u_res"), W, H);
+            gl.uniform1f(loc(skyP, "u_dpr"), DPR);
+            gl.uniform1f(loc(skyP, "u_gi"), gi);
+            gl.uniform1f(loc(skyP, "u_glowRad"), W * (0.55 + 0.04 * Math.sin(t * 0.13)));
+            gl.uniform2f(loc(skyP, "u_glowPos"), cx + panx * 0.6, horizon + pany);
+            gl.uniform3fv(loc(skyP, "u_skyTop"), skyTopC);
+            gl.uniform3fv(loc(skyP, "u_skyBot"), skyBotC);
+            gl.uniform3fv(loc(skyP, "u_glowC"), glowC);
+            gl.bindVertexArray(null);
+            gl.drawArrays(gl.TRIANGLES, 0, 3);
+            /* terrain mass — writes depth, so ridges truly occlude */
+            gl.enable(gl.DEPTH_TEST);
+            gl.depthFunc(gl.LEQUAL);
+            gl.depthMask(true);
+            gl.enable(gl.BLEND);
+            gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+            gl.useProgram(meshP);
+            common(meshP, t, travel, xdrift, camh, panx, pany);
+            gl.uniform2f(loc(meshP, "u_grid"), MC, MR);
+            gl.uniform3fv(loc(meshP, "u_haze"), hazeC);
+            gl.bindVertexArray(meshVAO);
+            gl.drawElements(gl.TRIANGLES, idx.length, gl.UNSIGNED_SHORT, 0);
+            /* luminous point cloud — additive, depth-tested against the mesh */
+            gl.depthMask(false);
+            gl.blendFunc(gl.ONE, gl.ONE);
+            gl.useProgram(ptsP);
+            common(ptsP, t, travel, xdrift, camh, panx, pany);
+            gl.uniform2f(loc(ptsP, "u_grid"), PC, PR);
+            gl.uniform3fv(loc(ptsP, "u_lo"), loC);
+            gl.uniform3fv(loc(ptsP, "u_hi"), hiC);
+            gl.uniform3fv(loc(ptsP, "u_wlo"), wloC);
+            gl.uniform3fv(loc(ptsP, "u_whi"), whiC);
+            gl.uniform3fv(loc(ptsP, "u_haze"), hazeC);
+            gl.uniform1f(loc(ptsP, "u_gain"), 1.15);
+            gl.bindVertexArray(ptsVAO);
+            gl.drawArrays(gl.POINTS, 0, PC * PR);
+            gl.bindVertexArray(null);
+            gl.depthMask(true);
+          }
+        };
+      })();
+
+      /* boot-sequence state: 0-2s the terrain assembles, then the first
+         synapses fire in sequence (fired 0..3) */
+      var fired = 0;
+      function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+      /* ---- the inhabited world: an explorer agent lives on the terrain.
+         Its loop is perceive -> plan -> act: a forward A* search runs over a
+         coarse grid of the actual heightfield (preferring low ground), the
+         exploration is replayed as tendrils fanning out, the winning route
+         snaps bright, and the explorer walks it, surveys, and plans again. */
+      var explorer = { x: 0, zn: 0, trail: [] };
+      var episode = null;
+
+      function planEpisode(t, travel) {
+        var sx = explorer.x, szn = explorer.zn;
+        var gx = Math.max(-9, Math.min(9, sx + (Math.random() * 12 - 6)));
+        var gzn = travel + 18 + Math.random() * 3;
+        var STEP = 1.2, half = 9;
+        var depth = Math.max(3, Math.round((gzn - szn) / STEP));
+        function nodeAt(i, jj) {
+          return { x: sx + (gx - sx) * (jj / depth) + i * STEP, zn: szn + jj * STEP };
+        }
+        function hcost(n) { var dx = n.x - gx, dz = n.zn - gzn; return Math.sqrt(dx * dx + dz * dz); }
+        var open = [], closedOrder = [], seen = {};
+        var s0 = nodeAt(0, 0);
+        open.push({ i: 0, j: 0, x: s0.x, zn: s0.zn, g: 0, f: hcost(s0), p: null });
+        seen["0:0"] = true;
+        var goalNode = null, guard = 0;
+        while (open.length && guard++ < 900) {
+          var bi = 0;
+          for (var oi = 1; oi < open.length; oi++) if (open[oi].f < open[bi].f) bi = oi;
+          var cur = open.splice(bi, 1)[0];
+          closedOrder.push(cur);
+          if (cur.j >= depth) { goalNode = cur; break; }
+          for (var di = -1; di <= 1; di++) {
+            var ni = cur.i + di, nj = cur.j + 1;
+            if (ni < -half || ni > half) continue;
+            var kk = ni + ":" + nj;
+            if (seen[kk]) continue;
+            seen[kk] = true;
+            var nn = nodeAt(ni, nj);
+            var g = cur.g + STEP + terrainH(nn.x, nn.zn) * 1.5 + Math.abs(di) * 0.3;
+            open.push({ i: ni, j: nj, x: nn.x, zn: nn.zn, g: g, f: g + hcost(nn), p: cur });
+          }
+        }
+        if (!goalNode) goalNode = closedOrder[closedOrder.length - 1];
+        var path = [];
+        for (var pn = goalNode; pn; pn = pn.p) path.unshift(pn);
+        episode = { phase: "think", planT: t, closed: closedOrder, path: path,
+                    thinkDur: 2.2, walkDur: Math.max(2, path.length * 0.55) };
+      }
+
+      function updateExplorer(t, travel) {
+        if (!episode) {
+          if (t > 4.2) {           /* first plan right after the boot sequence */
+            explorer.x = Math.random() * 4 - 2;
+            explorer.zn = travel + 10;
+            planEpisode(t, travel);
+          }
+          return;
+        }
+        var e = episode;
+        if (e.phase === "think" && t - e.planT > e.thinkDur) { e.phase = "commit"; e.commitT = t; }
+        else if (e.phase === "commit" && t - e.commitT > 0.6) { e.phase = "walk"; e.walkT = t; }
+        else if (e.phase === "walk") {
+          var u = clamp01((t - e.walkT) / e.walkDur);
+          var fu = u * (e.path.length - 1);
+          var si = Math.min(e.path.length - 2, Math.floor(fu)), sf = fu - si;
+          explorer.x = e.path[si].x + (e.path[si + 1].x - e.path[si].x) * sf;
+          explorer.zn = e.path[si].zn + (e.path[si + 1].zn - e.path[si].zn) * sf;
+          if (!e.lastCrumb || t - e.lastCrumb > 0.12) {
+            e.lastCrumb = t;
+            explorer.trail.push({ x: explorer.x, zn: explorer.zn, t: t });
+            if (explorer.trail.length > 70) explorer.trail.shift();
+          }
+          if (u >= 1) {
+            e.phase = "survey"; e.arriveT = t;
+            /* survey burst: synapses radiate from the arrival point */
+            for (var bb = 0; bb < 3; bb++) {
+              links.push({ nodes: [{ x: explorer.x, zn: explorer.zn },
+                                   { x: explorer.x + (Math.random() * 8 - 4),
+                                     zn: explorer.zn + (Math.random() * 6 - 3) }],
+                           born: t, life: 2.2 + bb * 0.5 });
+            }
+          }
+        }
+        else if (e.phase === "survey" && t - e.arriveT > 2.4) { e.phase = "idle"; e.idleT = t; }
+        else if (e.phase === "idle" && (t - e.idleT > 1.6 || explorer.zn - travel < 6)) planEpisode(t, travel);
+      }
+
+      function drawExplorer(t, travel, camh, xdrift) {
+        if (!episode) return;
+        var e = episode;
+
+        /* search tendrils fan out in exploration order; dead ends dim away */
+        for (var ci = 0; ci < e.closed.length; ci++) {
+          var n = e.closed[ci];
+          if (!n.p) continue;
+          var r = e.planT + (ci / e.closed.length) * e.thinkDur;
+          var a = clamp01((t - r) / 0.12) * clamp01(1 - (t - r - 0.45) / 1.1);
+          if (a <= 0) continue;
+          var z1 = n.zn - travel, z2 = n.p.zn - travel;
+          if (z1 < NEAR + 0.4 || z1 > FAR - 1 || z2 < NEAR + 0.4 || z2 > FAR - 1) continue;
+          var p1 = project(n.x, terrainH(n.x + xdrift, n.zn) + 0.12, z1, camh);
+          var p2 = project(n.p.x, terrainH(n.p.x + xdrift, n.p.zn) + 0.12, z2, camh);
+          ctx.strokeStyle = "rgba(" + TERRAIN.link + "," + (0.22 * a).toFixed(3) + ")";
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(p2.x, p2.y); ctx.lineTo(p1.x, p1.y); ctx.stroke();
+        }
+
+        /* the committed route */
+        if (e.commitT !== undefined) {
+          var pa = clamp01((t - e.commitT) / 0.4);
+          if (e.arriveT !== undefined) pa *= clamp01(1 - (t - e.arriveT) / 2.2);
+          if (pa > 0) {
+            ctx.strokeStyle = "rgba(" + TERRAIN.link + "," + (0.55 * pa).toFixed(3) + ")";
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            var pen = false;
+            for (var pi = 0; pi < e.path.length; pi++) {
+              var pz = e.path[pi].zn - travel;
+              if (pz < NEAR + 0.4 || pz > FAR - 1) { pen = false; continue; }
+              var pj = project(e.path[pi].x, terrainH(e.path[pi].x + xdrift, e.path[pi].zn) + 0.12, pz, camh);
+              if (!pen) { ctx.moveTo(pj.x, pj.y); pen = true; } else ctx.lineTo(pj.x, pj.y);
+            }
+            ctx.stroke();
+          }
+        }
+
+        /* breadcrumb trail */
+        for (var ti = explorer.trail.length - 1; ti >= 0; ti--) {
+          var c = explorer.trail[ti];
+          var ca = (1 - (t - c.t) / 3.5) * 0.45;
+          if (ca <= 0) { explorer.trail.splice(ti, 1); continue; }
+          var cz = c.zn - travel;
+          if (cz < NEAR + 0.4 || cz > FAR - 1) continue;
+          var cp = project(c.x, terrainH(c.x + xdrift, c.zn) + 0.14, cz, camh);
+          ctx.fillStyle = "rgba(" + TERRAIN.agent + "," + ca.toFixed(3) + ")";
+          ctx.beginPath(); ctx.arc(cp.x, cp.y, 1.2, 0, 6.2832); ctx.fill();
+        }
+
+        /* the explorer itself: gold core + halo, bobbing as it walks,
+           an expanding survey ring while it thinks, a slow blink at rest */
+        var ez = explorer.zn - travel;
+        if (ez > NEAR + 0.5 && ez < FAR - 1) {
+          var eb = e.phase === "idle" ? 0.55 + 0.45 * Math.sin(t * 2.6) : 1;
+          var ep = project(explorer.x, terrainH(explorer.x + xdrift, explorer.zn) + 0.2 + 0.05 * Math.sin(t * 2.1), ez, camh);
+          if (e.phase === "think" || e.phase === "commit") {
+            var rr = ((t - e.planT) % 0.9) / 0.9;
+            ctx.strokeStyle = "rgba(" + TERRAIN.agent + "," + (0.3 * (1 - rr)).toFixed(3) + ")";
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.arc(ep.x, ep.y, 3 + rr * 24, 0, 6.2832); ctx.stroke();
+          }
+          ctx.fillStyle = "rgba(" + TERRAIN.agent + "," + (0.14 * eb).toFixed(3) + ")";
+          ctx.beginPath(); ctx.arc(ep.x, ep.y, 8, 0, 6.2832); ctx.fill();
+          ctx.fillStyle = "rgba(" + TERRAIN.agent + "," + (0.55 * eb).toFixed(3) + ")";
+          ctx.beginPath(); ctx.arc(ep.x, ep.y, 3.4, 0, 6.2832); ctx.fill();
+          ctx.fillStyle = "rgba(255, 246, 220," + (0.95 * eb).toFixed(3) + ")";
+          ctx.beginPath(); ctx.arc(ep.x, ep.y, 1.8, 0, 6.2832); ctx.fill();
+        }
+      }
+
+      function project(x, h, z, camh) {
+        return { x: cx + px + (x * focal) / z, y: horizon + py + ((camh - h) * focal) / z };
+      }
+
+      function draw(t) {
+        var travel = t * TERRAIN.speed;
+        var camh = CAMH + Math.sin(t * 0.22) * 0.12;
+        /* ease the camera toward the pointer; meander the flight path so the
+           terrain slides gently sideways as well as forward */
+        px += (mx * -26 - px) * 0.04;
+        py += (my * -12 - py) * 0.04;
+        var xdrift = Math.sin(t * 0.043) * 3;
+
+        /* the glow ignites last in the boot sequence, like a sunrise as the
+           system comes online (fully lit for the static frame's large t) */
+        var gi = clamp01((t - 1.4) / 1.0); gi = gi * gi * (3 - 2 * gi);
+
+        if (GLR) {
+          /* the GL canvas below draws sky, glow, terrain mass and the
+             luminous point cloud; this canvas keeps the story layer */
+          ctx.clearRect(0, 0, W, H);
+          GLR.render(t, travel, xdrift, camh, px, py, gi);
+        } else {
+          /* sky + ground base */
+          var sky = ctx.createLinearGradient(0, 0, 0, H);
+          sky.addColorStop(0, TERRAIN.skyTop);
+          sky.addColorStop(0.62, TERRAIN.skyBottom);
+          sky.addColorStop(1, TERRAIN.skyTop);
+          ctx.fillStyle = sky;
+          ctx.fillRect(0, 0, W, H);
+
+          /* horizon halo */
+          var gx = cx + px * 0.6, gy = horizon + py;
+          var glow = ctx.createRadialGradient(gx, gy, 0, gx, gy, W * (0.55 + 0.04 * Math.sin(t * 0.13)));
+          glow.addColorStop(0, "rgba(" + TERRAIN.glow + ", " + (0.2 * gi).toFixed(3) + ")");
+          glow.addColorStop(0.55, "rgba(" + TERRAIN.glow + ", " + (0.07 * gi).toFixed(3) + ")");
+          glow.addColorStop(1, "rgba(" + TERRAIN.glow + ", 0)");
+          ctx.fillStyle = glow;
+          ctx.fillRect(0, 0, W, H);
+        }
+
+        /* terrain rows, far -> near so close points paint over distant ones */
+        var pts = [];
+        for (var j = ROWS - 1; j >= 0; j--) {
+          var fz = j / (ROWS - 1);
+          var z = NEAR + Math.pow(fz, 1.55) * (FAR - NEAR);
+          var zn = z + travel;
+          var depth = 1 - fz;                       /* 1 near, 0 far */
+          var alpha = 0.26 + 0.72 * Math.pow(depth, 1.2);
+          var size = Math.min(3.6, Math.max(1, (focal / z) * 0.013));
+          var bandI = Math.round(fz * (BANDS - 1));
+          var ramp = RAMP[bandI], rampW = RAMPW[bandI];
+
+          /* boot sequence: rows assemble far -> near, each point converging in
+             from a scattered position. The far field never fully assembles —
+             the horizon is forever resolving out of motes, so the intro never
+             ends; it just recedes to the back of the world. */
+          var gate = 0.5 + depth * 0.9;
+          var e = clamp01((t - gate) / 0.55); e = e * e * (3 - 2 * e);
+          var fray = fz > 0.72 ? Math.pow((fz - 0.72) / 0.28, 1.4) : 0;
+
+          pts.length = 0;
+          var hPrev = 0, cloudV = 0.5;
+          for (var i = 0; i < COLS; i++) {
+            var r1 = hash(i * 1.31, j * 2.17), r2 = hash(i * 2.73, j * 1.71);
+            /* organic jitter: points sit off the grid like a real point-cloud
+               scan, not graph paper */
+            var x = -SPAN + (2 * SPAN * i) / (COLS - 1) + (r1 - 0.5) * 0.42;
+            var zj = z + (r2 - 0.5) * 0.5;
+            var xw = x + xdrift;
+            var h = terrainH(xw, zn + (r2 - 0.5) * 0.5);
+            /* drifting cloud shadows (sampled every other column) */
+            if (!(i & 1)) cloudV = noise(xw * 0.07 + t * 0.055, zn * 0.07 - t * 0.03);
+            /* low sun from the left: slopes facing it catch the light */
+            var lit = clamp01(0.6 + (h - hPrev) * 0.9);
+            hPrev = h;
+            var p = project(x, h, zj, camh);
+            if (e < 1 || fray > 0) {
+              var wob = fray > 0 ? 0.4 + 0.6 * Math.sin(t * 0.9 + r1 * 6.283) : 1;
+              var scat = (1 - e) * (40 + 140 * r2);
+              p.x += (r1 - 0.5) * 2 * (scat + fray * 26 * wob);
+              p.y += -r2 * scat * 0.9 + (r1 - 0.5) * 2 * fray * 18 * wob;
+            }
+            if (p.x < -24 || p.x > W + 24) { pts.push(null); continue; }
+            /* luminance = altitude + sunlight - cloud shadow */
+            var lum = 0.14 + (h / 3.1) * 0.72 + lit * 0.3 - (cloudV - 0.5) * 0.3;
+            pts.push([p.x, p.y, Math.max(0, Math.min(16, Math.round(lum * 16))),
+                      0.7 + 0.6 * r2, r1 > 0.93]);
+          }
+
+          /* the land gets a body: each ridge fills softly down the frame, so
+             nearer ridges occlude and separate from the ones behind */
+          /* only every third row casts a silhouette, so the land separates into
+             distinct misty layers instead of accumulating into murk
+             (GL mode: the mesh provides the mass, so skip the fills) */
+          var fillA = (!GLR && j % 3 === 0) ? 0.075 * e * (1 - fray) : 0;
+          if (fillA > 0.008) {
+            ctx.globalAlpha = 1;
+            var hzT = fz * 0.5;   /* farther silhouettes carry the haze tint */
+            ctx.fillStyle = "rgba(" + Math.round(5 + (TERRAIN.farTint[0] - 5) * hzT) + "," +
+                                      Math.round(13 + (TERRAIN.farTint[1] - 13) * hzT) + "," +
+                                      Math.round(9 + (TERRAIN.farTint[2] - 9) * hzT) + "," + fillA.toFixed(3) + ")";
+            ctx.beginPath();
+            var began = false;
+            for (i = 0; i < COLS; i++) {
+              if (!pts[i]) continue;
+              if (!began) { ctx.moveTo(pts[i][0], pts[i][1]); began = true; }
+              else ctx.lineTo(pts[i][0], pts[i][1]);
+            }
+            if (began) {
+              ctx.lineTo(W + 30, H + 30); ctx.lineTo(-30, H + 30);
+              ctx.closePath(); ctx.fill();
+            }
+          }
+
+          /* contour line, smoothed through midpoints so it meanders like a
+             hand-drawn survey line — fades in as the row assembles and
+             dissolves again in the frayed horizon band */
+          ctx.globalAlpha = alpha * e * e * (1 - fray * 0.85);
+          ctx.strokeStyle = TERRAIN.wire;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          var prev = null;
+          for (i = 0; i < COLS; i++) {
+            if (!pts[i]) { prev = null; continue; }
+            if (!prev) ctx.moveTo(pts[i][0], pts[i][1]);
+            else ctx.quadraticCurveTo(prev[0], prev[1], (prev[0] + pts[i][0]) / 2, (prev[1] + pts[i][1]) / 2);
+            prev = pts[i];
+          }
+          ctx.stroke();
+
+          /* the points themselves: varied sizes, occasional warm flecks like
+             lichen catching the light (GL mode: the point cloud lives on the
+             GL canvas, so the 2D layer keeps only the contour lines) */
+          if (!GLR) {
+            var pAlpha = Math.min(1, alpha * 1.15) * (0.3 + 0.7 * e) * (1 - fray * 0.3);
+            ctx.globalAlpha = pAlpha;
+            for (i = 0; i < COLS; i++) {
+              if (!pts[i]) continue;
+              var ps = size * pts[i][3];
+              ctx.fillStyle = (pts[i][4] ? rampW : ramp)[pts[i][2]];
+              ctx.fillRect(pts[i][0] - ps / 2, pts[i][1] - ps / 2, ps, ps);
+            }
+            /* additive bloom pass: sunlit ground becomes luminous, not plotted */
+            ctx.globalCompositeOperation = "lighter";
+            for (i = 0; i < COLS; i++) {
+              if (!pts[i] || pts[i][2] < 10) continue;
+              var ps2 = size * pts[i][3];
+              ctx.globalAlpha = pAlpha * 0.42 * ((pts[i][2] - 9) / 7);
+              ctx.drawImage(glowSprite((pts[i][4] ? rampW : ramp)[pts[i][2]]),
+                            pts[i][0] - ps2 * 2.1, pts[i][1] - ps2 * 2.1, ps2 * 4.2, ps2 * 4.2);
+            }
+            ctx.globalCompositeOperation = "source-over";
+          }
+        }
+        ctx.globalAlpha = 1;
+
+        /* low valley fog: soft banks drifting through the corridor, fading in
+           once the terrain has assembled */
+        var fogA = clamp01((t - 1.3) / 1.6);
+        if (fogA > 0) {
+          var RANGE = FAR - NEAR - 3;
+          for (var fi = 0; fi < fogs.length; fi++) {
+            var F = fogs[fi];
+            var zw = NEAR + 1 + (((F.zn - travel) % RANGE) + RANGE) % RANGE;
+            var fxw = F.x + Math.sin(t * 0.05 + F.drift) * 1.5;
+            var fh2 = terrainH(fxw + xdrift, zw + travel);
+            var fp = project(fxw, fh2 * 0.45, zw, camh);
+            var rad = (focal / zw) * F.s;
+            if (rad < 6 || fp.x < -rad * 3 || fp.x > W + rad * 3) continue;
+            var dfade = clamp01((FAR - 4 - zw) / (FAR - 8));
+            ctx.save();
+            ctx.translate(fp.x, fp.y);
+            ctx.scale(2.6, 1);
+            var fg = ctx.createRadialGradient(0, 0, 0, 0, 0, rad);
+            fg.addColorStop(0, "rgba(126, 168, 142," + (0.055 * fogA * dfade).toFixed(3) + ")");
+            fg.addColorStop(1, "rgba(126, 168, 142, 0)");
+            ctx.fillStyle = fg;
+            ctx.fillRect(-rad, -rad, rad * 2, rad * 2);
+            ctx.restore();
+          }
+        }
+
+        /* first-fire: the moment assembly completes, the first synapses light
+           up one, two, then a shimmer sweeps — "...and it's alive" */
+        if (animate) {
+          if (fired === 0 && t > 2.0) { spawnLink(t, travel); fired = 1; }
+          else if (fired === 1 && t > 2.35) { spawnLink(t, travel); fired = 2; }
+          else if (fired === 2 && t > 2.7) { spawnLink(t, travel); spawnShimmer(t, travel); lastShimmer = t; fired = 3; }
+        }
+        /* ambient neural chains (quiet until the boot sequence finishes) */
+        if (animate && t > 3.2 && t - lastSpawn > 1.5 && links.length < 7) { spawnLink(t, travel); lastSpawn = t; }
+        for (var k = links.length - 1; k >= 0; k--) {
+          var L = links[k];
+          var age = t - L.born;
+          var pp = [], dead = age > L.life;
+          for (var q = 0; q < L.nodes.length && !dead; q++) {
+            var zq = L.nodes[q].zn - travel;
+            if (zq < NEAR + 0.4 || zq > FAR - 1) { dead = true; break; }
+            pp.push(project(L.nodes[q].x, terrainH(L.nodes[q].x + xdrift, L.nodes[q].zn) + 0.25, zq, camh));
+          }
+          if (dead) { links.splice(k, 1); continue; }
+          var env = Math.sin(Math.PI * (age / L.life));
+          ctx.strokeStyle = "rgba(" + TERRAIN.link + "," + (0.36 * env).toFixed(3) + ")";
+          ctx.lineWidth = 1.1;
+          ctx.beginPath();
+          ctx.moveTo(pp[0].x, pp[0].y);
+          for (q = 1; q < pp.length; q++) ctx.lineTo(pp[q].x, pp[q].y);
+          ctx.stroke();
+          /* nodes, each with a soft halo */
+          for (q = 0; q < pp.length; q++) {
+            ctx.fillStyle = "rgba(" + TERRAIN.link + "," + (0.14 * env).toFixed(3) + ")";
+            ctx.beginPath(); ctx.arc(pp[q].x, pp[q].y, 5.5, 0, 6.2832); ctx.fill();
+            ctx.fillStyle = "rgba(" + TERRAIN.link + "," + (0.85 * env).toFixed(3) + ")";
+            ctx.beginPath(); ctx.arc(pp[q].x, pp[q].y, 2.1, 0, 6.2832); ctx.fill();
+          }
+          /* pulse travelling down the chain */
+          var f = (age / L.life * (pp.length - 1)) % (pp.length - 1);
+          var seg = Math.floor(f), ff = f - seg;
+          var ppx = pp[seg].x + (pp[seg + 1].x - pp[seg].x) * ff;
+          var ppy = pp[seg].y + (pp[seg + 1].y - pp[seg].y) * ff;
+          ctx.fillStyle = "rgba(224, 255, 238," + (0.9 * env).toFixed(3) + ")";
+          ctx.beginPath(); ctx.arc(ppx, ppy, 1.7, 0, 6.2832); ctx.fill();
+        }
+
+        /* data-motes drifting upward, twinkling — brighter during the boot
+           sequence, when they read as the raw material the terrain forms from */
+        var moteBoost = 1 + Math.max(0, 1 - t / 2.2) * 0.9;
+        for (var mi = 0; mi < motes.length; mi++) {
+          var M = motes[mi];
+          var yy = ((M.y - t * M.v) % 1 + 1) % 1;
+          var tw = 0.5 + 0.5 * Math.sin(t * 1.7 + M.ph);
+          ctx.fillStyle = "rgba(" + TERRAIN.mote + "," + Math.min(0.5, (0.06 + 0.2 * tw) * moteBoost).toFixed(3) + ")";
+          ctx.beginPath(); ctx.arc(M.x * W + px * 0.5, yy * H + py * 0.5, M.s, 0, 6.2832); ctx.fill();
+        }
+
+        /* ridge shimmer: a lit pulse sweeping along one contour line */
+        if (animate && t - lastShimmer > 4.5 && shimmers.length < 2) { spawnShimmer(t, travel); lastShimmer = t; }
+        for (var si = shimmers.length - 1; si >= 0; si--) {
+          var S = shimmers[si];
+          var sAge = t - S.born;
+          var sz = S.zn - travel;
+          if (sAge > S.life || sz < NEAR + 0.6 || sz > FAR - 1) { shimmers.splice(si, 1); continue; }
+          var sEnv = Math.sin(Math.PI * (sAge / S.life));
+          var head = S.dir * (sAge / S.life * 2 - 1) * SPAN;
+          for (var w = -8; w <= 8; w++) {
+            var wx = head + w * 0.28;
+            if (wx < -SPAN || wx > SPAN) continue;
+            var fade = 1 - Math.abs(w) / 9;
+            var hp = project(wx, terrainH(wx + xdrift, S.zn) + 0.06, sz, camh);
+            ctx.fillStyle = "rgba(" + TERRAIN.link + "," + (0.5 * sEnv * fade * fade).toFixed(3) + ")";
+            ctx.beginPath(); ctx.arc(hp.x, hp.y, 1.5, 0, 6.2832); ctx.fill();
+          }
+        }
+
+        /* a passing flock: wing-beat bursts, then glides, in a loose vee */
+        if (animate && !flock && t > nextFlock) spawnFlock(t);
+        if (flock) {
+          var fAge = t - flock.born, fu2 = fAge / flock.dur;
+          if (fu2 > 1) { flock = null; nextFlock = t + 14 + Math.random() * 14; }
+          else {
+            var fx0 = flock.dir === 1 ? -80 + fu2 * (W + 160) : W + 80 - fu2 * (W + 160);
+            var fy0 = flock.y0 + Math.sin(t * 0.4) * 10 + py * 0.7;
+            var ea = clamp01(fu2 * 7) * clamp01((1 - fu2) * 7);
+            ctx.lineWidth = 1.3;
+            for (var bi2 = 0; bi2 < flock.birds.length; bi2++) {
+              var B = flock.birds[bi2];
+              var bx = fx0 + B.ox * flock.dir + px * 0.7;
+              var by = fy0 + B.oy + Math.sin(t * 0.7 + B.ph) * 7;
+              var flapEnv = 0.5 + 0.5 * Math.sin(t * 0.9 + B.ph * 2.3);
+              var wing = Math.sin(t * 7 + B.ph) * (0.25 + 0.75 * flapEnv);
+              var wl = 4.6 * B.sz;
+              ctx.strokeStyle = "rgba(" + TERRAIN.mote + "," + (0.5 * ea).toFixed(3) + ")";
+              ctx.beginPath();
+              ctx.moveTo(bx - wl, by - wing * wl * 0.9);
+              ctx.quadraticCurveTo(bx, by + wing * wl * 0.4, bx + wl, by - wing * wl * 0.9);
+              ctx.stroke();
+            }
+          }
+        }
+
+        /* the inhabited world: plan -> route -> walk -> survey, on loop */
+        if (animate) updateExplorer(t, travel);
+        drawExplorer(t, travel, camh, xdrift);
+
+        /* soft vignette so the white panels pop against the edges */
+        var vig = ctx.createRadialGradient(cx, H * 0.45, H * 0.3, cx, H * 0.45, H * 0.95);
+        vig.addColorStop(0, "rgba(3, 10, 6, 0)");
+        vig.addColorStop(1, "rgba(3, 10, 6, 0.3)");
+        ctx.fillStyle = vig;
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      var terrainFrame = 0, terrainTime = 0, previousTime = null, manuallyPaused = false;
+      function frame(ts) {
+        terrainFrame = 0;
+        if (!animate || document.hidden) return;
+        if (previousTime !== null) terrainTime += Math.min((ts - previousTime) / 1000, .05);
+        previousTime = ts;
+        draw(terrainTime);
+        terrainFrame = requestAnimationFrame(frame);
+      }
+      function syncMotion() {
+        cancelAnimationFrame(terrainFrame); previousTime = null;
+        animate = !manuallyPaused && !matchMedia('(prefers-reduced-motion: reduce)').matches && !matchMedia('(max-width: 1100px)').matches;
+        var toggle = document.querySelector('.terrain-toggle');
+        if (toggle) { toggle.textContent = animate ? 'Pause motion' : 'Play motion'; toggle.setAttribute('aria-pressed', String(!animate)); }
+        if (animate && !document.hidden) terrainFrame = requestAnimationFrame(frame);
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.terrain-toggle').addEventListener('click', function() { manuallyPaused = !manuallyPaused; syncMotion(); });
+        syncMotion();
+      });
+      document.addEventListener('visibilitychange', syncMotion);
+      matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', syncMotion);
+      matchMedia('(max-width: 1100px)').addEventListener('change', syncMotion);
+
+      resize();
+      window.addEventListener("resize", function () { resize(); if (!animate) drawStatic(); });
+      function drawStatic() {
+        /* one hand-composed frame: links and a shimmer frozen mid-life so
+           they show at full strength */
+        var t = 11.3;
+        for (var s = 0; s < 5; s++) {
+          spawnLink(t, t * TERRAIN.speed);
+          var L = links[links.length - 1];
+          L.born = t - L.life * (0.3 + Math.random() * 0.4);
+        }
+        spawnShimmer(t, t * TERRAIN.speed);
+        shimmers[0].born = t - shimmers[0].life * 0.45;
+        /* the explorer, frozen mid-journey along a committed route */
+        var tv = t * TERRAIN.speed;
+        explorer.x = -1.5; explorer.zn = tv + 9;
+        planEpisode(t - 8, tv);       /* planT far in the past: tendrils already gone */
+        episode.phase = "walk";
+        episode.commitT = t - 3;
+        var midI = Math.floor(episode.path.length * 0.45);
+        for (var ci = 0; ci <= midI; ci++) {
+          explorer.trail.push({ x: episode.path[ci].x, zn: episode.path[ci].zn, t: t - (midI - ci) * 0.4 });
+        }
+        explorer.x = episode.path[midI].x;
+        explorer.zn = episode.path[midI].zn;
+        /* a flock frozen mid-crossing */
+        spawnFlock(t);
+        flock.born = t - flock.dur * 0.42;
+        draw(t);
+        links.length = 0;
+        shimmers.length = 0;
+        episode = null;
+        explorer.trail.length = 0;
+        flock = null;
+      }
+      if (animate) terrainFrame = requestAnimationFrame(frame);
+      else drawStatic();
+    })();
+  </script>
+
+  <!-- ===== FOREGROUND CONTAINER 1: fixed top header strip ===== -->
+  <div class="topbar-wrap">
+    <svg class="topbar" viewBox="0 0 1400 100" preserveAspectRatio="none" aria-hidden="true">
+      <!-- solid white header strip with the curved/stepped bottom edge -->
+      <path d="M0,0 L1400,0 L1400,62 L700,62 C588,62 588,100 448,100 L112,100 C56,100 0,86 0,60 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+
+  <!-- brand lockup: the network-node mark + wordmark, top-left of header -->
+  <a class="brand-lockup" href="/" aria-label="Taylor Intelligence — home">
+    <svg class="header-scene" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Taylor Intelligence">
+      <g stroke="#15241c" stroke-width="2.6" fill="none" stroke-linecap="round">
+        <path d="M36 36 L36 12"/><path d="M36 36 L57 24"/><path d="M36 36 L57 48"/>
+        <path d="M36 36 L36 60"/><path d="M36 36 L15 48"/><path d="M15 24 L36 36"/>
+      </g>
+      <g fill="#15241c">
+        <circle cx="36" cy="12" r="4"/><circle cx="57" cy="24" r="4"/><circle cx="57" cy="48" r="4"/>
+        <circle cx="36" cy="60" r="4"/><circle cx="15" cy="48" r="4"/><circle cx="15" cy="24" r="4"/>
+      </g>
+      <circle cx="36" cy="36" r="9" fill="#2e6f4e"/>
+      <circle cx="36" cy="36" r="4.5" fill="#fff"/>
+    </svg>
+    <div class="brand-text">
+      <p class="brand-kicker brand-kicker--header">Taylor Intelligence</p>
+      <p class="brand-kicker brand-sub">Websites · AI · Software</p>
     </div>
+  </a>
 
-<div class="page" id="page-home"><section class="atlas-hero" aria-labelledby="atlas-heading">
-  <div class="atlas-canvas-wrap"><canvas id="atlas-canvas" aria-hidden="true"></canvas></div>
-  <div class="atlas-copy"><p class="atlas-kicker">Taylor Intelligence / Victoria, BC</p><h1 id="atlas-heading">Good ideas.<br>Put into <span>orbit.</span></h1><p class="atlas-intro">We build websites, AI systems, and software that move your business forward.</p><div class="atlas-actions"><a class="atlas-primary" href="#/websites">Explore our work <span aria-hidden="true">↗</span></a><a href="#/contact" class="atlas-secondary">Start a conversation</a></div></div>
-  <div class="atlas-destinations" aria-label="Explore Taylor Intelligence"><span class="orbit-caption">Explore the system</span><a href="#/websites" data-orbit="0"><span>01</span> Websites <i></i></a><a href="#/services" data-orbit="1"><span>02</span> AI systems <i></i></a><a href="/ai-intensive/" data-orbit="2"><span>03</span> Education <i></i></a><a href="#/software" data-orbit="3"><span>04</span> Software <i></i></a></div>
-  <button class="orbit-toggle" type="button" aria-pressed="false">Pause motion</button><div class="atlas-footer"><span>Independent minds. Connected systems.</span><a href="#/selected-work">Selected work below ↓</a></div>
-</section>
+  <!-- top-right navigation — the pill holds the studio phone line -->
+  <nav id="top-nav" class="top-nav" aria-label="Primary">
+
+    <a href="#websites">Websites</a>
+    <a href="#services">What we do</a>
+    <a href="/ai-intensive/">Education</a>
+    <a href="#start">Let’s talk ↗</a>
+  </nav>
+
+  <!-- mobile-only hamburger (toggles .top-nav); hidden on desktop via CSS -->
+  <button class="m-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="top-nav">
+    <span></span><span></span><span></span>
+  </button>
+
+
+<button class="terrain-toggle" type="button" aria-pressed="false">Pause motion</button>
+<div class="scroll-shadow"><div class="scroll-area"><div class="hero-spacer"></div><div class="panel-wrap">
+<main class="panel" id="main-content">
+<h1 class="hero-title">Good ideas. <br>Built for <br>your business.</h1>
+<div class="hero-intro"><p>Websites, AI systems, and software. <br>Designed around the way you work.</p><a class="green-link" href="#websites">Explore our work <span>↗</span></a></div>
 <section class="client-proof" aria-label="Selected clients"><p>Selected clients.</p>
 <div class="client-logos"><div><img src="/ai-intensive/logos/sd-concrete.svg" alt="Stone Design Concrete" width="170" height="58"></div>
 <div><img src="/ai-intensive/logos/szolyd.svg" alt="Szolyd" width="170" height="58"></div>
@@ -742,413 +1658,7 @@
 <div><img src="/ai-intensive/logos/big-o-tires.png" alt="Big O Tires" width="170" height="58"></div>
 <div><img src="/ai-intensive/logos/omen-foils-dark.png" alt="Omen Foils" width="170" height="58"></div>
 </div></section>
-<section class="work-section" id="selected-work"><div class="section-heading"><div><span class="eyebrow">01 / Websites</span><h2>Websites we’ve built.</h2>
-</div>
-<div><p>Distinct businesses deserve distinct websites.<br>Here’s a look at what we’ve been building.</p>
-<a class="text-link" href="#/websites">All websites <span>↗</span></a></div>
-</div><div class="work-grid"><article class="work-card"><a href="https://sdconcrete.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit website: Stone Design Concrete (opens in new tab)"><div class="work-image stone-design"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Stone Design Concrete</span></div>
-<img src="/assets/work/stone-design.jpg" alt="Stone Design Concrete website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website ↗</span></div>
-<div class="work-caption"><div><h3>Stone Design Concrete</h3>
-<p>Website design · Development</p>
-</div>
-<span class="work-status">Live website</span></div>
-</a></article>
-<article class="work-card"><a href="https://szolyd.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit website: Szolyd (opens in new tab)"><div class="work-image szolyd"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Szolyd</span></div>
-<img src="/assets/work/szolyd.jpg" alt="Szolyd website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website ↗</span></div>
-<div class="work-caption"><div><h3>Szolyd</h3>
-<p>Website design · Development</p>
-</div>
-<span class="work-status">Live website</span></div>
-</a></article>
-<article class="work-card"><a href="https://knot-normal.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit website: Knot Normal (opens in new tab)"><div class="work-image knot-normal"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Knot Normal</span></div>
-<img src="/assets/work/knot-normal.jpg" alt="Knot Normal website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website ↗</span></div>
-<div class="work-caption"><div><h3>Knot Normal</h3>
-<p>Brand experience · Storefront</p>
-</div>
-<span class="work-status">Live website</span></div>
-</a></article>
-<article class="work-card"><a href="https://taylorintelligence-test.ca/tirex/site-preview/" target="_blank" rel="noopener noreferrer" aria-label="Explore preview: Tire X Canada (opens in new tab)"><div class="work-image tire-x"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Tire X Canada</span></div>
-<img src="/assets/work/tire-x.jpg" alt="Tire X Canada website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Explore preview ↗</span></div>
-<div class="work-caption"><div><h3>Tire X Canada</h3>
-<p>Automotive · Commerce experience</p>
-</div>
-<span class="work-status">Review build</span></div>
-</a></article>
-</div>
-</section>
-<section class="services-new"><div class="section-heading"><div><span class="eyebrow">02 / What we do</span><h2>Consulting. Integration. Education.</h2>
-</div>
-<p>We connect the thinking, the building, and the training.<br>So a good idea becomes something your business can use.</p>
-</div>
-<div class="service-rows"><a href="#/services"><span>01</span><h3>Consulting</h3>
-<p>Find the right opportunities. Leave with a practical plan.</p>
-<b>↗</b></a><a href="#/services"><span>02</span><h3>Integration</h3>
-<p>Websites, AI workflows, and software that fit your business.</p>
-<b>↗</b></a><a href="/ai-intensive/"><span>03</span><h3>Education</h3>
-<p>Hands-on AI training, grounded in the work your team does.</p>
-<b>↗</b></a></div>
-</section>
-<section class="product-note" id="software"><div><span class="eyebrow">03 / In development</span><h2>Beyond the website.</h2>
-<p>We’re exploring software for the whole shop with Tire X — connecting the customer experience with the work behind it.</p>
-<a class="text-link" href="#/contact?s=integration">Talk shop with us <span>↗</span></a></div>
-<div class="software-orbit" aria-hidden="true"><i></i><b></b><span></span></div>
-</section>
-<section class="closing"><div class="eyebrow">Good things start with a conversation.</div>
-<h2>Let’s build something useful.</h2>
-<a class="button button-dark" href="#/contact">Let’s talk <span>↗</span></a><span class="closing-note">Victoria, BC · Working across the Pacific Northwest</span></section>
-</div>
-    <!-- ============ PAGE: SERVICES ============ -->
-    <div class="page is-hidden" id="page-services">
-
-    <div class="band pf-lead">
-      <span class="eyebrow">Services</span>
-      <h1>AI, delivered three ways.</h1>
-      <p class="sub"><span class="ln">Consulting to find the opportunities, Integration to build the system, Education to hand it over.</span> <span class="ln">Every engagement starts with a free diagnostic — no contract to begin.</span></p>
-    </div>
-
-    <!-- free diagnostic -->
-    <div class="band">
-      <div class="cell svc-lead">
-        <div class="free-strip">
-          <p><span class="ln"><strong>Free Diagnostic</strong> — a short, no-cost conversation to spot where AI could help.</span> <span class="ln">Not a deep audit, just enough to point you toward the right next step.</span> <a href="mailto:theo@taylorintelligence.ai">Book it →</a></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- service: Consulting -->
-    <div class="band">
-      <div class="cells detail-grid">
-        <div class="cell detail-head">
-          <span class="eyebrow" style="margin:0;">Service 01</span>
-          <h2>Consulting</h2>
-          <p class="summary"><span class="ln">The full picture, before you commit to a build.</span></p>
-          <span class="role-tag">Paid · Deep dive</span>
-        </div>
-        <div class="cell detail-body">
-          <div class="detail-item">
-            <span class="lbl">What it is</span>
-            <p><span class="ln">A paid, comprehensive review of your business — every workflow, every tool, every place a machine could carry the load.</span> <span class="ln">Deeper than the free diagnostic: this is the one that produces a real plan.</span></p>
-          </div>
-          <div class="detail-item">
-            <span class="lbl">What you get</span>
-            <p><span class="ln">A ranked, costed roadmap of the highest-ROI AI opportunities in your business — one document, yours to keep and act on, with us or without us.</span></p>
-          </div>
-          <div class="detail-item svc-video">
-            <span class="lbl">Julian on Consulting</span>
-            <video controls preload="none" playsinline poster="https://media.taylorintelligence.ai/video/consulting.jpg" width="1280" height="720">
-              <source src="https://media.taylorintelligence.ai/video/consulting.mp4" type="video/mp4">
-              <track kind="captions" src="/media/video/consulting.vtt" srclang="en" label="English" default>
-            </video>
-            <details class="svc-transcript">
-              <summary>Transcript</summary>
-              <p>Hi, I'm Julian from Taylor Intelligence. Most business owners know that AI can save them time, but they don't know what to automate, what it would cost, or if it would even make a meaningful difference at all. That's where our consultation comes in. We take a look at the work moving through your business — all of the missed calls, the leads that may go cold, or staff repeating the same repetitive tasks every day. We then create you a specific automated plan. We'll show you what we can improve, we'll filter out what doesn't need automation now, and we'll show you the impact that we can make. Leaving the call, you will have a better understanding of how AI can help you in your business — and that you won't have to deal with such technologies yourself, if we can handle them for you.</p>
-            </details>
-          </div>
-          <div class="detail-links">
-            <a class="deep-link" href="#/contact?s=consulting">Get in touch about Consulting →</a>
-            <a class="deep-link deep-link--soft" href="#/approach">Full breakdown on Approach →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- service: Integration -->
-    <div class="band">
-      <div class="cells detail-grid">
-        <div class="cell detail-head">
-          <span class="eyebrow" style="margin:0;">Service 02</span>
-          <h2>Integration</h2>
-          <p class="summary"><span class="ln">Where AI stops being a recommendation and starts doing the work.</span></p>
-          <span class="role-tag">The build</span>
-        </div>
-        <div class="cell detail-body">
-          <div class="detail-item">
-            <span class="lbl">What it is</span>
-            <p><span class="ln">We build the system into your business and run it — and you own it.</span> <span class="ln">The flagship is Conduit: a receptionist and operations layer for service businesses.</span></p>
-          </div>
-          <div class="detail-item">
-            <span class="lbl">What you get</span>
-            <p><span class="ln">A front desk that answers, books, chases, and remembers</span> <span class="ln">— running around the clock without adding a hire.</span></p>
-          </div>
-          <div class="detail-item svc-video">
-            <span class="lbl">Julian on Integration</span>
-            <video controls preload="none" playsinline poster="https://media.taylorintelligence.ai/video/integration.jpg" width="1280" height="720">
-              <source src="https://media.taylorintelligence.ai/video/integration.mp4" type="video/mp4">
-              <track kind="captions" src="/media/video/integration.vtt" srclang="en" label="English" default>
-            </video>
-            <details class="svc-transcript">
-              <summary>Transcript</summary>
-              <p>Hi, I'm Julian from Taylor Intelligence. Now, the last thing that a business owner needs is another piece of software. You just need your important work to stop being missed. That's what we build. We build AI systems that help take care of the background tasks that are so repetitive — for example, the phone calls, the booking system, routing inquiries to the right people, or even following up with your leads. We make sure there's nothing lost in translation between the systems and the people. Instead of having someone manually move information from one place to another, you don't have to worry about it, because the system can handle it consistently. We build around the way your business currently operates, and we can even educate your team on how to use it after. What are you waiting for? Start a build today.</p>
-            </details>
-          </div>
-          <div class="detail-links">
-            <a class="deep-link" href="#/contact?s=integration">Get in touch about Integration →</a>
-            <a class="deep-link deep-link--soft" href="#/approach">Full breakdown on Approach →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- service: Education -->
-    <div class="band">
-      <div class="cells detail-grid">
-        <div class="cell detail-head">
-          <span class="eyebrow" style="margin:0;">Service 03</span>
-          <h2>Education</h2>
-          <p class="summary"><span class="ln">Your team, fluent in the tools you already have.</span></p>
-          <span class="role-tag">Team training</span>
-        </div>
-        <div class="cell detail-body">
-          <div class="detail-item">
-            <span class="lbl">What it is</span>
-            <p><span class="ln">Hands-on AI training for your front-line team — on your real, day-to-day work, not a generic webinar.</span></p>
-          </div>
-          <div class="detail-item">
-            <span class="lbl">What you get</span>
-            <p><span class="ln">People who can actually use AI on the problems they face every day</span> <span class="ln">— so the skills stick and get used the Monday after we leave.</span></p>
-          </div>
-          <div class="detail-item svc-video">
-            <span class="lbl">Julian on Education</span>
-            <video controls preload="none" playsinline poster="https://media.taylorintelligence.ai/video/education.jpg" width="1280" height="720">
-              <source src="https://media.taylorintelligence.ai/video/education.mp4" type="video/mp4">
-              <track kind="captions" src="/media/video/education.vtt" srclang="en" label="English" default>
-            </video>
-            <details class="svc-transcript">
-              <summary>Transcript</summary>
-              <p>Hi, I'm Julian from Taylor Intelligence, and the third thing that we offer is Education. Just because we deliver AI to your team does not mean everyone's going to know how to use it. Most employees now may avoid AI, kind of know how to use it, or experiment inefficiently. Let's get past that, and have us educate your team. We work through real scenarios with customers to make sure you're actually learning the spots where AI can help — it's not just a generic presentation. Our goal is not to have your whole team be AI experts, but to have everyone have a certain fluency in AI: that they can tell when to use it, how to be responsible with its use, and even when human judgment is necessary. If you want to have your team learn about AI today, then train them below.</p>
-            </details>
-          </div>
-          <div class="detail-links">
-            <a class="deep-link" href="#/contact?s=education">Get in touch about Education →</a>
-            <a class="deep-link" href="/ai-intensive/">Join the AI intensive →</a>
-            <a class="deep-link deep-link--soft" href="#/approach">Full breakdown on Approach →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="band pf-close">
-      <p><span class="ln">Not sure which fits?</span></p>
-      <a class="cta" href="#/card">Book a diagnostic ↗</a>
-    </div>
-
-    </div>
-    <!-- ============ /PAGE: SERVICES ============ -->
-
-    <!-- ============ PAGE: APPROACH ============ -->
-    <div class="page is-hidden" id="page-approach">
-
-    <div class="band pf-lead">
-      <span class="eyebrow">Approach</span>
-      <h1>How we work.</h1>
-      <p class="sub"><span class="ln">Three services, one path.</span> <span class="ln">Every engagement starts with a free conversation and ends with a system you own.</span> <span class="ln">Here's the method — and exactly what each service does.</span></p>
-    </div>
-
-    <!-- methodology: the path -->
-    <div class="band">
-      <div class="cell" style="padding-bottom:0;">
-        <span class="eyebrow" style="margin:0;">The method</span>
-      </div>
-      <div class="cells method-grid">
-        <div class="cell step">
-          <span class="step-num">01 — Diagnose</span>
-          <h3>Find where AI pays off</h3>
-          <p><span class="ln">Start free: a short conversation to spot the obvious wins.</span> <span class="ln">Want the full picture first? That's Consulting — a paid, deeper audit.</span></p>
-        </div>
-        <div class="cell step">
-          <span class="step-num">02 — Build</span>
-          <h3>Put it into the business</h3>
-          <p><span class="ln">Integration: we build the system on your accounts and run it.</span> <span class="ln">When it ships, you own it.</span></p>
-        </div>
-        <div class="cell step">
-          <span class="step-num">03 — Train</span>
-          <h3>Hand over the keys</h3>
-          <p><span class="ln">Education: your team learns to run it on their real work,</span> <span class="ln">so it keeps paying off after we leave.</span></p>
-        </div>
-      </div>
-      <p class="method-note"><span class="ln"><strong>One path, not a menu.</strong></span> <span class="ln">Each stage's output is the next stage's starting point — nothing wasted, and every road leads to the build.</span></p>
-    </div>
-
-    <!-- deep dive: Consulting -->
-    <div class="band">
-      <div class="cells detail-grid">
-        <div class="cell detail-head">
-          <span class="eyebrow" style="margin:0;">Service 01</span>
-          <h2>Consulting</h2>
-          <p class="summary"><span class="ln">The full picture, before you commit to a build.</span></p>
-          <span class="role-tag">Paid · Deep dive</span>
-        </div>
-        <div class="cell detail-body">
-          <div class="detail-item">
-            <span class="lbl">What it is</span>
-            <p><span class="ln">A paid, comprehensive review of your business — every workflow, every tool, every place a machine could carry the load.</span> <span class="ln">Deeper than the free diagnostic: this is the one that produces a real plan.</span></p>
-          </div>
-          <div class="detail-item">
-            <span class="lbl">What you get</span>
-            <p><span class="ln">A ranked, costed roadmap of the highest-ROI AI opportunities in your business — each with a rough build cost and timeline.</span> <span class="ln">One document, not a slide deck. Yours to keep and act on, with us or without us.</span></p>
-          </div>
-          <div class="detail-item">
-            <span class="lbl">How it works</span>
-            <p><span class="ln">A few hours inside your business: interviews, watching how work actually flows, and reviewing the tools you already pay for.</span></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- deep dive: Integration -->
-    <div class="band">
-      <div class="cells detail-grid">
-        <div class="cell detail-head">
-          <span class="eyebrow" style="margin:0;">Service 02</span>
-          <h2>Integration</h2>
-          <p class="summary"><span class="ln">Where AI stops being a recommendation and starts doing the work.</span></p>
-          <span class="role-tag">The build</span>
-        </div>
-        <div class="cell detail-body">
-          <div class="detail-item">
-            <span class="lbl">What it is</span>
-            <p><span class="ln">We build the system into your business and run it — and you own it.</span> <span class="ln">The flagship is Conduit: a receptionist and operations layer for service businesses.</span></p>
-          </div>
-          <div class="detail-item">
-            <span class="lbl">Conduit — four parts</span>
-            <div class="modules">
-              <div class="module"><span class="mname">Front Desk</span><p class="mdesc">Answers every call and message, books the job, never misses after hours.</p>
-</div>
-              <div class="module"><span class="mname">Chaser</span><p class="mdesc">Follows up on every lead and unpaid invoice, so nothing slips.</p>
-</div>
-              <div class="module"><span class="mname">Memory</span><p class="mdesc">Remembers every customer, quote, and conversation — one brain for the business.</p>
-</div>
-              <div class="module"><span class="mname">Dispatch</span><p class="mdesc">Routes the right job to the right person at the right time.</p>
-</div>
-            </div>
-          </div>
-          <div class="detail-item">
-            <span class="lbl">How it works</span>
-            <p><span class="ln">Built on your accounts and your numbers — nothing rented, nothing held hostage.</span> <span class="ln">When it ships, it's yours to keep running.</span></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- deep dive: Education -->
-    <div class="band">
-      <div class="cells detail-grid">
-        <div class="cell detail-head">
-          <span class="eyebrow" style="margin:0;">Service 03</span>
-          <h2>Education</h2>
-          <p class="summary"><span class="ln">Your team, fluent in the tools you already have.</span></p>
-          <span class="role-tag">Team training</span>
-        </div>
-        <div class="cell detail-body">
-          <div class="detail-item">
-            <span class="lbl">What it is</span>
-            <p><span class="ln">Hands-on AI training for your front-line team — on your real, day-to-day work, not a generic webinar.</span></p>
-          </div>
-          <div class="detail-item">
-            <span class="lbl">What you get</span>
-            <p><span class="ln">People who can actually use AI on the problems they face every day</span> <span class="ln">— so the skills stick and get used the Monday after we leave.</span></p>
-          </div>
-          <div class="detail-item">
-            <span class="lbl">How it works</span>
-            <p><span class="ln">We learn how your team actually works first, then train on those workflows.</span> <span class="ln">Grounded in your ops, not slideware.</span></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- principles -->
-    <div class="band approach">
-      <div class="cell" style="padding-bottom:0;">
-        <span class="eyebrow" style="margin:0;">What holds across all of it</span>
-      </div>
-      <div class="cells approach-grid">
-        <div class="cell">
-          <h2>You own it</h2>
-          <p><span class="ln">The system runs on your accounts, your numbers.</span> <span class="ln">Nothing rented, nothing held hostage.</span></p>
-        </div>
-        <div class="cell">
-          <h2>Founder-built</h2>
-          <p><span class="ln">The person who scopes your diagnostic is the one who ships the build</span> <span class="ln">— no handoff to a junior team.</span></p>
-        </div>
-        <div class="cell">
-          <h2>No contract to start</h2>
-          <p><span class="ln">It begins with a free conversation.</span> <span class="ln">Everything after that is your call.</span></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="band pf-close">
-      <p><span class="ln">Sound like a fit?</span></p>
-      <a class="cta" href="#/card">Book a diagnostic ↗</a>
-    </div>
-
-    </div>
-    <!-- ============ /PAGE: APPROACH ============ -->
-
-    <!-- ============ PAGE: CONTACT (also the /card landing) ============ -->
-    <div class="page is-hidden" id="page-contact">
-
-    <div class="band pf-lead">
-      <span class="eyebrow" id="contact-eyebrow">Contact</span>
-      <h1 id="contact-h1">Let's talk.</h1>
-      <p class="sub" id="contact-sub"><span class="ln">Tell us what you're working on.</span> <span class="ln">We'll reply within a day — usually the same one.</span></p>
-    </div>
-
-    <div class="band">
-      <div class="cells contact-grid">
-        <!-- form: each field is a cell in the hairline grid -->
-        <form class="form" action="https://api.web3forms.com/submit" method="POST">
-          <input type="hidden" name="access_key" value="3d97d841-4c10-4ecf-9b00-248974f688a3">
-          <input type="hidden" name="subject" id="contact-subject" value="New enquiry — taylorintelligence.ai/card">
-          <div class="field">
-            <label for="f-name">Name</label>
-            <input id="f-name" name="name" type="text" autocomplete="name" required>
-          </div>
-          <div class="field">
-            <label for="f-email">Email</label>
-            <input id="f-email" name="email" type="email" autocomplete="email" required>
-          </div>
-          <div class="field">
-            <label for="f-biz">Business</label>
-            <input id="f-biz" name="business" type="text" autocomplete="organization">
-          </div>
-          <div class="field">
-            <label for="f-msg" id="contact-q">What do you want AI to do?</label>
-            <textarea id="f-msg" name="message" rows="4" required></textarea>
-          </div>
-          <button class="form-submit" type="submit">Send it →</button>
-        </form>
-
-        <!-- direct + pointer to the deep-dive Approach page -->
-        <div class="cell contact-side">
-          <div>
-            <span class="eyebrow">Direct</span>
-            <p class="contact-line"><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a></p>
-            <p class="contact-line"><a href="tel:+12502997815">+1 250 299 7815</a></p>
-          </div>
-          <!-- shown only when the visitor arrived from a service (?s=…) -->
-          <div id="contact-video-wrap" hidden>
-            <span class="eyebrow">Julian on <span id="contact-video-name"></span></span>
-            <video id="contact-video" controls preload="none" playsinline width="1280" height="720">
-              <track id="contact-video-track" kind="captions" srclang="en" label="English" default>
-            </video>
-          </div>
-          <div>
-            <span class="eyebrow">Before you write</span>
-            <p class="contact-note"><span class="ln">See exactly how each service works and the method behind them.</span></p>
-            <a class="deep-link" href="#/approach">Read our approach →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    </div>
-    <!-- ============ /PAGE: CONTACT ============ -->
-
-<div class="page is-hidden" id="page-websites"><section class="gallery-intro"><span class="eyebrow">The website collection</span><h1>Websites.</h1>
-<p>From architectural concrete to open water. Live websites with a character of their own, plus a first look at Tire X.</p>
-</section>
-<section class="work-section gallery-work"><div class="work-grid"><article class="work-card"><a href="https://sdconcrete.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit website: Stone Design Concrete (opens in new tab)"><div class="work-image stone-design"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Stone Design Concrete</span></div>
+<section class="green-work" id="websites" aria-labelledby="work-heading"><div class="green-heading"><div><p class="green-eyebrow">01 / Selected work</p><h2 id="work-heading">Out in the world.</h2></div><p>Different businesses.<br>Websites with a character of their own.</p></div><div class="work-grid"><article class="work-card"><a href="https://sdconcrete.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit website: Stone Design Concrete (opens in new tab)"><div class="work-image stone-design"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Stone Design Concrete</span></div>
 <img src="/assets/work/stone-design.jpg" alt="Stone Design Concrete website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website ↗</span></div>
 <div class="work-caption"><div><h3>Stone Design Concrete</h3>
 <p>Website design · Development</p>
@@ -1182,150 +1692,54 @@
 <p>Website design · Development</p>
 </div>
 <span class="work-status">Past project</span></div>
-</a></article>
-</div>
-</section>
-<section class="closing"><div class="eyebrow">Good things start with a conversation.</div>
-<h2>Let’s build something useful.</h2>
-<a class="button button-dark" href="#/contact">Let’s talk <span>↗</span></a><span class="closing-note">Victoria, BC · Working across the Pacific Northwest</span></section>
-</div>
-    <!-- footer (shared) -->
-    <div class="band foot">
-      <span><span class="ln">Taylor Intelligence</span> <span class="ln">· taylorintelligence.ai</span></span>
-      <span class="ln">Independent minds. Real-world work.</span>
-    </div>
+</a></article></div></section>
+<section class="green-services" id="services" aria-labelledby="services-heading"><div class="green-heading"><div><p class="green-eyebrow">02 / What we do</p><h2 id="services-heading">Thinking. Building. Teaching.</h2></div></div><div class="expertise-grid">
+<article><span>01</span><h3>Consulting</h3><p>Find where AI can help. Turn a promising idea into a practical plan.</p><a class="green-link" href="#start">Find your starting point ↗</a></article>
+<article><span>02</span><h3>Integration</h3><p>Websites, connected workflows, and software that fit how your business runs.</p><a class="green-link" href="#start">Build something useful ↗</a></article>
+<article><span>03</span><h3>Education</h3><p>Hands-on AI training, grounded in the work you and your team actually do.</p><a class="green-link" href="/ai-intensive/">Explore AI training ↗</a></article>
+</div></section>
+<section class="green-software" id="software"><div><p class="green-eyebrow">03 / In development</p><h2>Beyond the website.</h2><p>We’re exploring software for the whole shop with Tire X — connecting the customer experience with the work behind it.</p><a class="green-link" href="#start">Talk shop with us ↗</a></div><img src="/assets/work/tire-x.jpg" alt="Tire X website preview" width="1440" height="1000" loading="lazy"></section>
+<section class="green-about" id="studio"><p class="green-eyebrow">Independent studio / Victoria, BC</p><h2>The people you talk to<br>are the people building it.</h2><p>We’re Theo and Julian. We connect the thinking, the building, and the training — so a good idea becomes something your business can use.</p></section>
+<style>
+          .start { max-width: 720px; margin: clamp(44px, 6.5vh, 80px) 0 0; padding-top: clamp(38px, 5.5vh, 64px); border-top: 1px solid rgba(42, 74, 31, 0.22); font-family: system-ui, "Segoe UI", sans-serif; }
+          .start h2 { font-family: "Archivo Black", system-ui, sans-serif; font-weight: 400; font-size: clamp(23px, 2.6vw, 38px); line-height: 1.16; color: var(--brand-dark); margin: 0 0 12px; }
+          .start .lede { font-size: clamp(15px, 1.05vw, 17.5px); line-height: 1.62; color: var(--body-text); margin: 0 0 26px; max-width: 58ch; }
+          .start .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+          .start label { display: block; font-weight: 600; font-size: 13.5px; color: var(--brand-dark); }
+          .start input[type="text"], .start input[type="email"], .start textarea {
+            display: block; width: 100%; margin-top: 6px; padding: 12px 14px;
+            font: 16px system-ui, "Segoe UI", sans-serif; color: var(--brand-dark);
+            background: #fff; border: 1.5px solid rgba(21, 36, 28, 0.25); border-radius: 12px; }
+          .start input:focus, .start textarea:focus { outline: 2px solid var(--brand-accent); outline-offset: 1px; }
+          .start .block { display: block; margin-bottom: 18px; }
+          .start .honey { display: none; }
+          .start .submit { display: inline-flex; padding: 14px 30px; font-weight: 700; font-size: 15px; color: #fff;
+            background: var(--brand-accent); border: 1.5px solid var(--brand-accent); border-radius: 100px;
+            cursor: pointer; transition: background 0.2s ease; }
+          .start .submit:hover { background: var(--brand-accent-hover); }
+          .start .submit:disabled { opacity: 0.6; cursor: default; }
+          .start .direct { font-size: 13.5px; line-height: 1.7; color: var(--muted-text); margin: 22px 0 0; }
+          .start .direct a { color: var(--brand-accent); text-decoration: none; }
+          .start .direct a:hover { text-decoration: underline; }
+          .start .form-note { font-size: 15px; line-height: 1.6; color: var(--brand-dark); background: #eef4ef; border: 1.5px solid var(--brand-accent); border-radius: 12px; padding: 16px 18px; }
+          @media (max-width: 600px) { .start .f-row { grid-template-columns: 1fr; } }
+        </style>
+<section class="start" id="start" aria-label="Start a project"><p class="green-eyebrow">Start a conversation</p><h2>Let’s build something useful.</h2><p class="lede">A website, a workflow, or an idea you want to explore. Tell us where you’d like to go.</p><form action="https://api.web3forms.com/submit" method="POST" data-lead-form>
+            <input type="hidden" name="access_key" value="3d97d841-4c10-4ecf-9b00-248974f688a3">
+            <input type="hidden" name="subject" value="New project inquiry — taylorintelligence.ai">
+            <input type="hidden" name="page_path" value="">
+            <input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_term" value=""><input type="hidden" name="utm_content" value=""><input type="hidden" name="gclid" value="">
+            <input type="checkbox" name="botcheck" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="f-row">
+              <label>Name<input type="text" name="name" required autocomplete="name"></label>
+              <label>Email<input type="email" name="email" required autocomplete="email"></label>
+            </div>
+            <label class="block">What would you like to build?<textarea name="message" rows="4" required></textarea></label>
+            <button type="submit" class="submit">Send it</button>
+          </form><p class="direct"><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a> · <a href="tel:+12502997815">+1 250 299 7815</a></p></section>
+<footer class="green-footer"><span>Taylor Intelligence © 2026</span><span>Built in Victoria, BC.</span><div><a href="https://taylorintelligence.ai/privacy/">Privacy</a><a href="https://taylorintelligence.ai/terms/">Terms</a></div></footer>
+</main></div></div></div>
 
-  </div>
-</div>
+<script src="/lead-form.js"></script><script src="/green.js" defer></script>
 
-<script>
-  (function () {
-    var pages = {
-      websites: document.getElementById('page-websites'),
-      home: document.getElementById('page-home'),
-      services: document.getElementById('page-services'),
-      approach: document.getElementById('page-approach'),
-      contact: document.getElementById('page-contact')
-    };
-    var standalone = { websites: true, services: true, approach: true, contact: true }; // own page; else a home section
-    var alias = { card: 'contact', portfolio: 'websites' }; // taylorintelligence.ai/card → contact page
-    var navLinks = document.querySelectorAll('nav a[data-nav]');
-
-    // per-route <title> + meta description + canonical (SEO for JS-executing crawlers)
-    var meta = {
-      websites: { t: 'Websites — Taylor Intelligence', d: 'Explore websites by Taylor Intelligence: Stone Design Concrete, Szolyd, Knot Normal, Tire X and more.', u: 'https://taylorintelligence.ai/websites' },
-      home:      { t: 'Taylor Intelligence — Websites, AI & software', d: 'Beautiful websites, useful AI and software built around your business. Independent consulting, integration and education from Victoria, BC.', u: 'https://taylorintelligence.ai/' },
-      services:  { t: 'Services — Taylor Intelligence', d: 'Three AI services for PNW businesses: Consulting to find the opportunities, Integration to build the system, Education to train your team.', u: 'https://taylorintelligence.ai/services' },
-      approach:  { t: 'Approach — Taylor Intelligence', d: 'How we work: a three-step method — Diagnose, Build, Train — with deep dives on AI Consulting, Integration, and Education.', u: 'https://taylorintelligence.ai/approach' },
-      contact:   { t: 'Contact — Taylor Intelligence', d: 'Get in touch about AI consulting, integration, or training for your business in Victoria BC and the Pacific Northwest.', u: 'https://taylorintelligence.ai/contact' }
-    };
-    function setMeta(key) {
-      var m = meta[key] || meta.home;
-      document.title = m.t;
-      var set = function (sel, attr, val) { var el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
-      set('meta[name="description"]', 'content', m.d);
-      set('meta[property="og:title"]', 'content', m.t);
-      set('meta[property="og:description"]', 'content', m.d);
-      set('meta[property="og:url"]', 'content', m.u);
-      set('meta[name="twitter:title"]', 'content', m.t);
-      set('meta[name="twitter:description"]', 'content', m.d);
-      set('link[rel="canonical"]', 'href', m.u);
-    }
-
-    // route from the hash, or from the last path segment so a bare /card (no hash) works when deployed
-    function readRoute() {
-      var h = location.hash.replace(/^#\/?/, '');
-      var raw = h || location.pathname.replace(/\/+$/, '').split('/').pop();
-      return raw.split('?')[0]; // drop any ?s=… service param
-    }
-
-    // which service the visitor came from (e.g. #/contact?s=integration), if any
-    function readService() {
-      var m = location.hash.match(/[?&]s=([a-z]+)/i);
-      return m ? m[1].toLowerCase() : '';
-    }
-
-    // contact page copy, tailored to the service the visitor clicked
-    var contactCopy = {
-      '':          { eyebrow: 'Contact',                h1: 'Let’s talk.',            sub: 'Tell us what you’re working on. We’ll reply within a day — usually the same one.',                     q: 'What do you want AI to do?',                          subject: 'New enquiry — taylorintelligence.ai/card' },
-      consulting:  { eyebrow: 'Contact · Consulting',   h1: 'Let’s scope your review.', sub: 'Tell us about your business and we’ll frame what a full review would cover. We reply within a day — usually the same one.', q: 'What would you want a full AI review to cover?',      subject: 'New enquiry — Consulting' },
-      integration: { eyebrow: 'Contact · Integration',  h1: 'Let’s build it.',         sub: 'Tell us what your front desk and operations need to handle. We reply within a day — usually the same one.',            q: 'What should the system answer, book, or chase for you?', subject: 'New enquiry — Integration' },
-      education:   { eyebrow: 'Contact · Education',     h1: 'Let’s train your team.',   sub: 'Tell us about your team and the work they do every day. We reply within a day — usually the same one.',                q: 'What work should your team be able to do with AI?',   subject: 'New enquiry — Education' }
-    };
-    // Julian's clip for the service the visitor came from. Same three files the
-    // homepage and /services use, so nothing extra is downloaded site-wide.
-    var contactVideo = {
-      consulting:  { file: 'consulting',  name: 'Consulting' },
-      integration: { file: 'integration', name: 'Integration' },
-      education:   { file: 'education',   name: 'Education' }
-    };
-    function setContactVideo(service) {
-      var wrap = document.getElementById('contact-video-wrap');
-      var vid = document.getElementById('contact-video');
-      var trk = document.getElementById('contact-video-track');
-      var name = document.getElementById('contact-video-name');
-      if (!wrap || !vid) { return; }
-      var v = contactVideo[service];
-      if (!v) {
-        // clear everything, not just src — otherwise the previous service's
-        // poster/captions/label sit there stale behind the hidden wrapper
-        vid.removeAttribute('src');
-        vid.removeAttribute('poster');
-        if (trk) { trk.removeAttribute('src'); }
-        if (name) { name.textContent = ''; }
-        wrap.hidden = true;
-        vid.load();
-        return;
-      }
-      vid.src = 'https://media.taylorintelligence.ai/video/' + v.file + '.mp4';
-      vid.poster = 'https://media.taylorintelligence.ai/video/' + v.file + '.jpg';
-      if (trk) { trk.src = '/media/video/' + v.file + '.vtt'; }
-      if (name) { name.textContent = v.name; }
-      wrap.hidden = false;
-      vid.load();
-    }
-
-    function personalizeContact(service) {
-      var c = contactCopy[service] || contactCopy[''];
-      var set = function (id, prop, val) { var el = document.getElementById(id); if (el) el[prop] = val; };
-      set('contact-eyebrow', 'textContent', c.eyebrow);
-      set('contact-h1', 'textContent', c.h1);
-      set('contact-sub', 'textContent', c.sub);
-      set('contact-q', 'textContent', c.q);
-      set('contact-subject', 'value', c.subject);
-      setContactVideo(service);
-    }
-
-    function route() {
-      var raw = alias[readRoute()] || readRoute();
-      var target = standalone[raw] ? raw : 'home';
-
-      Object.keys(pages).forEach(function (key) {
-        pages[key].classList.toggle('is-hidden', key !== target);
-      });
-      navLinks.forEach(function (a) {
-        if (a.getAttribute('data-nav') === target) { a.setAttribute('aria-current', 'page'); }
-        else { a.removeAttribute('aria-current'); }
-      });
-      if (target === 'contact') { personalizeContact(readService()); }
-      setMeta(target);
-
-      if (target !== 'home') {
-        window.scrollTo(0, 0);
-      } else if (raw && !standalone[raw]) {
-        var el = document.getElementById(raw);
-        if (el) requestAnimationFrame(function () { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
-      } else {
-        window.scrollTo(0, 0);
-      }
-    }
-
-    window.addEventListener('hashchange', route);
-    document.addEventListener('DOMContentLoaded', route);
-    route();
-  })();
-</script>
-
-<script type="module" src="/orbit.js"></script>
-</body>
-</html>
+</body></html>
