@@ -7,7 +7,7 @@ Local redesign on `codex/orange-portfolio`, based on main `5d09f1a` (October 12,
 
 The initial cream/editorial/tilted-card design was rejected. Theo explicitly requested something closer to TI v1: minimal but visually present, with orbiting elements. The original `f0269c5` Celestial Atlas was found in the iCloud v1 checkout and rendered as reference.
 
-The current homepage uses a new, compact canvas interpretation: three mutually gravitating bodies with orange trails, compact destination links and a pause button. `three-body.js` integrates Newtonian gravity with fixed-step velocity Verlet using the Simó figure-eight initial conditions ([source](https://people.ucsc.edu/~rmont/talks/Heidelberg2Problems.pdf)); paths are sampled from the simulation. Reduced-motion preference renders a still scene; animation stops offscreen and in hidden tabs. No new frontend dependency or image-generation service.
+The current homepage uses a new, compact canvas interpretation: three mutually gravitating bodies with orange trails, compact destination links and a pause button. `three-body.js` solves Burrau’s Pythagorean initial-value problem: masses3:4:5 released from rest under unsoftened Newtonian gravity ([source](https://www.ucolick.org/~laugh/oxide/projects/burrau.html)). Adaptive RK4 step doubling resolves close passes; the display samples at120Hz of simulated time, independently of rendering. The scene starts18 simulated units into the run so trajectory history is already visible. Trails are sampled physical positions. The camera fits recent history and never changes the dynamics. There are no prescribed paths, central anchor, restoring force, damping, or automatic resets. The former figure-eight solution was rejected because its periodic appearance missed the intended behavior. Reduced-motion preference renders a still scene; animation stops offscreen and in hidden tabs. No new frontend dependency or image-generation service.
 
 - `/`: orbital homepage, five client logos and four featured websites.
 - `/websites`: Stone Design Concrete, Szolyd, Knot Normal, Tire X preview, and Adam’s Tires (past project).
@@ -29,7 +29,7 @@ Serve the folder with SPA fallback for the extensionless routes. The review serv
 index.html     routed page content and existing contact/router logic
 orange.css     restrained orange atlas / portfolio design
 orbit.js       three-body canvas rendering and motion controls
-three-body.js  fixed-step Newtonian gravity integrator
+three-body.js  adaptive Newtonian three-body integrator
 assets/        original logo and actual website screenshots
 _redirects     Cloudflare Pages rewrites so /card etc. serve index.html
 map/           build pipeline for the hairline Salish Sea coastline map
@@ -223,4 +223,4 @@ python3 gen_svg.py         # rebuild map_snippet.svg
 Domain of record: **taylorintelligence.ai**. v4 is the production site;
 the AI intensive landing page uses `/ai-intensive/`.
 
-Three-body stability check: `node tests/three-body.test.mjs`. Checks energy, momentum, centre of mass, boundedness and finite state over 1,000 simulated time units. Opening hero is 420px desktop / 475px mobile to expose client logos and project imagery earlier.
+Three-body stability check: `node tests/three-body.test.mjs`. Checks energy, linear/angular momentum, centre of mass and finite state through close encounters and escape over150 simulated time units, plus convergence against tighter integration at a different output cadence. Opening hero is 420px desktop / 475px mobile to expose client logos and project imagery earlier.
