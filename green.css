@@ -66,9 +66,8 @@ a:focus-visible,button:focus-visible{outline:2px solid #2e6f4e;outline-offset:5p
 .hero-title{top:24px;width:58%;max-width:760px;color:#111;white-space:normal;line-height:1}
 .hero-type{display:block;width:100%;height:auto;overflow:visible;fill:currentColor;font-family:'Archivo Black',sans-serif;letter-spacing:-.035em}
 .hero-type-lead{font:600 26px Manrope,sans-serif;letter-spacing:-.035em}
-.hero-type-curve{font-size:70px;letter-spacing:-.025em}
+.hero-type-curve{font-size:92px;letter-spacing:-.025em}
 .hero-type-main{font-size:96px;letter-spacing:-.045em}
-.hero-type-end{font:600 31px Manrope,sans-serif;letter-spacing:-.045em}
 .hero-type-mobile{display:none}
 .panel{padding-top:315px}
 .hero-intro{top:205px;width:34%}
@@ -77,8 +76,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #2e6f4e;outline-offset:5p
  .hero-type{display:none}.hero-type-mobile{display:flex;flex-direction:column;gap:5px}
  .hero-type-mobile>span:first-child{font:600 21px Manrope,sans-serif;letter-spacing:-.035em;margin-bottom:4px}
  .hero-type-mobile>span:nth-child(2){font-size:clamp(24px,5vw,45px);letter-spacing:-.045em}
- .hero-type-mobile>strong{font:inherit;font-size:clamp(52px,10vw,84px);letter-spacing:-.06em}
- .hero-type-mobile>span:last-child{font:600 26px Manrope,sans-serif;letter-spacing:-.04em;margin-top:1px}
+ .hero-type-mobile>strong{font:inherit;font-size:clamp(42px,10vw,84px);letter-spacing:-.06em}
  .hero-intro{width:auto}
 }
 @media(max-width:600px){.panel{padding:25px 20px}}
