@@ -256,8 +256,8 @@
          span, same 18vh zone) pinned at 12vh. Content scrolls UP and is cut off at
          this curve; the backdrop strip above stays. The panel's own curve locks into it. */
       --dock-cut: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 100 100'><path fill='%23fff' d='M0,100 L0,44 C0,20 4,6 16,6 L30,6 C46,6 54,94 70,94 L100,94 L100,100 Z'/></svg>");
-      -webkit-mask: var(--dock-cut) right 12vh / 92% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 27vh) no-repeat;
-              mask: var(--dock-cut) right 12vh / 92% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 27vh) no-repeat;
+      -webkit-mask: var(--dock-cut) right 12vh / 92% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 29.5vh) no-repeat;
+              mask: var(--dock-cut) right 12vh / 92% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 29.5vh) no-repeat;
     }
 
     /* transparent spacer: the clear backdrop band that shows between the header and the panel at the top */
@@ -282,10 +282,12 @@
       /* TI headline is 3 lines (was 4 on the donor site) — reserve accordingly */
       padding-top: max(20vh, calc(3.5vh + 32px + 3.4 * clamp(26px, 3.1vw, 52px)));
       /* curved top-left corner + curved step down to the right; fixed-height "cap"
-         shapes the top while a solid layer fills the rest, so it scrolls cleanly */
+         shapes the top while a solid layer fills the rest. Start the fill below
+         the curve’s horizontal tangent (94% of 18vh = 16.92vh), otherwise
+         the rectangle cuts the curve short and creates a visible corner. */
       --cap: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M0,100 L0,44 C0,20 4,6 16,6 L30,6 C46,6 54,94 70,94 L100,94 L100,100 Z' fill='%23fff'/></svg>");
-      -webkit-mask: var(--cap) top / 100% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 16vh) no-repeat;
-              mask: var(--cap) top / 100% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 16vh) no-repeat;
+      -webkit-mask: var(--cap) top / 100% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 17.5vh) no-repeat;
+              mask: var(--cap) top / 100% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 17.5vh) no-repeat;
     }
 
     /* ===== overview: bordered text card (left) + media placeholder (right) ===== */
