@@ -67,6 +67,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #2e6f4e;outline-offset:5p
 .hero-type{display:block;width:100%;height:auto;overflow:visible;fill:currentColor;font-family:'Archivo Black',sans-serif;letter-spacing:-.035em}
 .hero-type-curve{font-size:92px;letter-spacing:0}
 .hero-type-main{font-size:82px;letter-spacing:-.025em}
+.hero-type-emphasis{font-size:90px}
 .hero-type-mobile{display:none}
 .panel{padding-top:315px}
 .hero-intro{top:205px;width:34%}
