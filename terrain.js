@@ -307,7 +307,7 @@
           "  float yy = 1.0 - uv.y;\n" +
           "  vec3 c = yy < 0.62 ? mix(u_skyTop, u_skyBot, yy / 0.62) : mix(u_skyBot, u_skyTop, (yy - 0.62) / 0.38);\n" +
           "  float dd = distance(vec2(uv.x * u_res.x, yy * u_res.y), u_glowPos) / u_glowRad;\n" +
-          "  float ga = dd < 0.55 ? mix(0.2, 0.07, dd / 0.55) : mix(0.07, 0.0, clamp((dd - 0.55) / 0.45, 0.0, 1.0));\n" +
+          "  float ga = 0.16 * (1.0 - smoothstep(0.0, 1.0, dd));\n" +
           "  o = vec4(c + u_glowC * ga * u_gi, 1.0);\n" +
           "}\n";
 
@@ -552,9 +552,13 @@
           /* horizon halo */
           var gx = cx + px * 0.6, gy = horizon + py;
           var glow = ctx.createRadialGradient(gx, gy, 0, gx, gy, W * (0.55 + 0.04 * Math.sin(t * 0.13)));
-          glow.addColorStop(0, "rgba(" + TERRAIN.glow + ", " + (0.2 * gi).toFixed(3) + ")");
-          glow.addColorStop(0.55, "rgba(" + TERRAIN.glow + ", " + (0.07 * gi).toFixed(3) + ")");
-          glow.addColorStop(1, "rgba(" + TERRAIN.glow + ", 0)");
+          /* Match the GL halo: slightly dimmer, with a flat slope at both
+             the centre and edge instead of a visible two-segment falloff. */
+          for (var hs = 0; hs <= 32; hs++) {
+            var hr = hs / 32;
+            var ha = 0.16 * (1 - hr * hr * (3 - 2 * hr));
+            glow.addColorStop(hr, "rgba(" + TERRAIN.glow + ", " + (ha * gi) + ")");
+          }
           ctx.fillStyle = glow;
           ctx.fillRect(0, 0, W, H);
         }
