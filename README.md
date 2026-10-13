@@ -3,9 +3,9 @@
 Local branch `codex/green-portfolio`, built from v4 review `3ae0462` and authored green v3 `0df7132`.
 **Publication authorized by Theo on October 12, 2026.** Cloudflare can deploy review branches to the canonical domain before a PR merge; verify the exact build and public content after every push.
 
-## Current review direction
+## Current direction
 
-Theo's October12 direction combines the original curved white panels, Archivo Black typography and animated terrain with monochrome shading, birds and the professional TI monogram/Manrope wordmark. The black curved homepage headline reads “One agency for everything” The homepage is a compact overview: Websites → Marketing → Education → Software & agents → Team → Contact.
+Theo's October12 direction combines the original curved white panels, Archivo Black typography and animated terrain with monochrome shading, birds and the professional TI monogram/Manrope wordmark. The straight, two-line dotted homepage headline reads “One agency for everything”. The homepage is a compact overview: Websites → Marketing → Education → Software & agents → Team → Contact.
 
 - Local review: `/Users/theotaylor/Work/Sites/ti-green-review-20261012`, http://127.0.0.1:4191/.
 - Dedicated pages: `/websites/`, `/marketing/`, `/education/`, `/software/` and `/principles/`.
@@ -20,7 +20,7 @@ Static HTML, no frontend build step. `site-base.css` contains the extracted orig
 
 The landscape keeps its birds, pause control and hidden-tab suspension. Neural chains, explorer routes and ridge pulses are removed. Viewport-aware world width and100px overscan prevent exposed edges. Screens up to1100px and reduced-motion preferences use a still frame.
 
-The client strip uses five original logos. Tire X preserves the red X with black wireframe TIRE/CANADA lettering on transparent ground. The homepage initially shows Stone Design, Szolyd and Knot Normal; a right-side disclosure reveals Tire X, labelled as a review build. The dedicated Websites page shows all four. Adam’s Tires, Sasquatch and CCT concepts are excluded. Big O and Omen are client logos, not website credits.
+The client strip uses six original logos, including the supplied Knot Normal mark. Tire X preserves the red X with black wireframe TIRE/CANADA lettering on transparent ground. The homepage initially shows Stone Design, Szolyd and Knot Normal; a right-side disclosure reveals Tire X, labelled as a review build. The dedicated Websites page shows all four. Adam’s Tires, Sasquatch and CCT concepts are excluded. Big O and Omen are client logos, not website credits.
 
 Marketing cards use original colour Meta, Google Ads, Instagram, TikTok and Facebook vector marks (`assets/brands/SOURCES.md`), plus the coded Brand scaling illustration. Software uses clearly labelled illustrative workspace/agent diagrams and explains Agentic as a Service; Tire X software remains in development. Education reuses the full Theo/Julian call image and existing checkout script. Principles are draft brand copy for review: people, usefulness, clarity and learning.
 
@@ -30,7 +30,7 @@ Review scripts and screenshots live outside the deploy bundle in `/Users/theotay
 
 ## October12 cleanup and motion pass
 
-The current direction removes decorative numbered overlines and repeated micro-slogans. Page labels are only Websites, Marketing, Education, Software / AgAAS and Principles. Headings have no decorative full stops. The expressive curved headlines remain; secondary headings use quieter, direct wording. Links use a restrained underline rather than repeated diagonal arrows. Header chevrons sit close to their labels, with more even navigation spacing; dropdowns still match their triggers.
+The current direction removes decorative numbered overlines and repeated micro-slogans. Page labels are only Websites, Marketing, Education, Software / AgAAS and Principles. Headings have no decorative full stops. All agency hero headings use straight HTML text; secondary headings use quieter, direct wording. Links use a restrained underline rather than repeated diagonal arrows. Header chevrons sit close to their labels, with more even navigation spacing; dropdowns still match their triggers.
 
 Scrolling uses native browser behavior, with no wheel interception or animation dependency. Five chained full-screen drop shadows were the measured bottleneck: repeated isolated local Chromium scroll tests improved from median83.3ms to16.7ms/frame after removing them. A lightweight SVG cap and white rectangle replace the long panel mask, retaining the original curve and the viewport docking mask. These are local comparisons, not guarantees for every device.
 
@@ -203,3 +203,38 @@ Events Manager attribution/reporting must not be claimed from source tests alone
 Theo authorized publication of the agency redesign and the second education design. `/ai-intensive/` is the existing compact campaign page; `/education/` keeps the agency contour intro and uses the same orange artwork, client logos and CAD1,200 + CAD100 observer offer. The alternate design is not yet an active randomized or equivalently measured A/B experiment. Only `/ai-intensive/` loads consent-based Meta measurement; both checkout return URLs currently point there. Match consent/event behavior and persist an originating variant before interpreting comparative conversion results. No campaign or ad spending is launched by publication.
 
 Prepublication audit: 47 existing tests pass and 355 local asset references resolve. Responsive and visual checks are recorded above. Newsletter signups are requests sent to the existing enquiry inbox, not enrollment in a managed mailing platform.
+
+## Historical local trials — October12
+
+The following iteration notes record intermediate local states. Theo subsequently authorized the full current revision plus mobile overhaul for publication. Final direction: straight hero typography, dotted homepage title, no newsletter or hero introduction, six client logos, software scope/booking strip and monochrome dot-gradient footer.
+
+### Straight homepage headline — October 12
+
+Theo reversed the contour treatment on the homepage. Its H1 now uses normal HTML with two level lines, retaining Archivo Black and the curved white panel. Responsive layout and text/newsletter clearance checked at320/390/1101/1150/1625px; no runtime or payment changes. A subsequent review removed the service-page contours too: Websites, Marketing, Education, Software and Principles now use straight two-line HTML headings, preserving their wording and curved panels.
+
+The straight-headline revision is a local trial awaiting publication approval. The desktop second line is now8% larger with18px extra separation, following Theo’s local-preview feedback.
+
+## Software booking panel — October 12
+
+The homepage software section now uses the same responsive scope-and-pricing strip as Marketing, replacing the small text link with a prominent existing Calendar booking CTA. Software and AI workflows remain individually scoped; no fixed price or booking submission was introduced. Local review only.
+
+## Immediate terrain and homepage introduction — October 12
+
+The terrain now renders its settled geometry and lighting immediately, with no load-time assembly, glow/fog fade-in or mote brightness ramp. Ongoing landscape/bird motion and pause/reduced-motion behavior remain. The homepage newsletter form and its script/style hooks have been removed from the local design, restoring the short service introduction and work link. These changes are local review only.
+
+Follow-up: Theo removed the hero introduction entirely. The homepage now pairs its headline directly with the client logos; their desktop top margin is reduced by52px. Local review only.
+
+## Point-field heading and warm homepage ending — October12
+
+The homepage heading now uses a still, irregular SVG dot texture clipped to the original accessible HTML text. Its two straight lines and responsive sizing stay intact; no animation loop, canvas, new font or extra image request is introduced. Print and forced-colour modes show solid text. Homepage-only home-colour.css carries a light apricot gradient through the team/enquiry area into a terracotta footer, with accessible warm text/button colours. Existing forms, links and other pages remain unchanged. Local review only.
+
+Follow-up: the warm closing palette was replaced at Theo’s request with a white ground and static black-dot gradient that strengthens toward the bottom. Typography, fields and buttons are neutral again. A sparse SVG stipple field stays lighter behind content and stronger at the edges and below the footer; no animation added. Local review only.
+
+Homepage client-strip follow-up: stronger small-size Stone Design/Szolyd vector variants preserve original path geometry and brand colour. Added supplied Knot Normal vector unchanged; six desktop columns and two mobile rows of three. Shared originals and education variants unchanged. Local only.
+
+
+## October12 mobile overhaul and publication
+
+Theo requested all current revisions live and a substantial mobile cleanup. `mobile.css` loads last on the homepage and five agency pages; the independent `/ai-intensive/` campaign keeps its existing mobile layout. On phones, the terrain is a104px still band, the panel has a modest curved cap, headings and body copy are larger, dotted headline ink is crisp, and the gallery/pricing/forms stack naturally. Marketing uses compact image-and-copy rows, website charges have a clear one-column breakdown, and Education uses the available screen width instead of three nested gutters. Navigation, booking links, gallery disclosures and form controls have larger touch targets. Desktop above1100px retains the approved composition.
+
+Prepublication checks: six agency routes at320/390/800/1150px show no headline or control overflow; phone navigation, portfolio expansion, contact field editing and Education1200→1300 total were verified without submitting forms or payments. All47 existing checkout/worker tests pass. Production must be verified against the exact Cloudflare build SHA and changed public assets after the authorized push.

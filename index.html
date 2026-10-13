@@ -35,7 +35,8 @@
 
 <link rel="preload" href="/assets/fonts/ArchivoBlack-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/site-base.css"><link rel="stylesheet" href="/green.css"><link rel="stylesheet" href="/service-pages.css"><link rel="stylesheet" href="/scroll-reveal.css">
+<link rel="stylesheet" href="/site-base.css"><link rel="stylesheet" href="/green.css"><link rel="stylesheet" href="/service-pages.css"><link rel="stylesheet" href="/scroll-reveal.css"><link rel="stylesheet" href="/point-type.css"><link rel="stylesheet" href="/home-colour.css">
+<link rel="stylesheet" href="/mobile.css">
 </head><body>
 <a class="skip-link" href="#main-content">Skip to content</a>
 
@@ -93,25 +94,14 @@
 
 <div class="scroll-shadow"><div class="scroll-area"><div class="hero-spacer"></div><div class="panel-wrap">
 <main class="panel" id="main-content">
-<h1 class="hero-title" aria-label="One agency for everything">
-  <svg class="hero-type" viewBox="0 0 760 270" role="presentation" aria-hidden="true">
-    <defs><path id="headline-contour" d="M0 94 C170 94 222 98 310 112 S525 151 710 149"/><path id="headline-base-contour" d="M-3 248 C170 240 285 242 405 251 S595 265 735 255"/></defs>
-    <text class="hero-type-curve"><textPath href="#headline-contour">One agency</textPath></text>
-    <text class="hero-type-main"><textPath href="#headline-base-contour">for <tspan class="hero-type-emphasis">everything</tspan></textPath></text>
-  </svg>
-  <span class="hero-type-mobile" aria-hidden="true"><span>One agency</span><strong>for everything</strong></span>
-</h1>
-<section class="hero-intro newsletter-intro" aria-labelledby="newsletter-title"><h2 id="newsletter-title">The TI newsletter</h2><p>Practical notes on AI, business and what we’re building.</p>
-<form class="newsletter-form" action="https://api.web3forms.com/submit" method="POST" data-newsletter-form>
-<input type="hidden" name="access_key" value="3d97d841-4c10-4ecf-9b00-248974f688a3"><input type="hidden" name="subject" value="Newsletter signup — Taylor Intelligence"><input type="hidden" name="form_source" value="Homepage newsletter"><input type="hidden" name="consent" value="Requested Taylor Intelligence newsletter email updates"><input type="hidden" name="page_path" value="/"><input class="newsletter-honey" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
-<label class="visually-hidden" for="newsletter-email">Email address</label><div class="newsletter-fields"><input id="newsletter-email" name="email" type="email" placeholder="Your email address" autocomplete="email" required aria-describedby="newsletter-consent"><button type="submit">Sign up</button></div><p class="newsletter-consent" id="newsletter-consent">Email updates from Taylor Intelligence. Unsubscribe by replying.</p><p class="newsletter-status" role="status" aria-live="polite" hidden></p>
-</form></section>
+<h1 class="hero-title point-title"><span>One agency</span> <span>for everything</span></h1>
 <section class="client-proof" aria-label="Selected clients">
-<div class="client-logos"><div><img src="/ai-intensive/logos/sd-concrete.svg" alt="Stone Design Concrete" width="170" height="58"></div>
-<div><img src="/ai-intensive/logos/szolyd.svg" alt="Szolyd" width="170" height="58"></div>
+<div class="client-logos"><div><img src="/assets/logos/sd-concrete-small.svg" alt="Stone Design Concrete" width="170" height="58"></div>
+<div><img src="/assets/logos/szolyd-small.svg" alt="Szolyd" width="170" height="58"></div>
 <div><img src="/assets/logos/tire-x-outlined.svg" alt="Tire X" width="170" height="58"></div>
 <div><img src="/ai-intensive/logos/big-o-tires.png" alt="Big O Tires" width="170" height="58"></div>
-<div><img src="/ai-intensive/logos/omen-foils-dark.png" alt="Omen Foils" width="170" height="58"></div>
+<div class="client-logo-omen"><img src="/ai-intensive/logos/omen-foils-dark.png" alt="Omen Foils" width="170" height="58"></div>
+<div class="client-logo-knot"><img src="/assets/logos/knot-normal.svg" alt="Knot Normal" width="1040" height="1115"></div>
 </div></section>
 <section class="green-work" id="websites" aria-labelledby="work-heading">
 <div class="green-heading"><div><h2 id="work-heading">Websites</h2><a class="section-page-link" href="/websites/">Explore websites</a></div><p>Website design, development and ongoing care</p></div>
@@ -170,8 +160,9 @@
 <div class="software-grid">
 <article class="service-card"><figure><img src="/assets/services/custom-software.svg" alt="Example shop workspace connecting customers, appointments and inventory." width="640" height="360" loading="lazy"><figcaption>Illustrative workspace</figcaption></figure><h3>Custom software</h3><p>Portals, dashboards and connected tools built around how your team actually works. Bring customers, information and everyday tasks into one place.</p><p class="service-note">In development: shop software with Tire X.</p></article>
 <article class="service-card"><figure><img src="/assets/services/agent-service.svg" alt="Example agent workflow: an enquiry and business knowledge feed a drafted reply, which waits for human review." width="640" height="360" loading="lazy"><figcaption>Illustrative agent workflow</figcaption></figure><h3>Agentic as a Service</h3><p>AI agents connected to your tools and business knowledge. We build, deploy and maintain workflows that handle repeatable work, with clear boundaries and review where it matters.</p><p class="service-note">Think enquiry triage, research, draft replies and internal follow-ups.</p></article>
-</div><a class="green-link section-link" href="#start">Talk through your workflow</a>
+</div><div class="marketing-quote software-quote"><h3>Scope and pricing</h3><p>Software and AI workflows are scoped individually. We’ll review your workflow, integrations and ongoing support, then put together a clear quote.</p><a class="purchase-button" href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP" target="_blank" rel="noopener noreferrer">Book a free fit call</a></div>
 </section>
+<div class="home-closing">
 <div class="studio-contact">
 <section class="green-about" id="studio" aria-labelledby="team-heading"><h2 id="team-heading">Theo and Julian</h2><p class="team-intro">Taylor Intelligence is led by Theo Taylor and Julian Bezeau. We bring websites, marketing, AI training and software into one team, working directly with the people who use what we build.</p>
 <div class="team-members">
@@ -202,8 +193,9 @@
 </div>
 <div class="footer-bottom"><span>Taylor Intelligence © 2026</span><div class="footer-legal"><button class="terrain-toggle" type="button" aria-pressed="false">Pause motion</button></div></div>
 </footer>
+</div>
 </main></div></div></div>
 
-<script src="/lead-form.js"></script><script src="/green.js" defer></script><script src="/newsletter.js" defer></script><script src="/scroll-reveal.js" defer></script><script src="/ai-intensive/checkout.js" defer></script>
+<script src="/lead-form.js"></script><script src="/green.js" defer></script><script src="/scroll-reveal.js" defer></script><script src="/ai-intensive/checkout.js" defer></script>
 
 </body></html>

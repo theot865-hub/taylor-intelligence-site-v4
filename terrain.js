@@ -286,10 +286,6 @@
           "  float ndz = (z - 2.4) / 32.0;\n" +
           "  return vec4(sp.x / u_res.x * 2.0 - 1.0, 1.0 - sp.y / u_res.y * 2.0, ndz * 2.0 - 1.0, 1.0);\n" +
           "}\n" +
-          "float gateOf(float depth) {\n" +
-          "  float g = clamp((u_t - (0.5 + depth * 0.9)) / 0.55, 0.0, 1.0);\n" +
-          "  return g * g * (3.0 - 2.0 * g);\n" +
-          "}\n" +
           "float frayOf(float fz) { return fz > 0.72 ? pow((fz - 0.72) / 0.28, 1.4) : 0.0; }\n";
 
         var skyVS = HEAD +
@@ -325,7 +321,7 @@
           "  float xw = x + u_xdrift;\n" +
           "  float h = terrH(xw, zn);\n" +
           "  float hL = terrH(xw - 0.35, zn);\n" +
-          "  v_a = gateOf(1.0 - fz) * (1.0 - smoothstep(0.62, 0.95, fz));\n" +
+          "  v_a = 1.0 - smoothstep(0.62, 0.95, fz);\n" +
           "  v_c = mix(vec3(5., 13., 9.) / 255.0, u_haze, fz * 0.5) * (0.8 + clamp((h - hL) * 1.2, -0.25, 0.5));\n" +
           "  gl_Position = clipOf(proj(x, h, z), z);\n" +
           "}\n";
@@ -357,7 +353,7 @@
           "  float cloud = vnoise(vec2(xw * 0.07 + u_t * 0.055, zn * 0.07 - u_t * 0.03));\n" +
           "  float lit = clamp(0.6 + (h - hL) * 2.2, 0.0, 1.0);\n" +
           "  vec2 sp = proj(x, h, zj);\n" +
-          "  float e = gateOf(depth);\n" +
+          "  float e = 1.0;\n" +
           "  float fray = frayOf(fz);\n" +
           "  if (e < 1.0 || fray > 0.0) {\n" +
           "    float wob = fray > 0.0 ? 0.4 + 0.6 * sin(u_t * 0.9 + r1 * 6.283) : 1.0;\n" +
@@ -535,9 +531,8 @@
         py += (my * -12 - py) * cameraEase;
         var xdrift = Math.sin(t * 0.043) * 3;
 
-        /* the glow ignites last in the boot sequence, like a sunrise as the
-           system comes online (fully lit for the static frame's large t) */
-        var gi = clamp01((t - 1.4) / 1.0); gi = gi * gi * (3 - 2 * gi);
+        /* The landscape and lighting are settled from the first frame. */
+        var gi = 1;
 
         if (GLR) {
           /* the GL canvas below draws sky, glow, terrain mass and the
@@ -574,12 +569,8 @@
           var bandI = Math.round(fz * (BANDS - 1));
           var ramp = RAMP[bandI], rampW = RAMPW[bandI];
 
-          /* boot sequence: rows assemble far -> near, each point converging in
-             from a scattered position. The far field never fully assembles —
-             the horizon is forever resolving out of motes, so the intro never
-             ends; it just recedes to the back of the world. */
-          var gate = 0.5 + depth * 0.9;
-          var e = clamp01((t - gate) / 0.55); e = e * e * (3 - 2 * e);
+          /* Keep the distant shimmer without a load-time assembly effect. */
+          var e = 1;
           var fray = fz > 0.72 ? Math.pow((fz - 0.72) / 0.28, 1.4) : 0;
 
           var hPrev = 0, cloudV = 0.5;
@@ -685,9 +676,8 @@
         }
         ctx.globalAlpha = 1;
 
-        /* low valley fog: soft banks drifting through the corridor, fading in
-           once the terrain has assembled */
-        var fogA = clamp01((t - 1.3) / 1.6);
+        /* Low valley fog drifts through the settled landscape. */
+        var fogA = 1;
         if (fogA > 0) {
           var RANGE = FAR - NEAR - 3;
           for (var fi = 0; fi < fogs.length; fi++) {
@@ -711,9 +701,8 @@
           }
         }
 
-        /* data-motes drifting upward, twinkling — brighter during the boot
-           sequence, when they read as the raw material the terrain forms from */
-        var moteBoost = 1 + Math.max(0, 1 - t / 2.2) * 0.9;
+        /* Data-motes drift and twinkle at their normal brightness. */
+        var moteBoost = 1;
         for (var mi = 0; mi < motes.length; mi++) {
           var M = motes[mi];
           var yy = ((M.y - t * M.v) % 1 + 1) % 1;
@@ -741,10 +730,15 @@
       }
       function syncMotion() {
         cancelAnimationFrame(terrainFrame); previousTime = null;
-        animate = !manuallyPaused && !matchMedia('(prefers-reduced-motion: reduce)').matches && !matchMedia('(max-width: 1100px)').matches;
+        var reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var mobile = matchMedia('(max-width: 1100px)').matches;
+        animate = !manuallyPaused && !reducedMotion && !mobile;
         var toggle = document.querySelector('.terrain-toggle');
         if (toggle) { toggle.textContent = animate ? 'Pause motion' : 'Play motion'; toggle.setAttribute('aria-pressed', String(!animate)); }
         if (animate && !document.hidden) terrainFrame = requestAnimationFrame(frame);
+        /* A resize clears the canvas before the media-query event can stop
+           animation. Paint the still here too, regardless of event order. */
+        else if (!document.hidden && (reducedMotion || mobile)) drawStatic();
       }
       document.addEventListener('DOMContentLoaded', function() {
         var toggle = document.querySelector('.terrain-toggle');
@@ -765,6 +759,8 @@
         draw(t);
         flock = null;
       }
-      if (animate) terrainFrame = requestAnimationFrame(frame);
-      else drawStatic();
+      if (animate) {
+        draw(terrainTime, 0);
+        terrainFrame = requestAnimationFrame(frame);
+      } else drawStatic();
     })();
