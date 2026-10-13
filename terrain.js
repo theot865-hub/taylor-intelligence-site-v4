@@ -18,7 +18,17 @@
       };
 
       var ROWS = 52, COLS = 128, NEAR = 3.2, FAR = 34, SPAN = 15, CAMH = 4.2;
-      var DPR, W, H, cx, horizon, focal;
+      var DPR, W, H, cx, horizon, focal, skyGradient, vignette;
+      var pointX = new Float64Array(COLS), pointY = new Float64Array(COLS);
+      var pointLum = new Uint8Array(COLS), pointScale = new Float32Array(COLS);
+      var pointWarm = new Uint8Array(COLS), pointVisible = new Uint8Array(COLS);
+      /* Jitter belongs to the world grid, not to the frame. Cache it once and
+         reuse the coordinate buffers to keep animation out of the GC cycle. */
+      var gridR1 = new Float64Array(ROWS * COLS), gridR2 = new Float64Array(ROWS * COLS);
+      for (var gj = 0; gj < ROWS; gj++) for (var gi0 = 0; gi0 < COLS; gi0++) {
+        gridR1[gj * COLS + gi0] = hash(gi0 * 1.31, gj * 2.17);
+        gridR2[gj * COLS + gi0] = hash(gi0 * 2.73, gj * 1.71);
+      }
 
       function resize() {
         DPR = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -38,6 +48,13 @@
         /* Cover the far plane, including pointer parallax and drifting edge
            points. A fixed world width exposed the left/right mesh boundary. */
         SPAN = Math.max(15, (W * 0.5 + 100) * FAR / focal);
+        skyGradient = ctx.createLinearGradient(0, 0, 0, H);
+        skyGradient.addColorStop(0, TERRAIN.skyTop);
+        skyGradient.addColorStop(0.62, TERRAIN.skyBottom);
+        skyGradient.addColorStop(1, TERRAIN.skyTop);
+        vignette = ctx.createRadialGradient(cx, H * 0.45, H * 0.3, cx, H * 0.45, H * 0.95);
+        vignette.addColorStop(0, "rgba(3, 10, 6, 0)");
+        vignette.addColorStop(1, "rgba(3, 10, 6, 0.3)");
         if (GLR) GLR.resize();
       }
 
@@ -139,18 +156,86 @@
                     drift: Math.random() * 6.283, s: 0.7 + Math.random() * 0.9 });
       }
 
-      /* a passing flock of birds: loose vee, wing-beat bursts, glides */
-      var flock = null, nextFlock = 6.5;
+      /* Each flock shares a quiet heading, while a few birds take their own
+         curved flight out and back. The excursion envelope has zero velocity
+         and acceleration at both ends, so joining never snaps or jitters. */
+      var flock = null, nextFlock = 2.4;
       function spawnFlock(t) {
-        var n = 9 + Math.floor(Math.random() * 5);
-        var birds = [];
+        var n = 9 + Math.floor(Math.random() * 3), birds = [];
         for (var bi0 = 0; bi0 < n; bi0++) {
-          birds.push({ ox: (Math.random() - 0.5) * 90 - bi0 * 16,
-                       oy: (Math.random() - 0.5) * 36 + Math.abs((bi0 % 5) - 2) * 9,
-                       ph: Math.random() * 6.283, sz: 0.8 + Math.random() * 0.5 });
+          var rank = Math.ceil(bi0 / 2), side = bi0 % 2 ? 1 : -1;
+          var solo = bi0 > 0 && bi0 % 3 === 2;
+          birds.push({
+            ox: -rank * 20 + (Math.random() - 0.5) * 9,
+            oy: side * rank * 6 + (Math.random() - 0.5) * 6,
+            ph: Math.random() * Math.PI * 2, sz: 0.85 + Math.random() * 0.35,
+            depart: solo ? 0.12 + Math.floor(bi0 / 3) * 0.17 : 2,
+            duration: 0.29 + Math.random() * 0.045,
+            sweep: 0.85 + Math.random() * 0.3,
+            depth: bi0 % 2 ? 1 : -0.7
+          });
         }
-        flock = { born: t, dur: 16 + Math.random() * 6, dir: Math.random() < 0.5 ? 1 : -1,
-                  y0: H * (0.1 + Math.random() * 0.2), birds: birds };
+        flock = { born: t, dur: 23 + Math.random() * 4,
+          dir: Math.random() < 0.5 ? 1 : -1,
+          y0: 0.13 + Math.random() * 0.02, phase: Math.random() * Math.PI * 2,
+          birds: birds };
+      }
+      function birdPose(B, F, age, pose) {
+        var progress = age / F.dur;
+        var x = -160 + progress * (W + 320);
+        var y = H * F.y0 + Math.sin(age * 0.24 + F.phase) * 12;
+        var u = (progress - B.depart) / B.duration;
+        var excursion = 0, dx = 0, dy = 0;
+        if (u > 0 && u < 1) {
+          var arc = Math.sin(Math.PI * u);
+          excursion = arc * arc * arc * arc;
+          var scale = Math.max(0.75, Math.min(1.3, W / 1400));
+          dx = excursion * (Math.sin(u * Math.PI * 2) * 100 + 22) * B.sweep * scale;
+          dy = excursion * (Math.sin(u * Math.PI * 1.65) * 84 - 22) * B.depth * scale;
+        }
+        pose.x = (F.dir > 0 ? x : W - x) + (B.ox + dx) * F.dir + px * 0.7;
+        pose.y = y + B.oy + Math.sin(age * 0.65 + B.ph) * 4 + dy + py * 0.7;
+        pose.excursion = excursion;
+        pose.scale = 1 + dy / Math.max(H, 600) * 1.6;
+      }
+      var birdNow = {}, birdNext = {};
+      function drawBirds(t) {
+        if (animate && !flock && t > nextFlock) spawnFlock(t);
+        if (!flock) return;
+        var age = t - flock.born, progress = age / flock.dur;
+        if (progress > 1) { flock = null; nextFlock = t + 9 + Math.random() * 9; return; }
+        var fade = clamp01(progress * 9) * clamp01((1 - progress) * 9);
+        ctx.strokeStyle = "rgb(" + TERRAIN.mote + ")";
+        ctx.lineCap = "round";
+        for (var bi = 0; bi < flock.birds.length; bi++) {
+          var B = flock.birds[bi];
+          birdPose(B, flock, age, birdNow);
+          if (birdNow.x < -20 || birdNow.x > W + 20) continue;
+          birdPose(B, flock, age + 0.04, birdNext);
+          var vx = (birdNext.x - birdNow.x) * flock.dir;
+          var vy = birdNext.y - birdNow.y;
+          var bank = Math.max(-0.65, Math.min(0.65, Math.atan2(vy, Math.max(0.4, vx))));
+          /* Wings alternate short powered beats and longer glides. Independent
+             phases avoid the synchronized chevron look of the original flock. */
+          var cycle = (age * 0.18 + B.ph / (Math.PI * 2)) % 1;
+          var burst = cycle < 0.42 ? Math.pow(Math.sin(cycle / 0.42 * Math.PI), 2) : 0;
+          var wing = Math.sin(age * 10.5 + B.ph) * burst * (1 - birdNow.excursion * 0.6);
+          var wingLength = 6.2 * B.sz * birdNow.scale;
+          ctx.save();
+          ctx.translate(birdNow.x, birdNow.y);
+          ctx.rotate(bank * flock.dir * 0.65);
+          ctx.globalAlpha = fade * (0.74 + birdNow.excursion * 0.12);
+          ctx.lineWidth = 1.3 * B.sz;
+          ctx.beginPath();
+          ctx.moveTo(-wingLength, -wingLength * (0.15 + wing * 0.65 + bank * 0.28));
+          ctx.quadraticCurveTo(-wingLength * 0.4, -wingLength * 0.13, 0, wingLength * 0.13);
+          ctx.quadraticCurveTo(wingLength * 0.4, -wingLength * 0.13,
+            wingLength, -wingLength * (0.15 + wing * 0.65 - bank * 0.28));
+          ctx.stroke();
+          ctx.restore();
+        }
+        ctx.lineCap = "butt";
+        ctx.globalAlpha = 1;
       }
 
       /* ============ WebGL2 luminous renderer ============
@@ -440,13 +525,14 @@
         return { x: cx + px + (x * focal) / z, y: horizon + py + ((camh - h) * focal) / z };
       }
 
-      function draw(t) {
+      function draw(t, dt) {
         var travel = t * TERRAIN.speed;
         var camh = CAMH + Math.sin(t * 0.22) * 0.12;
         /* ease the camera toward the pointer; meander the flight path so the
            terrain slides gently sideways as well as forward */
-        px += (mx * -26 - px) * 0.04;
-        py += (my * -12 - py) * 0.04;
+        var cameraEase = 1 - Math.exp(-2.5 * (dt || 1 / 60));
+        px += (mx * -26 - px) * cameraEase;
+        py += (my * -12 - py) * cameraEase;
         var xdrift = Math.sin(t * 0.043) * 3;
 
         /* the glow ignites last in the boot sequence, like a sunrise as the
@@ -460,11 +546,7 @@
           GLR.render(t, travel, xdrift, camh, px, py, gi);
         } else {
           /* sky + ground base */
-          var sky = ctx.createLinearGradient(0, 0, 0, H);
-          sky.addColorStop(0, TERRAIN.skyTop);
-          sky.addColorStop(0.62, TERRAIN.skyBottom);
-          sky.addColorStop(1, TERRAIN.skyTop);
-          ctx.fillStyle = sky;
+          ctx.fillStyle = skyGradient;
           ctx.fillRect(0, 0, W, H);
 
           /* horizon halo */
@@ -478,7 +560,6 @@
         }
 
         /* terrain rows, far -> near so close points paint over distant ones */
-        var pts = [];
         for (var j = ROWS - 1; j >= 0; j--) {
           var fz = j / (ROWS - 1);
           var z = NEAR + Math.pow(fz, 1.55) * (FAR - NEAR);
@@ -497,10 +578,10 @@
           var e = clamp01((t - gate) / 0.55); e = e * e * (3 - 2 * e);
           var fray = fz > 0.72 ? Math.pow((fz - 0.72) / 0.28, 1.4) : 0;
 
-          pts.length = 0;
           var hPrev = 0, cloudV = 0.5;
           for (var i = 0; i < COLS; i++) {
-            var r1 = hash(i * 1.31, j * 2.17), r2 = hash(i * 2.73, j * 1.71);
+            var gridIndex = j * COLS + i;
+            var r1 = gridR1[gridIndex], r2 = gridR2[gridIndex];
             /* organic jitter: points sit off the grid like a real point-cloud
                scan, not graph paper */
             var x = -SPAN + (2 * SPAN * i) / (COLS - 1) + (r1 - 0.5) * 0.42;
@@ -508,22 +589,28 @@
             var xw = x + xdrift;
             var h = terrainH(xw, zn + (r2 - 0.5) * 0.5);
             /* drifting cloud shadows (sampled every other column) */
-            if (!(i & 1)) cloudV = noise(xw * 0.07 + t * 0.055, zn * 0.07 - t * 0.03);
+            if (!GLR && !(i & 1)) cloudV = noise(xw * 0.07 + t * 0.055, zn * 0.07 - t * 0.03);
             /* low sun from the left: slopes facing it catch the light */
             var lit = clamp01(0.6 + (h - hPrev) * 0.9);
             hPrev = h;
-            var p = project(x, h, zj, camh);
+            var sx = cx + px + (x * focal) / zj;
+            var sy = horizon + py + ((camh - h) * focal) / zj;
             if (e < 1 || fray > 0) {
               var wob = fray > 0 ? 0.4 + 0.6 * Math.sin(t * 0.9 + r1 * 6.283) : 1;
               var scat = (1 - e) * (40 + 140 * r2);
-              p.x += (r1 - 0.5) * 2 * (scat + fray * 26 * wob);
-              p.y += -r2 * scat * 0.9 + (r1 - 0.5) * 2 * fray * 18 * wob;
+              sx += (r1 - 0.5) * 2 * (scat + fray * 26 * wob);
+              sy += -r2 * scat * 0.9 + (r1 - 0.5) * 2 * fray * 18 * wob;
             }
-            if (p.x < -100 || p.x > W + 100) { pts.push(null); continue; }
-            /* luminance = altitude + sunlight - cloud shadow */
-            var lum = 0.14 + (h / 3.1) * 0.72 + lit * 0.3 - (cloudV - 0.5) * 0.3;
-            pts.push([p.x, p.y, Math.max(0, Math.min(16, Math.round(lum * 16))),
-                      0.7 + 0.6 * r2, r1 > 0.93]);
+            pointVisible[i] = sx >= -100 && sx <= W + 100 ? 1 : 0;
+            pointX[i] = sx; pointY[i] = sy;
+            if (!GLR && pointVisible[i]) {
+              /* Only the 2D fallback needs point colours and cloud lighting.
+                 WebGL already computes these in its point-cloud shader. */
+              var lum = 0.14 + (h / 3.1) * 0.72 + lit * 0.3 - (cloudV - 0.5) * 0.3;
+              pointLum[i] = Math.max(0, Math.min(16, Math.round(lum * 16)));
+              pointScale[i] = 0.7 + 0.6 * r2;
+              pointWarm[i] = r1 > 0.93 ? 1 : 0;
+            }
           }
 
           /* the land gets a body: each ridge fills softly down the frame, so
@@ -541,9 +628,9 @@
             ctx.beginPath();
             var began = false;
             for (i = 0; i < COLS; i++) {
-              if (!pts[i]) continue;
-              if (!began) { ctx.moveTo(pts[i][0], pts[i][1]); began = true; }
-              else ctx.lineTo(pts[i][0], pts[i][1]);
+              if (!pointVisible[i]) continue;
+              if (!began) { ctx.moveTo(pointX[i], pointY[i]); began = true; }
+              else ctx.lineTo(pointX[i], pointY[i]);
             }
             if (began) {
               ctx.lineTo(W + 30, H + 30); ctx.lineTo(-30, H + 30);
@@ -558,12 +645,13 @@
           ctx.strokeStyle = TERRAIN.wire;
           ctx.lineWidth = 1;
           ctx.beginPath();
-          var prev = null;
+          var previousPoint = -1;
           for (i = 0; i < COLS; i++) {
-            if (!pts[i]) { prev = null; continue; }
-            if (!prev) ctx.moveTo(pts[i][0], pts[i][1]);
-            else ctx.quadraticCurveTo(prev[0], prev[1], (prev[0] + pts[i][0]) / 2, (prev[1] + pts[i][1]) / 2);
-            prev = pts[i];
+            if (!pointVisible[i]) { previousPoint = -1; continue; }
+            if (previousPoint < 0) ctx.moveTo(pointX[i], pointY[i]);
+            else ctx.quadraticCurveTo(pointX[previousPoint], pointY[previousPoint],
+              (pointX[previousPoint] + pointX[i]) / 2, (pointY[previousPoint] + pointY[i]) / 2);
+            previousPoint = i;
           }
           ctx.stroke();
 
@@ -574,19 +662,19 @@
             var pAlpha = Math.min(1, alpha * 1.15) * (0.3 + 0.7 * e) * (1 - fray * 0.3);
             ctx.globalAlpha = pAlpha;
             for (i = 0; i < COLS; i++) {
-              if (!pts[i]) continue;
-              var ps = size * pts[i][3];
-              ctx.fillStyle = (pts[i][4] ? rampW : ramp)[pts[i][2]];
-              ctx.fillRect(pts[i][0] - ps / 2, pts[i][1] - ps / 2, ps, ps);
+              if (!pointVisible[i]) continue;
+              var ps = size * pointScale[i];
+              ctx.fillStyle = (pointWarm[i] ? rampW : ramp)[pointLum[i]];
+              ctx.fillRect(pointX[i] - ps / 2, pointY[i] - ps / 2, ps, ps);
             }
             /* additive bloom pass: sunlit ground becomes luminous, not plotted */
             ctx.globalCompositeOperation = "lighter";
             for (i = 0; i < COLS; i++) {
-              if (!pts[i] || pts[i][2] < 10) continue;
-              var ps2 = size * pts[i][3];
-              ctx.globalAlpha = pAlpha * 0.42 * ((pts[i][2] - 9) / 7);
-              ctx.drawImage(glowSprite((pts[i][4] ? rampW : ramp)[pts[i][2]]),
-                            pts[i][0] - ps2 * 2.1, pts[i][1] - ps2 * 2.1, ps2 * 4.2, ps2 * 4.2);
+              if (!pointVisible[i] || pointLum[i] < 10) continue;
+              var ps2 = size * pointScale[i];
+              ctx.globalAlpha = pAlpha * 0.42 * ((pointLum[i] - 9) / 7);
+              ctx.drawImage(glowSprite((pointWarm[i] ? rampW : ramp)[pointLum[i]]),
+                            pointX[i] - ps2 * 2.1, pointY[i] - ps2 * 2.1, ps2 * 4.2, ps2 * 4.2);
             }
             ctx.globalCompositeOperation = "source-over";
           }
@@ -630,37 +718,10 @@
           ctx.beginPath(); ctx.arc(M.x * W + px * 0.5, yy * H + py * 0.5, M.s, 0, 6.2832); ctx.fill();
         }
 
-        /* a passing flock: wing-beat bursts, then glides, in a loose vee */
-        if (animate && !flock && t > nextFlock) spawnFlock(t);
-        if (flock) {
-          var fAge = t - flock.born, fu2 = fAge / flock.dur;
-          if (fu2 > 1) { flock = null; nextFlock = t + 14 + Math.random() * 14; }
-          else {
-            var fx0 = flock.dir === 1 ? -80 + fu2 * (W + 160) : W + 80 - fu2 * (W + 160);
-            var fy0 = flock.y0 + Math.sin(t * 0.4) * 10 + py * 0.7;
-            var ea = clamp01(fu2 * 7) * clamp01((1 - fu2) * 7);
-            ctx.lineWidth = 1.3;
-            for (var bi2 = 0; bi2 < flock.birds.length; bi2++) {
-              var B = flock.birds[bi2];
-              var bx = fx0 + B.ox * flock.dir + px * 0.7;
-              var by = fy0 + B.oy + Math.sin(t * 0.7 + B.ph) * 7;
-              var flapEnv = 0.5 + 0.5 * Math.sin(t * 0.9 + B.ph * 2.3);
-              var wing = Math.sin(t * 7 + B.ph) * (0.25 + 0.75 * flapEnv);
-              var wl = 4.6 * B.sz;
-              ctx.strokeStyle = "rgba(" + TERRAIN.mote + "," + (0.5 * ea).toFixed(3) + ")";
-              ctx.beginPath();
-              ctx.moveTo(bx - wl, by - wing * wl * 0.9);
-              ctx.quadraticCurveTo(bx, by + wing * wl * 0.4, bx + wl, by - wing * wl * 0.9);
-              ctx.stroke();
-            }
-          }
-        }
+        drawBirds(t);
 
         /* soft vignette so the white panels pop against the edges */
-        var vig = ctx.createRadialGradient(cx, H * 0.45, H * 0.3, cx, H * 0.45, H * 0.95);
-        vig.addColorStop(0, "rgba(3, 10, 6, 0)");
-        vig.addColorStop(1, "rgba(3, 10, 6, 0.3)");
-        ctx.fillStyle = vig;
+        ctx.fillStyle = vignette;
         ctx.fillRect(0, 0, W, H);
       }
 
@@ -668,9 +729,10 @@
       function frame(ts) {
         terrainFrame = 0;
         if (!animate || document.hidden) return;
-        if (previousTime !== null) terrainTime += Math.min((ts - previousTime) / 1000, .05);
+        var dt = previousTime === null ? 0 : Math.min((ts - previousTime) / 1000, .1);
         previousTime = ts;
-        draw(terrainTime);
+        terrainTime += dt;
+        draw(terrainTime, dt);
         terrainFrame = requestAnimationFrame(frame);
       }
       function syncMotion() {
@@ -681,7 +743,8 @@
         if (animate && !document.hidden) terrainFrame = requestAnimationFrame(frame);
       }
       document.addEventListener('DOMContentLoaded', function() {
-        document.querySelector('.terrain-toggle').addEventListener('click', function() { manuallyPaused = !manuallyPaused; syncMotion(); });
+        var toggle = document.querySelector('.terrain-toggle');
+        if (toggle) toggle.addEventListener('click', function() { manuallyPaused = !manuallyPaused; syncMotion(); });
         syncMotion();
       });
       document.addEventListener('visibilitychange', syncMotion);

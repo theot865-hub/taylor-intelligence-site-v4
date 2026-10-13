@@ -5,7 +5,7 @@ Local branch `codex/green-portfolio`, built from v4 review `3ae0462` and authore
 
 ## Current review direction
 
-Theo's October12 direction combines the original curved white panels, Archivo Black typography and animated terrain with monochrome shading, birds and the professional TI monogram/Manrope wordmark. The black curved homepage headline reads “One agency for everything.” The homepage is a compact overview: Websites → Marketing → Education → Software & agents → Team → Contact.
+Theo's October12 direction combines the original curved white panels, Archivo Black typography and animated terrain with monochrome shading, birds and the professional TI monogram/Manrope wordmark. The black curved homepage headline reads “One agency for everything” The homepage is a compact overview: Websites → Marketing → Education → Software & agents → Team → Contact.
 
 - Local review: `/Users/theotaylor/Work/Sites/ti-green-review-20261012`, http://127.0.0.1:4191/.
 - Dedicated pages: `/websites/`, `/marketing/`, `/education/`, `/software/` and `/principles/`.
@@ -16,7 +16,7 @@ Theo's October12 direction combines the original curved white panels, Archivo Bl
 
 ## Assets and code
 
-Static HTML, no frontend build step. `site-base.css` contains the extracted original panel/terrain styles; `terrain.js` contains the unchanged terrain script. `green.css` adds the portfolio layout; `service-pages.css` adds shared navigation and standalone service layouts. `green.js` handles disclosures, mobile navigation, legacy section aliases and contact feedback. `lead-form.js` retains UTM/page metadata behavior. Form success requires both HTTP success and `{success:true}`; test requests are intercepted, never sent.
+Static HTML, no frontend build step. `site-base.css` contains the extracted original panel/terrain styles; `terrain.js` contains the terrain renderer and independent bird flight. `green.css` adds the portfolio layout; `service-pages.css` adds shared navigation and standalone service layouts. `green.js` handles disclosures, mobile navigation, legacy section aliases and contact feedback. `lead-form.js` retains UTM/page metadata behavior. Form success requires both HTTP success and `{success:true}`; test requests are intercepted, never sent.
 
 The landscape keeps its birds, pause control and hidden-tab suspension. Neural chains, explorer routes and ridge pulses are removed. Viewport-aware world width and100px overscan prevent exposed edges. Screens up to1100px and reduced-motion preferences use a still frame.
 
@@ -24,9 +24,19 @@ The client strip uses five original logos. Tire X preserves the red X with black
 
 Marketing cards use original colour Meta, Google Ads, Instagram, TikTok and Facebook vector marks (`assets/brands/SOURCES.md`), plus the coded Brand scaling illustration. Software uses clearly labelled illustrative workspace/agent diagrams and explains Agentic as a Service; Tire X software remains in development. Education reuses the full Theo/Julian call image and existing checkout script. Principles are draft brand copy for review: people, usefulness, clarity and learning.
 
-Website purchase is CAD1,500 upfront; CAD500/month maintenance and SEO must be activated separately at launch (see `docs/website-checkout.md`). Education remains CAD1,200/company plus CAD100/employee observer for four calls over two weeks. Marketing and software are scoped individually; fit-call links use the existing Google Calendar schedule. The campaign `/ai-intensive/`, Worker, Stripe configuration and checkout script are unchanged by the multipage work.
+Website purchase is CAD1,500 upfront; CAD500/month maintenance and SEO must be activated separately at launch (see `docs/website-checkout.md`). Education remains CAD1,200/company plus CAD100/employee observer for four calls over two weeks. Marketing and software are scoped individually; fit-call links use the existing Google Calendar schedule. The campaign `/ai-intensive/` keeps its independent layout and offer. Its labels, heading punctuation, fonts and images share the October12 cleanup. Worker, Stripe configuration and checkout scripts remain unchanged.
 
 Review scripts and screenshots live outside the deploy bundle in `/Users/theotaylor/Documents/Codex/2026-10-12/ti-orange-review/`. October12 multipage QA covered six routes at320/390/800/1150/1625px, image decoding, no horizontal overflow/runtime errors, education selector readiness/totals, exact dropdown dimensions, Escape dismissal and navigation. No payment or enquiry submitted.
+
+## October12 cleanup and motion pass
+
+The current direction removes decorative numbered overlines and repeated micro-slogans. Page labels are only Websites, Marketing, Education, Software / AgAAS and Principles. Headings have no decorative full stops. The expressive curved headlines remain; secondary headings use quieter, direct wording. Links use a restrained underline rather than repeated diagonal arrows. Header chevrons sit close to their labels, with more even navigation spacing; dropdowns still match their triggers.
+
+Scrolling uses native browser behavior, with no wheel interception or animation dependency. Five chained full-screen drop shadows were the measured bottleneck: repeated isolated local Chromium scroll tests improved from median83.3ms to16.7ms/frame after removing them. A lightweight SVG cap and white rectangle replace the long panel mask, retaining the original curve and the viewport docking mask. These are local comparisons, not guarantees for every device.
+
+Birds retain the flock and gain individually timed departures, banked swoops, glides and smooth returns. The terrain reuses coordinate buffers/jitter/gradients and skips redundant point lighting when WebGL is rendering. Pause/reduced-motion/hidden-tab behavior remains. Keep the grayscale filter on the terrain; the removed filters are the edge-outline shadows only.
+
+Fullframe WebP images use responsive srcsets; originals are retained. Education image:2,509,286 bytes original to70,960 full-size/37,204 responsive. Four work previews total766KB original to399KB full-size/152KB responsive. Both fonts are local WOFF2 (43KB combined); licenses and sources in `assets/fonts/`. Font width comparisons matched the previous files exactly. There are no Google Fonts requests, new dependencies or paid hosting requirements from this pass. Final responsive and motion evidence is stored outside the deploy bundle.
 
 ## Deployment
 

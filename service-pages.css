@@ -41,3 +41,34 @@
  .page-type-mobile>span{font-size:clamp(30px,5.8vw,58px);letter-spacing:-.025em}
  .page-type-mobile>strong{font:inherit;font-size:clamp(30px,6.6vw,66px);letter-spacing:-.035em}
 }
+
+/* Quiet, consistent labels; reserve the expressive type for the page headlines. */
+body{--brand-dark:#202020;--brand-accent:#303030;--brand-accent-hover:#000;--body-text:#454545;--muted-text:#737373}
+.page-kicker{font:600 13px/1.5 Manrope,Arial,sans-serif;letter-spacing:0;text-transform:none;color:#555}
+.green-heading>p{max-width:31ch;color:#777;font-size:12px;line-height:1.7}
+.green-about>p:last-child,.hero-intro,.green-footer,.client-proof>p{color:#666}
+.green-heading h2,.green-about h2{color:#171717}
+.detail-heading h2,.detail-call h2{font-family:Manrope,Arial,sans-serif;font-weight:650;letter-spacing:-.035em;font-size:clamp(25px,2.2vw,33px)}
+.detail-grid article{padding-top:20px}.detail-grid h3{margin-top:0}
+.principle{grid-template-columns:1fr}.principle h2{font:650 clamp(26px,2.6vw,37px)/1.2 Manrope,Arial,sans-serif;letter-spacing:-.035em}
+.green-link,.section-page-link{position:relative;gap:0;border:0;padding-bottom:7px;color:#252525;text-decoration:none}
+.green-link::after,.section-page-link::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:currentColor;transform:scaleX(.32);transform-origin:left;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+.green-link:hover::after,.green-link:focus-visible::after,.section-page-link:hover::after,.section-page-link:focus-visible::after{transform:scaleX(1)}
+.purchase-button{justify-content:center;transition:background-color .2s,box-shadow .2s}.purchase-button:hover{background:#343434;box-shadow:inset 0 0 0 1px #555}
+.top-nav .nav-contact{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:7px}
+@media(min-width:1101px){
+ .top-nav{left:auto;right:3%;width:clamp(590px,46vw,780px);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(8px,1vw,20px)}
+ .nav-disclosure{width:100%}
+ .nav-disclosure summary{justify-content:center;gap:9px;padding:11px 12px;white-space:nowrap}
+ .top-nav>a{padding-inline:7px;justify-self:center}
+ .scroll-shadow,.topbar-wrap{filter:none}
+ .scroll-area{isolation:isolate;overscroll-behavior-y:contain}
+ /* Only the viewport needs a mask. The long panel is an ordinary compositor layer. */
+ .panel{background:transparent;-webkit-mask:none;mask:none;isolation:isolate}
+ .panel::before,.panel::after{content:'';position:absolute;pointer-events:none;z-index:-1}
+ .panel::before{inset:0 0 auto;height:18vh;background:var(--cap) top/100% 100% no-repeat}
+ .panel::after{inset:17.5vh 0 0;background:#fff}
+}
+@media(min-width:1101px) and (max-width:1300px){.nav-disclosure summary{gap:5px;padding-inline:10px}.top-nav{width:590px;gap:8px}}
+@media(max-width:1100px){.nav-disclosure summary{justify-content:flex-start;gap:10px}.page-kicker{font-size:12px;margin-bottom:16px}}
+@media(prefers-reduced-motion:reduce){.green-link::after,.section-page-link::after{transition:none}}

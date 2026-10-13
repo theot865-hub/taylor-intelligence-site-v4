@@ -36,15 +36,14 @@
     {"@type":"WebSite","@id":"https://taylorintelligence.ai/#website","url":"https://taylorintelligence.ai/","name":"Taylor Intelligence"}
   ]}
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- CUSTOMIZE: display font (used for headlines + ticker) -->
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet" />
 
 
 
 
 
+<link rel="preload" href="/assets/fonts/ArchivoBlack-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/site-base.css"><link rel="stylesheet" href="/green.css"><link rel="stylesheet" href="/service-pages.css">
 </head><body>
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -70,7 +69,7 @@
       data-src-fallback=""></video>
   </div>
 
-  <script src="/terrain.js"></script>
+  <script src="/terrain.js" defer></script>
 
   <!-- ===== FOREGROUND CONTAINER 1: fixed top header strip ===== -->
   <div class="topbar-wrap">
@@ -92,7 +91,7 @@
       </a>
 
   <!-- top-right navigation — the pill holds the studio phone line -->
-  <nav id="top-nav" class="top-nav" aria-label="Primary"><details class="nav-disclosure services-menu"><summary>Services <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></div></details><a href="/#studio">Team</a><details class="nav-disclosure socials-menu"><summary>Our Socials <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a><p class="dropdown-note">More on the way.</p></div></details><details class="nav-disclosure principles-menu"><summary>Principles <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/principles/#people">People first</a><a href="/principles/#useful">Make it useful</a><a href="/principles/#clarity">Keep it clear</a><a href="/principles/#learning">Keep learning</a></div></details><a class="nav-contact" href="/#start">Let’s talk ↗</a></nav>
+  <nav id="top-nav" class="top-nav" aria-label="Primary"><details class="nav-disclosure services-menu"><summary>Services <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></div></details><a href="/#studio">Team</a><details class="nav-disclosure socials-menu"><summary>Our Socials <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram</a><p class="dropdown-note">More on the way.</p></div></details><details class="nav-disclosure principles-menu"><summary>Principles <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/principles/#people">People first</a><a href="/principles/#useful">Make it useful</a><a href="/principles/#clarity">Keep it clear</a><a href="/principles/#learning">Keep learning</a></div></details><a class="nav-contact" href="/#start">Let’s talk</a></nav>
 
   <!-- mobile-only hamburger (toggles .top-nav); hidden on desktop via CSS -->
   <button class="m-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="top-nav">
@@ -103,16 +102,16 @@
 <button class="terrain-toggle" type="button" aria-pressed="false">Pause motion</button>
 <div class="scroll-shadow"><div class="scroll-area"><div class="hero-spacer"></div><div class="panel-wrap">
 <main class="panel" id="main-content">
-<h1 class="hero-title" aria-label="One agency for everything.">
+<h1 class="hero-title" aria-label="One agency for everything">
   <svg class="hero-type" viewBox="0 0 760 270" role="presentation" aria-hidden="true">
     <defs><path id="headline-contour" d="M0 94 C190 94 218 94 302 112 S502 169 710 169"/></defs>
     <text class="hero-type-curve"><textPath href="#headline-contour">One agency</textPath></text>
-    <text class="hero-type-main" x="-3" y="257">for everything.</text>
+    <text class="hero-type-main" x="-3" y="257">for everything</text>
   </svg>
-  <span class="hero-type-mobile" aria-hidden="true"><span>One agency</span><strong>for everything.</strong></span>
+  <span class="hero-type-mobile" aria-hidden="true"><span>One agency</span><strong>for everything</strong></span>
 </h1>
-<div class="hero-intro"><p>Websites, AI systems, and software. <br> Designed around the way you work.</p><a class="green-link" href="#websites">Explore our work <span>↗</span></a></div>
-<section class="client-proof" aria-label="Selected clients"><p>Selected clients.</p>
+<div class="hero-intro"><p>Websites, AI systems, and software. <br> Designed around the way you work.</p><a class="green-link" href="#websites">Explore our work</a></div>
+<section class="client-proof" aria-label="Selected clients"><p>Selected clients</p>
 <div class="client-logos"><div><img src="/ai-intensive/logos/sd-concrete.svg" alt="Stone Design Concrete" width="170" height="58"></div>
 <div><img src="/ai-intensive/logos/szolyd.svg" alt="Szolyd" width="170" height="58"></div>
 <div><img src="/assets/logos/tire-x-outlined.svg" alt="Tire X" width="170" height="58"></div>
@@ -120,67 +119,67 @@
 <div><img src="/ai-intensive/logos/omen-foils-dark.png" alt="Omen Foils" width="170" height="58"></div>
 </div></section>
 <section class="green-work" id="websites" aria-labelledby="work-heading">
-<div class="green-heading"><div><p class="green-eyebrow">01 / Your place online</p><h2 id="work-heading">Websites.</h2><a class="section-page-link" href="/websites/">Explore websites <span aria-hidden="true">↗</span></a></div><p>Designed to stand out.<br> Built to work for your business.</p></div>
+<div class="green-heading"><div><h2 id="work-heading">Websites</h2><a class="section-page-link" href="/websites/">Explore websites</a></div><p>Website design, development and ongoing care</p></div>
 <div class="website-gallery"><div class="work-grid"><article class="work-card"><a href="https://sdconcrete.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit website: Stone Design Concrete (opens in new tab)"><div class="work-image stone-design"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Stone Design Concrete</span></div>
-<img src="/assets/work/stone-design.jpg" alt="Stone Design Concrete website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website ↗</span></div>
+<img src="/assets/work/stone-design-720.webp" srcset="/assets/work/stone-design-720.webp 720w, /assets/work/stone-design.webp 1440w" sizes="(max-width:600px) calc(100vw - 40px), (max-width:1100px) 44vw, 28vw" decoding="async" alt="Stone Design Concrete website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website</span></div>
 <div class="work-caption"><div><h3>Stone Design Concrete</h3>
 <p>Website design · Development</p>
 </div>
 <span class="work-status">Live website</span></div>
 </a></article><article class="work-card"><a href="https://szolyd.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit website: Szolyd (opens in new tab)"><div class="work-image szolyd"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Szolyd</span></div>
-<img src="/assets/work/szolyd.jpg" alt="Szolyd website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website ↗</span></div>
+<img src="/assets/work/szolyd-720.webp" srcset="/assets/work/szolyd-720.webp 720w, /assets/work/szolyd.webp 1440w" sizes="(max-width:600px) calc(100vw - 40px), (max-width:1100px) 44vw, 28vw" decoding="async" alt="Szolyd website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website</span></div>
 <div class="work-caption"><div><h3>Szolyd</h3>
 <p>Website design · Development</p>
 </div>
 <span class="work-status">Live website</span></div>
 </a></article><article class="work-card"><a href="https://knot-normal.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit website: Knot Normal (opens in new tab)"><div class="work-image knot-normal"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Knot Normal</span></div>
-<img src="/assets/work/knot-normal.jpg" alt="Knot Normal website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website ↗</span></div>
+<img src="/assets/work/knot-normal-720.webp" srcset="/assets/work/knot-normal-720.webp 720w, /assets/work/knot-normal.webp 1440w" sizes="(max-width:600px) calc(100vw - 40px), (max-width:1100px) 44vw, 28vw" decoding="async" alt="Knot Normal website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website</span></div>
 <div class="work-caption"><div><h3>Knot Normal</h3>
 <p>Brand experience · Storefront</p>
 </div>
 <span class="work-status">Live website</span></div>
 </a></article></div>
 <details class="more-websites"><summary><span class="more-label">More websites</span><span class="less-label">Fewer websites</span><span class="expand-mark" aria-hidden="true">+</span></summary><div class="work-grid"><article class="work-card"><a href="https://taylorintelligence-test.ca/tirex/site-preview/" target="_blank" rel="noopener noreferrer" aria-label="Explore preview: Tire X Canada (opens in new tab)"><div class="work-image tire-x"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Tire X Canada</span></div>
-<img src="/assets/work/tire-x.jpg" alt="Tire X Canada website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Explore preview ↗</span></div>
+<img src="/assets/work/tire-x-720.webp" srcset="/assets/work/tire-x-720.webp 720w, /assets/work/tire-x.webp 1440w" sizes="(max-width:600px) calc(100vw - 40px), (max-width:1100px) 44vw, 28vw" decoding="async" alt="Tire X Canada website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Explore preview</span></div>
 <div class="work-caption"><div><h3>Tire X Canada</h3>
 <p>Automotive · Commerce experience</p>
 </div>
 <span class="work-status">Review build</span></div>
 </a></article></div></details></div>
 <div class="website-offer offer-panel">
-<div class="website-offer-intro"><h3>Your next website.</h3><p>Designed &amp; built for your business.</p></div>
+<div class="website-offer-intro"><h3>Your next website</h3><p>Designed &amp; built for your business.</p></div>
 <div class="website-price"><p class="offer-price">$1,500 <span>CAD / one-time</span></p><p class="offer-small">Website design &amp; development</p></div>
 <div class="website-care"><p class="offer-recurring">+ $500 CAD/month</p><p class="offer-small">Maintenance &amp; SEO.<br> Billed separately, starting at launch.</p></div>
-<a class="purchase-button" href="https://buy.stripe.com/aFa14pa10ffO1LLgcdeIw01">Purchase now <span aria-hidden="true">↗</span></a>
+<a class="purchase-button" href="https://buy.stripe.com/aFa14pa10ffO1LLgcdeIw01">Purchase now</a>
 </div>
 </section>
 <section class="service-section marketing-section" id="services" aria-labelledby="marketing-heading">
-<div class="green-heading"><div><p class="green-eyebrow">02 / Get seen</p><h2 id="marketing-heading">Marketing.</h2><a class="section-page-link" href="/marketing/">Explore marketing <span aria-hidden="true">↗</span></a></div><p>A good business deserves an audience.<br> Let’s help the right people find you.</p></div>
+<div class="green-heading"><div><h2 id="marketing-heading">Marketing</h2><a class="section-page-link" href="/marketing/">Explore marketing</a></div><p>Paid campaigns, social content and brand development</p></div>
 <div class="marketing-grid">
 <article class="service-card"><div class="platform-art platform-meta"><img src="/assets/brands/meta.svg" alt="Meta" width="256" height="171" loading="lazy"></div><h3>Meta Ads</h3><p>Creative and campaigns for Facebook and Instagram, shaped around the people you want to reach.</p></article>
 <article class="service-card"><div class="platform-art platform-google"><img src="/assets/brands/google-ads.svg" alt="Google Ads" width="800" height="800" loading="lazy"></div><h3>Google Ads</h3><p>Meet people at the moment they’re looking for what your business offers.</p></article>
 <article class="service-card"><div class="platform-art platform-social"><img src="/assets/brands/instagram-icon.svg" alt="Instagram" width="265" height="265" loading="lazy"><img src="/assets/brands/tiktok-icon-light.svg" alt="TikTok" width="352" height="399" loading="lazy"><img src="/assets/brands/facebook-icon.svg" alt="Facebook" width="667" height="667" loading="lazy"></div><h3>Social media</h3><p>A consistent presence, with content that sounds like you and gives people a reason to follow.</p></article>
 <article class="service-card"><img src="/assets/services/brand-scaling.svg" alt="" width="480" height="320" loading="lazy"><h3>Brand scaling</h3><p>Bring your positioning, creative and campaigns together as your business grows.</p></article>
-</div><div class="marketing-quote"><div><h3>Priced around your goals.</h3><p>One campaign or a complete marketing programme. Pricing depends on the channels, creative, content and ongoing management you need. We’ll scope it together, with advertising spend set out separately from our fees.</p></div><a class="purchase-button" href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP" target="_blank" rel="noopener noreferrer">Book a free fit call <span aria-hidden="true">↗</span></a></div>
+</div><div class="marketing-quote"><div><h3>Scope and pricing</h3><p>One campaign or a complete marketing programme. Pricing depends on the channels, creative, content and ongoing management you need. We’ll scope it together, with advertising spend set out separately from our fees.</p></div><a class="purchase-button" href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP" target="_blank" rel="noopener noreferrer">Book a free fit call</a></div>
 </section>
 <section class="service-section education-section" id="education" aria-labelledby="education-heading">
-<div class="green-heading"><div><p class="green-eyebrow">03 / Learn to use it</p><h2 id="education-heading">Education.</h2><a class="section-page-link" href="/education/">Explore education <span aria-hidden="true">↗</span></a></div><p>Practical guidance.<br> For you and the people you work with.</p></div>
-<div class="education-feature"><div class="education-story"><a class="education-image" href="/ai-intensive/" aria-label="Explore the AI Intensive for Business Owners"><img src="/ai-intensive/images/theo-julian-call.png" alt="Theo and Julian hosting a two-person video call." width="1672" height="941" loading="lazy"></a><div class="education-copy"><p class="green-eyebrow">AI Intensive / Business owners</p><h3>Put AI to work<br> in your business.</h3><p>Four live group calls over two weeks with Theo and Julian. Bring your questions, explore practical uses and leave each call with something to try.</p><a class="green-link" href="/ai-intensive/">See the full programme <span>↗</span></a></div></div>
+<div class="green-heading"><div><h2 id="education-heading">Education</h2><a class="section-page-link" href="/education/">Explore education</a></div><p>Live AI training for business owners and their teams</p></div>
+<div class="education-feature"><div class="education-story"><a class="education-image" href="/ai-intensive/" aria-label="Explore the AI Intensive for Business Owners"><img src="/ai-intensive/images/theo-julian-call-960.webp" srcset="/ai-intensive/images/theo-julian-call-960.webp 960w, /ai-intensive/images/theo-julian-call.webp 1672w" sizes="(max-width:1100px) 90vw, 45vw" decoding="async" alt="Theo and Julian hosting a two-person video call." width="1672" height="941" loading="lazy"></a><div class="education-copy"><h3>AI Intensive for business owners</h3><p>Four live group calls over two weeks with Theo and Julian. Bring your questions, explore practical uses and leave each call with something to try.</p><a class="green-link" href="/ai-intensive/">See the full programme</a></div></div>
 <form class="education-checkout" id="company-checkout" action="/api/checkout" method="post">
-<p class="green-eyebrow">Bring your business</p><h3>One company seat.</h3><p class="offer-price">$1,200 <span>CAD</span></p><p class="seat-description">Includes the business owner. Add employee observers for $100 CAD each, including all four calls.</p><div class="course-facts"><span>4 live group calls</span><span>2 weeks, with Theo &amp; Julian</span><span>Call dates and times to be announced</span></div>
-<label for="extra-employees">Additional employees</label><div class="seat-stepper"><button type="button" data-seat-step="-1" aria-label="Remove one additional employee" disabled>−</button><input id="extra-employees" name="extraEmployees" type="number" min="0" max="99" step="1" value="0" inputmode="numeric" aria-describedby="extra-seat-price"><button type="button" data-seat-step="1" aria-label="Add one additional employee">+</button></div><p id="extra-seat-price" class="offer-small">$100 CAD per employee · one-time</p><div class="education-total"><span>Total · CAD</span><output id="order-total" for="extra-employees" aria-live="polite">$1,200</output></div><input type="hidden" name="checkoutAttempt" id="checkout-attempt" value=""><button class="purchase-button" type="submit" disabled>Purchase now <span aria-hidden="true">↗</span></button><p id="checkout-status" role="status" aria-live="polite" hidden></p><a class="green-link education-fit" href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP" target="_blank" rel="noopener noreferrer">Questions? Book a free fit call <span>↗</span></a><noscript><p class="offer-small">Please enable JavaScript to choose your seats and open secure checkout.</p></noscript>
+<h3>Company seat</h3><p class="offer-price">$1,200 <span>CAD</span></p><p class="seat-description">Includes the business owner. Add employee observers for $100 CAD each, including all four calls.</p><div class="course-facts"><span>4 live group calls</span><span>2 weeks, with Theo &amp; Julian</span><span>Call dates and times to be announced</span></div>
+<label for="extra-employees">Additional employees</label><div class="seat-stepper"><button type="button" data-seat-step="-1" aria-label="Remove one additional employee" disabled>−</button><input id="extra-employees" name="extraEmployees" type="number" min="0" max="99" step="1" value="0" inputmode="numeric" aria-describedby="extra-seat-price"><button type="button" data-seat-step="1" aria-label="Add one additional employee">+</button></div><p id="extra-seat-price" class="offer-small">$100 CAD per employee · one-time</p><div class="education-total"><span>Total · CAD</span><output id="order-total" for="extra-employees" aria-live="polite">$1,200</output></div><input type="hidden" name="checkoutAttempt" id="checkout-attempt" value=""><button class="purchase-button" type="submit" disabled>Purchase now</button><p id="checkout-status" role="status" aria-live="polite" hidden></p><a class="green-link education-fit" href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP" target="_blank" rel="noopener noreferrer">Questions? Book a free fit call</a><noscript><p class="offer-small">Please enable JavaScript to choose your seats and open secure checkout.</p></noscript>
 </form></div>
 </section>
 <section class="service-section software-section" id="software" aria-labelledby="software-heading">
-<div class="green-heading"><div><p class="green-eyebrow">04 / Make work work</p><h2 id="software-heading">Software &amp; agents.</h2><a class="section-page-link" href="/software/">Explore software &amp; AgAAS <span aria-hidden="true">↗</span></a></div><p>Fewer disconnected tools.<br> More time for the work that matters.</p></div>
+<div class="green-heading"><div><h2 id="software-heading">Software &amp; agents</h2><a class="section-page-link" href="/software/">Explore software &amp; AgAAS</a></div><p>Custom software and managed AI workflows</p></div>
 <div class="software-grid">
 <article class="service-card"><figure><img src="/assets/services/custom-software.svg" alt="Example shop workspace connecting customers, appointments and inventory." width="640" height="360" loading="lazy"><figcaption>Illustrative workspace</figcaption></figure><h3>Custom software</h3><p>Portals, dashboards and connected tools built around how your team actually works. Bring customers, information and everyday tasks into one place.</p><p class="service-note">In development: shop software with Tire X.</p></article>
 <article class="service-card"><figure><img src="/assets/services/agent-service.svg" alt="Example agent workflow: an enquiry and business knowledge feed a drafted reply, which waits for human review." width="640" height="360" loading="lazy"><figcaption>Illustrative agent workflow</figcaption></figure><h3>Agentic as a Service</h3><p>AI agents connected to your tools and business knowledge. We build, deploy and maintain workflows that handle repeatable work, with clear boundaries and review where it matters.</p><p class="service-note">Think enquiry triage, research, draft replies and internal follow-ups.</p></article>
-</div><a class="green-link section-link" href="#start">Talk through your workflow <span>↗</span></a>
+</div><a class="green-link section-link" href="#start">Talk through your workflow</a>
 </section>
-<section class="green-about" id="studio"><p class="green-eyebrow">Independent studio / Victoria, BC</p><h2>The people you talk to<br> are the people building it.</h2><p>We’re Theo and Julian. We connect the thinking, the building, and the training — so a good idea becomes something your business can use.</p></section>
+<section class="green-about" id="studio"><h2>Theo and Julian</h2><p>We’re Theo and Julian. We connect the thinking, the building, and the training — so a good idea becomes something your business can use.</p></section>
 
-<section class="start" id="start" aria-label="Start a project"><p class="green-eyebrow">Start a conversation</p><h2>Let’s build something useful.</h2><p class="lede">A website, a workflow, or an idea you want to explore. Tell us where you’d like to go.</p><form action="https://api.web3forms.com/submit" method="POST" data-lead-form>
+<section class="start" id="start" aria-label="Start a project"><h2>Tell us about your project</h2><p class="lede">A website, a workflow, or an idea you want to explore. Tell us where you’d like to go.</p><form action="https://api.web3forms.com/submit" method="POST" data-lead-form>
             <input type="hidden" name="access_key" value="3d97d841-4c10-4ecf-9b00-248974f688a3">
             <input type="hidden" name="subject" value="New project inquiry — taylorintelligence.ai">
             <input type="hidden" name="page_path" value="">

@@ -1,4 +1,4 @@
-@font-face { font-family: Manrope; src: url('/ai-intensive/fonts/Manrope.ttf') format('truetype'); font-style: normal; font-weight: 200 800; font-display: swap; }
+@font-face { font-family: Manrope; src: url('/assets/fonts/Manrope-latin.woff2') format('woff2'); font-style: normal; font-weight: 200 800; font-display: swap; }
 :root { color-scheme: light; --paper: #f8f6f1; --ink: #26251f; --muted: #65635d; --line: #dedbd2; --sans: Manrope, Arial, Helvetica, sans-serif; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
@@ -224,3 +224,7 @@ details > p { font-size: 13px; color: var(--muted); padding: 0 24px 20px 0; max-
   .inclusions li::before, .text-link, .faq-list, details, .site-footer { border-color: CanvasText; }
   .mark { fill: CanvasText; }
 }
+
+/* Plain link affordances and quieter section headings, shared agency direction. */
+.nav-cta,.text-link,.site-footer>a:last-child{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.questions-intro h2{letter-spacing:-.035em}
