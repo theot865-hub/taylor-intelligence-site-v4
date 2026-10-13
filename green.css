@@ -116,7 +116,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #2e6f4e;outline-offset:5p
 .education-image{display:block;border:1px solid #deded8}.education-image img{display:block;width:100%;height:auto}
 .education-copy h3{font:clamp(24px,2.6vw,36px)/1.12 'Archivo Black',sans-serif;letter-spacing:-.035em;margin-bottom:19px}
 .education-copy>p:not(.green-eyebrow){font-size:13px;line-height:1.8;color:#6b6b65;max-width:43ch;margin-bottom:22px}
-@media(max-width:1200px){.marketing-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}.marketing-grid>article>img{aspect-ratio:1.8;object-fit:cover}}
+@media(max-width:800px){.marketing-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}.marketing-grid>article>img{aspect-ratio:1.8;object-fit:cover}}
 @media(max-width:1100px){.service-section{scroll-margin-top:85px}.education-feature{gap:28px}}
 @media(max-width:800px){.software-grid,.education-feature{grid-template-columns:1fr}.education-copy h3{font-size:30px}.education-copy h3 br{display:none}.work-grid{gap:16px}.work-caption h3{font-size:13px}.work-caption p{font-size:10px}.software-grid{gap:32px}}
 @media(max-width:600px){.work-grid{grid-template-columns:1fr}.work-card:last-child .work-caption{display:block}.work-caption h3{font-size:17px}.work-caption p{font-size:11px}.work-image,.work-card:last-child .work-image{aspect-ratio:1.8}.marketing-grid{gap:28px 15px}.marketing-grid>article>img{aspect-ratio:1.25;object-fit:cover}.service-card h3{font-size:17px}.service-card p{font-size:12px}.service-section{padding:32px 0 38px}.green-work{padding:30px 0 35px}.service-section .green-heading{margin-bottom:22px}.education-feature{gap:26px}}
@@ -158,7 +158,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #2e6f4e;outline-offset:5p
 .platform-art img{display:block;object-fit:contain;height:auto;filter:none;flex:none}
 .platform-meta img{width:47%}.platform-google img{width:43%}
 .platform-social img{width:19%;aspect-ratio:1;object-fit:contain}
-@media(max-width:1200px){.platform-art{aspect-ratio:1.8}}
+@media(max-width:800px){.platform-art{aspect-ratio:1.8}}
 @media(max-width:600px){.platform-art{aspect-ratio:1.25}.platform-meta img{width:57%}.platform-google img{width:55%}.platform-social{gap:7%}.platform-social img{width:22%}}
 
 /* Services disclosure keeps the header compact and all four destinations together. */
