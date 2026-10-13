@@ -16,7 +16,8 @@ a:focus-visible,button:focus-visible{outline:2px solid #2e6f4e;outline-offset:5p
 .client-logos{display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:30px;width:100%}
 .client-logos>div{height:44px;display:flex;align-items:center;justify-content:center}
 .client-logos img{width:100%;max-width:135px;height:36px;object-fit:contain;filter:grayscale(1);mix-blend-mode:multiply}
-.client-logos>div:nth-child(2) img{filter:brightness(0);height:35px}
+.client-logos>div:nth-child(2) img,.client-logos>div:nth-child(4) img{filter:none;mix-blend-mode:normal}
+.client-logos>div:nth-child(2) img{height:35px}
 .client-logos>div:nth-child(3) img{filter:none;mix-blend-mode:normal;height:32px;max-width:110px}
 .client-logos>div:last-child img{height:48px}
 .green-work{padding:36px 0 65px;scroll-margin-top:30vh}
