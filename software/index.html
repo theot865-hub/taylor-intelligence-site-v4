@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Software &amp; AgAAS — Taylor Intelligence</title>
+  <meta name="description" content="Custom software and Agentic as a Service, connected to your business and built around the way your team works." />
+  <link rel="icon" href="/favicon.svg?v=ti-monogram" type="image/svg+xml" />
+  <link rel="canonical" href="https://taylorintelligence.ai/software/" />
+  <!-- social share (Open Graph + Twitter) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Taylor Intelligence" />
+  <meta property="og:url" content="https://taylorintelligence.ai/software/" />
+  <meta property="og:title" content="Software &amp; AgAAS — Taylor Intelligence" />
+  <meta property="og:description" content="Custom software and Agentic as a Service, connected to your business and built around the way your team works." />
+
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Taylor Intelligence — AI Automation Studio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Software &amp; AgAAS — Taylor Intelligence" />
+  <meta name="twitter:description" content="Custom software and Agentic as a Service, connected to your business and built around the way your team works." />
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"LocalBusiness","@id":"https://taylorintelligence.ai/#business","name":"Taylor Intelligence","description":"Independent studio building websites, AI systems and software for businesses.","url":"https://taylorintelligence.ai/","email":"theo@taylorintelligence.ai","telephone":"+1-250-299-7815","founder":{"@type":"Person","name":"Theo Taylor"},"address":{"@type":"PostalAddress","addressLocality":"Victoria","addressRegion":"BC","addressCountry":"CA"},"areaServed":["Victoria BC","Vancouver Island","British Columbia","Canada"]},
+    {"@type":"WebSite","@id":"https://taylorintelligence.ai/#website","url":"https://taylorintelligence.ai/","name":"Taylor Intelligence"}
+  ]}
+  </script>
+  <!-- CUSTOMIZE: display font (used for headlines + ticker) -->
+
+
+
+
+
+<link rel="preload" href="/assets/fonts/ArchivoBlack-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/site-base.css"><link rel="stylesheet" href="/green.css"><link rel="stylesheet" href="/service-pages.css">
+</head>
+<body class="service-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- ===== fixed full-screen BACKGROUND =====
+       Ships with a self-contained SVG landscape so the template works with zero
+       assets. CUSTOMIZE: to use a video, fill the data-src-* attributes below
+       (largest first) — the loader fades it in over the poster automatically.
+       To use a photo instead, replace the <svg> with
+       <img class="hero-video-poster" src="assets/background.jpg" alt="" /> -->
+  <div class="hero-video-bg" id="hero-video-bg" aria-hidden="true">
+    <!-- generative "living terrain": a slowly drifting topographic point-cloud
+         rendered in the brand palette, with occasional neural links riding the
+         landscape toward the camera. Pure canvas — zero assets, recolorable via
+         the TERRAIN config below. Renders a single static frame on mobile and
+         for prefers-reduced-motion. A video dropped into the data-src-* slots
+         still fades in over it, exactly like the old poster. -->
+    <canvas class="hero-video-poster" id="terrain-gl"></canvas>
+    <canvas class="hero-video-poster" id="terrain-bg"></canvas>
+    <video class="hero-video" muted loop playsinline preload="auto"
+      data-src-4k=""
+      data-src-2k=""
+      data-src-fallback=""></video>
+  </div>
+
+  <script src="/terrain.js" defer></script>
+
+  <!-- ===== FOREGROUND CONTAINER 1: fixed top header strip ===== -->
+  <div class="topbar-wrap">
+    <svg class="topbar" viewBox="0 0 1400 100" preserveAspectRatio="none" aria-hidden="true">
+      <!-- solid white header strip with the curved/stepped bottom edge -->
+      <path d="M0,0 L1400,0 L1400,62 L700,62 C588,62 588,100 448,100 L112,100 C56,100 0,86 0,60 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+
+  <!-- Agency monogram and wordmark. -->
+  <a class="brand-lockup" href="/" aria-label="Taylor Intelligence — home">
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <g transform="translate(3.290 24.934) scale(0.0256 -0.0256)">
+            <path d="M557 563H368V0H216V563H27V698H557Z"/>
+            <path transform="translate(584 0)" d="M382 0H50V121H140V577H50V698H382V577H292V121H382Z"/>
+          </g>
+        </svg>
+        <span class="word">Taylor Intelligence</span>
+      </a>
+
+  <!-- Primary navigation. -->
+  <nav id="top-nav" class="top-nav" aria-label="Primary"><details class="nav-disclosure services-menu"><summary>Services <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></div></details><a href="/#studio">Team</a><details class="nav-disclosure socials-menu"><summary>Our Socials <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram</a><p class="dropdown-note">More on the way.</p></div></details><a href="/principles/">Principles</a><a class="nav-contact" href="/#start">Let’s talk</a></nav>
+
+  <!-- mobile-only hamburger (toggles .top-nav); hidden on desktop via CSS -->
+  <button class="m-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="top-nav">
+    <span></span><span></span><span></span>
+  </button>
+
+
+
+<div class="scroll-shadow"><div class="scroll-area"><div class="hero-spacer"></div><div class="panel-wrap">
+<main class="panel" id="main-content"><header class="page-hero"><p class="page-kicker">Software / AgAAS</p><h1 class="page-title page-title-contour" aria-label="Tools that work like you do" style="--curve-size:100px;--base-size:73px">
+  <svg class="page-type" viewBox="0 0 760 260" role="presentation" aria-hidden="true">
+    <defs><path id="page-headline-contour" d="M0 84 C170 84 225 88 310 102 S530 143 730 139"/><path id="page-base-contour" d="M-3 237 C165 228 285 228 400 240 S590 256 735 246"/></defs>
+    <text class="page-type-curve"><textPath href="#page-headline-contour">Tools that</textPath></text>
+    <text class="page-type-main"><textPath href="#page-base-contour">work like you do</textPath></text>
+  </svg>
+  <span class="page-type-mobile" aria-hidden="true"><span>Tools that</span><strong>work like you do</strong></span>
+</h1><div class="page-intro"><p>Custom software and Agentic as a Service, connected to your business and built around the way your team works.</p><a class="green-link" href="#page-details">Explore</a></div></header><div id="page-details"><section class="service-section software-section" id="software" aria-labelledby="software-heading">
+<div class="green-heading"><div><h2 id="software-heading">Software and AgAAS</h2></div><p>Custom software and managed AI workflows</p></div>
+<div class="software-grid">
+<article class="service-card"><figure><img src="/assets/services/custom-software.svg" alt="Example shop workspace connecting customers, appointments and inventory." width="640" height="360" loading="lazy"><figcaption>Illustrative workspace</figcaption></figure><h3>Custom software</h3><p>Portals, dashboards and connected tools built around how your team actually works. Bring customers, information and everyday tasks into one place.</p><p class="service-note">In development: shop software with Tire X.</p></article>
+<article class="service-card"><figure><img src="/assets/services/agent-service.svg" alt="Example agent workflow: an enquiry and business knowledge feed a drafted reply, which waits for human review." width="640" height="360" loading="lazy"><figcaption>Illustrative agent workflow</figcaption></figure><h3>Agentic as a Service</h3><p>AI agents connected to your tools and business knowledge. We build, deploy and maintain workflows that handle repeatable work, with clear boundaries and review where it matters.</p><p class="service-note">Think enquiry triage, research, draft replies and internal follow-ups.</p></article>
+</div><a class="green-link section-link" href="#start">Talk through your workflow</a>
+</section><section class="detail-section"><div class="detail-heading"><h2>How AgAAS works</h2></div><div class="agent-explainer"><p>AgAAS is our shorthand for Agentic as a Service: AI agents connected to your business tools and information, with ongoing care from the people who built them.</p><p>We start with a defined job. The agent gets the context and access it needs, prepares or completes the agreed steps, and brings decisions back to a person where review is needed.</p></div><div class="detail-grid"><article><h3>Give it a defined job</h3><p>A useful first workflow might sort enquiries, gather research or prepare a reply. A clear start and finish makes it easier to see whether the work is helping.</p></article><article><h3>Connect the right context</h3><p>Your knowledge and tools give the workflow its context. We agree what it can access, what it can do and what needs your review.</p></article><article><h3>Keep looking after it</h3><p>Workflows change as the business changes. Ongoing maintenance keeps the connections, instructions and review points aligned with the job.</p></article></div></section><section class="detail-section"><div class="detail-heading"><h2>An enquiry workflow</h2></div><ol class="workflow-steps"><li><div><h3>An enquiry arrives</h3><p>The workflow receives the message from an agreed source.</p></div></li><li><div><h3>The agent gathers context</h3><p>Relevant business information helps it understand the request.</p></div></li><li><div><h3>A draft is prepared</h3><p>The response and supporting context are organised for review.</p></div></li><li><div><h3>A person decides</h3><p>Your team approves the next step where the workflow requires it.</p></div></li></ol></section><section class="detail-section"><div class="detail-heading"><h2>Questions</h2></div><div class="service-faq"><details><summary>How is this different from using a chatbot?<span aria-hidden="true">+</span></summary><p>A chatbot is a place to have a conversation. A custom agent workflow can connect that reasoning to a defined task, your information and your tools. The useful part is the job it helps your team complete.</p></details><details><summary>What does it cost?<span aria-hidden="true">+</span></summary><p>Software and AgAAS are scoped individually. The price depends on the workflow, integrations, access requirements and ongoing support. We’ll define the work together before quoting it.</p></details><details><summary>What is the Tire X software?<span aria-hidden="true">+</span></summary><p>We’re developing shop software with Tire X. The workspace shown here is an illustration of connected customers, appointments and inventory; it is not a finished product demonstration.</p></details></div></section><section class="detail-call"><div><h2>Discuss a workflow</h2><p>Tell us what keeps landing on your desk. We’ll discuss whether software, an agent or a simpler change is the right answer.</p></div><a class="purchase-button" href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP" target="_blank" rel="noopener noreferrer">Book a free fit call</a></section></div><section class="start" id="start" aria-label="Start a project"><h2>Tell us about your project</h2><p class="lede">A website, a workflow, or an idea you want to explore. Tell us where you’d like to go.</p><form action="https://api.web3forms.com/submit" method="POST" data-lead-form>
+            <input type="hidden" name="access_key" value="3d97d841-4c10-4ecf-9b00-248974f688a3">
+            <input type="hidden" name="subject" value="New project inquiry — taylorintelligence.ai">
+            <input type="hidden" name="page_path" value="">
+            <input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_term" value=""><input type="hidden" name="utm_content" value=""><input type="hidden" name="gclid" value="">
+            <input type="checkbox" name="botcheck" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="f-row">
+              <label>Name<input type="text" name="name" required autocomplete="name"></label>
+              <label>Email<input type="email" name="email" required autocomplete="email"></label>
+            </div>
+            <label class="block">What would you like to build?<textarea name="message" rows="4" required></textarea></label>
+            <button type="submit" class="submit">Send it</button>
+          </form><p class="direct"><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a> · <a href="tel:+12502997815">+1 250 299 7815</a></p></section><footer class="green-footer">
+<div class="footer-main">
+<div class="footer-identity"><a class="footer-name" href="/">Taylor Intelligence</a><p>Victoria, British Columbia</p><p>Websites, marketing, AI training<br>and software, from one team.</p></div>
+<nav class="footer-links" aria-label="Footer services"><h2>Services</h2><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></nav>
+<nav class="footer-links" aria-label="About Taylor Intelligence"><h2>Company</h2><a href="/#studio">Our team</a><a href="/principles/">Principles</a><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram</a></nav>
+<div class="footer-links footer-contact"><h2>Get in touch</h2><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a><a href="tel:+12502997815">+1 250 299 7815</a><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP" target="_blank" rel="noopener noreferrer">Book a free fit call</a></div>
+</div>
+<div class="footer-bottom"><span>Taylor Intelligence © 2026</span><div class="footer-legal"><button class="terrain-toggle" type="button" aria-pressed="false">Pause motion</button></div></div>
+</footer></main></div></div></div><script src="/lead-form.js"></script><script src="/green.js" defer></script></body></html>

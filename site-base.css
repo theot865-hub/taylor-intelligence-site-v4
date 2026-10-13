@@ -1,0 +1,586 @@
+@font-face{font-family:'Archivo Black';src:url('/assets/fonts/ArchivoBlack-latin.woff2') format('woff2');font-style:normal;font-weight:400;font-display:swap}
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      background: #0b1612;
+      /* soft edge "gradient": layered zero-offset blurs at increasing radius and
+         decreasing opacity sum to an exponential-style falloff — darkest right at
+         each container's silhouette, fading out naturally. */
+      --edge: 18, 24, 20;
+      --edge-outline:
+        drop-shadow(0 0 1.2px rgba(var(--edge), 0.58))
+        drop-shadow(0 0 3.5px rgba(var(--edge), 0.40))
+        drop-shadow(0 0 7px   rgba(var(--edge), 0.26))
+        drop-shadow(0 0 13px  rgba(var(--edge), 0.15))
+        drop-shadow(0 0 22px  rgba(var(--edge), 0.08));
+
+      /* ---- CUSTOMIZE: brand palette (one place) ---- */
+      --brand-dark: #15241c;     /* headings, nav text */
+      --brand-accent: #2e6f4e;   /* links, buttons, eyebrows */
+      --brand-accent-hover: #245a3f;
+      --body-text: #3a4a40;
+      --muted-text: #7a8a7f;
+      /* warm gold accent (charts, live-dot, footer chevrons). NOTE: the brain
+         canvas paints its one gold node with the literal "#d9a441" — keep in sync. */
+      --gold: #d9a441;
+      --gold-soft: rgba(242, 206, 132, .45);
+      --gold-ink: #8a6a1c;
+
+      /* ---- hero title design tokens (adjust placement & scale in one place) ---- */
+      --title-x: 4%;          /* distance from the panel's left edge */
+      --title-y: 3.5vh;       /* distance from the panel's top */
+      --title-size: clamp(28px, 3.45vw, 58px);
+      --title-leading: 1.03;  /* line spacing */
+      --title-tracking: 0.004em; /* letter spacing */
+      --title-color: #1e3a16;
+    }
+
+    /* wrappers carry the outline filter so it isn't clipped by each container's own mask */
+    .topbar-wrap { position: fixed; top: 0; left: 0; right: 0; z-index: 3; filter: var(--edge-outline); }
+    /* scroll is capped here so the panel rises and PAUSES at the docked position;
+       content scrolling under it comes later. */
+    .panel-wrap { position: relative; z-index: 2; scroll-snap-align: start; }
+
+    /* fixed full-screen backdrop (stays put while everything scrolls over it).
+       Ships with a self-contained SVG scene; drop a video in to replace it. */
+    .hero-video-bg { position: fixed; inset: 0; overflow: hidden; z-index: 0; background: #0b1612; }
+    .hero-video-bg svg.hero-video-poster,
+    .hero-video-bg img.hero-video-poster,
+    .hero-video-bg canvas.hero-video-poster,
+    .hero-video-bg video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .hero-video-bg video { opacity: 0; transition: opacity 0.7s ease; }
+    .hero-video-bg.is-playing video { opacity: 1; }
+    .hero-video-bg.is-playing .hero-video-poster { opacity: 0; transition: opacity 0.7s ease; }
+
+    /* FIXED top header strip — solid white with a curved/stepped bottom edge */
+    .topbar {
+      display: block;
+      width: 100%;
+      height: 12vh;
+    }
+
+    .panel-logo {
+      display: block;
+      height: 15vh;
+      width: auto;
+      margin: 0 auto clamp(14px, 2vh, 24px);
+    }
+
+    /* brand lockup (logo + wordmark), stacked inside the header's deep
+       "bubble" (the curve's 12vh-deep bump, x 8%-32%). The size budget totals
+       ~10.6vh so the descriptor line clears the curved edge at every ratio. */
+    .brand-lockup {
+      position: fixed;
+      top: clamp(6px, 0.8vh, 12px);
+      left: 9%;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: clamp(2px, 0.35vh, 5px);
+      pointer-events: none;
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+    .header-scene {
+      display: block;
+      height: clamp(40px, 5.8vh, 70px);
+      width: auto;
+    }
+
+    /* top-right navigation links, sitting along the header line */
+    .top-nav {
+      position: fixed;
+      top: 2.7vh;
+      left: 52%;      /* keep all links to the right of this line */
+      right: 3%;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(5px, 0.7vw, 12px);
+    }
+    .top-nav a {
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 600;
+      font-size: clamp(12px, 1.45vh, 15px);
+      letter-spacing: 0.04em;
+      color: var(--brand-dark);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.18s ease;
+    }
+    .top-nav a:hover,
+    .top-nav a:focus-visible { color: var(--brand-accent); }
+
+    /* hero tagline inside the panel's upper-left (the raised "bump" area) */
+    .hero-title {
+      position: absolute;
+      top: var(--title-y);
+      left: var(--title-x);
+      max-width: 52%;
+      white-space: nowrap;
+      margin: 0;
+      font-family: "Archivo Black", system-ui, sans-serif;
+      font-weight: 400;
+      font-size: var(--title-size);
+      line-height: var(--title-leading);
+      letter-spacing: var(--title-tracking);
+      color: var(--title-color);
+    }
+
+    /* company wordmark under the header logo */
+    .brand-kicker {
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 600;
+      font-size: clamp(10px, 1.25vh, 14px);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #2a4a1f;
+      white-space: nowrap;
+      margin: 0;
+    }
+    .brand-kicker--header {
+      font-size: clamp(15px, 2.4vh, 26px);
+      padding-left: 2px;
+    }
+    /* studio descriptor line under the wordmark */
+    .brand-sub {
+      font-size: clamp(9px, 1.15vh, 13px);
+      letter-spacing: 0.3em;
+      color: #5d7a66;
+      margin-top: -2px;
+      padding-left: 2px;
+    }
+
+    /* stock-ticker pill (optional) — first item in the top-nav row */
+    .brand-ticker {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 7px;
+      white-space: nowrap;
+      padding: 5px 12px;
+      border: 1.5px solid rgba(21, 36, 28, 0.16);
+      border-radius: 100px;
+      background: rgba(21, 36, 28, 0.035);
+    }
+    .brand-ticker .sym {
+      font-family: "Archivo Black", system-ui, sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      color: #0e0e0e;
+    }
+    .brand-ticker .cse {
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--brand-accent);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .brand-ticker .cse:hover,
+    .brand-ticker .cse:focus-visible { text-decoration: underline; }
+
+    /* the scroll region starts just BELOW the fixed header, so nothing ever scrolls
+       behind it. The outer wrapper carries the edge glow; it is applied to the
+       MASKED scroll-area result, so the fixed cut curve and the left rail edge get
+       the soft shadow too. */
+    .scroll-shadow { position: fixed; inset: 0; z-index: 2; filter: var(--edge-outline); pointer-events: none; }
+
+    .scroll-area {
+      pointer-events: auto;
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      /* ease/settle cleanly onto the dock point, then scroll on past */
+      scroll-snap-type: y proximity;
+      scroll-padding-top: 12vh;
+      /* Fixed cut at the dock using the panel's EXACT curve (same path, same 8-100%
+         span, same 18vh zone) pinned at 12vh. Content scrolls UP and is cut off at
+         this curve; the backdrop strip above stays. The panel's own curve locks into it. */
+      --dock-cut: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 100 100'><path fill='%23fff' d='M0,100 L0,44 C0,20 4,6 16,6 L30,6 C46,6 54,94 70,94 L100,94 L100,100 Z'/></svg>");
+      -webkit-mask: var(--dock-cut) right 12vh / 92% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 29.5vh) no-repeat;
+              mask: var(--dock-cut) right 12vh / 92% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 29.5vh) no-repeat;
+    }
+
+    /* transparent spacer: the clear backdrop band that shows between the header and the panel at the top */
+    /* transparent spacer: sets where the panel RESTS on load, i.e. where the
+       rise-and-dock scroll animation starts. Bigger = more open terrain above
+       the panel. The dock point, scroll-snap and side-scrollbar all derive
+       from the panel's offset, so this is the single knob. */
+    .hero-spacer { height: 60vh; }
+
+    /* SCROLLING content panel — offset from the left so a clear backdrop rail
+       always shows down its left side. Rounded/stepped top edge. */
+    .panel {
+      position: relative;
+      z-index: 2;
+      margin-left: 8%;
+      min-height: 0;
+      background: #ffffff;
+      padding: 24vh 2.5% 4vh 7%;
+      /* Reserve room for the (width-sized, 4-line) headline so content below can
+         never ride up into it. Keeps 24vh on tall screens but floors at
+         "headline height + 32px" otherwise. */
+      /* TI headline is 3 lines (was 4 on the donor site) — reserve accordingly */
+      padding-top: max(20vh, calc(3.5vh + 32px + 3.4 * clamp(26px, 3.1vw, 52px)));
+      /* curved top-left corner + curved step down to the right; fixed-height "cap"
+         shapes the top while a solid layer fills the rest. Start the fill below
+         the curve’s horizontal tangent (94% of 18vh = 16.92vh), otherwise
+         the rectangle cuts the curve short and creates a visible corner. */
+      --cap: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M0,100 L0,44 C0,20 4,6 16,6 L30,6 C46,6 54,94 70,94 L100,94 L100,100 Z' fill='%23fff'/></svg>");
+      -webkit-mask: var(--cap) top / 100% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 17.5vh) no-repeat;
+              mask: var(--cap) top / 100% 18vh no-repeat, linear-gradient(#fff, #fff) bottom / 100% calc(100% - 17.5vh) no-repeat;
+    }
+
+    /* ===== overview: bordered text card (left) + media placeholder (right) ===== */
+    .overview {
+      /* --ov-shift translates the whole overview (card + media + glued news strip)
+         DOWN; everything below moves with it via normal flow, and the absolutely
+         positioned headline/header above stay put. Tune in one place. */
+      --ov-shift: 26vh;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: clamp(28px, 4vw, 56px);
+      align-items: start;
+      margin-top: var(--ov-shift);
+      margin-bottom: clamp(6px, 1.2vh, 14px);
+    }
+    .ov-text {
+      margin-top: 1.5vh;   /* aligns the card top with the media top (matches .ov-media) */
+      background: transparent;
+      border: 1.5px solid var(--brand-accent);
+      border-radius: 18px;
+      padding: clamp(26px, 3vw, 44px);
+    }
+    .ov-left { display: flex; flex-direction: column; align-items: flex-start; }
+    .ov-allbtn {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: clamp(20px, 3.5vh, 40px);
+      padding: 14px 26px;
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 700; font-size: clamp(14px, 1.05vw, 16px); letter-spacing: 0.01em;
+      color: #fff; background: var(--brand-accent); border: 1.5px solid var(--brand-accent);
+      border-radius: 100px; text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .ov-allbtn svg { width: 20px; height: 20px; transition: transform 0.2s ease; }
+    .ov-allbtn:hover { background: var(--brand-accent-hover); }
+    .ov-allbtn:hover svg { transform: translateX(3px); }
+    .ov-media { margin-top: 1.5vh; }
+    .ov-text .ov-h {
+      font-family: "Archivo Black", system-ui, sans-serif; font-weight: 400;
+      font-size: clamp(22px, 2.6vw, 34px); line-height: 1.16; color: var(--brand-dark); margin: 0 0 18px;
+    }
+    .ov-text p { font-size: clamp(15px, 1.05vw, 17.5px); line-height: 1.62; color: var(--body-text); margin: 0 0 14px; max-width: 58ch; }
+    .ov-text p:last-child { margin-bottom: 0; }
+
+    /* media placeholder box — swap for a map, image, gallery or embed */
+    .media-figure {
+      position: relative;
+      height: clamp(480px, 68vh, 720px);
+      background:
+        repeating-linear-gradient(45deg, rgba(26,42,32,0.045) 0 14px, transparent 14px 28px),
+        #dfe7e4;
+      border: 1px solid rgba(26, 42, 32, 0.16);
+      border-radius: 18px;
+      overflow: hidden;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .media-figure .mf-label {
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 600; font-size: clamp(13px, 1.1vw, 16px);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #5d6f64; text-align: center; padding: 0 20px;
+    }
+    /* the seven services, stacked in the media slot */
+    .svc-list {
+      display: flex; flex-direction: column; justify-content: space-between;
+      width: 100%; height: 100%;
+      padding: clamp(16px, 2vh, 26px) clamp(20px, 1.8vw, 32px);
+      font-family: system-ui, "Segoe UI", sans-serif;
+      background: #fff;
+    }
+    .svc-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: clamp(8px, 1.1vh, 13px) 0;
+      border-top: 1px solid rgba(21, 36, 28, 0.12);
+      text-decoration: none;
+    }
+    .svc-item:first-child { border-top: 0; }
+    .svc-item .si-n { font-family: "Archivo Black", system-ui, sans-serif; font-size: 12px; color: #7a8a7f; flex: none; padding-top: 3px; }
+    .svc-item .si-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .svc-item .si-t { font-family: "Archivo Black", system-ui, sans-serif; font-size: clamp(15px, 1.2vw, 19px); color: var(--brand-dark); transition: color 0.18s ease; }
+    .svc-item .si-d { font-size: clamp(11.5px, 0.85vw, 13.5px); line-height: 1.45; color: #4a5a4f; }
+    .svc-item .si-k { margin-left: auto; flex: none; font-weight: 600; font-size: clamp(11px, 0.85vw, 13px); color: var(--brand-accent); white-space: nowrap; padding-top: 4px; }
+    .svc-item:hover .si-t { color: var(--brand-accent); }
+    @media (max-width: 600px) { .svc-item .si-k { display: none; } }
+    @media (max-width: 820px) { .overview { grid-template-columns: 1fr; } }
+
+    /* ===== second content band (inside the full-width white continuation) ===== */
+    .data {
+      max-width: 1700px; font-family: system-ui, "Segoe UI", sans-serif;
+      display: block;
+    }
+    /* shared eyebrow kicker — one rule for every section (.brain, .shift, .data,
+       .start use .eyebrow; the overview uses .ov-eyebrow) */
+    .eyebrow, .ov-text .ov-eyebrow {
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 700; font-size: clamp(11px, 1.3vh, 14px); letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--brand-accent); margin: 0 0 14px;
+    }
+    .data h2 {
+      font-family: "Archivo Black", system-ui, sans-serif; font-weight: 400;
+      font-size: clamp(23px, 2.9vw, 38px); line-height: 1.16; color: var(--brand-dark); margin: 0 0 14px;
+    }
+    .data .lede { font-size: clamp(15px, 1.05vw, 18px); line-height: 1.62; color: var(--body-text); max-width: 68ch; margin: 0; }
+
+    .data-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: clamp(30px, 4vh, 44px); }
+    /* shared pill-button spec — used by .data-cta and .sh-cta (the AI-shift section) */
+    .data-cta a, .sh-cta a { display: inline-flex; align-items: center; font-family: system-ui, "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(14px, 1.05vw, 16px); letter-spacing: 0.01em; text-decoration: none; border-radius: 100px; padding: 14px 26px; transition: background .2s, border-color .2s, color .2s; }
+    .data-cta .btn-solid, .sh-cta .btn-solid { background: var(--brand-accent); color: #fff; border: 1.5px solid var(--brand-accent); }
+    .data-cta .btn-solid:hover, .sh-cta .btn-solid:hover { background: var(--brand-accent-hover); }
+    .data-cta .btn-outline, .sh-cta .btn-outline { border: 1.5px solid rgba(21,36,28,0.3); color: var(--brand-dark); background: transparent; }
+    .data-cta .btn-outline:hover, .sh-cta .btn-outline:hover { border-color: var(--brand-accent); color: var(--brand-accent); }
+
+    /* INFO container — the white panel's edge continues at the SAME left offset
+       (8%) so the backdrop rail runs continuously down the whole left side. */
+    .info {
+      position: relative;
+      z-index: 2;
+      margin-left: 8%;
+      margin-top: -1px;               /* close the hairline seam with the panel */
+      padding: clamp(8px, 1.6vh, 18px) 2.5% clamp(44px, 7vh, 96px) 7%;
+      background: #ffffff;
+    }
+
+    /* ===== minimalist recent-news strip (above the media box) ===== */
+    .news-strip {
+      /* full-width news bar pinned to the panel, sitting in the band BELOW the
+         headline in the unscrolled/docked view. Bottom-anchored (translateY(-100%))
+         so the bar's bottom stays put however the headline wraps. */
+      position: absolute;
+      top: 33vh;   /* just under the headline, leaving room for the scroll cue */
+      left: 4%;
+      right: 2.5%;
+      transform: translateY(-100%);
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(20px, 2.8vw, 52px);
+      margin-bottom: clamp(16px, 2.6vh, 30px);
+      text-align: center;
+    }
+    .news-arrow {
+      flex: none; background: none; border: 0; cursor: pointer; padding: 6px; line-height: 0;
+    }
+    .news-arrow svg { width: clamp(36px, 4vw, 54px); height: auto; display: block; }
+    .news-arrow svg path {
+      fill: #111111; stroke: #111111; stroke-width: 2.4;
+      stroke-linejoin: round; stroke-linecap: round;
+    }
+    .news-arrow:hover svg path { fill: var(--brand-accent); }
+    .news-item { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: clamp(20px, 2.6vw, 52px); text-decoration: none; text-align: left; min-width: 0; max-width: 1000px; }
+    .news-meta { display: flex; flex-direction: column; gap: 4px; flex: none; align-items: flex-start; }
+    .news-item .news-eyebrow { font-family: system-ui, "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brand-accent); white-space: nowrap; }
+    .news-item .news-date { font-family: system-ui, sans-serif; font-size: 15px; color: #6a766e; white-space: nowrap; }
+    .news-item .news-headline { font-family: "Archivo Black", system-ui, sans-serif; font-weight: 400; font-size: clamp(20px, 1.9vw, 30px); line-height: 1.2; color: var(--brand-dark); max-width: 46ch; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .news-item:hover .news-headline { color: var(--brand-accent); }
+
+    /* scroll cue — centered under the services strip in the on-load view;
+       fades out as soon as the visitor starts scrolling */
+    .scroll-cue {
+      position: absolute;
+      top: 35.5vh;
+      left: 4%;
+      right: 2.5%;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      color: var(--muted-text);
+      font-family: system-ui, "Segoe UI", sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .scroll-cue svg { width: 18px; height: 18px; animation: cue-bob 2.2s ease-in-out infinite; }
+    @keyframes cue-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+    @media (prefers-reduced-motion: reduce) { .scroll-cue svg { animation: none; } }
+    .scroll-cue.is-gone { opacity: 0; }
+
+    /* ── Short viewports (wide-but-short windows, smaller laptops) ── */
+    @media (max-height: 820px) {
+      /* news strip: anchor from the TOP so it grows downward on short screens */
+      .news-strip { top: clamp(140px, 26vh, 190px); transform: none; }
+      .scroll-cue { top: clamp(240px, 33.5vh, 275px); }
+      /* brand wordmark + nav: drive off width instead of height so they stay legible */
+      .brand-kicker--header { font-size: clamp(15px, 1.45vw, 20px); }
+      .top-nav a { font-size: clamp(13px, 1.05vw, 16px); }
+    }
+
+    /* hide the native (right) scrollbar — we use a custom short bar on the LEFT */
+    .scroll-area { scrollbar-width: none; }
+    .scroll-area::-webkit-scrollbar { width: 0; height: 0; }
+
+    /* custom SHORT scrollbar on the left edge — fades in only once the panel docks */
+    .side-scroll {
+      position: fixed;
+      left: 7%;
+      top: 20vh;
+      bottom: 1.5vh;
+      width: 6px;
+      z-index: 6;
+      background: rgba(255, 255, 255, 0.32);
+      border-radius: 100px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+    .side-scroll.is-ready { opacity: 1; pointer-events: auto; }
+    .side-scroll-thumb {
+      position: absolute;
+      left: -1px; right: -1px;
+      top: 0;
+      height: 40px;
+      background: var(--brand-dark);
+      border-radius: 100px;
+      box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.55);
+      cursor: grab;
+    }
+    .side-scroll-thumb:active { cursor: grabbing; }
+  
+
+    .m-nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px;
+      position: fixed; top: 11px; right: 14px; z-index: 8; width: 40px; height: 36px;
+      padding: 7px 6px; background: none; border: 0; cursor: pointer; }
+    .m-nav-toggle span { display: block; height: 2.5px; width: 100%; background: var(--brand-dark);
+      border-radius: 2px; transition: transform .25s ease, opacity .2s ease; }
+    .m-nav-toggle.is-open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    .m-nav-toggle.is-open span:nth-child(2) { opacity: 0; }
+    .m-nav-toggle.is-open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+  
+
+  /* =================================================================
+     MOBILE LAYOUT (<=1100px): the cinematic desktop layout (fixed
+     backdrop, masked side-rail panels, hand-placed header) can't fit a
+     phone, so below this width we take over with a clean, stacked
+     layout: a simple white top bar + hamburger, a full-bleed hero
+     poster, then a single column of content. Static poster (no video).
+     ================================================================= */
+  @media (max-width: 1100px) {
+    /* release the desktop viewport-lock so the page scrolls normally */
+    html, body { height: auto; min-height: 100%; overflow: visible; overflow-x: hidden; }
+
+    /* ---- top bar: white, logo left, hamburger right ---- */
+    .topbar-wrap { position: fixed; top: 0; left: 0; right: 0; height: 58px;
+      filter: none; background: #fff; z-index: 6;
+      box-shadow: 0 1px 0 rgba(21,36,28,.07), 0 8px 20px -14px rgba(21,36,28,.55); }
+    .topbar { display: none; }
+    .brand-ticker { display: none; }
+    .brand-lockup { position: fixed; top: 0; left: 0; right: 0; height: 58px;
+      flex-direction: row; align-items: center; gap: 9px;
+      padding: 0 16px; z-index: 7; }
+    .header-scene { height: 30px; }
+    .brand-kicker--header { font-size: 11px; letter-spacing: .14em; padding-left: 0; }
+    .brand-sub { display: none; }
+
+    .m-nav-toggle { display: flex; }      /* shown only on mobile */
+
+    /* nav: collapses into a dropdown panel under the bar */
+    .top-nav { position: fixed; top: 58px; left: 0; right: 0;
+      flex-direction: column; align-items: stretch; justify-content: flex-start;
+      gap: 0; background: #fff; z-index: 6; padding: 4px 0 10px;
+      box-shadow: 0 16px 26px -18px rgba(21,36,28,.6);
+      opacity: 0; visibility: hidden; transform: translateY(-10px); pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease, visibility .2s; }
+    .top-nav.m-open { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
+    .top-nav a { padding: 14px 22px; font-size: 16px; border-top: 1px solid rgba(21,36,28,.07); }
+
+    /* ---- hero: static full-bleed poster (no video) ---- */
+    .hero-video-bg { position: relative; inset: auto; height: 46vh; margin-top: 58px; z-index: 0; }
+    .hero-video-bg video { display: none; }
+    .hero-video-poster { opacity: 1; }
+
+    /* ---- content: un-fix, un-mask, single column ---- */
+    .scroll-shadow { position: static; inset: auto; filter: none; pointer-events: auto; }
+    .scroll-area { position: static; inset: auto; overflow: visible; height: auto;
+      -webkit-mask: none; mask: none; scroll-snap-type: none; scroll-padding-top: 0; }
+    .hero-spacer { display: none; }
+    .side-scroll { display: none; }
+
+    .panel-wrap { scroll-snap-align: none; }
+    .panel { margin-left: 0; padding: 26px 18px 28px; -webkit-mask: none; mask: none; }
+    .hero-title { position: static; max-width: 100%; white-space: normal;
+      font-size: clamp(26px, 7.4vw, 40px); line-height: 1.12; margin: 0 0 22px; }
+
+    /* brain + overview: stack, drop the desktop strip-clearing offset */
+    .brain { margin-top: 24px; }
+    .shift { margin-top: 24px; padding-top: 24px; }
+    .shift + .overview { padding-top: 24px; }
+    .overview { display: block; margin-top: 0; margin-bottom: 0; }
+    .ov-text { margin-top: 0; }
+    .ov-allbtn { margin-top: 20px; }
+    .ov-media { margin-top: 26px; }
+    .media-figure { height: 56vh; }
+
+    /* recent-news strip: pull it out of its absolute slot, center it full-width */
+    .news-strip { position: static; transform: none; top: auto; left: auto; right: auto;
+      width: 100%; margin: 6px 0 30px; gap: clamp(10px, 4vw, 26px); }
+    .scroll-cue { display: none; }   /* mobile scrolls normally — no cue needed */
+    .news-item .news-headline { font-size: clamp(20px, 5.4vw, 27px); }
+
+    /* second band + footer: drop the left rail, stack grids */
+    .info { margin-left: 0; padding: 8px 18px 36px; }
+    .site-footer-x { margin-left: 0; padding-left: 22px; padding-right: 22px; }
+    .foot-inner { grid-template-columns: 1fr; row-gap: 28px; }
+  }
+  
+
+          .start { max-width: 720px; margin: clamp(44px, 6.5vh, 80px) 0 0; padding-top: clamp(38px, 5.5vh, 64px); border-top: 1px solid rgba(42, 74, 31, 0.22); font-family: system-ui, "Segoe UI", sans-serif; }
+          .start h2 { font-family: "Archivo Black", system-ui, sans-serif; font-weight: 400; font-size: clamp(23px, 2.6vw, 38px); line-height: 1.16; color: var(--brand-dark); margin: 0 0 12px; }
+          .start .lede { font-size: clamp(15px, 1.05vw, 17.5px); line-height: 1.62; color: var(--body-text); margin: 0 0 26px; max-width: 58ch; }
+          .start .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+          .start label { display: block; font-weight: 600; font-size: 13.5px; color: var(--brand-dark); }
+          .start input[type="text"], .start input[type="email"], .start textarea {
+            display: block; width: 100%; margin-top: 6px; padding: 12px 14px;
+            font: 16px system-ui, "Segoe UI", sans-serif; color: var(--brand-dark);
+            background: #fff; border: 1.5px solid rgba(21, 36, 28, 0.25); border-radius: 12px; }
+          .start input:focus, .start textarea:focus { outline: 2px solid var(--brand-accent); outline-offset: 1px; }
+          .start .block { display: block; margin-bottom: 18px; }
+          .start .honey { display: none; }
+          .start .submit { display: inline-flex; padding: 14px 30px; font-weight: 700; font-size: 15px; color: #fff;
+            background: var(--brand-accent); border: 1.5px solid var(--brand-accent); border-radius: 100px;
+            cursor: pointer; transition: background 0.2s ease; }
+          .start .submit:hover { background: var(--brand-accent-hover); }
+          .start .submit:disabled { opacity: 0.6; cursor: default; }
+          .start .direct { font-size: 13.5px; line-height: 1.7; color: var(--muted-text); margin: 22px 0 0; }
+          .start .direct a { color: var(--brand-accent); text-decoration: none; }
+          .start .direct a:hover { text-decoration: underline; }
+          .start .form-note { font-size: 15px; line-height: 1.6; color: var(--brand-dark); background: #eef4ef; border: 1.5px solid var(--brand-accent); border-radius: 12px; padding: 16px 18px; }
+          @media (max-width: 600px) { .start .f-row { grid-template-columns: 1fr; } }
+        

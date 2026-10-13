@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketing — Taylor Intelligence</title>
+  <meta name="description" content="Campaigns, content and creative that bring the right people to your business. A clear plan, shaped around your goals." />
+  <link rel="icon" href="/favicon.svg?v=ti-monogram" type="image/svg+xml" />
+  <link rel="canonical" href="https://taylorintelligence.ai/marketing/" />
+  <!-- social share (Open Graph + Twitter) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Taylor Intelligence" />
+  <meta property="og:url" content="https://taylorintelligence.ai/marketing/" />
+  <meta property="og:title" content="Marketing — Taylor Intelligence" />
+  <meta property="og:description" content="Campaigns, content and creative that bring the right people to your business. A clear plan, shaped around your goals." />
+
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Taylor Intelligence — AI Automation Studio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Marketing — Taylor Intelligence" />
+  <meta name="twitter:description" content="Campaigns, content and creative that bring the right people to your business. A clear plan, shaped around your goals." />
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[
+    {"@type":"LocalBusiness","@id":"https://taylorintelligence.ai/#business","name":"Taylor Intelligence","description":"Independent studio building websites, AI systems and software for businesses.","url":"https://taylorintelligence.ai/","email":"theo@taylorintelligence.ai","telephone":"+1-250-299-7815","founder":{"@type":"Person","name":"Theo Taylor"},"address":{"@type":"PostalAddress","addressLocality":"Victoria","addressRegion":"BC","addressCountry":"CA"},"areaServed":["Victoria BC","Vancouver Island","British Columbia","Canada"]},
+    {"@type":"WebSite","@id":"https://taylorintelligence.ai/#website","url":"https://taylorintelligence.ai/","name":"Taylor Intelligence"}
+  ]}
+  </script>
+  <!-- CUSTOMIZE: display font (used for headlines + ticker) -->
+
+
+
+
+
+<link rel="preload" href="/assets/fonts/ArchivoBlack-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/site-base.css"><link rel="stylesheet" href="/green.css"><link rel="stylesheet" href="/service-pages.css">
+</head>
+<body class="service-page">
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- ===== fixed full-screen BACKGROUND =====
+       Ships with a self-contained SVG landscape so the template works with zero
+       assets. CUSTOMIZE: to use a video, fill the data-src-* attributes below
+       (largest first) — the loader fades it in over the poster automatically.
+       To use a photo instead, replace the <svg> with
+       <img class="hero-video-poster" src="assets/background.jpg" alt="" /> -->
+  <div class="hero-video-bg" id="hero-video-bg" aria-hidden="true">
+    <!-- generative "living terrain": a slowly drifting topographic point-cloud
+         rendered in the brand palette, with occasional neural links riding the
+         landscape toward the camera. Pure canvas — zero assets, recolorable via
+         the TERRAIN config below. Renders a single static frame on mobile and
+         for prefers-reduced-motion. A video dropped into the data-src-* slots
+         still fades in over it, exactly like the old poster. -->
+    <canvas class="hero-video-poster" id="terrain-gl"></canvas>
+    <canvas class="hero-video-poster" id="terrain-bg"></canvas>
+    <video class="hero-video" muted loop playsinline preload="auto"
+      data-src-4k=""
+      data-src-2k=""
+      data-src-fallback=""></video>
+  </div>
+
+  <script src="/terrain.js" defer></script>
+
+  <!-- ===== FOREGROUND CONTAINER 1: fixed top header strip ===== -->
+  <div class="topbar-wrap">
+    <svg class="topbar" viewBox="0 0 1400 100" preserveAspectRatio="none" aria-hidden="true">
+      <!-- solid white header strip with the curved/stepped bottom edge -->
+      <path d="M0,0 L1400,0 L1400,62 L700,62 C588,62 588,100 448,100 L112,100 C56,100 0,86 0,60 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+
+  <!-- Agency monogram and wordmark. -->
+  <a class="brand-lockup" href="/" aria-label="Taylor Intelligence — home">
+        <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <g transform="translate(3.290 24.934) scale(0.0256 -0.0256)">
+            <path d="M557 563H368V0H216V563H27V698H557Z"/>
+            <path transform="translate(584 0)" d="M382 0H50V121H140V577H50V698H382V577H292V121H382Z"/>
+          </g>
+        </svg>
+        <span class="word">Taylor Intelligence</span>
+      </a>
+
+  <!-- Primary navigation. -->
+  <nav id="top-nav" class="top-nav" aria-label="Primary"><details class="nav-disclosure services-menu"><summary>Services <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></div></details><a href="/#studio">Team</a><details class="nav-disclosure socials-menu"><summary>Our Socials <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram</a><p class="dropdown-note">More on the way.</p></div></details><a href="/principles/">Principles</a><a class="nav-contact" href="/#start">Let’s talk</a></nav>
+
+  <!-- mobile-only hamburger (toggles .top-nav); hidden on desktop via CSS -->
+  <button class="m-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="top-nav">
+    <span></span><span></span><span></span>
+  </button>
+
+
+
+<div class="scroll-shadow"><div class="scroll-area"><div class="hero-spacer"></div><div class="panel-wrap">
+<main class="panel" id="main-content"><header class="page-hero"><p class="page-kicker">Marketing</p><h1 class="page-title page-title-contour" aria-label="Turn attention into customers" style="--curve-size:84px;--base-size:82px">
+  <svg class="page-type" viewBox="0 0 760 260" role="presentation" aria-hidden="true">
+    <defs><path id="page-headline-contour" d="M0 84 C170 84 225 88 310 102 S530 143 730 139"/><path id="page-base-contour" d="M-3 237 C165 228 285 228 400 240 S590 256 735 246"/></defs>
+    <text class="page-type-curve"><textPath href="#page-headline-contour">Turn attention</textPath></text>
+    <text class="page-type-main"><textPath href="#page-base-contour">into customers</textPath></text>
+  </svg>
+  <span class="page-type-mobile" aria-hidden="true"><span>Turn attention</span><strong>into customers</strong></span>
+</h1><div class="page-intro"><p>Campaigns, content and creative that bring the right people to your business. A clear plan, shaped around your goals.</p><a class="green-link" href="#page-details">Explore</a></div></header><div id="page-details"><section class="service-section marketing-section" id="services" aria-labelledby="marketing-heading">
+<div class="green-heading"><div><h2 id="marketing-heading">Marketing services</h2></div><p>Paid campaigns, social content and brand development</p></div>
+<div class="marketing-grid">
+<article class="service-card"><div class="platform-art platform-meta"><img src="/assets/brands/meta.svg" alt="Meta" width="256" height="171" loading="lazy"></div><h3>Meta Ads</h3><p>Creative and campaigns for Facebook and Instagram, shaped around the people you want to reach.</p></article>
+<article class="service-card"><div class="platform-art platform-google"><img src="/assets/brands/google-ads.svg" alt="Google Ads" width="800" height="800" loading="lazy"></div><h3>Google Ads</h3><p>Meet people at the moment they’re looking for what your business offers.</p></article>
+<article class="service-card"><div class="platform-art platform-social"><img src="/assets/brands/instagram-icon.svg" alt="Instagram" width="265" height="265" loading="lazy"><img src="/assets/brands/tiktok-icon-light.svg" alt="TikTok" width="352" height="399" loading="lazy"><img src="/assets/brands/facebook-icon.svg" alt="Facebook" width="667" height="667" loading="lazy"></div><h3>Social media</h3><p>A consistent presence, with content that sounds like you and gives people a reason to follow.</p></article>
+<article class="service-card"><img src="/assets/services/brand-scaling.svg" alt="Coordinated brand layouts for print and social media." width="480" height="320" loading="lazy"><h3>Brand scaling</h3><p>Bring your positioning, creative and campaigns together as your business grows.</p></article>
+</div><div class="marketing-quote"><h3>Scope and pricing</h3><p>Pricing depends on your channels, creative, content and ongoing management. We’ll scope the work together, with ad spend separate from our fees.</p><a class="purchase-button" href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP" target="_blank" rel="noopener noreferrer">Book a free fit call</a></div>
+</section><section class="detail-section"><div class="detail-heading"><h2>Planning and management</h2></div><div class="detail-grid"><article><h3>Find the real opportunity</h3><p>We start with the audience, offer and customer journey. Where are people discovering you, and what happens after they click?</p></article><article><h3>Make something worth noticing</h3><p>Creative, content and landing pages should tell the same story. We shape them around the offer and the platform, with room to test different ideas.</p></article><article><h3>Learn from what happens</h3><p>We look at enquiries and meaningful customer actions alongside campaign data. That informs what to improve, keep running or stop.</p></article></div></section><section class="detail-section"><div class="detail-heading"><h2>Campaign scope</h2></div><div class="scope-list"><p><strong>Campaigns</strong><span>Meta and Google Ads, with creative and landing pages shaped around the offer.</span></p><p><strong>Content</strong><span>Social content, a consistent voice and a clear reason for people to follow.</span></p><p><strong>Brand growth</strong><span>Positioning, creative direction and the systems behind a more consistent presence.</span></p></div></section><section class="detail-section"><div class="detail-heading"><h2>Questions</h2></div><div class="service-faq"><details><summary>Why isn’t there one fixed price?<span aria-hidden="true">+</span></summary><p>A single campaign and a multi-channel content programme need different levels of work. We scope the channels, creative, content and ongoing management together, then quote the work. Advertising spend is set out separately from our fees.</p></details><details><summary>Do we need to be on every platform?<span aria-hidden="true">+</span></summary><p>No. The right mix depends on your customers and your offer. We would rather start with a clear reason for a channel than add one just to fill a plan.</p></details><details><summary>Can you help with the website as well?<span aria-hidden="true">+</span></summary><p>Yes. Website design, landing pages, marketing and software can be planned together, so the experience after the click is part of the work.</p></details></div></section><section class="detail-call"><div><h2>Discuss your marketing</h2><p>Bring your goals and what you’ve tried. We’ll work out a sensible starting point.</p></div><a class="purchase-button" href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP" target="_blank" rel="noopener noreferrer">Book a free fit call</a></section></div><section class="start" id="start" aria-label="Start a project"><h2>Tell us about your project</h2><p class="lede">A website, a workflow, or an idea you want to explore. Tell us where you’d like to go.</p><form action="https://api.web3forms.com/submit" method="POST" data-lead-form>
+            <input type="hidden" name="access_key" value="3d97d841-4c10-4ecf-9b00-248974f688a3">
+            <input type="hidden" name="subject" value="New project inquiry — taylorintelligence.ai">
+            <input type="hidden" name="page_path" value="">
+            <input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_term" value=""><input type="hidden" name="utm_content" value=""><input type="hidden" name="gclid" value="">
+            <input type="checkbox" name="botcheck" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="f-row">
+              <label>Name<input type="text" name="name" required autocomplete="name"></label>
+              <label>Email<input type="email" name="email" required autocomplete="email"></label>
+            </div>
+            <label class="block">What would you like to build?<textarea name="message" rows="4" required></textarea></label>
+            <button type="submit" class="submit">Send it</button>
+          </form><p class="direct"><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a> · <a href="tel:+12502997815">+1 250 299 7815</a></p></section><footer class="green-footer">
+<div class="footer-main">
+<div class="footer-identity"><a class="footer-name" href="/">Taylor Intelligence</a><p>Victoria, British Columbia</p><p>Websites, marketing, AI training<br>and software, from one team.</p></div>
+<nav class="footer-links" aria-label="Footer services"><h2>Services</h2><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></nav>
+<nav class="footer-links" aria-label="About Taylor Intelligence"><h2>Company</h2><a href="/#studio">Our team</a><a href="/principles/">Principles</a><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram</a></nav>
+<div class="footer-links footer-contact"><h2>Get in touch</h2><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a><a href="tel:+12502997815">+1 250 299 7815</a><a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP" target="_blank" rel="noopener noreferrer">Book a free fit call</a></div>
+</div>
+<div class="footer-bottom"><span>Taylor Intelligence © 2026</span><div class="footer-legal"><button class="terrain-toggle" type="button" aria-pressed="false">Pause motion</button></div></div>
+</footer></main></div></div></div><script src="/lead-form.js"></script><script src="/green.js" defer></script></body></html>

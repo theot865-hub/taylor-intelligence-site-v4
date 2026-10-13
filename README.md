@@ -1,36 +1,46 @@
-# Taylor Intelligence — site v4 · "Simple by design"
+# Taylor Intelligence — Agency site
 
-A lean, self-contained agency site. Pure white ground, single black hairline
-weight, no frameworks, no build step. Everything (CSS, JS, the map SVG) is
-inlined in `index.html`.
+Local branch `codex/green-portfolio`, built from v4 review `3ae0462` and authored green v3 `0df7132`.
+**Publication authorized by Theo on October 12, 2026.** Cloudflare can deploy review branches to the canonical domain before a PR merge; verify the exact build and public content after every push.
 
-## Structure
+## Current review direction
 
-```
-index.html     the entire site — inline CSS + JS + SVG, no dependencies
-_redirects     Cloudflare Pages rewrites so /card etc. serve index.html
-map/           build pipeline for the hairline Salish Sea coastline map
-  build_map.py   fetch OSM coastline (Overpass) → stitch → simplify → map_data.json
-  gen_svg.py     map_data.json → map_snippet.svg (paste into index.html)
-  map_data.json  cached projected paths + city coords
-  map_snippet.svg the <svg> currently embedded in the statement band
-```
+Theo's October12 direction combines the original curved white panels, Archivo Black typography and animated terrain with monochrome shading, birds and the professional TI monogram/Manrope wordmark. The black curved homepage headline reads “One agency for everything” The homepage is a compact overview: Websites → Marketing → Education → Software & agents → Team → Contact.
 
-## Pages / routing
+- Local review: `/Users/theotaylor/Work/Sites/ti-green-review-20261012`, http://127.0.0.1:4191/.
+- Dedicated pages: `/websites/`, `/marketing/`, `/education/`, `/software/` and `/principles/`.
+- Header: Services, Team, Our Socials, Principles, Let’s talk. Each dropdown matches its trigger width. Team links to the homepage studio section; Principles links to four principles on its own page.
+- Our Socials currently links only to the confirmed `https://www.instagram.com/taylorintelligence/` profile. Other agency profile URLs are pending Theo/Julian; no personal or guessed profiles added.
+- `/portfolio` redirects to `/websites/`. Legacy `/services`, `/approach`, `/contact`, `/card` retain homepage section behavior.
+- Original green reference remains at4190; previous orange review at4188.
 
-Client-side router (bottom of `index.html`). Reads the hash, or the last path
-segment so bare paths work once `_redirects` is live.
+## Assets and code
 
-- `/`            Home — statement + map, Services, closing CTA
-- `/portfolio`   Selected work
-- `/approach`    In-depth: 3-step method + per-service deep dives + Conduit + principles
-- `/contact`     Contact form + direct details
-- `/card`        alias → Contact (the QR / business-card landing)
+Static HTML, no frontend build step. `site-base.css` contains the extracted original panel/terrain styles; `terrain.js` contains the terrain renderer and independent bird flight. `green.css` adds the portfolio layout; `service-pages.css` adds shared navigation and standalone service layouts. `green.js` handles disclosures, mobile navigation, legacy section aliases and contact feedback. `lead-form.js` retains UTM/page metadata behavior. Form success requires both HTTP success and `{success:true}`; test requests are intercepted, never sent.
 
-Add a page: drop a `#page-x` block and add `x: true` to the `standalone` map
-(and a `_redirects` line if it needs a bare path).
+The landscape keeps its birds, pause control and hidden-tab suspension. Neural chains, explorer routes and ridge pulses are removed. Viewport-aware world width and100px overscan prevent exposed edges. Screens up to1100px and reduced-motion preferences use a still frame.
+
+The client strip uses five original logos. Tire X preserves the red X with black wireframe TIRE/CANADA lettering on transparent ground. The homepage initially shows Stone Design, Szolyd and Knot Normal; a right-side disclosure reveals Tire X, labelled as a review build. The dedicated Websites page shows all four. Adam’s Tires, Sasquatch and CCT concepts are excluded. Big O and Omen are client logos, not website credits.
+
+Marketing cards use original colour Meta, Google Ads, Instagram, TikTok and Facebook vector marks (`assets/brands/SOURCES.md`), plus the coded Brand scaling illustration. Software uses clearly labelled illustrative workspace/agent diagrams and explains Agentic as a Service; Tire X software remains in development. Education reuses the full Theo/Julian call image and existing checkout script. Principles are draft brand copy for review: people, usefulness, clarity and learning.
+
+Website purchase is CAD1,500 upfront; CAD500/month maintenance and SEO must be activated separately at launch (see `docs/website-checkout.md`). Education remains CAD1,200/company plus CAD100/employee observer for four calls over two weeks. Marketing and software are scoped individually; fit-call links use the existing Google Calendar schedule. The campaign `/ai-intensive/` keeps its independent layout and offer. Its labels, heading punctuation, fonts and images share the October12 cleanup. This agency redesign preserves the October 12 CAD1,200 Stripe configuration, Worker and checkout scripts.
+
+Review scripts and screenshots live outside the deploy bundle in `/Users/theotaylor/Documents/Codex/2026-10-12/ti-orange-review/`. October12 multipage QA covered six routes at320/390/800/1150/1625px, image decoding, no horizontal overflow/runtime errors, education selector readiness/totals, exact dropdown dimensions, Escape dismissal and navigation. No payment or enquiry submitted.
+
+## October12 cleanup and motion pass
+
+The current direction removes decorative numbered overlines and repeated micro-slogans. Page labels are only Websites, Marketing, Education, Software / AgAAS and Principles. Headings have no decorative full stops. The expressive curved headlines remain; secondary headings use quieter, direct wording. Links use a restrained underline rather than repeated diagonal arrows. Header chevrons sit close to their labels, with more even navigation spacing; dropdowns still match their triggers.
+
+Scrolling uses native browser behavior, with no wheel interception or animation dependency. Five chained full-screen drop shadows were the measured bottleneck: repeated isolated local Chromium scroll tests improved from median83.3ms to16.7ms/frame after removing them. A lightweight SVG cap and white rectangle replace the long panel mask, retaining the original curve and the viewport docking mask. These are local comparisons, not guarantees for every device.
+
+Birds retain the flock and gain individually timed departures, banked swoops, glides and smooth returns. The terrain reuses coordinate buffers/jitter/gradients and skips redundant point lighting when WebGL is rendering. Pause/reduced-motion/hidden-tab behavior remains. Keep the grayscale filter on the terrain; the removed filters are the edge-outline shadows only.
+
+Fullframe WebP images use responsive srcsets; originals are retained. Education image:2,509,286 bytes original to70,960 full-size/37,204 responsive. Four work previews total766KB original to399KB full-size/152KB responsive. Both fonts are local WOFF2 (43KB combined); licenses and sources in `assets/fonts/`. Font width comparisons matched the previous files exactly. There are no Google Fonts requests, new dependencies or paid hosting requirements from this pass. Final responsive and motion evidence is stored outside the deploy bundle.
 
 ## Deployment
+
+**Policy-page follow-up (October12):** standalone `/privacy/` and `/terms/` pages are absent from this deployment. Their broken agency-footer links were removed; the campaign’s inline privacy disclosure and consent controls remain intact. Historical v2 policy pages need review against current Stripe, optional Meta measurement and newsletter handling before restoration. No new legal terms were created.
 
 The production domain is **taylorintelligence.ai**. Cloudflare Workers Builds
 deploys repository pushes automatically. On October9, the review branch
@@ -188,14 +198,8 @@ other devices or cleared storage; events queued to Meta are not a delivery
 receipt. No real paid purchase is submitted as routine verification, and Meta
 Events Manager attribution/reporting must not be claimed from source tests alone.
 
-## Regenerating the map
+## Education landing-page comparison — October 12
 
-```
-cd map
-python3 build_map.py      # re-fetch + reproject coastline (needs network)
-python3 gen_svg.py         # rebuild map_snippet.svg
-# then paste map_snippet.svg over the <svg class="statement-map"> in index.html
-```
+Theo authorized publication of the agency redesign and the second education design. `/ai-intensive/` is the existing compact campaign page; `/education/` keeps the agency contour intro and uses the same orange artwork, client logos and CAD1,200 + CAD100 observer offer. The alternate design is not yet an active randomized or equivalently measured A/B experiment. Only `/ai-intensive/` loads consent-based Meta measurement; both checkout return URLs currently point there. Match consent/event behavior and persist an originating variant before interpreting comparative conversion results. No campaign or ad spending is launched by publication.
 
-Domain of record: **taylorintelligence.ai**. v4 is the production site;
-the AI intensive landing page uses `/ai-intensive/`.
+Prepublication audit: 47 existing tests pass and 355 local asset references resolve. Responsive and visual checks are recorded above. Newsletter signups are requests sent to the existing enquiry inbox, not enrollment in a managed mailing platform.

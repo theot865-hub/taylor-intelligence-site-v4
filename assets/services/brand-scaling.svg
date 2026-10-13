@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">A brand, across every touchpoint</title>
+  <desc id="desc">A coordinated set of editorial, poster and social layouts uses the same graphic mark, palette and visual language.</desc>
+  <defs>
+    <g id="mark">
+      <path d="M0-28H12V-12H28V0H12V16H0V0H-16V-12H0Z" fill="currentColor"/>
+      <path d="M-16 4H-4V16H-16Z" fill="currentColor"/>
+    </g>
+  </defs>
+  <path fill="#f3f3f0" d="M0 0H480V320H0Z"/>
+
+  <!-- A wide editorial piece establishes the identity. -->
+  <g transform="rotate(-7 188 141)">
+    <rect x="65" y="65" width="246" height="164" rx="2" fill="#deded7"/>
+    <rect x="63" y="60" width="246" height="164" rx="2" fill="#fff" stroke="#d9d9d2"/>
+    <path d="M191 60H307Q309 60 309 62V222Q309 224 307 224H191V60Z" fill="#dfdfd7"/>
+    <path d="M192 60V224" stroke="#d0d0c8"/>
+    <g transform="translate(87 84) scale(.31)" color="#242626"><use href="#mark"/></g>
+    <path d="M79 128H164V138H79Z M79 145H146V155H79Z" fill="#242626"/>
+    <path d="M79 178H153V181H79Z M79 185H140V188H79Z M79 192H149V195H79Z" fill="#b4b5ad"/>
+    <g transform="translate(253 149) scale(1.34)" color="#242626"><use href="#mark"/></g>
+    <path d="M205 205H238V208H205Z" fill="#96988e"/>
+  </g>
+
+  <!-- A poster uses the same mark at a larger scale. -->
+  <g transform="rotate(8 340 152)">
+    <rect x="280" y="70" width="122" height="174" rx="2" fill="#d8d8d1"/>
+    <rect x="277" y="65" width="122" height="174" rx="2" fill="#292c2a"/>
+    <path d="M293 83H330V86H293Z M293 91H319V94H293Z" fill="#b9c2bc"/>
+    <g transform="translate(341 149) scale(1.38)" color="#f3f3f0"><use href="#mark"/></g>
+    <path d="M292 209H374V212H292Z M292 217H350V220H292Z" fill="#b9c2bc"/>
+  </g>
+
+  <!-- The identity becomes a compact social / business card. -->
+  <g transform="rotate(-2 223 226)">
+    <rect x="135" y="178" width="186" height="103" rx="2" fill="#d7d8d1"/>
+    <rect x="133" y="174" width="186" height="103" rx="2" fill="#fff" stroke="#d9d9d2"/>
+    <path d="M239 174H317Q319 174 319 176V275Q319 277 317 277H239V174Z" fill="#cbdde6"/>
+    <g transform="translate(158 197) scale(.34)" color="#292c2a"><use href="#mark"/></g>
+    <path d="M149 227H215V234H149Z M149 240H200V247H149Z" fill="#292c2a"/>
+    <path d="M149 262H189V265H149Z" fill="#b4b5ad"/>
+    <g transform="translate(281 230) scale(1.01)" color="#292c2a"><use href="#mark"/></g>
+  </g>
+</svg>
