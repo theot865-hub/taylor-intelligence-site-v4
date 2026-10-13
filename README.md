@@ -1,7 +1,7 @@
-# Taylor Intelligence — Portfolio review
+# Taylor Intelligence — Agency site
 
 Local branch `codex/green-portfolio`, built from v4 review `3ae0462` and authored green v3 `0df7132`.
-**Not published. Do not push until approved for production:** Cloudflare has deployed review branches to the canonical domain before a PR merge.
+**Publication authorized by Theo on October 12, 2026.** Cloudflare can deploy review branches to the canonical domain before a PR merge; verify the exact build and public content after every push.
 
 ## Current review direction
 
@@ -24,7 +24,7 @@ The client strip uses five original logos. Tire X preserves the red X with black
 
 Marketing cards use original colour Meta, Google Ads, Instagram, TikTok and Facebook vector marks (`assets/brands/SOURCES.md`), plus the coded Brand scaling illustration. Software uses clearly labelled illustrative workspace/agent diagrams and explains Agentic as a Service; Tire X software remains in development. Education reuses the full Theo/Julian call image and existing checkout script. Principles are draft brand copy for review: people, usefulness, clarity and learning.
 
-Website purchase is CAD1,500 upfront; CAD500/month maintenance and SEO must be activated separately at launch (see `docs/website-checkout.md`). Education remains CAD1,200/company plus CAD100/employee observer for four calls over two weeks. Marketing and software are scoped individually; fit-call links use the existing Google Calendar schedule. The campaign `/ai-intensive/` keeps its independent layout and offer. Its labels, heading punctuation, fonts and images share the October12 cleanup. Worker, Stripe configuration and checkout scripts remain unchanged.
+Website purchase is CAD1,500 upfront; CAD500/month maintenance and SEO must be activated separately at launch (see `docs/website-checkout.md`). Education remains CAD1,200/company plus CAD100/employee observer for four calls over two weeks. Marketing and software are scoped individually; fit-call links use the existing Google Calendar schedule. The campaign `/ai-intensive/` keeps its independent layout and offer. Its labels, heading punctuation, fonts and images share the October12 cleanup. This agency redesign preserves the October 12 CAD1,200 Stripe configuration, Worker and checkout scripts.
 
 Review scripts and screenshots live outside the deploy bundle in `/Users/theotaylor/Documents/Codex/2026-10-12/ti-orange-review/`. October12 multipage QA covered six routes at320/390/800/1150/1625px, image decoding, no horizontal overflow/runtime errors, education selector readiness/totals, exact dropdown dimensions, Escape dismissal and navigation. No payment or enquiry submitted.
 
@@ -39,6 +39,8 @@ Birds retain the flock and gain individually timed departures, banked swoops, gl
 Fullframe WebP images use responsive srcsets; originals are retained. Education image:2,509,286 bytes original to70,960 full-size/37,204 responsive. Four work previews total766KB original to399KB full-size/152KB responsive. Both fonts are local WOFF2 (43KB combined); licenses and sources in `assets/fonts/`. Font width comparisons matched the previous files exactly. There are no Google Fonts requests, new dependencies or paid hosting requirements from this pass. Final responsive and motion evidence is stored outside the deploy bundle.
 
 ## Deployment
+
+**Policy-page follow-up (October12):** standalone `/privacy/` and `/terms/` pages are absent from this deployment. Their broken agency-footer links were removed; the campaign’s inline privacy disclosure and consent controls remain intact. Historical v2 policy pages need review against current Stripe, optional Meta measurement and newsletter handling before restoration. No new legal terms were created.
 
 The production domain is **taylorintelligence.ai**. Cloudflare Workers Builds
 deploys repository pushes automatically. On October9, the review branch
@@ -195,3 +197,9 @@ or lack usable browser storage. Deduplication covers the current browser, not
 other devices or cleared storage; events queued to Meta are not a delivery
 receipt. No real paid purchase is submitted as routine verification, and Meta
 Events Manager attribution/reporting must not be claimed from source tests alone.
+
+## Education landing-page comparison — October 12
+
+Theo authorized publication of the agency redesign and the second education design. `/ai-intensive/` is the existing compact campaign page; `/education/` keeps the agency contour intro and uses the same orange artwork, client logos and CAD1,200 + CAD100 observer offer. The alternate design is not yet an active randomized or equivalently measured A/B experiment. Only `/ai-intensive/` loads consent-based Meta measurement; both checkout return URLs currently point there. Match consent/event behavior and persist an originating variant before interpreting comparative conversion results. No campaign or ad spending is launched by publication.
+
+Prepublication audit: 47 existing tests pass and 355 local asset references resolve. Responsive and visual checks are recorded above. Newsletter signups are requests sent to the existing enquiry inbox, not enrollment in a managed mailing platform.

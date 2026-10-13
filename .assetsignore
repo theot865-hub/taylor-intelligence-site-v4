@@ -4,6 +4,7 @@
 .claude
 wrangler.jsonc
 README.md
+docs/
 map
 media/_originals
 # Server implementation, local credentials, tooling and tests are not assets.
