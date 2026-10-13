@@ -1,0 +1,85 @@
+/* Education variant: shared campaign artwork, with the agency page's own layout. */
+@media (min-width:1101px) {
+  .education-page .page-title-contour { left:calc(5.4% - 18px); }
+}
+.education-client-proof {
+  border-top:1px solid #deded8;
+  padding:26px 20px;
+  margin-bottom:18px;
+  background:#fff;
+}
+.education-client-logos {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  align-items:center;
+  gap:25px;
+  max-width:760px;
+  margin:auto;
+}
+.education-logo {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  justify-self:center;
+  width:100%;
+  max-width:112px;
+  height:30px;
+  min-width:0;
+  margin:0;
+}
+.education-logo img { display:block;width:100%;height:29px;object-fit:contain; }
+.education-logo-szolyd { gap:4px; }
+.education-logo-szolyd img { width:23px;height:30px;flex:none; }
+.education-logo-szolyd span { font:18px Arial,Helvetica,sans-serif;color:#252525; }
+.education-logo-omen { overflow:hidden; }
+.education-logo-omen img { width:220%;max-width:none;height:auto;flex:none; }
+.education-page #education {
+  background:#ffbf7e url('/ai-intensive/images/orange-mentoring-background.jpg') center/cover;
+  border:0;
+  padding:32px;
+  margin-bottom:44px;
+  color:#26251f;
+}
+.education-page #education .green-heading { margin-bottom:26px; }
+.education-page #education .green-heading>p { color:#59452f; }
+.education-page .education-feature { grid-template-columns:minmax(0,1.4fr) minmax(300px,1fr);gap:30px; }
+.education-page .education-image { border-color:#78543544; }
+.education-page .education-copy h3 { font-family:Manrope,Arial,sans-serif;font-weight:700;font-size:28px;line-height:1.2; }
+.education-page .education-copy>p:not(.green-eyebrow) { color:#514332; }
+.education-page .education-checkout { background:#fff7e7d9;border-color:#92704655;padding:26px;color:#26251f; }
+.education-page .education-checkout .seat-description { color:#5e5140; }
+.education-page .course-facts,.education-page .education-total { border-color:#92704644; }
+.education-page .seat-stepper { background:#fff5e2;border-color:#92704688; }
+.education-page .education-checkout .purchase-button { background:#26251f;border-radius:5px; }
+.education-page .education-checkout .purchase-button:hover { background:#454139; }
+.education-page .education-fit { color:#3e3121; }
+@media (max-width:1000px) {
+  .education-page #education { padding:26px; }
+  .education-page .education-feature { gap:25px; }
+  .education-page .education-checkout { padding:23px; }
+}
+@media (max-width:800px) {
+  .education-page .education-feature { grid-template-columns:1fr; }
+}
+@media (max-width:640px) {
+  .education-client-proof { padding:21px 0;margin-bottom:14px; }
+  .education-client-logos { gap:12px; }
+  .education-logo { max-width:85px;height:25px; }
+  .education-logo img { height:23px; }
+  .education-logo-szolyd { gap:2px; }
+  .education-logo-szolyd img { width:17px;height:25px; }
+  .education-logo-szolyd span { font-size:13px; }
+  .education-logo-omen img { height:auto; }
+  .education-page #education { padding:24px 18px;background-image:url('/ai-intensive/images/orange-mentoring-background-mobile.jpg');margin-bottom:32px; }
+  .education-page #education .green-heading { margin-bottom:22px; }
+  .education-page .education-copy h3 { font-size:25px; }
+  .education-page .education-checkout { padding:22px 16px; }
+}
+@media (max-width:360px) {
+  .education-client-logos { gap:8px; }
+  .education-logo-szolyd img { width:14px; }
+  .education-logo-szolyd span { font-size:11px; }
+}
+@media (forced-colors:active) {
+  .education-page #education,.education-page .education-checkout { background:Canvas;color:CanvasText; }
+}
