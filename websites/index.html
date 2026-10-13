@@ -3,15 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- ============================================================
-       DOCKING-PANELS SITE TEMPLATE
-       A fixed full-screen background with two curved white containers
-       floating in the foreground:
-         1. a fixed header strip with a curved/stepped bottom edge
-         2. a scrolling content panel that rises and DOCKS under it
-       All brand-specific content has been replaced with placeholders —
-       search for "CUSTOMIZE" comments to find every slot.
-       ============================================================ -->
   <title>Website design — Taylor Intelligence</title>
   <meta name="description" content="Distinctive websites, built around your business. Design, development and ongoing care from one team." />
   <link rel="icon" href="/favicon.svg?v=ti-monogram" type="image/svg+xml" />
@@ -80,7 +71,7 @@
     </svg>
   </div>
 
-  <!-- brand lockup: the network-node mark + wordmark, top-left of header -->
+  <!-- Agency monogram and wordmark. -->
   <a class="brand-lockup" href="/" aria-label="Taylor Intelligence — home">
         <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
           <g transform="translate(3.290 24.934) scale(0.0256 -0.0256)">
@@ -91,8 +82,8 @@
         <span class="word">Taylor Intelligence</span>
       </a>
 
-  <!-- top-right navigation — the pill holds the studio phone line -->
-  <nav id="top-nav" class="top-nav" aria-label="Primary"><details class="nav-disclosure services-menu"><summary>Services <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></div></details><a href="/#studio">Team</a><details class="nav-disclosure socials-menu"><summary>Our Socials <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram</a><p class="dropdown-note">More on the way.</p></div></details><details class="nav-disclosure principles-menu"><summary>Principles <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/principles/#people">People first</a><a href="/principles/#useful">Make it useful</a><a href="/principles/#clarity">Keep it clear</a><a href="/principles/#learning">Keep learning</a></div></details><a class="nav-contact" href="/#start">Let’s talk</a></nav>
+  <!-- Primary navigation. -->
+  <nav id="top-nav" class="top-nav" aria-label="Primary"><details class="nav-disclosure services-menu"><summary>Services <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></div></details><a href="/#studio">Team</a><details class="nav-disclosure socials-menu"><summary>Our Socials <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram</a><p class="dropdown-note">More on the way.</p></div></details><a href="/principles/">Principles</a><a class="nav-contact" href="/#start">Let’s talk</a></nav>
 
   <!-- mobile-only hamburger (toggles .top-nav); hidden on desktop via CSS -->
   <button class="m-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="top-nav">
@@ -104,9 +95,9 @@
 <div class="scroll-shadow"><div class="scroll-area"><div class="hero-spacer"></div><div class="panel-wrap">
 <main class="panel" id="main-content"><header class="page-hero"><p class="page-kicker">Websites</p><h1 class="page-title page-title-contour" aria-label="A better place to be found" style="--curve-size:86px;--base-size:96px">
   <svg class="page-type" viewBox="0 0 760 260" role="presentation" aria-hidden="true">
-    <defs><path id="page-headline-contour" d="M0 84 C190 84 218 84 302 102 S502 159 730 159"/></defs>
+    <defs><path id="page-headline-contour" d="M0 84 C170 84 225 88 310 102 S530 143 730 139"/><path id="page-base-contour" d="M-3 237 C165 228 285 228 400 240 S590 256 735 246"/></defs>
     <text class="page-type-curve"><textPath href="#page-headline-contour">A better place</textPath></text>
-    <text class="page-type-main" x="-3" y="245">to be found</text>
+    <text class="page-type-main"><textPath href="#page-base-contour">to be found</textPath></text>
   </svg>
   <span class="page-type-mobile" aria-hidden="true"><span>A better place</span><strong>to be found</strong></span>
 </h1><div class="page-intro"><p>Distinctive websites, built around your business. Design, development and ongoing care from one team.</p><a class="green-link" href="#page-details">Explore</a></div></header><div id="page-details"><section class="green-work" id="websites" aria-labelledby="work-heading">
@@ -124,7 +115,7 @@
 </div>
 <span class="work-status">Live website</span></div>
 </a></article><article class="work-card"><a href="https://knot-normal.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit website: Knot Normal (opens in new tab)"><div class="work-image knot-normal"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Knot Normal</span></div>
-<img src="/assets/work/knot-normal-720.webp" srcset="/assets/work/knot-normal-720.webp 720w, /assets/work/knot-normal.webp 1440w" sizes="(max-width:600px) calc(100vw - 40px), (max-width:1100px) 44vw, 28vw" decoding="async" alt="Knot Normal website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website</span></div>
+<img src="/assets/work/knot-normal-720.webp" srcset="/assets/work/knot-normal-720.webp 720w, /assets/work/knot-normal.webp 1425w" sizes="(max-width:600px) calc(100vw - 40px), (max-width:1100px) 44vw, 28vw" decoding="async" alt="Knot Normal’s current website, featuring Nolan parawing foiling on Vancouver Island." loading="lazy" width="1425" height="990"><span class="work-visit">Visit website</span></div>
 <div class="work-caption"><div><h3>Knot Normal</h3>
 <p>Brand experience · Storefront</p>
 </div>
@@ -136,8 +127,8 @@
 <p>Automotive · Commerce experience</p>
 </div>
 <span class="work-status">Review build</span></div>
-</a></article></div></div></div>
-<div class="website-offer offer-panel">
+</a></article><article class="work-card work-invitation"><a href="#website-offer" aria-label="Make this yours — website pricing"><div class="work-image future-site"><span aria-hidden="true">?</span></div><div class="work-caption"><div><h3>Make this yours</h3><p>Your business · Your website</p></div><span class="work-status">Start your project</span></div></a></article></div></div></div>
+<div class="website-offer offer-panel" id="website-offer">
 <div class="website-offer-intro"><h3>Your next website</h3><p>Designed &amp; built for your business.</p></div>
 <div class="website-price"><p class="offer-price">$1,500 <span>CAD / one-time</span></p><p class="offer-small">Website design &amp; development</p></div>
 <div class="website-care"><p class="offer-recurring">+ $500 CAD/month</p><p class="offer-small">Maintenance &amp; SEO.<br> Billed separately, starting at launch.</p></div>

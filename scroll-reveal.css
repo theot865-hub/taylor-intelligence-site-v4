@@ -1,0 +1,53 @@
+/* One-time reveals only. No baseline opacity/transform, so content is fail-open. */
+[data-ti-reveal] {
+  --ti-reveal-x: 0px;
+  --ti-reveal-y: 28px;
+  --ti-reveal-scale: 1;
+  --ti-reveal-duration: 680ms;
+  --ti-reveal-delay: 0ms;
+  --ti-reveal-opacity: .15;
+}
+[data-ti-reveal="heading"] {
+  --ti-reveal-x: -18px;
+  --ti-reveal-y: 10px;
+  --ti-reveal-duration: 740ms;
+}
+[data-ti-reveal="card"] {
+  --ti-reveal-y: 38px;
+  --ti-reveal-duration: 760ms;
+}
+[data-ti-reveal="media"] {
+  --ti-reveal-y: 30px;
+  --ti-reveal-scale: .982;
+  --ti-reveal-duration: 800ms;
+  transform-origin: 50% 100%;
+}
+[data-ti-reveal="quiet"] {
+  --ti-reveal-y: 18px;
+  --ti-reveal-duration: 620ms;
+  --ti-reveal-opacity: .4;
+}
+[data-ti-reveal="copy"] { --ti-reveal-y: 18px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-ti-reveal].ti-reveal-enter {
+    animation: ti-content-enter var(--ti-reveal-duration) cubic-bezier(.16, 1, .3, 1)
+      var(--ti-reveal-delay) backwards;
+    will-change: transform, opacity;
+  }
+  [data-ti-reveal].ti-reveal-enter:focus-within { animation: none; will-change: auto; }
+}
+@keyframes ti-content-enter {
+  from {
+    opacity: var(--ti-reveal-opacity);
+    transform: translate3d(var(--ti-reveal-x), var(--ti-reveal-y), 0) scale(var(--ti-reveal-scale));
+  }
+  to { opacity: 1; transform: none; }
+}
+@media (max-width: 600px) {
+  [data-ti-reveal="card"] { --ti-reveal-y: 26px; --ti-reveal-duration: 650ms; }
+  [data-ti-reveal="heading"] { --ti-reveal-x: -12px; }
+}
+@media (prefers-reduced-motion: reduce), print {
+  [data-ti-reveal].ti-reveal-enter { animation: none !important; will-change: auto; }
+}

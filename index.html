@@ -3,15 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- ============================================================
-       DOCKING-PANELS SITE TEMPLATE
-       A fixed full-screen background with two curved white containers
-       floating in the foreground:
-         1. a fixed header strip with a curved/stepped bottom edge
-         2. a scrolling content panel that rises and DOCKS under it
-       All brand-specific content has been replaced with placeholders —
-       search for "CUSTOMIZE" comments to find every slot.
-       ============================================================ -->
   <title>Taylor Intelligence — Websites, AI &amp; software</title>
   <meta name="description" content="Websites, AI systems and software built around your business. Independent studio in Victoria, BC." />
   <link rel="icon" href="/favicon.svg?v=ti-monogram" type="image/svg+xml" />
@@ -44,7 +35,7 @@
 
 <link rel="preload" href="/assets/fonts/ArchivoBlack-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/site-base.css"><link rel="stylesheet" href="/green.css"><link rel="stylesheet" href="/service-pages.css">
+<link rel="stylesheet" href="/site-base.css"><link rel="stylesheet" href="/green.css"><link rel="stylesheet" href="/service-pages.css"><link rel="stylesheet" href="/scroll-reveal.css">
 </head><body>
 <a class="skip-link" href="#main-content">Skip to content</a>
 
@@ -79,7 +70,7 @@
     </svg>
   </div>
 
-  <!-- brand lockup: the network-node mark + wordmark, top-left of header -->
+  <!-- Agency monogram and wordmark. -->
   <a class="brand-lockup" href="/" aria-label="Taylor Intelligence — home">
         <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
           <g transform="translate(3.290 24.934) scale(0.0256 -0.0256)">
@@ -90,8 +81,8 @@
         <span class="word">Taylor Intelligence</span>
       </a>
 
-  <!-- top-right navigation — the pill holds the studio phone line -->
-  <nav id="top-nav" class="top-nav" aria-label="Primary"><details class="nav-disclosure services-menu"><summary>Services <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></div></details><a href="/#studio">Team</a><details class="nav-disclosure socials-menu"><summary>Our Socials <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram</a><p class="dropdown-note">More on the way.</p></div></details><details class="nav-disclosure principles-menu"><summary>Principles <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/principles/#people">People first</a><a href="/principles/#useful">Make it useful</a><a href="/principles/#clarity">Keep it clear</a><a href="/principles/#learning">Keep learning</a></div></details><a class="nav-contact" href="/#start">Let’s talk</a></nav>
+  <!-- Primary navigation. -->
+  <nav id="top-nav" class="top-nav" aria-label="Primary"><details class="nav-disclosure services-menu"><summary>Services <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></div></details><a href="/#studio">Team</a><details class="nav-disclosure socials-menu"><summary>Our Socials <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram</a><p class="dropdown-note">More on the way.</p></div></details><a href="/principles/">Principles</a><a class="nav-contact" href="/#start">Let’s talk</a></nav>
 
   <!-- mobile-only hamburger (toggles .top-nav); hidden on desktop via CSS -->
   <button class="m-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="top-nav">
@@ -104,13 +95,17 @@
 <main class="panel" id="main-content">
 <h1 class="hero-title" aria-label="One agency for everything">
   <svg class="hero-type" viewBox="0 0 760 270" role="presentation" aria-hidden="true">
-    <defs><path id="headline-contour" d="M0 94 C190 94 218 94 302 112 S502 169 710 169"/></defs>
+    <defs><path id="headline-contour" d="M0 94 C170 94 222 98 310 112 S525 151 710 149"/><path id="headline-base-contour" d="M-3 248 C170 240 285 242 405 251 S595 265 735 255"/></defs>
     <text class="hero-type-curve"><textPath href="#headline-contour">One agency</textPath></text>
-    <text class="hero-type-main" x="-3" y="257">for <tspan class="hero-type-emphasis">everything</tspan></text>
+    <text class="hero-type-main"><textPath href="#headline-base-contour">for <tspan class="hero-type-emphasis">everything</tspan></textPath></text>
   </svg>
   <span class="hero-type-mobile" aria-hidden="true"><span>One agency</span><strong>for everything</strong></span>
 </h1>
-<div class="hero-intro"><p>Websites, AI systems, and software. <br> Designed around the way you work.</p><a class="green-link" href="#websites">Explore our work</a></div>
+<section class="hero-intro newsletter-intro" aria-labelledby="newsletter-title"><h2 id="newsletter-title">The TI newsletter</h2><p>Practical notes on AI, business and what we’re building.</p>
+<form class="newsletter-form" action="https://api.web3forms.com/submit" method="POST" data-newsletter-form>
+<input type="hidden" name="access_key" value="3d97d841-4c10-4ecf-9b00-248974f688a3"><input type="hidden" name="subject" value="Newsletter signup — Taylor Intelligence"><input type="hidden" name="form_source" value="Homepage newsletter"><input type="hidden" name="consent" value="Requested Taylor Intelligence newsletter email updates"><input type="hidden" name="page_path" value="/"><input class="newsletter-honey" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+<label class="visually-hidden" for="newsletter-email">Email address</label><div class="newsletter-fields"><input id="newsletter-email" name="email" type="email" placeholder="Your email address" autocomplete="email" required aria-describedby="newsletter-consent"><button type="submit">Sign up</button></div><p class="newsletter-consent" id="newsletter-consent">Email updates from Taylor Intelligence. Unsubscribe by replying.</p><p class="newsletter-status" role="status" aria-live="polite" hidden></p>
+</form></section>
 <section class="client-proof" aria-label="Selected clients">
 <div class="client-logos"><div><img src="/ai-intensive/logos/sd-concrete.svg" alt="Stone Design Concrete" width="170" height="58"></div>
 <div><img src="/ai-intensive/logos/szolyd.svg" alt="Szolyd" width="170" height="58"></div>
@@ -133,7 +128,7 @@
 </div>
 <span class="work-status">Live website</span></div>
 </a></article><article class="work-card"><a href="https://knot-normal.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit website: Knot Normal (opens in new tab)"><div class="work-image knot-normal"><div class="browser-chrome" aria-hidden="true"><i></i><i></i><i></i><span>Knot Normal</span></div>
-<img src="/assets/work/knot-normal-720.webp" srcset="/assets/work/knot-normal-720.webp 720w, /assets/work/knot-normal.webp 1440w" sizes="(max-width:600px) calc(100vw - 40px), (max-width:1100px) 44vw, 28vw" decoding="async" alt="Knot Normal website design" loading="lazy" width="1440" height="1000"><span class="work-visit">Visit website</span></div>
+<img src="/assets/work/knot-normal-720.webp" srcset="/assets/work/knot-normal-720.webp 720w, /assets/work/knot-normal.webp 1425w" sizes="(max-width:600px) calc(100vw - 40px), (max-width:1100px) 44vw, 28vw" decoding="async" alt="Knot Normal’s current website, featuring Nolan parawing foiling on Vancouver Island." loading="lazy" width="1425" height="990"><span class="work-visit">Visit website</span></div>
 <div class="work-caption"><div><h3>Knot Normal</h3>
 <p>Brand experience · Storefront</p>
 </div>
@@ -145,8 +140,8 @@
 <p>Automotive · Commerce experience</p>
 </div>
 <span class="work-status">Review build</span></div>
-</a></article></div></details></div>
-<div class="website-offer offer-panel">
+</a></article><article class="work-card work-invitation"><a href="#website-offer" aria-label="Make this yours — website pricing"><div class="work-image future-site"><span aria-hidden="true">?</span></div><div class="work-caption"><div><h3>Make this yours</h3><p>Your business · Your website</p></div><span class="work-status">Start your project</span></div></a></article></div></details></div>
+<div class="website-offer offer-panel" id="website-offer">
 <div class="website-offer-intro"><h3>Your next website</h3><p>Designed &amp; built for your business.</p></div>
 <div class="website-price"><p class="offer-price">$1,500 <span>CAD / one-time</span></p><p class="offer-small">Website design &amp; development</p></div>
 <div class="website-care"><p class="offer-recurring">+ $500 CAD/month</p><p class="offer-small">Maintenance &amp; SEO.<br> Billed separately, starting at launch.</p></div>
@@ -209,6 +204,6 @@
 </footer>
 </main></div></div></div>
 
-<script src="/lead-form.js"></script><script src="/green.js" defer></script><script src="/ai-intensive/checkout.js" defer></script>
+<script src="/lead-form.js"></script><script src="/green.js" defer></script><script src="/newsletter.js" defer></script><script src="/scroll-reveal.js" defer></script><script src="/ai-intensive/checkout.js" defer></script>
 
 </body></html>

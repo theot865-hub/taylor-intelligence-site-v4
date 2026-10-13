@@ -3,15 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- ============================================================
-       DOCKING-PANELS SITE TEMPLATE
-       A fixed full-screen background with two curved white containers
-       floating in the foreground:
-         1. a fixed header strip with a curved/stepped bottom edge
-         2. a scrolling content panel that rises and DOCKS under it
-       All brand-specific content has been replaced with placeholders —
-       search for "CUSTOMIZE" comments to find every slot.
-       ============================================================ -->
   <title>Marketing — Taylor Intelligence</title>
   <meta name="description" content="Campaigns, content and creative that bring the right people to your business. A clear plan, shaped around your goals." />
   <link rel="icon" href="/favicon.svg?v=ti-monogram" type="image/svg+xml" />
@@ -80,7 +71,7 @@
     </svg>
   </div>
 
-  <!-- brand lockup: the network-node mark + wordmark, top-left of header -->
+  <!-- Agency monogram and wordmark. -->
   <a class="brand-lockup" href="/" aria-label="Taylor Intelligence — home">
         <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
           <g transform="translate(3.290 24.934) scale(0.0256 -0.0256)">
@@ -91,8 +82,8 @@
         <span class="word">Taylor Intelligence</span>
       </a>
 
-  <!-- top-right navigation — the pill holds the studio phone line -->
-  <nav id="top-nav" class="top-nav" aria-label="Primary"><details class="nav-disclosure services-menu"><summary>Services <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></div></details><a href="/#studio">Team</a><details class="nav-disclosure socials-menu"><summary>Our Socials <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram</a><p class="dropdown-note">More on the way.</p></div></details><details class="nav-disclosure principles-menu"><summary>Principles <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/principles/#people">People first</a><a href="/principles/#useful">Make it useful</a><a href="/principles/#clarity">Keep it clear</a><a href="/principles/#learning">Keep learning</a></div></details><a class="nav-contact" href="/#start">Let’s talk</a></nav>
+  <!-- Primary navigation. -->
+  <nav id="top-nav" class="top-nav" aria-label="Primary"><details class="nav-disclosure services-menu"><summary>Services <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="/websites/">Websites</a><a href="/marketing/">Marketing</a><a href="/education/">Education</a><a href="/software/">Software / AgAAS</a></div></details><a href="/#studio">Team</a><details class="nav-disclosure socials-menu"><summary>Our Socials <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="m1 1 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="nav-dropdown"><a href="https://www.instagram.com/taylorintelligence/" target="_blank" rel="noopener noreferrer">Instagram</a><p class="dropdown-note">More on the way.</p></div></details><a href="/principles/">Principles</a><a class="nav-contact" href="/#start">Let’s talk</a></nav>
 
   <!-- mobile-only hamburger (toggles .top-nav); hidden on desktop via CSS -->
   <button class="m-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="top-nav">
@@ -104,9 +95,9 @@
 <div class="scroll-shadow"><div class="scroll-area"><div class="hero-spacer"></div><div class="panel-wrap">
 <main class="panel" id="main-content"><header class="page-hero"><p class="page-kicker">Marketing</p><h1 class="page-title page-title-contour" aria-label="Turn attention into customers" style="--curve-size:84px;--base-size:82px">
   <svg class="page-type" viewBox="0 0 760 260" role="presentation" aria-hidden="true">
-    <defs><path id="page-headline-contour" d="M0 84 C190 84 218 84 302 102 S502 159 730 159"/></defs>
+    <defs><path id="page-headline-contour" d="M0 84 C170 84 225 88 310 102 S530 143 730 139"/><path id="page-base-contour" d="M-3 237 C165 228 285 228 400 240 S590 256 735 246"/></defs>
     <text class="page-type-curve"><textPath href="#page-headline-contour">Turn attention</textPath></text>
-    <text class="page-type-main" x="-3" y="245">into customers</text>
+    <text class="page-type-main"><textPath href="#page-base-contour">into customers</textPath></text>
   </svg>
   <span class="page-type-mobile" aria-hidden="true"><span>Turn attention</span><strong>into customers</strong></span>
 </h1><div class="page-intro"><p>Campaigns, content and creative that bring the right people to your business. A clear plan, shaped around your goals.</p><a class="green-link" href="#page-details">Explore</a></div></header><div id="page-details"><section class="service-section marketing-section" id="services" aria-labelledby="marketing-heading">
