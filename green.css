@@ -13,13 +13,14 @@ a:focus-visible,button:focus-visible{outline:2px solid #2e6f4e;outline-offset:5p
 .terrain-toggle{position:fixed;top:17vh;right:4%;z-index:5;color:#c3decc;font:10px system-ui;background:#0b161280;border:1px solid #c3decc55;padding:8px 12px;cursor:pointer}
 .client-proof{margin-top:32px;display:flex;gap:35px;align-items:center;padding:22px 0;border-top:1px solid #dce5de;border-bottom:1px solid #dce5de}
 .client-proof>p{font-size:10px;color:#677c6d;white-space:nowrap}
-.client-logos{display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:30px;width:100%}
+.client-logos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:center;gap:30px;width:100%}
 .client-logos>div{height:44px;display:flex;align-items:center;justify-content:center}
 .client-logos img{width:100%;max-width:135px;height:36px;object-fit:contain;filter:grayscale(1);mix-blend-mode:multiply}
 .client-logos>div:nth-child(2) img,.client-logos>div:nth-child(4) img{filter:none;mix-blend-mode:normal}
-.client-logos>div:nth-child(2) img{height:35px}
+.client-logos>div:nth-child(2) img{height:42px}
 .client-logos>div:nth-child(3) img{filter:none;mix-blend-mode:normal;height:32px;max-width:110px}
-.client-logos>div:last-child img{height:48px}
+.client-logos>.client-logo-omen img{height:48px}
+.client-logos>.client-logo-knot img{height:44px;max-width:75px;filter:none;mix-blend-mode:normal}
 .green-work{padding:36px 0 65px;scroll-margin-top:30vh}
 .green-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:26px}
 .green-eyebrow{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#5c7865;margin-bottom:14px}
@@ -46,7 +47,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #2e6f4e;outline-offset:5p
 }
 @media(max-width:600px){
  .hero-video-bg{height:165px}.panel{padding:25px 20px}.hero-title{font-size:34px;line-height:1.1;max-width:360px}
- .client-logos{grid-template-columns:repeat(6,1fr);gap:12px 18px}.client-logos>div{grid-column:span 2;height:33px}.client-logos>div:nth-child(4){grid-column:2/span 2}.client-logos img{height:29px}.client-logos>div:nth-child(3) img{height:28px}
+ .client-logos{grid-template-columns:repeat(6,1fr);gap:12px 18px}.client-logos>div{grid-column:span 2;height:33px}.client-logos img{height:29px}.client-logos>div:nth-child(3) img{height:28px}.client-logos>div:nth-child(2) img,.client-logos>.client-logo-knot img{height:32px}
  .green-work{padding:30px 0 40px}.green-heading{display:block;margin-bottom:24px}.green-heading>p{margin-top:16px}.green-heading h2,.green-software h2,.green-about h2{font-size:30px}
  .work-grid{grid-template-columns:1fr;gap:28px}.work-card:last-child>a{display:block}.work-card:last-child .work-image{aspect-ratio:1.44}.work-card:last-child .work-caption{display:flex;padding:15px 0 0}.work-card:last-child .work-status{margin-top:0}.work-caption h3{font-size:16px}.work-status{font-size:9px}
  .expertise-grid{grid-template-columns:1fr;gap:30px}.expertise-grid p{min-height:0;max-width:38ch}.green-services{padding:32px 0 42px}.green-software{grid-template-columns:1fr;gap:25px;padding:35px 0}.green-about{padding:35px 0}.green-footer{margin-top:45px;gap:15px}.green-footer a{margin-left:0;margin-right:18px}
@@ -63,23 +64,17 @@ a:focus-visible,button:focus-visible{outline:2px solid #2e6f4e;outline-offset:5p
 .hero-video-bg{filter:grayscale(1) brightness(1.12) contrast(1.06);background:#111}
 .terrain-toggle{color:#e0e0e0;background:#1119;border-color:#bdbdbd66}
 
-/* Headline follows the panel shoulder: two natural phrases, curved first line and broad base. */
-.hero-title{top:24px;width:58%;max-width:760px;color:#111;white-space:normal;line-height:1}
-.hero-type{display:block;width:100%;height:auto;overflow:visible;fill:currentColor;font-family:'Archivo Black',sans-serif;letter-spacing:-.035em}
-.hero-type-curve{font-size:92px;letter-spacing:0}
-.hero-type-main{font-size:82px;letter-spacing:-.025em}
-.hero-type-emphasis{font-size:90px}
-.hero-type-mobile{display:none}
+/* Straight headline: two natural phrases inside the curved panel. */
+.hero-title{top:64px;width:58%;max-width:760px;color:#111;white-space:normal;font-size:clamp(64px,6.1vw,88px);line-height:1.08;letter-spacing:-.045em}
+.hero-title>span{display:block;width:max-content;white-space:nowrap}
+@media(min-width:1101px){.hero-title>span+span{margin-top:18px;font-size:1.08em}}
 .panel{padding-top:315px}
 .hero-intro{top:205px;width:34%}
 @media(max-width:1100px){
- .panel{padding:30px 26px}.hero-title{width:auto;max-width:100%;margin-bottom:24px}
- .hero-type{display:none}.hero-type-mobile{display:flex;flex-direction:column;gap:5px}
- .hero-type-mobile>span{font-size:clamp(32px,6vw,60px);letter-spacing:-.025em}
- .hero-type-mobile>strong{font:inherit;font-size:clamp(33px,7vw,70px);letter-spacing:-.035em}
+ .panel{padding:30px 26px}.hero-title{width:auto;max-width:100%;margin-bottom:24px;font-size:clamp(28px,6.4vw,68px);line-height:1.08;letter-spacing:-.04em}
  .hero-intro{width:auto}
 }
-@media(max-width:600px){.panel{padding:25px 20px}}
+@media(max-width:600px){.panel{padding:25px 20px}.hero-title{font-size:clamp(28px,8.4vw,50px)}}
 
 /* One agency: compact work, then marketing, software and education. */
 .green-work{padding:36px 0 48px}

@@ -1,0 +1,107 @@
+/* Agency pages: a deliberate small-screen layout. Desktop remains unchanged. */
+@media (max-width:1100px) {
+  .hero-video-bg { height:clamp(112px,18vw,170px); }
+  .hero-spacer { display:none; }
+  .panel,.service-page .panel { margin-top:-18px;border-radius:28px 28px 0 0;padding-top:30px; }
+  .m-nav-toggle { top:7px;right:12px;width:44px;height:44px;padding:10px; }
+  .top-nav .nav-dropdown a { min-height:48px;font-size:15px; }
+  .panel .page-intro { font-size:15px;line-height:1.7; }
+  .panel .green-heading>p { font-size:14px;line-height:1.7;max-width:38ch; }
+  .panel .service-card p,.panel .education-copy>p:not(.green-eyebrow),
+  .panel .detail-grid p,.panel .agent-explainer p,.panel .workflow-steps p,
+  .panel .service-faq p,.panel .detail-call p,.panel .principle p,
+  .panel .name-story p,.panel .team-intro,.panel .team-member p,
+  .panel .start .lede { font-size:15px;line-height:1.7; }
+  .panel .service-card .service-note,.panel .service-card figcaption,
+  .panel .principle .principle-practice { font-size:12px;line-height:1.65; }
+  .panel .green-link,.panel .section-page-link { min-height:44px;align-items:center;font-size:14px;padding-block:9px; }
+  .panel .purchase-button { min-height:48px;font-size:14px;padding:13px 18px; }
+  .panel .marketing-quote p { font-size:14px;line-height:1.7; }
+  .panel .work-caption h3 { font-size:17px;line-height:1.35; }
+  .panel .work-caption p,.panel .work-status { font-size:12px;line-height:1.6; }
+  .panel .work-status { margin-top:5px; }
+  .panel .website-offer .website-offer-intro>p,.panel .website-offer .offer-recurring { font-size:14px;line-height:1.6; }
+  .panel .website-offer .offer-small,.panel .offer-small { font-size:12px;line-height:1.65; }
+  .panel .education-checkout .seat-description { font-size:15px;line-height:1.7; }
+  .panel .course-facts { font-size:13px;line-height:1.55;gap:10px; }
+  .panel .education-checkout label,.panel .education-total { font-size:14px; }
+  .panel .education-fit { font-size:13px;white-space:normal; }
+  .seat-stepper { height:48px; }
+  .panel .service-faq summary { min-height:56px;font-size:16px;gap:18px; }
+  .panel .scope-list span { font-size:15px;line-height:1.7; }
+  .panel .footer-identity p { font-size:14px;line-height:1.7; }
+  .panel .footer-links { gap:2px; }
+  .panel .footer-links h2 { font-size:13px;margin-bottom:8px; }
+  .panel .footer-links a { display:flex;align-items:center;min-height:44px;font-size:14px;line-height:1.5;padding-block:8px; }
+  .panel .footer-bottom { font-size:12px; }
+  .panel .start .direct { font-size:14px;line-height:1.8; }
+  .panel .start input[type="text"],.panel .start input[type="email"] { min-height:48px; }
+  .panel .start textarea { min-height:128px; }
+}
+
+@media (min-width:601px) and (max-width:1100px) {
+  .work-grid { grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px; }
+}
+
+@media (max-width:800px) {
+  .website-gallery .more-websites summary {
+    width:100%;min-height:48px;margin-left:0;padding:8px 0;
+    justify-content:space-between;font-size:14px;border-block:1px solid #deded8;
+  }
+  .website-gallery .expand-mark { width:36px;height:36px; }
+  .panel .studio-contact { gap:36px; }
+  .panel .detail-grid,.panel .agent-explainer { grid-template-columns:1fr;gap:26px; }
+  .panel .scope-list>p { grid-template-columns:1fr;gap:12px;padding-block:24px; }
+  .panel .software-grid { gap:34px; }
+}
+
+@media (max-width:600px) {
+  .hero-video-bg { height:104px; }
+  .panel,.service-page .panel { padding-top:28px;border-radius:26px 26px 0 0; }
+  .hero-title { font-size:clamp(34px,10.6vw,48px);line-height:1.08;letter-spacing:-.045em;margin-bottom:28px; }
+  .hero-title.point-title>span { background-image:radial-gradient(circle,#171b19 1.35px,transparent 1.45px);background-size:3px 3px; }
+  .hero-title>span+span { margin-top:8px;font-size:1.04em; }
+  .page-title-straight { font-size:clamp(32px,10.3vw,46px);line-height:1.12;margin-bottom:22px; }
+  .page-title-long { font-size:clamp(26px,7.5vw,38px); }
+  .page-kicker { margin-bottom:14px;font-size:13px; }
+  .page-intro { margin-bottom:26px; }
+  .panel .green-heading h2 { font-size:30px;line-height:1.15; }
+  .panel .green-heading>p { margin-top:10px;max-width:none; }
+  .panel .service-section,.panel .green-work { padding-block:34px; }
+  .client-proof + .green-work { margin-top:10px; }
+  .client-proof { padding-block:19px; }
+  .client-logos { gap:15px 18px; }
+  .work-grid { gap:28px; }
+  .panel .work-caption { padding-top:12px; }
+  .website-offer.offer-panel { grid-template-columns:1fr;padding:22px;gap:18px; }
+  .website-offer .website-care { border-top:1px solid #dcdcd5;padding-top:16px; }
+  .website-offer .offer-price { font-size:32px; }
+  .website-offer .offer-price>span { display:inline;font-size:12px;white-space:normal; }
+  .website-offer>.purchase-button { justify-content:center;white-space:normal; }
+  .marketing-grid { grid-template-columns:1fr;gap:24px; }
+  .marketing-grid .service-card { display:grid;grid-template-columns:88px minmax(0,1fr);column-gap:16px;row-gap:7px;align-content:start; }
+  .marketing-grid .service-card>.platform-art,.marketing-grid .service-card>img { grid-column:1;grid-row:1 / span 2;width:88px;height:88px;aspect-ratio:1;object-fit:contain; }
+  .marketing-grid .service-card h3 { grid-column:2;margin:0;font-size:18px;line-height:1.3; }
+  .marketing-grid .service-card p { grid-column:2;max-width:none;font-size:14px;line-height:1.65; }
+  .panel .marketing-quote { gap:16px;padding:22px;margin-top:26px; }
+  .panel .marketing-quote h3 { font-size:23px; }
+  .panel .education-copy h3 { font-size:28px;line-height:1.2; }
+  .education-checkout { padding:24px 20px; }
+  .education-page #education { margin-inline:-20px;padding:28px 20px;margin-bottom:34px; }
+  .education-page .education-checkout { padding:24px 18px; }
+  .education-page .education-feature { gap:28px; }
+  .education-client-proof { padding-block:22px;margin-bottom:12px; }
+  .education-client-logos { grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 30px;max-width:320px; }
+  .education-logo { max-width:112px;height:31px; }
+  .education-logo img { height:29px; }
+  .education-logo-szolyd img { width:22px;height:30px; }
+  .education-logo-szolyd span { font-size:16px; }
+  .education-logo-omen img { height:auto; }
+  .panel .workflow-steps { grid-template-columns:1fr;gap:14px; }
+  .panel .workflow-steps li { padding:22px; }
+  .panel .studio-contact .green-about h2,.panel .studio-contact .start h2 { font-size:29px; }
+  .panel .start .submit { min-height:48px;width:100%; }
+  .panel .footer-main { gap:28px 20px; }
+  .panel .footer-contact { gap:2px; }
+  .home-closing>.green-footer { padding-bottom:50px; }
+}
