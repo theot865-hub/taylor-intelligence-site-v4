@@ -12,11 +12,23 @@
     "STRIPE_COMPANY_PRICE_ID": "price_1UPpAmPUw9hCFj9HMR2kugF2",
     "STRIPE_EMPLOYEE_PRICE_ID": "price_1UOodyPUw9hCFj9HNbLHQYbx"
   },
+  "d1_databases": [{
+    "binding": "AI_INTENSIVE_LEADS",
+    "database_name": "ti-ai-intensive-leads",
+    "database_id": "cc82118a-1ded-4ae7-9f48-5d27d9699bd5",
+    "migrations_dir": "migrations"
+  }],
+  "ratelimits": [{
+    "name": "AI_INTENSIVE_LEAD_LIMITER",
+    // Dedicated TI campaign namespace; keys are scoped to this endpoint too.
+    "namespace_id": "2026101401",
+    "simple": { "limit": 5, "period": 60 }
+  }],
   "assets": {
     "directory": ".",
     "binding": "ASSETS",
     // API routes must bypass the SPA fallback, including native form POSTs.
-    "run_worker_first": ["/api/checkout", "/api/checkout/*"],
+    "run_worker_first": ["/api/checkout", "/api/checkout/*", "/api/ai-intensive", "/api/ai-intensive/*"],
     // Serve index.html (200) for any path that doesn't match a file, so the
     // client-side router in index.html can resolve /contact, /card, /approach,
     // etc. This is the idiomatic SPA setup and makes _redirects belt-and-suspenders.

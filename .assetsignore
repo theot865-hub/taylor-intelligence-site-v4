@@ -10,6 +10,8 @@ media/_originals
 # Server implementation, local credentials, tooling and tests are not assets.
 worker
 tests
+migrations
+scripts
 node_modules
 .wrangler
 .env*

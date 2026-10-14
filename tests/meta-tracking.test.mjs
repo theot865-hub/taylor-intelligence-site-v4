@@ -219,6 +219,32 @@ test("Meta is absent before consent and after decline, including booking and pai
   assert.equal(JSON.parse(fixture.storage.get(CONSENT_KEY)).value, "denied");
 });
 
+test("reopening ad choices describes offer views when the campaign has no checkout form", async () => {
+  const fixture = browserFixture({ storage: storedConsent("denied") });
+  delete fixture.elements["company-checkout"];
+  await fixture.boot();
+  await fixture.click("ad-choice");
+  assert.equal(fixture.elements["ad-notice-text"].textContent,
+    "Allow Meta cookies to measure our ads using page visits and offer views? You can book either way.");
+  assert.equal(fixture.scripts.length, 0);
+  assert.deepEqual(fixture.events(), []);
+  await fixture.click("ad-allow");
+  assert.deepEqual(fixture.events().map(event => event.name), ["PageView", "ViewContent"]);
+  await fixture.click("ad-choice");
+  assert.match(fixture.elements["ad-notice-text"].textContent, /offer views/);
+  assert.equal(fixture.events().length, 2);
+});
+
+test("ad choices preserves existing checkout wording when a checkout form is present", async () => {
+  const fixture = browserFixture();
+  await fixture.boot();
+  await fixture.click("ad-choice");
+  assert.equal(fixture.elements["ad-notice-text"].textContent,
+    "Allow Meta cookies to measure our ads using page visits and booking events? You can book either way.");
+  assert.equal(fixture.scripts.length, 0);
+  assert.deepEqual(fixture.events(), []);
+});
+
 test("GPC and DNT override saved consent and attempted acceptance", async () => {
   for (const signal of [{ gpc: true }, { dnt: "1" }]) {
     const fixture = browserFixture({ ...signal, storage: storedConsent("granted") });
