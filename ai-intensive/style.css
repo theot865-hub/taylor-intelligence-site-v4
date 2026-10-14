@@ -228,3 +228,6 @@ details > p { font-size: 13px; color: var(--muted); padding: 0 24px 20px 0; max-
 /* Plain link affordances and quieter section headings, shared agency direction. */
 .nav-cta,.text-link,.site-footer>a:last-child{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
 .questions-intro h2{letter-spacing:-.035em}
+
+/* The free-call funnel keeps the campaign's existing orange layout. */
+.free-call-cta > .button { width: 100%; justify-content: center; }

@@ -1,5 +1,37 @@
 # Taylor Intelligence — Agency site
 
+## October 14 free-call funnel
+
+Theo explicitly authorized completing and publishing Julian's requested funnel
+on October14,2026. Source is based on verified main `838648d`, preserving today's
+homepage metadata repair. Only `/ai-intensive/` changes from public pricing and
+checkout to `/ai-intensive/book`; Education and actual offer prices remain as
+published. Original portraits, artwork, logos and CSS are preserved. Price/seat
+FAQ and payment/privacy copy are revised narrowly. Tracking changes only the
+reopened ad-choice notice to match offer views; all consent, Pixel, event values,
+privacy guards and verified-purchase code remain unchanged. No head tracking
+script was changed or removed, and no new Lead/Purchase event is fabricated.
+
+The new name/email form has independent, unchecked weekly-tip consent. Its
+private D1 save must succeed before Calendar navigation. Missing storage or
+protection fails503; the native limiter allows five attempts per IP per minute
+per Cloudflare location and returns429 for excess requests. There is no public
+export, automatic email or automatic Calendar appointment. See
+`docs/ai-intensive-leads.md` for the actual database binding, schema, guarded
+private CSV export and operator instructions. Theo owns private data access;
+weekly-tip sending and retention review remain separate operational work.
+
+The full89-test suite and actual local D1/browser consent-on/off acceptance pass.
+The supplied scheduler still shows30 minutes, so the page truthfully matches that
+working duration. Google requires Theo to sign in again before a separate
+15-minute schedule can be created; do not change the agency-wide scheduler or
+publish mismatched15-minute wording. Captured contacts are booking intent, not
+confirmed appointments. Live provider/save receipts belong in the dated portable
+handoff and Brain owners. Repository branch pushes can deploy canonical before
+PR merge; verify the actual build, serving version, public source and save effect.
+The retained historical CAD1200 ViewContent value is an offer-view detail, not
+free-call revenue or a paid conversion result.
+
 Local branch `codex/green-portfolio`, built from v4 review `3ae0462` and authored green v3 `0df7132`.
 **Publication authorized by Theo on October 12, 2026.** Cloudflare can deploy review branches to the canonical domain before a PR merge; verify the exact build and public content after every push.
 

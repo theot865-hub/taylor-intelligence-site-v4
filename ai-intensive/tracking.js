@@ -211,7 +211,9 @@
       allow.disabled = privacySignal();
       document.querySelector('#ad-notice-text').textContent = privacySignal()
         ? 'Your browser’s privacy preference keeps Meta ad measurement off. Booking works normally.'
-        : 'Allow Meta cookies to measure our ads using page visits and booking events? You can book either way.';
+        : document.querySelector('#company-checkout')
+          ? 'Allow Meta cookies to measure our ads using page visits and booking events? You can book either way.'
+          : 'Allow Meta cookies to measure our ads using page visits and offer views? You can book either way.';
       (privacySignal() ? decline : allow).focus();
     });
     document.querySelector('#ad-privacy-link')?.addEventListener('click', () => {

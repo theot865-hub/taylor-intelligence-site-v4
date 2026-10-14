@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book your free call — Taylor Intelligence</title>
+  <meta name="description" content="Book a free call with Taylor Intelligence to see if the AI Intensive fits your business. Leave your details, then choose a time.">
+  <meta name="theme-color" content="#f4f1ea">
+  <link rel="canonical" href="https://taylorintelligence.ai/ai-intensive/book">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/Manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Taylor Intelligence">
+  <meta property="og:title" content="Book your free call">
+  <meta property="og:description" content="Leave your details and pick a time that works for you.">
+  <meta property="og:url" content="https://taylorintelligence.ai/ai-intensive/book">
+  <meta property="og:image" content="https://taylorintelligence.ai/ai-intensive/og.png?v=20261014-free-call">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="/ai-intensive/style.css?v=20261014-free-call">
+  <link rel="stylesheet" href="/ai-intensive/book/booking.css?v=20261014-free-call">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header shell">
+    <a class="brand" href="/" aria-label="Taylor Intelligence — home">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><g transform="translate(3.290 24.934) scale(0.0256 -0.0256)"><path d="M557 563H368V0H216V563H27V698H557Z"/><path transform="translate(584 0)" d="M382 0H50V121H140V577H50V698H382V577H292V121H382Z"/></g></svg>
+      <span>Taylor Intelligence</span>
+    </a>
+    <nav aria-label="Page navigation"><a class="nav-cta" href="/ai-intensive/">Back to the intensive</a></nav>
+  </header>
+  <main id="main" class="shell">
+    <section class="call-booking" aria-labelledby="booking-title">
+      <div class="call-heading">
+        <h1 id="booking-title">Book your free call</h1>
+        <p>Leave your details and pick a time that works for you.</p>
+      </div>
+      <form id="free-call-form" class="call-form" action="/api/ai-intensive/leads" method="post" aria-describedby="details-use">
+        <div class="call-field">
+          <label for="call-name">Name <span>(required)</span></label>
+          <input id="call-name" name="name" type="text" autocomplete="name" maxlength="120" required>
+        </div>
+        <div class="call-field">
+          <label for="call-email">Email <span>(required)</span></label>
+          <input id="call-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+        </div>
+        <div class="call-honeypot" aria-hidden="true">
+          <label for="call-website">Website</label>
+          <input id="call-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <input id="call-submission-id" name="submissionId" type="hidden" value="">
+        <label class="tips-choice" for="call-tips">
+          <input id="call-tips" name="marketingConsent" type="checkbox" value="true" aria-describedby="tips-use">
+          <span>Send me one practical AI tip each week for my business</span>
+        </label>
+        <p id="tips-use" class="call-small">Optional. You can book without signing up for tips and unsubscribe from the emails at any time.</p>
+        <button id="call-submit" class="button call-submit" type="submit">Continue to pick a time</button>
+        <p id="call-status" class="call-status" role="status" aria-live="polite" hidden></p>
+        <noscript><p class="call-small">After your details are saved, you will continue to Google Calendar to choose a time.</p></noscript>
+        <p id="details-use" class="call-small details-use">Taylor Intelligence uses your name and email to follow up about your call. We save your weekly tips choice separately; checking it lets us send those tips. After your details are saved, you will go to Google Calendar to choose a time. No call is booked until you select and confirm a time there. Google processes the booking under <a href="https://policies.google.com/privacy" rel="noreferrer">its privacy policy</a>. This form does not use Meta tracking or send your details to Meta. Questions or changes to your details: <a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a>.</p>
+      </form>
+    </section>
+  </main>
+  <footer class="site-footer shell"><a class="brand" href="/"><span class="footer-ti" aria-hidden="true">TI</span><span>Taylor Intelligence</span></a><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a></footer>
+  <script src="/ai-intensive/book/booking.js?v=20261014-free-call" defer></script>
+</body>
+</html>

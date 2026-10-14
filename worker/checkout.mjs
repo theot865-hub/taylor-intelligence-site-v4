@@ -3,6 +3,7 @@
 // STRIPE_SECRET_KEY, STRIPE_COMPANY_PRICE_ID, STRIPE_EMPLOYEE_PRICE_ID.
 // The company price must be a one-time CAD 1,200 price; employee price CAD 100.
 // Capacity is not enforced here: 99 is only the technical purchase cap.
+import { handleAIIntensiveLeads } from "./ai-intensive-leads.mjs";
 const SITE_ORIGIN = "https://taylorintelligence.ai";
 const OFFER = "ti-company-ai-intensive-v2";
 // Read-back only: existing CAD 2,000 purchases retain their original amount.
@@ -271,6 +272,7 @@ export function createWorker(fetchStripe = fetch) {
     async fetch(request, env) {
       const url = new URL(request.url);
       const path = url.pathname;
+      if (path === "/api/ai-intensive" || path.startsWith("/api/ai-intensive/")) return handleAIIntensiveLeads(request, env);
       if (!path.startsWith("/api/checkout")) return env.ASSETS.fetch(request);
       try {
         if (path === "/api/checkout/status" && request.method === "GET") {
