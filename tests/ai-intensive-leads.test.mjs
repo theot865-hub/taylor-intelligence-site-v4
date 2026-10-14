@@ -26,13 +26,14 @@ function storage(options = {}) {
             async run() {
               if (options.failInsert) throw new Error("private person@example.invalid storage failure");
               if (options.unconfirmed) return { success: false, meta: { changes: 1 } };
-              if (rows.has(values[0])) return { success: true, meta: { changes: 0 } };
-              rows.set(values[0], { ...Object.fromEntries(columns.map((column, index) => [column, values[index]])), created_at: new Date().toISOString() });
+              if (rows.has(values[0])) return { success: true, meta: { changes: options.conflictChanges ?? 0 } };
+              rows.set(values[0], { ...Object.fromEntries(columns.map((column, index) => [column, values[index]])), created_at: new Date().toISOString(), ...options.storedOverrides });
               if (options.ambiguousOnce) { options.ambiguousOnce = false; throw new Error("private write acknowledgement lost"); }
               return { success: true, meta: { changes: 1 } };
             },
             async first() {
               if (options.failRead) throw new Error("private database information");
+              if (options.falseRead) return false;
               return options.missingRead ? null : rows.get(values[0]) ?? null;
             },
           };
@@ -212,6 +213,30 @@ test("exact UUID retries create one row; changed details or consent receive 409 
   assert.equal(db.rows.size, 1);
 });
 
+test("a stale D1 changes:1 count on a conflicted UUID cannot claim changed consent was saved", async () => {
+  const { db, env, worker } = setup({ conflictChanges: 1 });
+  const fields = new URLSearchParams({ name: base.name, email: base.email, submissionId: ID, website: "" });
+  assert.equal((await worker.fetch(rawRequest(fields, "application/x-www-form-urlencoded"), env)).status, 303);
+  assert.equal((await worker.fetch(rawRequest(fields, "application/x-www-form-urlencoded"), env)).status, 303);
+  const changed = await worker.fetch(jsonRequest({ ...base, marketingConsent: true }), env);
+  assert.equal(changed.status, 409);
+  assert.equal(changed.headers.has("Location"), false);
+  assert.equal((await changed.json()).saved, undefined);
+  assert.equal(db.rows.size, 1);
+  assert.equal(db.rows.get(ID).marketing_consent, 0);
+  assert.equal((await worker.fetch(jsonRequest(), env)).status, 200, "the unchanged original remains an idempotent success");
+});
+
+test("a successful new-write acknowledgement cannot replace readback of the actual stored consent/details", async () => {
+  for (const storedOverrides of [{ marketing_consent: 0 }, { name: "Different Person" }, { email: "different@example.invalid" }, { consent_text: "broader choice" }, { consent_version: "other-version" }, { source: "/other/" }]) {
+    const { env, worker } = setup({ storedOverrides });
+    const response = await worker.fetch(jsonRequest({ ...base, marketingConsent: true }), env);
+    assert.equal(response.status, 409, JSON.stringify(storedOverrides));
+    assert.equal(response.headers.has("Location"), false);
+    assert.equal((await response.json()).saved, undefined);
+  }
+});
+
 test("ambiguous acknowledgement fails closed, then the same UUID reconciles the already saved row", async () => {
   const { db, env, worker } = setup({ ambiguousOnce: true });
   const first = await worker.fetch(jsonRequest(), env);
@@ -240,11 +265,21 @@ test("missing binding, failed write and unconfirmed write never produce success 
   }
 });
 
-test("a duplicate with failed or absent readback remains unavailable, rather than claiming success", async () => {
-  for (const options of [{ failRead: true }, { missingRead: true }]) {
-    const { env, worker } = setup(options);
-    assert.equal((await worker.fetch(jsonRequest(), env)).status, 200);
-    assert.equal((await worker.fetch(jsonRequest(), env)).status, 503);
+test("both new and repeated writes with failed, absent or false readback cannot claim a save", async () => {
+  for (const option of ["failRead", "missingRead", "falseRead"]) {
+    const options = { [option]: true };
+    const { db, env, worker } = setup(options);
+    const first = await worker.fetch(jsonRequest(), env);
+    assert.equal(first.status, 503);
+    assert.equal(first.headers.has("Location"), false);
+    assert.equal((await first.json()).saved, undefined);
+    assert.equal(db.rows.size, 1, "an acknowledged insert can exist while readback is unavailable");
+    options[option] = false;
+    assert.equal((await worker.fetch(jsonRequest(), env)).status, 200, "readback can reconcile the existing row");
+    options[option] = true;
+    const retry = await worker.fetch(jsonRequest(), env);
+    assert.equal(retry.status, 503);
+    assert.equal((await retry.json()).saved, undefined);
   }
 });
 

@@ -204,14 +204,16 @@ async function save(binding, lead) {
     VALUES (?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(submission_id) DO NOTHING
   `).bind(...values).run();
-  if (result?.success !== true || ![0, 1].includes(result.meta?.changes)) throw new Error("Unconfirmed write");
-  if (result.meta.changes === 1) return;
+  if (result?.success !== true) throw new Error("Unconfirmed write");
+  // D1's reported change count is not proof of the stored consent or payload.
+  // Always read the row in this primary session, including after a new insert.
+  // Only the exact persisted record can authorize saved:true or a redirect.
   const previous = await database.prepare(`
     SELECT submission_id, name, email, marketing_consent, consent_text, consent_version, source
     FROM ai_intensive_leads WHERE submission_id = ?
   `).bind(lead.submissionId).first();
   const columns = ["submission_id", "name", "email", "marketing_consent", "consent_text", "consent_version", "source"];
-  if (!previous) throw new Error("Unconfirmed prior write");
+  if (!previous) throw new Error("Unconfirmed stored record");
   if (columns.some((column, index) => previous[column] !== values[index])) {
     throw new LeadError(409, "This request has already been saved with different details. Please refresh the page to start a new request.");
   }
