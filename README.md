@@ -21,7 +21,7 @@ export, automatic email or automatic Calendar appointment. See
 private CSV export and operator instructions. Theo owns private data access;
 weekly-tip sending and retention review remain separate operational work.
 
-The full89-test suite and actual local D1/browser consent-on/off acceptance pass.
+The full92-test suite and actual local D1/browser consent-on/off acceptance pass.
 The supplied scheduler still shows30 minutes, so the page truthfully matches that
 working duration. Google requires Theo to sign in again before a separate
 15-minute schedule can be created; do not change the agency-wide scheduler or
@@ -31,6 +31,9 @@ handoff and Brain owners. Repository branch pushes can deploy canonical before
 PR merge; verify the actual build, serving version, public source and save effect.
 The retained historical CAD1200 ViewContent value is an offer-view detail, not
 free-call revenue or a paid conversion result.
+New Stripe Checkout Sessions return to `/education/` for success and cancellation;
+that page retains the guarded payment confirmation script. Previously created
+sessions keep their original Stripe return URLs and are not modified.
 
 Local branch `codex/green-portfolio`, built from v4 review `3ae0462` and authored green v3 `0df7132`.
 **Publication authorized by Theo on October 12, 2026.** Cloudflare can deploy review branches to the canonical domain before a PR merge; verify the exact build and public content after every push.

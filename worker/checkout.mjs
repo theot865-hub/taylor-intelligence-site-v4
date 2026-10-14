@@ -211,8 +211,8 @@ async function createCheckout(request, config, fetchStripe) {
     "metadata[extra_employees]": String(extras),
     "metadata[company_price_id]": config.companyPrice,
     "metadata[employee_price_id]": config.employeePrice,
-    success_url: `${SITE_ORIGIN}/ai-intensive/?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${SITE_ORIGIN}/ai-intensive/?checkout=cancelled&employees=${extras}`,
+    success_url: `${SITE_ORIGIN}/education/?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${SITE_ORIGIN}/education/?checkout=cancelled&employees=${extras}`,
     submit_type: "book",
   });
   if (extras > 0) {
