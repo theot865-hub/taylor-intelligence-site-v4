@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { createWorker } from "../worker/checkout.mjs";
-import { CALENDAR_URL, LEAD_SOURCE, MARKETING_CONSENT_TEXT, MARKETING_CONSENT_VERSION } from "../worker/ai-intensive-leads.mjs";
+import { CALENDAR_URL, THANK_YOU_PATH, LEAD_SOURCE, MARKETING_CONSENT_TEXT, MARKETING_CONSENT_VERSION } from "../worker/ai-intensive-leads.mjs";
 
 const ORIGIN = "https://taylorintelligence.ai";
 const ROUTE = "/api/ai-intensive/leads";
@@ -13,10 +13,11 @@ const columns = ["submission_id", "name", "email", "marketing_consent", "consent
 
 function storage(options = {}) {
   const rows = new Map();
+  const receipts = new Map();
   const queries = [];
   const sessions = [];
   const database = {
-    rows, queries, sessions,
+    rows, receipts, queries, sessions,
     withSession(value) { sessions.push(value); return database; },
     prepare(sql) {
       return {
@@ -24,6 +25,10 @@ function storage(options = {}) {
           queries.push({ sql, values });
           return {
             async run() {
+              if (sql.includes("INSERT INTO ai_intensive_receipts")) {
+                receipts.set(values[0], { token_hash: values[0], submission_id: values[1], expires_at: values[2] });
+                return { success: true, meta: { changes: 1 } };
+              }
               if (options.failInsert) throw new Error("private person@example.invalid storage failure");
               if (options.unconfirmed) return { success: false, meta: { changes: 1 } };
               if (rows.has(values[0])) return { success: true, meta: { changes: options.conflictChanges ?? 0 } };
@@ -32,6 +37,7 @@ function storage(options = {}) {
               return { success: true, meta: { changes: 1 } };
             },
             async first() {
+              if (sql.includes("FROM ai_intensive_receipts")) return receipts.get(values[0]) ?? null;
               if (options.failRead) throw new Error("private database information");
               if (options.falseRead) return false;
               return options.missingRead ? null : rows.get(values[0]) ?? null;
@@ -153,7 +159,7 @@ test("confirmed save records the exact optional weekly-tip choice, source and se
   const { db, env, worker, stripeCalls } = setup();
   const result = await worker.fetch(jsonRequest({ ...base, name: "  Example   Person  ", email: "Person@Example.Invalid" }), env);
   assert.equal(result.status, 200);
-  assert.deepEqual(await result.json(), { saved: true, redirect: CALENDAR_URL });
+  assert.deepEqual(await result.json(), { saved: true, redirect: THANK_YOU_PATH });
   assert.equal(result.headers.get("Cache-Control"), "no-store");
   assert.equal(result.headers.has("Access-Control-Allow-Origin"), false);
   assert.deepEqual(db.sessions, ["first-primary"]);
@@ -189,7 +195,7 @@ test("native form redirects 303 only after a confirmed save and supports the unc
     if (value !== undefined) fields.marketingConsent = value;
     const result = await worker.fetch(rawRequest(new URLSearchParams(fields), "application/x-www-form-urlencoded;charset=UTF-8"), env);
     assert.equal(result.status, 303);
-    assert.equal(result.headers.get("Location"), CALENDAR_URL);
+    assert.equal(result.headers.get("Location"), `${ORIGIN}${THANK_YOU_PATH}`);
     assert.equal(result.headers.get("Cache-Control"), "no-store");
     const [row] = db.rows.values();
     assert.match(row.submission_id, /^[0-9a-f-]{36}$/);

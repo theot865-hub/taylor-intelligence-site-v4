@@ -3,7 +3,7 @@
   const status = document.querySelector('#call-status');
   const button = document.querySelector('#call-submit');
   const submission = document.querySelector('#call-submission-id');
-  const calendar = 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP';
+  const destination = '/ai-intensive/thank-you/';
   // The ordinary POST remains available when enhancement is unavailable.
   if (!form || !status || !button || !submission || !window.fetch
       || !window.FormData || !window.crypto?.randomUUID || !window.AbortController) return;
@@ -41,7 +41,7 @@
         signal: controller.signal
       });
       const result = await response.json().catch(() => null);
-      if (!response.ok || result?.saved !== true || result.redirect !== calendar) {
+      if (!response.ok || result?.saved !== true || result.redirect !== destination) {
         const correction = [400, 403, 409, 413, 415, 429].includes(response.status)
           && typeof result?.error === 'string' && result.error.length <= 300;
         setStatus(correction ? result.error : unavailable, 'error');
@@ -49,7 +49,7 @@
       }
       setStatus('Details saved. Opening the calendar to choose a time…', 'saved');
       // No name, email or consent is added to this fixed destination URL.
-      window.location.assign(calendar);
+      window.location.assign(destination);
     } catch {
       setStatus(unavailable, 'error');
     } finally {
