@@ -13,6 +13,8 @@ const campaign = text("ai-intensive/index.html");
 // This revision changes only the ad campaign funnel. These source hashes were
 // read from verified production main 838648d40d1e28f23bfbde9e51b7aa70411980ee.
 // Deliberate future changes to the protected agency or assets need new review.
+// Homepage baseline reviewed October 14 for the approved Contact button;
+// the remaining protected assets retain their original baselines.
 const preserved = {
   "ai-intensive/fonts/Manrope.ttf": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6",
   "ai-intensive/fonts/OFL.txt": "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b",
@@ -31,7 +33,7 @@ const preserved = {
   "ai-intensive/tracking.js": "ca289a0ca6dc654e02637d4f9d720cc904d3ff501ba8795327e1af0421c8324e",
   "ai-intensive/checkout.js": "697568b6c024a83fe30c5e43411833d262426a7f56618f4a8fb0500616ae5394",
   "ai-intensive/og.png": "9824e5fefe0d76a7374bcec604d15be5e5d21a6cc8e2ed6320dafb2dc782c178",
-  "index.html": "38cb0408e882cd28297b36262b84b76cc14e0c6a4533769ef3a832735d13d488",
+  "index.html": "0c2a516171ffa2a6a3a26828802735a8d733ba31219bd61827439d5736740930",
   "og.png": "3b39e8988834a4eddc32b55973737640f8ac438fb61701ba6fbf4877aa707a75"
 };
 

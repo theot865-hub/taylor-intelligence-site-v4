@@ -62,12 +62,14 @@ body{--brand-dark:#202020;--brand-accent:#303030;--brand-accent-hover:#000;--bod
  .nav-disclosure summary{justify-content:center;gap:9px;padding:11px 12px;white-space:nowrap}
  .top-nav>a{padding-inline:7px;justify-self:center}
  .scroll-shadow,.topbar-wrap{filter:none}
- .scroll-area{isolation:isolate;overscroll-behavior-y:contain}
+ /* Keep the footer against the viewport edge instead of bouncing into the terrain. */
+ .scroll-area{isolation:isolate;overscroll-behavior-y:none}
  /* Only the viewport needs a mask. The long panel is an ordinary compositor layer. */
  .panel{background:transparent;-webkit-mask:none;mask:none;isolation:isolate}
  .panel::before,.panel::after{content:'';position:absolute;pointer-events:none;z-index:-1}
  .panel::before{inset:0 0 auto;height:18vh;background:var(--cap) top/100% 100% no-repeat}
- .panel::after{inset:17.5vh 0 0;background:#fff}
+ /* Continue white past the footer without adding scrollable space. */
+ .panel::after{inset:17.5vh 0 0;background:#fff;box-shadow:0 100vh 0 #fff}
 }
 @media(min-width:1101px) and (max-width:1300px){.nav-disclosure summary{gap:5px;padding-inline:10px}.top-nav{width:590px;gap:8px}}
 @media(max-width:1100px){.nav-disclosure summary{justify-content:flex-start;gap:10px}.page-kicker{font-size:12px;margin-bottom:16px}}
