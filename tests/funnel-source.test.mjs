@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
+import { CALENDAR_URL, THANK_YOU_PATH } from "../worker/ai-intensive-leads.mjs";
 
 const root = new URL("../", import.meta.url);
 const read = path => readFileSync(new URL(path, root));
@@ -55,21 +56,66 @@ test("every free-call and private-session CTA goes through the contact form", ()
   assert.doesNotMatch(campaign, /href="https:\/\/calendar\.google\.com/);
 });
 
+test("campaign uses the verified 15-minute schedule inside the private thank-you handoff", () => {
+  const expected = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2OnIx-9j8ROlj-uAqbq9_rKBDncdqcEtmf4DshdYIZU80lv-ldIBXfa2uBwTIyuhG67_kvQ57C";
+  assert.equal(CALENDAR_URL, expected, "Server preserves the verified dedicated schedule");
+  const destination = text("ai-intensive/book/booking.js").match(/const destination = '([^']+)';/)?.[1];
+  assert.equal(destination, "/ai-intensive/thank-you/");
+  assert.equal(THANK_YOU_PATH, destination);
+  assert.match(text("ai-intensive/thank-you/index.html"), /AcZssZ2OnIx-9j8ROlj-uAqbq9_rKBDncdqcEtmf4DshdYIZU80lv-ldIBXfa2uBwTIyuhG67_kvQ57C/);
+  assert.match(campaign, /A 15-minute call to see if the AI Intensive fits your business\./);
+  assert.doesNotMatch(campaign, /30-minute|AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP/);
+  assert.equal(new URL(CALENDAR_URL).search, "", "No personal data or consent is added to the URL");
+  assert.match(text("education/index.html"), /AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP/,
+    "Education retains its existing general 30-minute fit-call schedule");
+});
+
 test("agency Education, portraits, chosen artwork and logos remain byte-identical", () => {
   for (const [path, expected] of Object.entries(preserved)) {
     if (path !== "ai-intensive/tracking.js") assert.equal(hash(read(path)), expected, path);
   }
 });
 
-test("tracking changes only the ad-settings notice to match the free-call page", () => {
-  const previous = "        : 'Allow Meta cookies to measure our ads using page visits and booking events? You can book either way.';";
-  const revised = "        : document.querySelector('#company-checkout')\n"
-    + "          ? 'Allow Meta cookies to measure our ads using page visits and booking events? You can book either way.'\n"
-    + "          : 'Allow Meta cookies to measure our ads using page visits and offer views? You can book either way.';";
+test("existing payment verification, privacy signals, SDK readiness and purchase deduplication remain intact", () => {
   const tracking = text("ai-intensive/tracking.js");
-  assert.equal(tracking.split(revised).length, 2, "One reviewed notice-only change");
-  assert.equal(hash(tracking.replace(revised, previous)), preserved["ai-intensive/tracking.js"],
-    "All consent, privacy-signal, event, price, purchase-verification and deduplication code is unchanged");
+  const protectedRegions = [
+  [
+    "  function safeURL(",
+    "  const safeLocation",
+    "2595c8a7d1eade5ea895a435880821f4871cf2e9556157fca3b59f22e04be657"
+  ],
+  [
+    "  const order =",
+    "  function pixel()",
+    "e29104e043468605f0d42dab1d0af76a9a89c3977c12ea5bb2515a83b7b9f17f"
+  ],
+  [
+    "  function pixel()",
+    "  function purchaseClaims()",
+    "dc3017fce776a644d1dcae2c52306d1a17921e1631413392ba9c69c502e8e76f"
+  ],
+  [
+    "  function purchaseClaims()",
+    "  // Only the private booking-status endpoint",
+    "9e0395bc522086c8f76e656698c1442860b5dc7d3de14444a33dcd7bb318f6e8"
+  ],
+  [
+    "  function removePixelCookies()",
+    "\n  // Called only",
+    "f7fab9df3eee2f22e7c57596111049ceb9cd21d2bc27d296935967c7dd161cff"
+  ],
+  [
+    "    confirmedPurchase(result)",
+    "\n  function boot()",
+    "dc2d98d1c6e0fd03884a00c3d20dd114138af12423f02270b04a70fe396d4d99"
+  ]
+];
+  for (const [start, end, expected] of protectedRegions) {
+    const from = tracking.indexOf(start);
+    const to = tracking.indexOf(end, from);
+    assert.ok(from >= 0 && to > from, start);
+    assert.equal(hash(tracking.slice(from, to)), expected, start);
+  }
 });
 
 test("campaign preserves full-frame portrait markup and all existing styling", () => {

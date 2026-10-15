@@ -1,7 +1,11 @@
 # Campaign free-call lead storage
 
-This endpoint saves a name and email before opening Julian's confirmed Calendar
-appointment page. It does not book an appointment or send any email. The agency
+This endpoint saves a name and email before opening Theo's separate, confirmed
+15-minute AI Intensive Calendar appointment page. Its publicly verified share
+alias is https://calendar.app.google/xtN3MFTxaHHHUXPp8, with Google Meet and
+Vancouver time. The frontend and server use the same fixed full schedule URL;
+the agency's existing 30-minute general scheduler remains unchanged. This
+endpoint does not book an appointment or send any email. The agency
 Education checkout and Stripe configuration are unchanged.
 
 `POST /api/ai-intensive/leads` accepts either JSON or a native URL-encoded form:

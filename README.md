@@ -1,39 +1,51 @@
 # Taylor Intelligence — Agency site
 
-## October 14 free-call funnel
+## October 14 free-call booking and Meta confirmation
 
-Theo explicitly authorized completing and publishing Julian's requested funnel
-on October14,2026. Source is based on verified main `838648d`, preserving today's
-homepage metadata repair. Only `/ai-intensive/` changes from public pricing and
-checkout to `/ai-intensive/book`; Education and actual offer prices remain as
-published. Original portraits, artwork, logos and CSS are preserved. Price/seat
-FAQ and payment/privacy copy are revised narrowly. Tracking changes only the
-reopened ad-choice notice to match offer views; all consent, Pixel, event values,
-privacy guards and verified-purchase code remain unchanged. No head tracking
-script was changed or removed, and no new Lead/Purchase event is fabricated.
+Theo authorized completing and publishing Julian's ad-funnel changes. The
+campaign `/ai-intensive/` has no price/payment controls and sends every enquiry
+through `/ai-intensive/book`. Existing Education checkout, offer prices,
+portraits, artwork, logos and agency pages are preserved.
 
-The new name/email form has independent, unchecked weekly-tip consent. Its
-private D1 save must succeed before Calendar navigation. Missing storage or
-protection fails503; the native limiter allows five attempts per IP per minute
-per Cloudflare location and returns429 for excess requests. There is no public
-export, automatic email or automatic Calendar appointment. See
-`docs/ai-intensive-leads.md` for the actual database binding, schema, guarded
-private CSV export and operator instructions. Theo owns private data access;
-weekly-tip sending and retention review remain separate operational work.
+The form saves name/email and a separate unchecked weekly-tip preference in
+private D1 before moving to `/ai-intensive/thank-you/`. A random, HttpOnly,
+two-hour receipt cookie lets that page check only the visitor's own booking
+state. The page embeds Google's official dedicated 15-minute calendar. Use the
+same email in both forms. Without JavaScript, a direct Calendar link still lets
+the visitor book; automatic confirmation/ad measurement requires JavaScript.
 
-The full92-test suite and actual local D1/browser consent-on/off acceptance pass.
-The supplied scheduler still shows30 minutes, so the page truthfully matches that
-working duration. Google requires Theo to sign in again before a separate
-15-minute schedule can be created; do not change the agency-wide scheduler or
-publish mismatched15-minute wording. Captured contacts are booking intent, not
-confirmed appointments. Live provider/save receipts belong in the dated portable
-handoff and Brain owners. Repository branch pushes can deploy canonical before
-PR merge; verify the actual build, serving version, public source and save effect.
-The retained historical CAD1200 ViewContent value is an offer-view detail, not
-free-call revenue or a paid conversion result.
-New Stripe Checkout Sessions return to `/education/` for success and cancellation;
-that page retains the guarded payment confirmation script. Previously created
-sessions keep their original Stripe return URLs and are not modified.
+Google's signed booking notification is read by the existing HOST mailbox
+collector and delivered through the private HMAC receipt endpoint. Only a
+matching prior lead and authenticated Calendar confirmation turn the page into
+“Thanks—your call is booked”. Pending checks run every 20 seconds for up to
+15 minutes while visible; confirmation can take a few minutes. The separate
+15-minute schedule uses Google Meet and Vancouver time. Its public share URL is
+https://calendar.app.google/xtN3MFTxaHHHUXPp8. The original 30-minute schedule and
+Education link are unchanged.
+
+Meta Pixel 1281844947404157 receives `Schedule` only for a server-confirmed
+booking after optional ad consent. Direct visits and saved leads do not count.
+The thank-you page emits no offer-value or Purchase event. GPC/DNT override
+consent; blocked SDK/storage cannot prevent booking. Opaque event IDs and
+cross-tab durable claims suppress duplicate browser events. Names, emails,
+provider event IDs and receipt tokens never enter Meta payloads or URLs.
+This is browser measurement; it requires the visitor to keep or reopen the
+page in the same browser before the two-hour receipt expires. Events Manager
+receipt/attribution cannot be inferred from passing source tests.
+
+Apply migrations 0001 and 0002 and provision `TI_BOOKING_RECEIPT_KEY` privately
+before publishing. Keep the HOST copy outside Git. There is no new timer,
+automatic appointment, marketing send or public lead export. See
+`docs/ai-intensive-leads.md` and `docs/ai-intensive-booking-verification.md` for
+contracts, schema, operator checks and limitations. Full source tests:
+`node --test tests/*.test.mjs`. Current release evidence belongs in the dated
+portable handoff and Brain owners. Branch pushes may deploy canonical before
+PR merge: verify provider build, serving version, public assets and actual
+private save/receipt effects after publication.
+
+Education retains CAD1200 per company plus CAD100 per observer. New Stripe
+sessions return to `/education/`; historical sessions retain their original
+return URLs. Existing payment verification and Purchase guards are unchanged.
 
 Local branch `codex/green-portfolio`, built from v4 review `3ae0462` and authored green v3 `0df7132`.
 **Publication authorized by Theo on October 12, 2026.** Cloudflare can deploy review branches to the canonical domain before a PR merge; verify the exact build and public content after every push.

@@ -1,0 +1,33 @@
+.thank-you-card { max-width: 940px; min-height: 390px; padding: 64px; margin: 18px auto 48px; background: #ffbf7e url('/ai-intensive/images/orange-mentoring-background.jpg') center / cover; }
+.thank-you-card h1 { max-width: 16ch; font-size: clamp(36px, 4.2vw, 56px); }
+.thanks-intro { max-width: 55ch; margin-block: 24px 28px; font-size: 17px; }
+.thank-you-card .button { justify-content: center; min-width: 250px; text-align: center; }
+.thanks-note { max-width: 58ch; margin-top: 18px; font-size: 12px; }
+.thanks-contact { margin-top: 28px; font-size: 13px; }
+.thanks-contact a { font-weight: 700; }
+.thank-you-card [hidden] { display: none; }
+.confirmation-status { max-width: 58ch; margin-top: 22px; font-size: 13px; }
+.confirmation-refresh { min-height: 44px; margin-top: 14px; padding: 10px 16px; border: 1px solid var(--ink); border-radius: 5px; background: transparent; color: var(--ink); font: 650 13px var(--sans); cursor: pointer; }
+.confirmation-refresh:disabled { opacity: .65; cursor: wait; }
+.calendar-booking { margin: 0 auto 48px; max-width: 940px; padding: 28px; background: #fff; }
+.calendar-booking[hidden] { display: none; }
+.calendar-booking h2 { font-size: 26px; }
+.calendar-booking > p { margin-block: 12px 20px; font-size: 14px; }
+.calendar-booking iframe { display: block; width: 100%; border: 0; min-width: 0; height: 600px; background: #fff; }
+.thanks-no-script { margin-block: 12px 24px; font-size: 12px; }
+.site-footer [hidden] { display: none; }
+@media (max-width: 1000px) { .thank-you-card { padding: 44px; } }
+@media (max-width: 640px) {
+  nav > a:first-child { display: inline-flex; }
+  .site-header { align-items: flex-start; gap: 14px; }
+  .site-header nav { max-width: 115px; text-align: right; }
+  .thank-you-card { min-height: 0; margin-block: 10px 30px; padding: 34px 24px; background-image: url('/ai-intensive/images/orange-mentoring-background-mobile.jpg'); }
+  .thank-you-card h1 { font-size: clamp(32px, 8.5vw, 44px); }
+  .thanks-intro { margin-block: 20px 24px; font-size: 15px; }
+  .thank-you-card .button { width: 100%; min-width: 0; }
+  .thanks-contact { margin-top: 24px; }
+  .calendar-booking { padding: 24px 14px; margin-bottom: 30px; }
+  .calendar-booking h2 { font-size: 24px; }
+}
+@media (max-width: 360px) { .thank-you-card { padding-inline: 20px; } }
+@media (forced-colors: active) { .thank-you-card { background: Canvas; color: CanvasText; border: 1px solid CanvasText; } }

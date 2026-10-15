@@ -5,7 +5,7 @@ import vm from 'node:vm';
 
 const source = readFileSync(new URL('../ai-intensive/book/booking.js', import.meta.url), 'utf8');
 const html = readFileSync(new URL('../ai-intensive/book/index.html', import.meta.url), 'utf8');
-const calendar = 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP';
+const calendar = '/ai-intensive/thank-you/';
 const id = '935046f0-e9ea-4841-92c2-a78c2b718a89';
 
 function fixture(options = {}) {

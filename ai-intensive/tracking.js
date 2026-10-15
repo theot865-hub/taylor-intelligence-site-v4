@@ -3,6 +3,7 @@
   const PIXEL = '1281844947404157';
   const CONSENT_KEY = 'ti-ad-consent-v1';
   const PURCHASES_KEY = 'ti-meta-purchases-v1';
+  const SCHEDULES_KEY = 'ti-meta-schedules-v1';
   const CONSENT_AGE = 180 * 24 * 60 * 60 * 1000;
   const production = location.protocol === 'https:' && ['taylorintelligence.ai', 'www.taylorintelligence.ai'].includes(location.hostname);
   const privacySignal = () => navigator.globalPrivacyControl === true || navigator.doNotTrack === '1';
@@ -12,6 +13,9 @@
   let pageSending = false;
   let pageViewed = false;
   let pendingPurchase;
+  let pendingSchedule;
+  const sentSchedules = new Set();
+  const claimingSchedules = new Set();
   const sentPurchases = new Set();
   const claimingPurchases = new Set();
   const sentCheckouts = new Set();
@@ -32,7 +36,10 @@
     return false;
   }
   const safeLocation = () => safeURL(location.href) && safeURL(document.referrer);
-  const permitted = () => production && consent === 'granted' && !privacySignal() && safeLocation();
+  const safeThankYou = () => document.body?.dataset?.tiAdsPage !== 'thank-you'
+    || (document.documentElement?.dataset?.privateURLCleanup !== 'failed'
+      && !location.search && !location.hash);
+  const permitted = () => production && consent === 'granted' && !privacySignal() && safeLocation() && safeThankYou();
   const order = (extras, companyPrice = 1200) => ({
     content_name: 'AI Intensive — Company Seat', content_type: 'product',
     content_ids: extras ? ['ti-company-intensive', 'ti-employee-observer'] : ['ti-company-intensive'],
@@ -133,6 +140,38 @@
     } catch { /* Storage, locks and SDK failures cannot affect booking. */ }
     finally { claimingPurchases.delete(id); }
   }
+  // Only the private booking-status endpoint supplies this opaque receipt.
+  // Consent, durable claims and a cross-tab lock are required before dispatch.
+  async function schedule() {
+    const result = pendingSchedule;
+    if (!result || !permitted()) return;
+    const id = result.eventId;
+    if (sentSchedules.has(id) || claimingSchedules.has(id)) return;
+    try {
+      if (!pixel() || typeof navigator.locks?.request !== 'function') return;
+      claimingSchedules.add(id);
+      await navigator.locks.request('ti-meta-schedule', { mode: 'exclusive', ifAvailable: true }, lock => {
+        if (!lock || pendingSchedule?.eventId !== id || !permitted()
+            || !sdkReady || typeof window.fbq.callMethod !== 'function') return;
+        const raw = localStorage.getItem(SCHEDULES_KEY);
+        if (raw !== null && raw.length > 10000) return;
+        const saved = raw === null ? [] : JSON.parse(raw);
+        if (!Array.isArray(saved) || saved.length > 100
+            || !saved.every(value => /^ti-schedule-[a-f0-9]{64}$/.test(value))
+            || saved.includes(id) || sentSchedules.has(id)) return;
+        const claim = JSON.stringify([...saved, id].slice(-100));
+        localStorage.setItem(SCHEDULES_KEY, claim);
+        if (localStorage.getItem(SCHEDULES_KEY) !== claim) return;
+        if (track('Schedule', { content_name: 'AI Intensive — free call' }, id)) {
+          sentSchedules.add(id);
+        } else {
+          // Synchronous SDK failure: release only our own claim under the lock.
+          localStorage.setItem(SCHEDULES_KEY, JSON.stringify(saved));
+        }
+      });
+    } catch { /* Analytics cannot affect a confirmed booking. */ }
+    finally { claimingSchedules.delete(id); }
+  }
   function page() {
     if (pageSending) return;
     pageSending = true;
@@ -140,11 +179,14 @@
       if (!pageViewed && permitted()) {
         if (track('PageView', {})) {
           pageViewed = true;
+          if (document.body?.dataset?.tiAdsPage !== 'thank-you') {
           track('ViewContent', { content_name: 'AI Intensive for Business Owners', content_type: 'product', content_ids: ['ti-company-intensive'], value: 1200, currency: 'CAD' });
+          }
         }
       }
     } finally { pageSending = false; }
     void purchase();
+    void schedule();
   }
   function removePixelCookies() {
     for (const name of ['_fbp', '_fbc']) {
@@ -166,8 +208,18 @@
     if (label) label.textContent = `Ad choices: ${consent === 'granted' ? 'on' : 'off'}`;
   }
 
-  // Called only after the checkout API accepts the request / verifies payment.
+  // Called only with server-verified checkout or booking responses.
   window.TIAds = {
+    confirmedSchedule(result) {
+      if (document.body?.dataset?.tiAdsPage !== 'thank-you') return;
+      if (result?.leadSaved !== true || result.bookingStatus !== 'confirmed'
+          || !/^ti-schedule-[a-f0-9]{64}$/.test(result.eventId ?? '')) {
+        pendingSchedule = undefined;
+        return;
+      }
+      pendingSchedule = { eventId: result.eventId };
+      void schedule();
+    },
     async checkoutStarted(extras, attempt) {
       if (!validCount(extras) || !/^[0-9a-f-]{36}$/i.test(attempt) || sentCheckouts.has(attempt)) return;
       if (track('InitiateCheckout', order(extras), `ti-checkout-${attempt}`)) {
@@ -211,6 +263,8 @@
       allow.disabled = privacySignal();
       document.querySelector('#ad-notice-text').textContent = privacySignal()
         ? 'Your browser’s privacy preference keeps Meta ad measurement off. Booking works normally.'
+        : document.body?.dataset?.tiAdsPage === 'thank-you'
+          ? 'Allow Meta cookies to measure our ads using page visits and confirmed call bookings? You can book either way.'
         : document.querySelector('#company-checkout')
           ? 'Allow Meta cookies to measure our ads using page visits and booking events? You can book either way.'
           : 'Allow Meta cookies to measure our ads using page visits and offer views? You can book either way.';

@@ -56,6 +56,8 @@ function browserFixture(options = {}) {
   const document = new Events();
   document.referrer = options.referrer ?? "";
   document.activeElement = null;
+  document.documentElement = { dataset: { privateURLCleanup: options.cleanupFailed ? 'failed' : '' } };
+  document.body = { dataset: { tiAdsPage: options.thankYou ? 'thank-you' : '' } };
   const element = (id, value = "") => {
     const target = new Events();
     Object.assign(target, {
@@ -99,6 +101,7 @@ function browserFixture(options = {}) {
     get protocol() { return currentURL.protocol; },
     get hostname() { return currentURL.hostname; },
     get search() { return currentURL.search; },
+    get hash() { return currentURL.hash; },
     assign(url) { redirects.push(url); },
   };
   const history = {
@@ -588,4 +591,94 @@ test("cancelled, unpaid and forged-amount responses never emit Purchase", async 
     await fixture.boot({ checkout: true });
     assert.equal(fixture.events().filter(event => event.name === "Purchase").length, 0);
   }
+});
+
+
+test("thank-you page sends only a consented PageView, without product/revenue or booking claims", async () => {
+  const fixture = browserFixture({ thankYou: true, url: `${ORIGIN}/ai-intensive/thank-you/` });
+  await fixture.boot();
+  assert.deepEqual(fixture.events(), []);
+  await fixture.click("ad-allow");
+  assert.deepEqual(fixture.events().map(event => event.name), ["PageView"]);
+  assert.deepEqual(fixture.events()[0].data, {});
+  await fixture.click("ad-choice");
+  await fixture.click("ad-allow");
+  assert.deepEqual(fixture.events().map(event => event.name), ["PageView"]);
+});
+
+test("thank-you tracking honors decline and browser privacy signals", async () => {
+  for (const options of [{}, { gpc: true }, { dnt: "1" }]) {
+    const fixture = browserFixture({ ...options, thankYou: true, url: `${ORIGIN}/ai-intensive/thank-you/` });
+    await fixture.boot();
+    await fixture.click("ad-decline");
+    assert.equal(fixture.scripts.length, 0);
+    assert.deepEqual(fixture.events(), []);
+  }
+});
+
+const SCHEDULE_ID = `ti-schedule-${'b'.repeat(64)}`;
+const scheduleReceipt = (overrides = {}) => ({ leadSaved: true, bookingStatus: 'confirmed', eventId: SCHEDULE_ID, ...overrides });
+
+test('Schedule requires confirmed receipt, thank-you context, and consent; carries no money or contact data', async () => {
+  const f = browserFixture({ thankYou: true, url: `${ORIGIN}/ai-intensive/thank-you/` });
+  await f.boot();
+  f.context.TIAds.confirmedSchedule(scheduleReceipt());
+  await f.flush();
+  assert.deepEqual(f.events(), []);
+  await f.click('ad-choice');
+  assert.match(f.elements['ad-notice-text'].textContent, /confirmed call bookings/);
+  await f.click('ad-allow');
+  const events = f.events();
+  assert.deepEqual(events.map(e => e.name), ['PageView', 'Schedule']);
+  assert.deepEqual(events[1], { name: 'Schedule', data: { content_name: 'AI Intensive — free call' }, eventId: SCHEDULE_ID });
+  const other = browserFixture({ storage: storedConsent('granted') });
+  await other.boot(); other.context.TIAds.confirmedSchedule(scheduleReceipt()); await other.flush();
+  assert.equal(other.events().filter(e => e.name === 'Schedule').length, 0);
+});
+
+test('pending, cancelled, unknown and malformed booking receipts never count as Schedule', async () => {
+  for (const receipt of [null, {}, scheduleReceipt({ leadSaved: false }), scheduleReceipt({ bookingStatus: 'pending' }),
+    scheduleReceipt({ bookingStatus: 'cancelled' }), scheduleReceipt({ bookingStatus: 'unknown' }),
+    scheduleReceipt({ eventId: 'calendar-user@example.test' }), scheduleReceipt({ eventId: 'ti-schedule-x' })]) {
+    const f = browserFixture({ thankYou: true, storage: storedConsent('granted') });
+    await f.boot(); f.context.TIAds.confirmedSchedule(receipt); await f.flush();
+    assert.deepEqual(f.events().map(e => e.name), ['PageView']);
+  }
+});
+
+test('booking conversion is deduplicated across calls, reloads and concurrent tabs', async () => {
+  const storage = storedConsent('granted'); const lockQueues = new Map();
+  const a = browserFixture({ thankYou: true, storage, lockQueues });
+  const b = browserFixture({ thankYou: true, storage, lockQueues });
+  await Promise.all([a.boot(), b.boot()]);
+  a.context.TIAds.confirmedSchedule(scheduleReceipt()); b.context.TIAds.confirmedSchedule(scheduleReceipt());
+  a.context.TIAds.confirmedSchedule(scheduleReceipt());
+  await Promise.all([a.flush(), b.flush()]);
+  assert.equal([...a.events(), ...b.events()].filter(e => e.name === 'Schedule').length, 1);
+  const reload = browserFixture({ thankYou: true, storage, lockQueues });
+  await reload.boot(); reload.context.TIAds.confirmedSchedule(scheduleReceipt()); await reload.flush();
+  assert.equal(reload.events().filter(e => e.name === 'Schedule').length, 0);
+});
+
+test('Schedule fails closed on privacy signals, unavailable storage or locks, dirty thank-you URLs and blocked SDK', async () => {
+  for (const extra of [{ gpc: true }, { dnt: '1' }, { storageFailure: true }, { storageWriteFailure: true },
+    { locks: false }, { cleanupFailed: true }, { url: `${ORIGIN}/ai-intensive/thank-you/?email=private%40example.test` },
+    { url: `${ORIGIN}/ai-intensive/thank-you/#private` }, { autoSDK: false }]) {
+    const f = browserFixture({ thankYou: true, storage: storedConsent('granted'), ...extra });
+    await f.boot(); f.context.TIAds.confirmedSchedule(scheduleReceipt()); await f.flush();
+    assert.equal(f.events().filter(e => e.name === 'Schedule').length, 0);
+    if (extra.cleanupFailed || extra.url || extra.gpc || extra.dnt) assert.equal(f.scripts.length, 0);
+    assert.equal(f.storage.has('ti-meta-schedules-v1'), false);
+  }
+});
+
+test('a confirmed receipt received before SDK load dispatches only after readiness and current consent', async () => {
+  const f = browserFixture({ thankYou: true, storage: storedConsent('granted'), autoSDK: false });
+  await f.boot(); f.context.TIAds.confirmedSchedule(scheduleReceipt()); await f.flush();
+  assert.deepEqual(f.events(), []);
+  await f.loadSDK();
+  assert.equal(f.events().filter(e => e.name === 'Schedule').length, 1);
+  const revoked = browserFixture({ thankYou: true, storage: storedConsent('granted'), autoSDK: false });
+  await revoked.boot(); revoked.context.TIAds.confirmedSchedule(scheduleReceipt()); await revoked.click('ad-decline');
+  await revoked.loadSDK(); assert.deepEqual(revoked.events(), []);
 });
