@@ -1,12 +1,25 @@
 # Campaign free-call lead storage
 
-This endpoint saves a name and email before opening Theo's separate, confirmed
-15-minute AI Intensive Calendar appointment page. Its publicly verified share
-alias is https://calendar.app.google/xtN3MFTxaHHHUXPp8, with Google Meet and
-Vancouver time. The frontend and server use the same fixed full schedule URL;
-the agency's existing 30-minute general scheduler remains unchanged. This
-endpoint does not book an appointment or send any email. The agency
-Education checkout and Stripe configuration are unchanged.
+This endpoint saves a name and email before returning to the fixed TI route
+`/ai-intensive/thank-you/`. That page verifies the private lead receipt and shows
+Theo's separate 15-minute AI Intensive Google Calendar inline scheduler. The
+visitor must use the same email address entered on the lead form; Google may
+prefill a different signed-in address. The scheduler's verified share alias is
+https://calendar.app.google/xtN3MFTxaHHHUXPp8, with Google Meet and Vancouver time.
+The agency's existing 30-minute general scheduler remains unchanged. Lead save
+does not book an appointment or send email. The agency Education checkout and
+Stripe configuration are unchanged.
+
+The thank-you page shows a booked state only after the authenticated HOST Google
+confirmation bridge supplies a matching, server-verified appointment. Until then,
+it shows the calendar and waits for confirmation. The form itself loads no Meta
+tracker. On the next page, separate optional ad consent permits PageView and a
+deduplicated Schedule for a verified booking; a page visit or saved lead cannot
+emit Schedule. Weekly-tip consent is independent and booking works with ad
+measurement off. Direct/expired receipt visits do not prove a booking. With
+JavaScript unavailable, the thank-you page provides a real Google Calendar link.
+See [private booking verification](ai-intensive-booking-verification.md) for the
+receipt cookie, matching rules, signed bridge and confirmation states.
 
 `POST /api/ai-intensive/leads` accepts either JSON or a native URL-encoded form:
 
@@ -25,15 +38,20 @@ choice, not broader marketing. This implementation makes no CASL compliance clai
 The Worker records the fixed source `/ai-intensive/`, consent text/version,
 choice and a database-generated UTC timestamp. It does not store IP addresses,
 user agents or client-supplied redirect URLs in D1. The trusted edge IP is used
-only for the transient Cloudflare rate-limit counter. There is no public export/list API,
-no third-party email integration and no lead data in logs or error responses.
+only for the transient Cloudflare rate-limit counter. There is no public export/list
+API, no automatic marketing send, and no lead data in logs or error responses.
+The separate passive HOST bridge reads authenticated Google confirmation emails;
+it does not send customer messages or create appointments.
 Name length is capped at 120 Unicode characters and the full request at 2,048
 bytes. Email syntax validation is not deliverability verification.
 
-JSON returns `{ "saved": true, "redirect": "https://calendar.google.com/..." }`
-only after a confirmed save. The full redirect is a fixed server constant in
-`worker/ai-intensive-leads.mjs`; it is never read from the client. Native forms
-receive 303 only after that same save. Failures return a clear, safe message
+JSON returns `{ "saved": true, "redirect": "/ai-intensive/thank-you/" }`
+only after a confirmed save and private receipt write. The relative redirect is
+the fixed `THANK_YOU_PATH` in `worker/ai-intensive-leads.mjs`; it is never read
+from the client. Native forms receive 303 to that same route on their own
+canonical origin only after the same save and receipt write. A private HttpOnly
+cookie lets the thank-you page check status; no receipt token or contact details
+are added to the URL. Failures return a clear, safe message
 without redirecting. JSON requires a UUIDv4 submission ID. The browser keeps
 that ID for retries of one request. An exact retry does not add a row; changed
 details or consent with the same ID receive 409. A new request needs a new ID.
@@ -45,9 +63,10 @@ independent repeated native submissions are separate requests, not deduplicated.
 Theo explicitly authorized finishing and publishing this deliverable on October
 14, 2026. The existing TI account now has the real database
 `ti-ai-intensive-leads`, ID `cc82118a-1ded-4ae7-9f48-5d27d9699bd5`, in the
-`AI_INTENSIVE_LEADS` binding. A deployment still requires the schema to be applied
-and the actual save behavior verified. Missing D1 or rate-limit bindings return
-503 and never claim a save. The deployment verification is:
+`AI_INTENSIVE_LEADS` binding. Both `0001_ai_intensive_leads.sql` and
+`0002_receipts_bookings.sql` are required for this flow. Missing D1, receipt
+storage or rate-limit bindings fail closed without claiming success. The
+deployment verification runbook is:
 
 1. Verify that this exact database and binding are in the existing TI account.
 2. Apply the schema remotely and verify it through authenticated D1 access.
@@ -55,10 +74,18 @@ and the actual save behavior verified. Missing D1 or rate-limit bindings return
    `AI_INTENSIVE_LEAD_LIMITER`, namespace `2026101401`, five attempts per 60
    seconds per IP and Cloudflare location. A blocked request returns 429 with
    `Retry-After: 60`; no D1 write or redirect follows. A missing, throwing or
-   unconfirmed limiter returns 503. Checkout and other routes use no lead quota.
+   unconfirmed limiter returns 503. Booking-status GET uses a separate key under
+   the same binding and does not consume lead-submit quota. The browser polls
+   every 20 seconds while visible, for a bounded 15-minute window, and respects
+   Retry-After. Checkout consumes no lead quota.
 4. Verify a saved consent-off record and optional consent-on record through
    the private dashboard, then remove clearly labelled QA records. Verify that
-   failure never redirects and successful save opens the confirmed Calendar URL.
+   failure never redirects, a successful save returns to the TI thank-you page
+   with a private receipt, and a pending receipt loads the official inline
+   calendar. Verify the same-email instruction and native no-JavaScript fallback.
+   A booked label/Schedule requires authenticated matching Google confirmation;
+   an unmatched or expired receipt must not appear booked. Verify denial,
+   supported privacy signals, cancelled records and duplicate event suppression.
    Do not book a Calendar appointment or send marketing as a test.
 5. Keep access and exports private under Theo's ownership. Retention/deletion
    review and the actual weekly-tip sending workflow remain operational follow-up;
@@ -92,12 +119,12 @@ The top-level `wrangler.jsonc` already contains the real binding:
 }]
 ```
 
-Apply any unapplied migrations and verify the table:
+Apply any unapplied migrations and verify all three private tables:
 
 ```sh
 wrangler d1 migrations apply ti-ai-intensive-leads --local
 wrangler d1 migrations apply ti-ai-intensive-leads --remote
-wrangler d1 execute ti-ai-intensive-leads --remote --command "SELECT name FROM sqlite_master WHERE type='table' AND name='ai_intensive_leads';"
+wrangler d1 execute ti-ai-intensive-leads --remote --command "SELECT name FROM sqlite_master WHERE type='table' AND name IN ('ai_intensive_leads','ai_intensive_receipts','ai_intensive_bookings') ORDER BY name;"
 ```
 
 The canonical deployment can happen on a repository branch push before a PR
