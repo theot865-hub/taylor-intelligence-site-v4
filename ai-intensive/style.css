@@ -231,3 +231,12 @@ details > p { font-size: 13px; color: var(--muted); padding: 0 24px 20px 0; max-
 
 /* The free-call funnel keeps the campaign's existing orange layout. */
 .free-call-cta > .button { width: 100%; justify-content: center; }
+
+/* Keep all six client marks legible without changing the existing artwork. */
+.client-proof .client-logos { grid-template-columns: repeat(6, minmax(0, 1fr)); max-width: 1000px; }
+.logo-knot-normal { height: 40px; }
+.logo-knot-normal img { width: auto; max-width: 100%; height: 100%; }
+@media (max-width: 640px) {
+  .client-proof .client-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .logo-knot-normal { height: 32px; }
+}
