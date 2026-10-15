@@ -140,6 +140,14 @@ test("booking page collects contact details without payment or Meta tracking", (
   assert.ok(checkbox);
   assert.doesNotMatch(checkbox, /\b(?:checked|required)\b/);
   assert.doesNotMatch(booking, /<script[^>]+(?:tracking|checkout)\.js|\/api\/checkout|\bStripe\b/);
+  assert.match(booking, /Google Calendar on the next page/);
+  assert.match(booking, /Use the same email address you enter here\./);
+  assert.match(booking, /separate, optional Meta ad measurement for page visits and verified call bookings/);
+  assert.match(booking, /weekly tips checkbox does not control it/);
+  assert.match(booking, /<noscript>[\s\S]*next page has a Google Calendar link/);
+  const leadDocs = text("docs/ai-intensive-leads.md");
+  assert.match(leadDocs, /"saved": true, "redirect": "\/ai-intensive\/thank-you\/"/);
+  assert.doesNotMatch(leadDocs, /"redirect": "https:\/\/calendar\.google\.com/);
 });
 
 test("lead API bypasses SPA fallback and private tooling is excluded from assets", () => {
