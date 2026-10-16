@@ -22,11 +22,11 @@
     const calendar = document.querySelector('#choose-call');
     const status = document.querySelector('#booking-confirmation-status');
     const refresh = document.querySelector('#refresh-confirmation');
+    const legacy = document.querySelector('#check-legacy-booking');
     const calendarPanel = document.querySelector('#calendar-booking');
     const calendarFrame = document.querySelector('#calendar-frame');
     if (!card || !heading || !intro || !note || !calendar || !status || !refresh
-        || !calendarPanel || !calendarFrame
-        || typeof window.fetch !== 'function' || typeof window.AbortController !== 'function') return;
+        || !calendarPanel || !calendarFrame) return;
 
     const pollInterval = 20000;
     const budget = 15 * 60 * 1000;
@@ -41,9 +41,10 @@
     let terminal = false;
     let cooldownUntil = 0;
     let cooldownTimer;
+    let legacyMode = false;
     const calendarURL = 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2OnIx-9j8ROlj-uAqbq9_rKBDncdqcEtmf4DshdYIZU80lv-ldIBXfa2uBwTIyuhG67_kvQ57C';
     const embedURL = 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2OnIx-9j8ROlj-uAqbq9_rKBDncdqcEtmf4DshdYIZU80lv-ldIBXfa2uBwTIyuhG67_kvQ57C?gv=true';
-    const genericIntro = 'If you’ve chosen a time, your Google Calendar confirmation has the call details. Otherwise, choose a time below.';
+    const genericIntro = 'If you’ve chosen a time, your booking confirmation has the call details. Otherwise, choose a time below.';
     const genericNote = 'Already booked? There’s no need to book again. Check your confirmation email for the time and joining link.';
 
     const say = message => { status.textContent = message; status.hidden = !message; };
@@ -189,7 +190,7 @@
       }
     };
     const start = () => {
-      if (checking || active) return;
+      if (!legacyMode || checking || active) return;
       if (document.visibilityState === 'hidden') return;
       if (Date.now() < cooldownUntil) return;
       reads = 0;
@@ -207,6 +208,12 @@
       finish();
       start();
     });
+    legacy?.addEventListener('click', () => {
+      if (terminal) return;
+      legacyMode = true;
+      legacy.hidden = true;
+      start();
+    });
     const resume = () => {
       if (!terminal && !active && !checking && document.visibilityState !== 'hidden' && Date.now() >= cooldownUntil) start();
     };
@@ -217,7 +224,30 @@
     });
     window.addEventListener('pagehide', () => { finish(); clearTimeout(cooldownTimer); controller?.abort(); });
     window.addEventListener('pageshow', event => { if (event.persisted) resume(); });
-    start();
+    // A Calendly widget completion belongs to this tab only. This is browser
+    // evidence; the separate legacy Google path remains server-verified.
+    let observed;
+    try { observed = window.TICalendlySession?.read(); } catch { /* Optional storage. */ }
+    if (observed) {
+      terminal = true;
+      if (legacy) legacy.hidden = true;
+      finish();
+      heading.textContent = 'Thanks—your call is booked';
+      intro.textContent = 'Your Calendly confirmation email has the time and joining link. We’re looking forward to speaking with you.';
+      note.textContent = 'Need to change your booking? Use the link in your Calendly confirmation email.';
+      calendar.hidden = true;
+      hideCalendar();
+      refresh.hidden = true;
+      say('Your booking was completed in Calendly.');
+      try { window.TIAds?.observedCalendlySchedule(observed); } catch { /* Measurement cannot affect booking. */ }
+      return;
+    }
+    // Default visits do not consult an old Google cookie or invite duplicate
+    // booking. Legacy verification starts only from the explicitly labelled action.
+    generic();
+    if (typeof window.fetch !== 'function' || typeof window.AbortController !== 'function') {
+      if (legacy) legacy.hidden = true;
+    }
   };
   // Deferred tracking.js defines TIAds before DOMContentLoaded. Confirmation
   // works even when Meta is declined, blocked or unavailable.

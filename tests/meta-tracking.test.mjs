@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import vm from "node:vm";
 
 const TRACKING = readFileSync(new URL("../ai-intensive/tracking.js", import.meta.url), "utf8");
+const CALENDLY_SESSION = readFileSync(new URL("../ai-intensive/book/calendly-session.js", import.meta.url), "utf8");
 const CHECKOUT = readFileSync(new URL("../ai-intensive/checkout.js", import.meta.url), "utf8");
 const ORIGIN = "https://taylorintelligence.ai";
 const ATTEMPT = "831fa0cb-9fbf-47a9-9a4f-784361d8700e";
@@ -40,6 +41,7 @@ class Events {
 function browserFixture(options = {}) {
   let currentURL = new URL(options.url ?? `${ORIGIN}/ai-intensive/`);
   const storage = options.storage ?? new Map();
+  const sessionData = options.sessionData ?? new Map();
   const scripts = [];
   const cookieWrites = [];
   const requests = [];
@@ -140,6 +142,11 @@ function browserFixture(options = {}) {
   };
   const context = {
     document, location, history, localStorage, fetch,
+    sessionStorage: {
+      getItem(key) { if (options.sessionFailure) throw new Error('Blocked'); return sessionData.get(key) ?? null; },
+      setItem(key, value) { if (options.sessionFailure) throw new Error('Blocked'); sessionData.set(key, value); },
+      removeItem(key) { if (options.sessionFailure) throw new Error('Blocked'); sessionData.delete(key); },
+    },
     navigator: {
       globalPrivacyControl: options.gpc ?? false, doNotTrack: options.dnt ?? null,
       locks: options.locks === false ? undefined : {
@@ -154,7 +161,7 @@ function browserFixture(options = {}) {
       },
     },
     crypto: { randomUUID: () => ATTEMPT },
-    URL, URLSearchParams, Intl, Date,
+    URL, URLSearchParams, Intl, Date: options.clock ?? Date,
     setTimeout(callback, delay) {
       timers.push(delay);
       const timer = ++nextTimer;
@@ -168,6 +175,7 @@ function browserFixture(options = {}) {
   context.window = context;
   if (options.fbq) context.fbq = options.fbq;
   vm.createContext(context);
+  vm.runInContext(CALENDLY_SESSION, context);
   const runTracking = () => vm.runInContext(TRACKING, context, { filename: "tracking.js" });
   const runCheckout = () => vm.runInContext(CHECKOUT, context, { filename: "checkout.js" });
   const flush = async () => { for (let step = 0; step < 32; step++) await Promise.resolve(); };
@@ -681,4 +689,81 @@ test('a confirmed receipt received before SDK load dispatches only after readine
   const revoked = browserFixture({ thankYou: true, storage: storedConsent('granted'), autoSDK: false });
   await revoked.boot(); revoked.context.TIAds.confirmedSchedule(scheduleReceipt()); await revoked.click('ad-decline');
   await revoked.loadSDK(); assert.deepEqual(revoked.events(), []);
+});
+
+const observedRecord = (at = Date.now()) => ({ version: 1, source: 'calendly-embed', eventId: SCHEDULE_ID, completedAt: at });
+const observedData = record => new Map([['ti-calendly-completion-v1', JSON.stringify(record)]]);
+test('Calendly completion is distinct from a lead receipt and requires the current same-tab marker', async () => {
+  const record = observedRecord();
+  const f = browserFixture({ thankYou: true, sessionData: observedData(record) });
+  await f.boot(); f.context.TIAds.observedCalendlySchedule(record); await f.flush();
+  assert.equal(f.events().length, 0);
+  await f.click('ad-allow');
+  assert.deepEqual(f.events().find(e => e.name === 'Schedule'), {
+    name: 'Schedule', data: { content_name: 'AI Intensive — free call' }, eventId: SCHEDULE_ID
+  });
+  assert.equal('leadSaved' in record, false);
+  const direct = browserFixture({ thankYou: true, storage: storedConsent('granted') });
+  await direct.boot(); direct.context.TIAds.observedCalendlySchedule(record); await direct.flush();
+  assert.equal(direct.events().filter(e => e.name === 'Schedule').length, 0);
+  const wrongPage = browserFixture({ sessionData: observedData(record), storage: storedConsent('granted') });
+  await wrongPage.boot(); wrongPage.context.TIAds.observedCalendlySchedule(record); await wrongPage.flush();
+  assert.equal(wrongPage.events().filter(e => e.name === 'Schedule').length, 0);
+});
+test('Calendly rejects expired, future, malformed, mismatched and extra-data markers', async () => {
+  const valid = observedRecord();
+  for (const record of [null, {}, { ...valid, completedAt: Date.now() - 900001 },
+    { ...valid, completedAt: Date.now() + 60000 }, { ...valid, source: 'url' },
+    { ...valid, version: 2 }, { ...valid, eventId: 'private@example.test' }, { ...valid, name: 'Private' }]) {
+    const f = browserFixture({ thankYou: true, storage: storedConsent('granted'), sessionData: observedData(record) });
+    await f.boot(); f.context.TIAds.observedCalendlySchedule(record); await f.flush();
+    assert.equal(f.events().filter(e => e.name === 'Schedule').length, 0);
+  }
+  const mismatch = browserFixture({ thankYou: true, storage: storedConsent('granted'), sessionData: observedData(valid) });
+  await mismatch.boot();
+  mismatch.context.TIAds.observedCalendlySchedule({ ...valid, eventId: 'ti-schedule-' + 'c'.repeat(64) });
+  await mismatch.flush();
+  assert.equal(mismatch.events().filter(e => e.name === 'Schedule').length, 0);
+});
+test('Calendly deduplicates repeated calls, reloads and concurrent tabs sharing an observed identity', async () => {
+  const record = observedRecord(); const storage = storedConsent('granted'); const lockQueues = new Map();
+  const a = browserFixture({ thankYou: true, storage, lockQueues, sessionData: observedData(record) });
+  const b = browserFixture({ thankYou: true, storage, lockQueues, sessionData: observedData(record) });
+  await a.boot(); await b.boot();
+  a.context.TIAds.observedCalendlySchedule(record); a.context.TIAds.observedCalendlySchedule(record);
+  b.context.TIAds.observedCalendlySchedule(record); await a.flush(); await b.flush();
+  assert.equal([...a.events(), ...b.events()].filter(e => e.name === 'Schedule').length, 1);
+  const reload = browserFixture({ thankYou: true, storage, lockQueues, sessionData: observedData(record) });
+  await reload.boot(); reload.context.TIAds.observedCalendlySchedule(record); await reload.flush();
+  assert.equal(reload.events().filter(e => e.name === 'Schedule').length, 0);
+});
+test('Calendly respects decline, privacy signals, unavailable durable claims and blocked session storage', async () => {
+  for (const options of [{ storage: storedConsent('denied') }, { gpc: true }, { dnt: '1' },
+    { storageFailure: true }, { storageWriteFailure: true }, { locks: false }, { sessionFailure: true }]) {
+    const record = observedRecord();
+    const f = browserFixture({ thankYou: true, storage: storedConsent('granted'), sessionData: observedData(record), ...options });
+    await f.boot(); f.context.TIAds.observedCalendlySchedule(record); await f.flush();
+    assert.equal(f.events().filter(e => e.name === 'Schedule').length, 0);
+  }
+});
+test('Calendly waits for SDK readiness and rechecks consent after a delayed load', async () => {
+  const record = observedRecord();
+  const f = browserFixture({ thankYou: true, storage: storedConsent('granted'), autoSDK: false, sessionData: observedData(record) });
+  await f.boot(); f.context.TIAds.observedCalendlySchedule(record); await f.flush();
+  assert.equal(f.events().length, 0); await f.loadSDK();
+  assert.equal(f.events().filter(e => e.name === 'Schedule').length, 1);
+  const revoked = browserFixture({ thankYou: true, storage: storedConsent('granted'), autoSDK: false, sessionData: observedData(record) });
+  await revoked.boot(); revoked.context.TIAds.observedCalendlySchedule(record); await revoked.click('ad-decline'); await revoked.loadSDK();
+  assert.equal(revoked.events().length, 0);
+});
+test('Calendly freshness is rechecked at actual SDK readiness and delayed consent dispatch', async () => {
+  let now = Date.now(); const record = observedRecord(now); const clock = { now: () => now };
+  const f = browserFixture({ thankYou: true, storage: storedConsent('granted'), autoSDK: false, sessionData: observedData(record), clock });
+  await f.boot(); f.context.TIAds.observedCalendlySchedule(record); await f.flush();
+  now += 900001; await f.loadSDK();
+  assert.equal(f.events().filter(e => e.name === 'Schedule').length, 0);
+  now = Date.now(); const next = observedRecord(now);
+  const consent = browserFixture({ thankYou: true, sessionData: observedData(next), clock });
+  await consent.boot(); consent.context.TIAds.observedCalendlySchedule(next); now += 900001; await consent.click('ad-allow');
+  assert.equal(consent.events().filter(e => e.name === 'Schedule').length, 0);
 });

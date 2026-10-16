@@ -46,12 +46,12 @@ function fixture(options = {}) {
   };
 }
 
-test('thank-you route uses conditional booking copy and a fixed verified 15-minute Calendar destination', () => {
+test('thank-you route uses conditional provider-neutral copy and preserves the legacy 15-minute Calendar', () => {
   assert.match(html, /Thanks for your interest/);
-  assert.match(html, /If you’ve chosen a time, your Google Calendar confirmation has the call details\. Otherwise, choose a time below\./);
+  assert.match(html, /If you’ve chosen a time, your booking confirmation has the call details\. Otherwise, choose a time below\./);
   assert.match(html, /Already booked\? There’s no need to book again/);
   assert.equal(html.match(/id="choose-call"[^>]*href="([^"]+)"/)?.[1], '/ai-intensive/book/');
-  assert.match(html, /<noscript>[\s\S]*Open Google Calendar to choose a time/);
+  assert.match(html, /<noscript>[\s\S]*check your confirmation email[\s\S]*href="\/ai-intensive\/book\/"/);
   assert.ok(html.includes(`data-src="${calendar.replace('/u/0', '')}?gv=true"`));
   assert.doesNotMatch(html, /<iframe[^>]*\ssrc=/, 'the private-receipt check precedes loading the inline calendar');
   assert.equal(new URL(calendar).search, '');
@@ -68,7 +68,7 @@ test('static route loads only local assets and the shared consent engine after U
   const paths = [...html.matchAll(/(?:src|href)="(\/[^"#?]+)(?:\?[^"#]*)?"/g)].map(match => match[1]);
   for (const asset of paths.filter(path => /\.(css|js|svg|woff2)$/.test(path))) assert.ok(existsSync(new URL(`..${asset}`, import.meta.url)), asset);
   const scripts = [...html.matchAll(/<script\s+src="([^"]+)"/g)].map(match => match[1].split('?')[0]);
-  assert.deepEqual(scripts, ['/ai-intensive/thank-you/thank-you.js', '/ai-intensive/tracking.js']);
+  assert.deepEqual(scripts, ['/ai-intensive/book/calendly-session.js', '/ai-intensive/thank-you/thank-you.js', '/ai-intensive/tracking.js']);
   for (const id of ['ad-notice', 'ad-choice', 'ad-allow', 'ad-decline', 'ad-privacy', 'ad-privacy-link', 'ad-notice-text']) assert.match(html, new RegExp(`id="${id}"`));
   assert.doesNotMatch(source, /fbq\(|localStorage|#ad-choice|#ad-notice|confirmedLead|confirmedPurchase|location\.assign/);
 });

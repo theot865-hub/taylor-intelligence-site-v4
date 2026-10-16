@@ -1,47 +1,48 @@
 # Taylor Intelligence — Agency site
 
-## October 14 free-call booking and Meta confirmation
+## October 15 Calendly free-call flow — local preparation
 
-Theo authorized completing and publishing Julian's ad-funnel changes. The
-campaign `/ai-intensive/` has no price/payment controls and sends every enquiry
-through `/ai-intensive/book`. Existing Education checkout, offer prices,
-portraits, artwork, logos and agency pages are preserved.
+Prepared locally; **not published**. The only public event setting is
+`window.TICalendlyConfig.eventUrl` in `ai-intensive/book/calendly-config.js`.
+Root verified and configured the owned 15-minute event:
+https://calendly.com/theo-taylorintelligence/ai-intensive.
+Root saved and read back nine upcoming date-specific availability windows and
+the optional weekly-tip checkbox. Browser acceptance and publication remain pending.
 
-The form saves name/email and a separate unchecked weekly-tip preference in
-private D1 before moving to `/ai-intensive/thank-you/`. A random, HttpOnly,
-two-hour receipt cookie lets that page check only the visitor's own booking
-state. The page embeds Google's official dedicated 15-minute calendar. Use the
-same email in both forms. Without JavaScript, a direct Calendar link still lets
-the visitor book; automatic confirmation/ad measurement requires JavaScript.
+The campaign preserves its appearance, artwork and six client logos. Its
+booking page now uses Calendly's official JavaScript widget to collect details
+once. Keep the provider's cookie/privacy choices visible and its confirmation
+behavior at default. The parent handles navigation after the supported
+`calendly.event_scheduled` event, without a paid native-redirect feature.
 
-Google's signed booking notification is read by the existing HOST mailbox
-collector and delivered through the private HMAC receipt endpoint. Only a
-matching prior lead and authenticated Calendar confirmation turn the page into
-“Thanks—your call is booked”. Pending checks run every 20 seconds for up to
-15 minutes while visible; confirmation can take a few minutes. The separate
-15-minute schedule uses Google Meet and Vancouver time. Its public share URL is
-https://calendar.app.google/xtN3MFTxaHHHUXPp8. The original 30-minute schedule and
-Education link are unchanged.
+Only the exact Calendly origin and actual embedded frame can supply completion.
+A namespaced hash and timestamp enter a same-tab marker valid for 15 minutes;
+contact details and raw provider identifiers never enter the thank-you URL or
+Meta payload. Fresh completion shows Calendly confirmation wording. Direct
+visits, missing/malformed/expired markers and separate-tab fallback bookings
+do not create a Calendly conversion claim. The provider confirmation email
+remains authoritative.
 
-Meta Pixel 1281844947404157 receives `Schedule` only for a server-confirmed
-booking after optional ad consent. Direct visits and saved leads do not count.
-The thank-you page emits no offer-value or Purchase event. GPC/DNT override
-consent; blocked SDK/storage cannot prevent booking. Opaque event IDs and
-cross-tab durable claims suppress duplicate browser events. Names, emails,
-provider event IDs and receipt tokens never enter Meta payloads or URLs.
-This is browser measurement; it requires the visitor to keep or reopen the
-page in the same browser before the two-hour receipt expires. Events Manager
-receipt/attribution cannot be inferred from passing source tests.
+This is **browser-observed completion**, not server attestation. The new flow
+creates no D1 lead and does not use the HOST Google-mail bridge. Calendly and
+the connected calendar retain the operational record. Booking alone does not
+provide weekly-tip consent, and stored consent does not prove email delivery.
 
-Apply migrations 0001 and 0002 and provision `TI_BOOKING_RECEIPT_KEY` privately
-before publishing. Keep the HOST copy outside Git. There is no new timer,
-automatic appointment, marketing send or public lead export. See
-`docs/ai-intensive-leads.md` and `docs/ai-intensive-booking-verification.md` for
-contracts, schema, operator checks and limitations. Full source tests:
-`node --test tests/*.test.mjs`. Current release evidence belongs in the dated
-portable handoff and Brain owners. Branch pushes may deploy canonical before
-PR merge: verify provider build, serving version, public assets and actual
-private save/receipt effects after publication.
+Meta Pixel 1281844947404157 sends Schedule only with current evidence, optional
+ad consent, SDK readiness and durable cross-tab deduplication. GPC/DNT and
+revocation keep measurement off. Thank-you sends no Purchase or offer value.
+Blocked tracking/storage cannot invalidate scheduling. Source tests and
+browser dispatch do not establish Events Manager receipt or attribution.
+
+Existing Google appointments, private endpoints, D1 records and the HOST
+collector remain unchanged. Only “Check an earlier Google booking” starts
+legacy private-cookie verification. Default visits never open the old Google
+calendar. Payment/Purchase guards and Education remain unchanged. No new
+secret, webhook, migration or timer is required. See
+`docs/ai-intensive-calendly.md` and the preserved legacy documentation.
+
+Run `node --test tests/*.test.mjs`. Root owns provider setup, publication and
+live verification. Cloudflare may deploy pushed branches before PR merge.
 
 Education retains CAD1200 per company plus CAD100 per observer. New Stripe
 sessions return to `/education/`; historical sessions retain their original

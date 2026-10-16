@@ -48,7 +48,7 @@ test("campaign removes pricing and payment controls from page and social descrip
   assert.match(campaign, /<script src="\/ai-intensive\/tracking\.js\?v=20261014-free-call" defer><\/script>/);
 });
 
-test("every free-call and private-session CTA goes through the contact form", () => {
+test("every free-call and private-session CTA goes through the booking page", () => {
   const links = Array.from(campaign.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi))
     .map(([, attrs, body]) => ({ href: attrs.match(/\bhref="([^"]+)"/)?.[1], label: body.replace(/<[^>]*>/g, "").trim() }));
   const bookingLinks = links.filter(link => /Book a free call|Ask about private sessions/.test(link.label));
@@ -58,7 +58,7 @@ test("every free-call and private-session CTA goes through the contact form", ()
   assert.doesNotMatch(campaign, /href="https:\/\/calendar\.google\.com/);
 });
 
-test("campaign uses the verified 15-minute schedule inside the private thank-you handoff", () => {
+test("campaign preserves its 15-minute promise and the legacy Google schedule contract", () => {
   const expected = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2OnIx-9j8ROlj-uAqbq9_rKBDncdqcEtmf4DshdYIZU80lv-ldIBXfa2uBwTIyuhG67_kvQ57C";
   assert.equal(CALENDAR_URL, expected, "Server preserves the verified dedicated schedule");
   const destination = text("ai-intensive/book/booking.js").match(/const destination = '([^']+)';/)?.[1];
@@ -98,7 +98,7 @@ test("existing payment verification, privacy signals, SDK readiness and purchase
   ],
   [
     "  function purchaseClaims()",
-    "  // Only the private booking-status endpoint",
+    "  // Private Google receipts and browser-observed",
     "9e0395bc522086c8f76e656698c1442860b5dc7d3de14444a33dcd7bb318f6e8"
   ],
   [
@@ -131,23 +131,28 @@ test("campaign preserves full-frame portrait markup and all existing styling", (
   assert.equal(hash(css.slice(0, boundary)), "c474c2f9a7653e009cc163bf47763f370f9ae1ae2292023dc086496b50f3d253", "Existing campaign CSS");
 });
 
-test("booking page collects contact details without payment or Meta tracking", () => {
+test("booking page delegates details to Calendly without payment, Meta, or implied marketing consent", () => {
   const booking = text("ai-intensive/book/index.html");
-  assert.match(booking, /<form[^>]+action="\/api\/ai-intensive\/leads"[^>]+method="post"/);
-  assert.match(booking, /<input[^>]+name="name"[^>]+required/);
-  assert.match(booking, /<input[^>]+name="email"[^>]+required/);
-  const checkbox = booking.match(/<input[^>]+name="marketingConsent"[^>]*>/)?.[0];
-  assert.ok(checkbox);
-  assert.doesNotMatch(checkbox, /\b(?:checked|required)\b/);
+  assert.doesNotMatch(booking, /<form\b|<input\b|\/api\/ai-intensive\/leads/);
+  assert.match(booking, /id="calendly-widget"/);
+  assert.match(booking, /name and email once, in Calendly/);
+  assert.match(booking, /Booking alone does not sign you up for marketing emails/);
+  assert.match(booking, /Calendly provides its own privacy and cookie choices/);
+  assert.match(booking, /separate, optional Meta ad measurement/);
+  assert.match(booking, /book in a new tab[\s\S]*cannot automatically verify/);
   assert.doesNotMatch(booking, /<script[^>]+(?:tracking|checkout)\.js|\/api\/checkout|\bStripe\b/);
-  assert.match(booking, /Google Calendar on the next page/);
-  assert.match(booking, /Use the same email address you enter here\./);
-  assert.match(booking, /separate, optional Meta ad measurement for page visits and verified call bookings/);
-  assert.match(booking, /weekly tips checkbox does not control it/);
-  assert.match(booking, /<noscript>[\s\S]*next page has a Google Calendar link/);
+  assert.doesNotMatch(text("ai-intensive/book/booking.js"), /hide_gdpr_banner|hide_landing_page_details|fetch\(/);
+  const eventUrl = text("ai-intensive/book/calendly-config.js").match(/eventUrl: '([^']*)'/)?.[1];
+  assert.equal(typeof eventUrl, 'string', 'One explicit public event URL setting');
+  assert.equal(eventUrl, 'https://calendly.com/theo-taylorintelligence/ai-intensive', 'Verified owned 15-minute free-call event');
+  if (eventUrl) {
+    const configured = new URL(eventUrl);
+    assert.equal(configured.origin, 'https://calendly.com');
+    assert.equal(configured.search + configured.hash + configured.username + configured.password, '');
+    assert.match(configured.pathname, /^\/[a-z0-9][a-z0-9_-]*\/[a-z0-9][a-z0-9_-]*\/?$/i);
+  }
   const leadDocs = text("docs/ai-intensive-leads.md");
   assert.match(leadDocs, /"saved": true, "redirect": "\/ai-intensive\/thank-you\/"/);
-  assert.doesNotMatch(leadDocs, /"redirect": "https:\/\/calendar\.google\.com/);
 });
 
 test("lead API bypasses SPA fallback and private tooling is excluded from assets", () => {

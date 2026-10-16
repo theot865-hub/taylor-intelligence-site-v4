@@ -1,5 +1,7 @@
 # Private Calendar confirmation bridge
 
+> October 15 source preparation: this document describes the preserved legacy Google/D1 path. The new Calendly path collects details once in the provider widget and uses browser-observed completion; it creates no D1 lead and does not use Google-mail matching. Default thank-you visits are generic; only the explicit earlier-Google-booking action starts the legacy browser check. See [Calendly flow](ai-intensive-calendly.md). This local revision is not yet published.
+
 Lead capture and choosing a time are separate from a confirmed booking. After a
 save, JSON returns the fixed relative path `/ai-intensive/thank-you/`; native POST
 redirects there on the same canonical origin. That page embeds the verified

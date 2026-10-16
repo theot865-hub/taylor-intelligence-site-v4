@@ -1,5 +1,7 @@
 # Campaign free-call lead storage
 
+> October 15 source preparation: this document describes the preserved legacy Google/D1 path. The new Calendly path collects details once in the provider widget and uses browser-observed completion; it creates no D1 lead and does not use Google-mail matching. Default thank-you visits are generic; only the explicit earlier-Google-booking action starts the legacy browser check. See [Calendly flow](ai-intensive-calendly.md). This local revision is not yet published.
+
 This endpoint saves a name and email before returning to the fixed TI route
 `/ai-intensive/thank-you/`. That page verifies the private lead receipt and shows
 Theo's separate 15-minute AI Intensive Google Calendar inline scheduler. The

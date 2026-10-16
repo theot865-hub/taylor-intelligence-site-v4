@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Book your free call — Taylor Intelligence</title>
-  <meta name="description" content="Book a free call with Taylor Intelligence to see if the AI Intensive fits your business. Leave your details, then choose a time.">
+  <meta name="description" content="Book a free call with Taylor Intelligence to see if the AI Intensive fits your business. Choose a time and enter your details once in Calendly.">
   <meta name="theme-color" content="#f4f1ea">
   <link rel="canonical" href="https://taylorintelligence.ai/ai-intensive/book">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -12,14 +12,14 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Taylor Intelligence">
   <meta property="og:title" content="Book your free call">
-  <meta property="og:description" content="Leave your details and pick a time that works for you.">
+  <meta property="og:description" content="Choose a time for your free 15-minute call.">
   <meta property="og:url" content="https://taylorintelligence.ai/ai-intensive/book">
   <meta property="og:image" content="https://taylorintelligence.ai/ai-intensive/og.png?v=20261014-free-call">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="/ai-intensive/style.css?v=20261014-free-call">
-  <link rel="stylesheet" href="/ai-intensive/book/booking.css?v=20261014-free-call">
+  <link rel="stylesheet" href="/ai-intensive/book/booking.css?v=20261015-calendly">
 </head>
-<body>
+<body class="call-booking-page">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header shell">
     <a class="brand" href="/" aria-label="Taylor Intelligence — home">
@@ -32,35 +32,21 @@
     <section class="call-booking" aria-labelledby="booking-title">
       <div class="call-heading">
         <h1 id="booking-title">Book your free call</h1>
-        <p>Leave your details and pick a time that works for you.</p>
+        <p>Choose a time for your free 15-minute call.</p>
       </div>
-      <form id="free-call-form" class="call-form" action="/api/ai-intensive/leads" method="post" aria-describedby="details-use">
-        <div class="call-field">
-          <label for="call-name">Name <span>(required)</span></label>
-          <input id="call-name" name="name" type="text" autocomplete="name" maxlength="120" required>
-        </div>
-        <div class="call-field">
-          <label for="call-email">Email <span>(required)</span></label>
-          <input id="call-email" name="email" type="email" autocomplete="email" maxlength="254" required>
-        </div>
-        <div class="call-honeypot" aria-hidden="true">
-          <label for="call-website">Website</label>
-          <input id="call-website" name="website" type="text" tabindex="-1" autocomplete="off">
-        </div>
-        <input id="call-submission-id" name="submissionId" type="hidden" value="">
-        <label class="tips-choice" for="call-tips">
-          <input id="call-tips" name="marketingConsent" type="checkbox" value="true" aria-describedby="tips-use">
-          <span>Send me one practical AI tip each week for my business</span>
-        </label>
-        <p id="tips-use" class="call-small">Optional. You can book without signing up for tips and unsubscribe from the emails at any time.</p>
-        <button id="call-submit" class="button call-submit" type="submit">Continue to pick a time</button>
-        <p id="call-status" class="call-status" role="status" aria-live="polite" hidden></p>
-        <noscript><p class="call-small">After your details are saved, the next page has a Google Calendar link to choose a time. Use the same email address you enter here.</p></noscript>
-        <p id="details-use" class="call-small details-use">Taylor Intelligence uses your name and email to follow up about your call. We save your weekly tips choice separately; checking it lets us send those tips. After your details are saved, you will choose a time in Google Calendar on the next page. Use the same email address you enter here. No call is booked until you select and confirm a time there. Google processes the booking under <a href="https://policies.google.com/privacy" rel="noreferrer">its privacy policy</a>. This form does not use Meta tracking or send your name or email to Meta. The next page offers separate, optional Meta ad measurement for page visits and verified call bookings. You can book with ad measurement off; the weekly tips checkbox does not control it. Questions or changes to your details: <a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a>.</p>
-      </form>
+      <div class="calendar-area">
+        <p id="call-status" class="call-status" role="status" aria-live="polite">Please email Theo to arrange your free 15-minute call.</p>
+        <div id="calendly-widget" class="calendly-inline-widget" data-auto-load="false" aria-label="Book your free 15-minute call with Taylor Intelligence" hidden></div>
+        <p class="calendar-fallback"><a id="calendar-fallback" href="mailto:theo@taylorintelligence.ai" target="_blank" rel="noopener noreferrer" hidden>Open Calendly in a new tab</a></p>
+        <p class="call-small">If you book in a new tab, Calendly’s confirmation email is your confirmation. This page cannot automatically verify that separate booking.</p>
+        <noscript><p class="call-small">The embedded calendar needs JavaScript. <a href="mailto:theo@taylorintelligence.ai">Email Theo to arrange your call</a>.</p></noscript>
+      </div>
+      <p id="details-use" class="call-small details-use">Calendly collects your booking details so Taylor Intelligence can arrange and follow up about your call. You enter your name and email once, in Calendly. Booking alone does not sign you up for marketing emails. Calendly provides its own privacy and cookie choices; see <a href="https://calendly.com/privacy" rel="noreferrer">Calendly’s Privacy Notice</a>. After the embedded calendar confirms your booking, you will return to our thank-you page, which offers separate, optional Meta ad measurement. We do not send your name or email to Meta, and you can book with ad measurement off. Questions: <a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a>.</p>
     </section>
   </main>
   <footer class="site-footer shell"><a class="brand" href="/"><span class="footer-ti" aria-hidden="true">TI</span><span>Taylor Intelligence</span></a><a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a></footer>
-  <script src="/ai-intensive/book/booking.js?v=20261014-free-call" defer></script>
+  <script src="/ai-intensive/book/calendly-config.js?v=20261015-calendly" defer></script>
+  <script src="/ai-intensive/book/calendly-session.js?v=20261015-calendly" defer></script>
+  <script src="/ai-intensive/book/booking.js?v=20261015-calendly" defer></script>
 </body>
 </html>
