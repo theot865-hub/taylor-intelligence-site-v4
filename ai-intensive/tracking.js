@@ -140,18 +140,22 @@
     } catch { /* Storage, locks and SDK failures cannot affect booking. */ }
     finally { claimingPurchases.delete(id); }
   }
-  // Only the private booking-status endpoint supplies this opaque receipt.
+  // Private Google receipts and browser-observed Calendly completions use distinct inputs.
   // Consent, durable claims and a cross-tab lock are required before dispatch.
+  const freshSchedule = result => {
+    if (result?.source !== 'calendly-embed') return true;
+    try { return !!window.TICalendlySession?.normalize(result); } catch { return false; }
+  };
   async function schedule() {
     const result = pendingSchedule;
-    if (!result || !permitted()) return;
+    if (!result || !freshSchedule(result) || !permitted()) return;
     const id = result.eventId;
     if (sentSchedules.has(id) || claimingSchedules.has(id)) return;
     try {
       if (!pixel() || typeof navigator.locks?.request !== 'function') return;
       claimingSchedules.add(id);
       await navigator.locks.request('ti-meta-schedule', { mode: 'exclusive', ifAvailable: true }, lock => {
-        if (!lock || pendingSchedule?.eventId !== id || !permitted()
+        if (!lock || pendingSchedule?.eventId !== id || !freshSchedule(result) || !permitted()
             || !sdkReady || typeof window.fbq.callMethod !== 'function') return;
         const raw = localStorage.getItem(SCHEDULES_KEY);
         if (raw !== null && raw.length > 10000) return;
@@ -208,8 +212,19 @@
     if (label) label.textContent = `Ad choices: ${consent === 'granted' ? 'on' : 'off'}`;
   }
 
-  // Called only with server-verified checkout or booking responses.
+  // Called only through distinct server-receipt or browser-observation methods.
   window.TIAds = {
+    observedCalendlySchedule(record) {
+      if (document.body?.dataset?.tiAdsPage !== 'thank-you') return;
+      try {
+        const observed = window.TICalendlySession?.normalize(record);
+        const saved = window.TICalendlySession?.read();
+        if (!observed || !saved || saved.eventId !== observed.eventId
+            || saved.completedAt !== observed.completedAt) return;
+        pendingSchedule = observed;
+        void schedule();
+      } catch { /* Browser measurement is optional. */ }
+    },
     confirmedSchedule(result) {
       if (document.body?.dataset?.tiAdsPage !== 'thank-you') return;
       if (result?.leadSaved !== true || result.bookingStatus !== 'confirmed'

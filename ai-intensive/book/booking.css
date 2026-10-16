@@ -1,23 +1,21 @@
-.call-booking { display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; padding: 48px; margin-bottom: 42px; background-color: #ffbf7e; background-image: url('/ai-intensive/images/orange-mentoring-background.jpg'); background-size: cover; background-position: center; }
-.call-heading h1 { max-width: 10ch; }
-.call-heading > p { max-width: 32ch; margin-top: 22px; }
-.call-form { min-width: 0; }
-.call-field { margin-bottom: 20px; }
-.call-field label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 700; }
-.call-field label span { font-weight: 500; }
-.call-field input { display: block; width: 100%; min-height: 48px; padding: 12px 14px; border: 1px solid #786144; border-radius: 5px; background: #fff9ee; color: var(--ink); font: 16px/1.4 var(--sans); }
-.call-honeypot { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
-.tips-choice { display: flex; align-items: flex-start; gap: 11px; font-size: 13px; line-height: 1.6; cursor: pointer; }
-.tips-choice input { flex: none; width: 19px; height: 19px; margin: 2px 0 0; accent-color: var(--ink); }
-.call-small { max-width: 70ch; font-size: 11px; line-height: 1.7; }
-#tips-use { margin: 8px 0 22px 30px; }
-.call-submit { width: 100%; justify-content: center; border: 0; font-family: var(--sans); cursor: pointer; }
-.call-submit:disabled { opacity: .65; cursor: wait; }
-.call-status { margin-top: 14px; font-size: 13px; line-height: 1.6; }
-.call-status[data-state="error"] { color: #7c2115; font-weight: 650; }
-.details-use { margin-top: 22px; padding-top: 18px; border-top: 1px solid #6f471a33; }
-@media (max-width: 1000px) { .call-booking { padding: 34px; gap: 34px; } }
-@media (max-width: 760px) { .call-booking { grid-template-columns: 1fr; gap: 28px; padding: 29px; } .call-heading h1 { max-width: 16ch; } .call-heading > p { max-width: none; margin-top: 16px; } }
-@media (max-width: 640px) { nav > a:first-child { display: inline-flex; } .call-booking { padding: 28px 24px; margin-bottom: 28px; background-image: url('/ai-intensive/images/orange-mentoring-background-mobile.jpg'); } }
-@media (max-width: 360px) { .call-booking { padding-inline: 20px; } }
-@media (forced-colors: active) { .call-booking, .call-field input { background: Canvas; color: CanvasText; } .call-field input, .details-use { border-color: CanvasText; } .call-status[data-state="error"] { color: CanvasText; } }
+.call-booking { display: grid; grid-template-columns: 1fr; gap: 26px; padding: 42px; margin-bottom: 42px; background-color: #ffbf7e; background-image: url('/ai-intensive/images/orange-mentoring-background.jpg'); background-size: cover; background-position: center; }
+.call-heading h1 { max-width: none; }
+.call-heading > p { max-width: 50ch; margin-top: 18px; }
+.calendar-area { min-width: 0; width: 100%; }
+.calendly-inline-widget { width: 100%; height: 950px; min-width: 0; background: #fff; }
+.calendly-inline-widget[hidden] { display: none; }
+.calendly-inline-widget iframe { display: block; width: 100%; max-width: 100%; height: 100%; border: 0; }
+.call-small { max-width: 85ch; font-size: 11px; line-height: 1.7; }
+.call-status { margin-bottom: 16px; font-size: 13px; line-height: 1.6; }
+.calendar-fallback { margin: 16px 0 8px; font-size: 13px; }
+.details-use { padding-top: 18px; border-top: 1px solid #6f471a33; }
+@media (max-width: 1000px) { .call-booking { padding: 28px; } }
+@media (max-width: 640px) {
+  nav > a:first-child { display: inline-flex; }
+  .call-booking-page main.shell { width: 100%; }
+  .call-booking { padding: 26px 0; margin-bottom: 28px; background-image: url('/ai-intensive/images/orange-mentoring-background-mobile.jpg'); }
+  .call-heading, .call-status, .calendar-fallback, .calendar-area > .call-small, .calendar-area > noscript, .details-use { margin-inline: 20px; }
+  .call-heading > p { margin-top: 16px; }
+  .calendly-inline-widget { height: 1100px; }
+}
+@media (forced-colors: active) { .call-booking { background: Canvas; color: CanvasText; } .details-use { border-color: CanvasText; } }

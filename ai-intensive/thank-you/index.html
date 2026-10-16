@@ -6,7 +6,7 @@
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex, nofollow">
   <title>Thanks for your interest — Taylor Intelligence</title>
-  <meta name="description" content="Find your free-call confirmation in Google Calendar, or choose a time with Taylor Intelligence.">
+  <meta name="description" content="Find your free-call confirmation, or choose a time with Taylor Intelligence.">
   <meta name="theme-color" content="#f4f1ea">
   <link rel="canonical" href="https://taylorintelligence.ai/ai-intensive/thank-you/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -26,9 +26,10 @@
   <main id="main" class="shell">
     <section id="thank-you-card" class="thank-you-card" aria-labelledby="thanks-title">
       <h1 id="thanks-title">Thanks for your interest</h1>
-      <p id="thanks-intro" class="thanks-intro">If you’ve chosen a time, your Google Calendar confirmation has the call details. Otherwise, choose a time below.</p>
+      <p id="thanks-intro" class="thanks-intro">If you’ve chosen a time, your booking confirmation has the call details. Otherwise, choose a time below.</p>
       <a id="choose-call" class="button" href="/ai-intensive/book/">Book a free call</a>
       <p id="thanks-note" class="thanks-note">Already booked? There’s no need to book again. Check your confirmation email for the time and joining link.</p>
+      <button id="check-legacy-booking" class="confirmation-refresh" type="button">Check an earlier Google booking</button>
       <p id="booking-confirmation-status" class="confirmation-status" role="status" aria-live="polite" hidden></p>
       <button id="refresh-confirmation" class="confirmation-refresh" type="button" hidden>I’ve booked—check confirmation</button>
       <p class="thanks-contact">Need a hand? <a href="mailto:theo@taylorintelligence.ai">Email Theo</a>.</p>
@@ -46,17 +47,18 @@
   </footer>
   <details id="ad-privacy" class="ad-privacy shell">
     <summary>Privacy &amp; ad measurement</summary>
-    <p>Ad measurement is optional and separate from the weekly AI tips choice. Your ad preference is saved in this browser for up to 180 days; supported browser privacy signals keep measurement off. With your permission, Meta Pixel can measure page visits and server-verified call bookings. Meta processes page and referral information, browser/device information, cookie identifiers and your IP address. We do not send names or email addresses through this integration. See <a href="https://www.facebook.com/privacy/policy/" rel="noreferrer">Meta’s Privacy Policy</a>. You can change your preference using “Ad choices”. Questions: <a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a>.</p>
+    <p>Ad measurement is optional. Booking a call does not sign you up for marketing emails. Your ad preference is saved in this browser for up to 180 days; supported browser privacy signals keep measurement off. With your permission, Meta Pixel can measure page visits and completed call bookings. Meta processes page and referral information, browser/device information, cookie identifiers and your IP address. We do not send names or email addresses through this integration. See <a href="https://www.facebook.com/privacy/policy/" rel="noreferrer">Meta’s Privacy Policy</a>. You can change your preference using “Ad choices”. Questions: <a href="mailto:theo@taylorintelligence.ai">theo@taylorintelligence.ai</a>.</p>
   </details>
   <section id="ad-notice" class="ad-notice" aria-label="Optional ad measurement" hidden>
     <p id="ad-notice-text">Allow Meta cookies to measure our ads using page visits and confirmed call bookings? Your calendar booking works either way.</p>
     <a id="ad-privacy-link" href="#ad-privacy">Privacy details</a>
     <div class="ad-actions"><button id="ad-decline" type="button">Decline</button><button id="ad-allow" type="button">Allow</button></div>
   </section>
-  <noscript><p class="shell thanks-no-script">Ad measurement is off without JavaScript. <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2OnIx-9j8ROlj-uAqbq9_rKBDncdqcEtmf4DshdYIZU80lv-ldIBXfa2uBwTIyuhG67_kvQ57C" rel="noreferrer">Open Google Calendar to choose a time</a>. Google sends the confirmation email after you book.</p></noscript>
+  <noscript><p class="shell thanks-no-script">Ad measurement is off without JavaScript. If you booked, check your confirmation email for the time and joining link. Otherwise, <a href="/ai-intensive/book/">book a free call</a> or email Theo.</p></noscript>
   <!-- Clean the URL before any future consent-based PageView integration.
        A visit is not evidence of a saved lead or a confirmed appointment. -->
-  <script src="/ai-intensive/thank-you/thank-you.js?v=20261014-thanks" defer></script>
-  <script src="/ai-intensive/tracking.js?v=20261014-thank-you" defer></script>
+  <script src="/ai-intensive/book/calendly-session.js?v=20261015-calendly" defer></script>
+  <script src="/ai-intensive/thank-you/thank-you.js?v=20261015-calendly" defer></script>
+  <script src="/ai-intensive/tracking.js?v=20261015-calendly" defer></script>
 </body>
 </html>
