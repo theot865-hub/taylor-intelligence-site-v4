@@ -14,15 +14,16 @@ const campaign = text("ai-intensive/index.html");
 // read from verified production main 838648d40d1e28f23bfbde9e51b7aa70411980ee.
 // Deliberate future changes to the protected agency or assets need new review.
 // Homepage baseline reviewed October 14 for the approved Contact button;
-// the remaining protected assets retain their original baselines.
+// Zoom image baselines updated October 20 for the approved direct-from-original
+// colour/background/name revision; other protected assets retain their baselines.
 const preserved = {
   "ai-intensive/fonts/Manrope.ttf": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6",
   "ai-intensive/fonts/OFL.txt": "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b",
   "ai-intensive/images/orange-mentoring-background-mobile.jpg": "ace81f24920255dc4f7af6b487682682a7825aa3c59e79a77a0b739d7a86bdf3",
   "ai-intensive/images/orange-mentoring-background.jpg": "472289b62ee8f3b051149c3392f985ee801c6c81cef4a43af058385734c043f0",
-  "ai-intensive/images/theo-julian-call-960.webp": "b2319357b224984de2c112408029adb5442f6db6826ea0a4f4c30108e3efaf7e",
-  "ai-intensive/images/theo-julian-call.png": "1e4adc34634f59e601893702dc4793e3bed1ee94da7b59ca48d7475c56f2df04",
-  "ai-intensive/images/theo-julian-call.webp": "a1704278ba20e83b2aeb9084e5b31fe7e05f49e624b387183ecf17e4f6505ee7",
+  "ai-intensive/images/theo-julian-call-960.webp": "7186f3c671abbf43876f3d60144ab3561d97b25e963e02cfc77fc4438cbe9dc8",
+  "ai-intensive/images/theo-julian-call.png": "43c3098707a8f7acb858311006e5ffb40b02aab14ffa5cca74fe49efcbb44a6c",
+  "ai-intensive/images/theo-julian-call.webp": "ce3ef70030b7da0744fb487276010cb1a3d3d90d32f988809370f7de776f52b3",
   "ai-intensive/images/ti-education-still.jpg": "5c494a8f532f5fe0480d8c1c4ed852fa0eadb328c91365204e55614b813c72c2",
   "ai-intensive/logos/big-o-tires.png": "58814d8600fc3113b6ee2902ab52b1fe08ba11f38b2c24427b71efff16bc26fa",
   "ai-intensive/logos/omen-foils-dark.png": "fdfae3ec6fbd00a9e47634026f9c9039489af766e5c0c820e1f369a170bfdd14",
