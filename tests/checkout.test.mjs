@@ -94,58 +94,6 @@ test("native form with extras redirects 303 to exactly priced checkout", async (
   assert.equal(params.get("cancel_url"), `${ORIGIN}/education/?checkout=cancelled&employees=3`);
 });
 
-test("new paid checkout returns to Education's actual confirmation handler and displays only the server-verified booking", { timeout: 2000 }, async () => {
-  const html = readFileSync(new URL("../education/index.html", import.meta.url), "utf8");
-  assert.match(html, /<form[^>]*id="company-checkout"[^>]*action="\/api\/checkout"/);
-  for (const id of ["extra-employees", "checkout-attempt", "order-total", "checkout-status"]) assert.match(html, new RegExp(`id="${id}"`));
-  const script = html.match(/<script\s+src="(\/ai-intensive\/checkout\.js)"[^>]*><\/script>/)?.[1];
-  assert.ok(script, "the return page must actually load the payment confirmation script");
-  const { worker, calls } = stripeStub(url => url.endsWith(`/sessions/${ID}`)
-    ? session(3, { status: "complete", payment_status: "paid" }) : session(3));
-  assert.equal((await worker.fetch(jsonRequest({ extraEmployees: 3, checkoutAttempt: ATTEMPT }), env)).status, 200);
-  const params = new URLSearchParams(calls[0].options.body);
-  let pageURL = new URL(params.get("success_url").replace("{CHECKOUT_SESSION_ID}", ID));
-  assert.equal(pageURL.pathname, "/education/");
-
-  const element = value => ({ value, textContent: "", hidden: false, disabled: false, addEventListener() {} });
-  const input = element("0");
-  const attempt = element("");
-  const total = element("");
-  const status = element("");
-  const submit = element("");
-  const form = {
-    elements: { extraEmployees: input, checkoutAttempt: attempt },
-    querySelector: () => submit, querySelectorAll: () => [], addEventListener() {},
-  };
-  const elements = { "#company-checkout": form, "#order-total": total, "#checkout-status": status };
-  const requests = [];
-  let readbackFinished;
-  const readback = new Promise(resolve => { readbackFinished = resolve; });
-  const history = { state: {}, replaceState(state, unused, destination) { this.state = state; pageURL = new URL(destination); } };
-  const context = vm.createContext({
-    document: { querySelector: selector => elements[selector] ?? null },
-    location: { get href() { return pageURL.href; }, get search() { return pageURL.search; }, assign() { throw new Error("Confirmation must not start another payment"); } },
-    history, window: { addEventListener() {} }, crypto: { randomUUID: () => ATTEMPT }, URL, URLSearchParams,
-    fetch: async path => {
-      requests.push(path);
-      const response = await worker.fetch(new Request(`${ORIGIN}${path}`, { headers: { "Sec-Fetch-Site": "same-origin" } }), env);
-      if (path.startsWith("/api/checkout/confirmation?")) readbackFinished();
-      return response;
-    },
-  });
-  vm.runInContext(readFileSync(new URL(`..${script}`, import.meta.url), "utf8"), context);
-  await readback;
-  await new Promise(resolve => setImmediate(resolve));
-  assert.deepEqual(requests, ["/api/checkout/status", `/api/checkout/confirmation?session_id=${ID}`]);
-  assert.equal(pageURL.searchParams.has("session_id"), false, "the return token is removed from the address bar");
-  assert.equal(history.state.tiCheckoutSession, ID);
-  assert.equal(total.value, "$1,500");
-  assert.equal(input.value, "3");
-  assert.equal(submit.textContent, "Company seat booked");
-  assert.equal(submit.disabled, true);
-  assert.match(status.textContent, /You’re booked/);
-  assert.equal(calls.filter(call => call.options.method === "POST").length, 1, "confirmation does not create another Checkout Session");
-});
 
 test("99 additional employees is accepted as a technical cap", async () => {
   const { worker } = stripeStub(() => session(99));

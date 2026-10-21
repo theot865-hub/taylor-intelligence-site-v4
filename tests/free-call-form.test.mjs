@@ -5,7 +5,6 @@ import { webcrypto } from 'node:crypto';
 import vm from 'node:vm';
 
 const source = readFileSync(new URL('../ai-intensive/book/booking.js', import.meta.url), 'utf8');
-const html = readFileSync(new URL('../ai-intensive/book/index.html', import.meta.url), 'utf8');
 const helperSource = readFileSync(new URL('../ai-intensive/book/calendly-session.js', import.meta.url), 'utf8');
 const eventUrl = 'https://calendly.com/theo-taylor/free-ai-call';
 const destination = '/ai-intensive/thank-you/';
@@ -97,15 +96,6 @@ function fixture(options = {}) {
   };
 }
 
-test('booking page collects details once in Calendly and retains a static contact fallback', () => {
-  assert.doesNotMatch(html, /<form\b|name="(?:name|email|marketingConsent)"/i);
-  assert.match(html, /id="calendly-widget"/);
-  assert.match(html, /id="calendly-widget"[^>]*data-auto-load="false"/,
-    'Disable vendor class auto-init: explicit init supplies the sole configured URL');
-  assert.match(html, /id="calendar-fallback"[^>]*href="mailto:theo@taylorintelligence\.ai"|href="mailto:theo@taylorintelligence\.ai"[^>]*id="calendar-fallback"/);
-  assert.match(html, /<script[^>]+src="[^\"]*calendly-session\.js(?:\?[^\"]*)?"/);
-  assert.doesNotMatch(html, /hide_gdpr_banner|assets\.calendly\.com\/assets\/external\/widget\.js/);
-});
 
 test('repeat widget script readiness initializes the explicit embed only once', () => {
   const f = fixture();

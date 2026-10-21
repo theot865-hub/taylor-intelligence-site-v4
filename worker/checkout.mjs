@@ -272,12 +272,19 @@ export function createWorker(fetchStripe = fetch) {
     async fetch(request, env) {
       const url = new URL(request.url);
       const path = url.pathname;
+      // The retired offer cannot create new payments or capture new leads.
+      // Keep private receipts and historical payment confirmation available.
+      const retired = env.AI_INTENSIVE_RETIRED === "true";
+      if (retired && ((path === "/api/checkout" && request.method === "POST")
+        || (path.replace(/\/$/, "") === "/api/ai-intensive/leads" && request.method === "POST"))) {
+        return json({ error: "The AI Intensive has ended. New bookings and payments are closed.", retired: true }, 410);
+      }
       if (path === "/api/ai-intensive" || path.startsWith("/api/ai-intensive/")) return handleAIIntensiveLeads(request, env);
       if (!path.startsWith("/api/checkout")) return env.ASSETS.fetch(request);
       try {
         if (path === "/api/checkout/status" && request.method === "GET") {
           checkSameOrigin(request, env, false);
-          return json({ ready: Boolean(configuration(env, url)) });
+          return json({ ready: !retired && Boolean(configuration(env, url)), ...(retired ? { retired: true } : {}) });
         }
         if (path !== "/api/checkout" && path !== "/api/checkout/confirmation") {
           return json({ error: "Not found." }, 404);

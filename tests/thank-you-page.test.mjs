@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import vm from 'node:vm';
 
-const html = readFileSync(new URL('../ai-intensive/thank-you/index.html', import.meta.url), 'utf8');
 const source = readFileSync(new URL('../ai-intensive/thank-you/thank-you.js', import.meta.url), 'utf8');
 const tracker = readFileSync(new URL('../ai-intensive/tracking.js', import.meta.url), 'utf8');
 const calendar = 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2OnIx-9j8ROlj-uAqbq9_rKBDncdqcEtmf4DshdYIZU80lv-ldIBXfa2uBwTIyuhG67_kvQ57C';
@@ -46,32 +45,7 @@ function fixture(options = {}) {
   };
 }
 
-test('thank-you route uses conditional provider-neutral copy and preserves the legacy 15-minute Calendar', () => {
-  assert.match(html, /Thanks for your interest/);
-  assert.match(html, /If you’ve chosen a time, your booking confirmation has the call details\. Otherwise, choose a time below\./);
-  assert.match(html, /Already booked\? There’s no need to book again/);
-  assert.equal(html.match(/id="choose-call"[^>]*href="([^"]+)"/)?.[1], '/ai-intensive/book/');
-  assert.match(html, /<noscript>[\s\S]*check your confirmation email[\s\S]*href="\/ai-intensive\/book\/"/);
-  assert.ok(html.includes(`data-src="${calendar.replace('/u/0', '')}?gv=true"`));
-  assert.doesNotMatch(html, /<iframe[^>]*\ssrc=/, 'the private-receipt check precedes loading the inline calendar');
-  assert.equal(new URL(calendar).search, '');
-  assert.doesNotMatch(html, /Your appointment is confirmed|You’re booked|Company seat booked|\$1,200|\$100/);
-  assert.match(html, /name="referrer" content="no-referrer"/);
-  assert.match(html, /name="robots" content="noindex, nofollow"/);
-});
 
-test('static route loads only local assets and the shared consent engine after URL cleanup', () => {
-  assert.match(html, /class="skip-link" href="#main"/);
-  assert.match(html, /<main id="main"/);
-  assert.match(html, /aria-labelledby="thanks-title"/);
-  assert.match(html, /data-ti-ads-page="thank-you"/);
-  const paths = [...html.matchAll(/(?:src|href)="(\/[^"#?]+)(?:\?[^"#]*)?"/g)].map(match => match[1]);
-  for (const asset of paths.filter(path => /\.(css|js|svg|woff2)$/.test(path))) assert.ok(existsSync(new URL(`..${asset}`, import.meta.url)), asset);
-  const scripts = [...html.matchAll(/<script\s+src="([^"]+)"/g)].map(match => match[1].split('?')[0]);
-  assert.deepEqual(scripts, ['/ai-intensive/book/calendly-session.js', '/ai-intensive/thank-you/thank-you.js', '/ai-intensive/tracking.js']);
-  for (const id of ['ad-notice', 'ad-choice', 'ad-allow', 'ad-decline', 'ad-privacy', 'ad-privacy-link', 'ad-notice-text']) assert.match(html, new RegExp(`id="${id}"`));
-  assert.doesNotMatch(source, /fbq\(|localStorage|#ad-choice|#ad-notice|confirmedLead|confirmedPurchase|location\.assign/);
-});
 
 test('a thank-you visit with ad permission emits only PageView and never revenue or a booking conversion', () => {
   const f = fixture({ tracker: true, granted: true });

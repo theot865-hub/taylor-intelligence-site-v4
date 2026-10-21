@@ -1,5 +1,22 @@
 # Taylor Intelligence — Agency site
 
+## October 21 — AI Intensive retired
+
+Theo ended the AI Intensive. The campaign, book and thank-you URLs now show a
+closure notice without booking embeds, forms or advertising scripts. Homepage
+and Education remove the same group package, price, seat selector and checkout;
+general implementation-related training remains. No replacement group offer is
+promised. The old campaign URL is removed from the sitemap.
+
+Production sets `AI_INTENSIVE_RETIRED=true`: new checkout and legacy lead POSTs
+return 410 before touching Stripe or D1, and checkout readiness is false.
+Historical confirmation and private operational receipts remain readable;
+retirement does not delete customer data, refund payments or cancel appointments.
+Calendly's owned AI Intensive event was turned off separately. Legacy standalone
+Stripe payment links and paid Meta campaigns require their own provider checks.
+
+The sections below describe earlier launches and are retained as history.
+
 ## October 15 Calendly free-call flow — local preparation
 
 Prepared locally; **not published**. The only public event setting is
