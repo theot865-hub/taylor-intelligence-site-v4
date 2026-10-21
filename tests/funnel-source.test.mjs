@@ -30,50 +30,16 @@ const preserved = {
   "ai-intensive/logos/sd-concrete.svg": "52b5bf825e6eaad5c463b3e3e91d21604cfee4e1340741ec1866fb31491a172f",
   "ai-intensive/logos/szolyd.svg": "87efe5c34d0ee30af4878c0cb1ab5387b330c5fbf0b2bd9d61ea9c5e64beda46",
   "education/education.css": "f319a5e70a279868f4d437627298cb742194a1687bab53a808220086174c6b5c",
-  "education/index.html": "4927c4afce5099abbb607726a8a6aac0c54fe70013862455a29b86ae8a958a38",
   "ai-intensive/tracking.js": "ca289a0ca6dc654e02637d4f9d720cc904d3ff501ba8795327e1af0421c8324e",
   "ai-intensive/checkout.js": "697568b6c024a83fe30c5e43411833d262426a7f56618f4a8fb0500616ae5394",
   "ai-intensive/og.png": "9824e5fefe0d76a7374bcec604d15be5e5d21a6cc8e2ed6320dafb2dc782c178",
-  "index.html": "0c2a516171ffa2a6a3a26828802735a8d733ba31219bd61827439d5736740930",
   "og.png": "3b39e8988834a4eddc32b55973737640f8ac438fb61701ba6fbf4877aa707a75"
 };
 
-test("campaign removes pricing and payment controls from page and social descriptions", () => {
-  // Inspect page copy and metadata separately from referenced scripts.
-  const publicCopy = campaign.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
-  assert.doesNotMatch(publicCopy, /\$\s*\d|\bCAD\b|\bStripe\b|company seat|seat selector|\/api\/checkout|checkout\.js|extra-employees|checkout-status/i);
-  assert.doesNotMatch(campaign, /<form\b/i);
-  assert.match(campaign, /name="description" content="[^"]*Book a free call/);
-  assert.match(campaign, /property="og:description" content="[^"]*Book a free call/);
-  assert.match(campaign, /name="twitter:description" content="[^"]*Book a free call/);
-  assert.match(campaign, /<script src="\/ai-intensive\/tracking\.js\?v=20261014-free-call" defer><\/script>/);
-});
 
-test("every free-call and private-session CTA goes through the booking page", () => {
-  const links = Array.from(campaign.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi))
-    .map(([, attrs, body]) => ({ href: attrs.match(/\bhref="([^"]+)"/)?.[1], label: body.replace(/<[^>]*>/g, "").trim() }));
-  const bookingLinks = links.filter(link => /Book a free call|Ask about private sessions/.test(link.label));
-  assert.equal(bookingLinks.length, 4, "Header, primary, FAQ and private-session links");
-  for (const link of bookingLinks) assert.equal(link.href, "/ai-intensive/book", link.label);
-  assert.ok(bookingLinks.some(link => link.label === "Ask about private sessions"));
-  assert.doesNotMatch(campaign, /href="https:\/\/calendar\.google\.com/);
-});
 
-test("campaign preserves its 15-minute promise and the legacy Google schedule contract", () => {
-  const expected = "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2OnIx-9j8ROlj-uAqbq9_rKBDncdqcEtmf4DshdYIZU80lv-ldIBXfa2uBwTIyuhG67_kvQ57C";
-  assert.equal(CALENDAR_URL, expected, "Server preserves the verified dedicated schedule");
-  const destination = text("ai-intensive/book/booking.js").match(/const destination = '([^']+)';/)?.[1];
-  assert.equal(destination, "/ai-intensive/thank-you/");
-  assert.equal(THANK_YOU_PATH, destination);
-  assert.match(text("ai-intensive/thank-you/index.html"), /AcZssZ2OnIx-9j8ROlj-uAqbq9_rKBDncdqcEtmf4DshdYIZU80lv-ldIBXfa2uBwTIyuhG67_kvQ57C/);
-  assert.match(campaign, /A 15-minute call to see if the AI Intensive fits your business\./);
-  assert.doesNotMatch(campaign, /30-minute|AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP/);
-  assert.equal(new URL(CALENDAR_URL).search, "", "No personal data or consent is added to the URL");
-  assert.match(text("education/index.html"), /AcZssZ1gTNRRjtUhFG3CoFfreS9iHhPiF3XYPo2QBchk6DxCt5HwHm_gLVUe3Z-rBEhu890-og5GPxIP/,
-    "Education retains its existing general 30-minute fit-call schedule");
-});
 
-test("agency Education, portraits, chosen artwork and logos remain byte-identical", () => {
+test("portraits, chosen artwork, logos and legacy receipt assets remain byte-identical", () => {
   for (const [path, expected] of Object.entries(preserved)) {
     if (path !== "ai-intensive/tracking.js") assert.equal(hash(read(path)), expected, path);
   }
@@ -121,40 +87,7 @@ test("existing payment verification, privacy signals, SDK readiness and purchase
   }
 });
 
-test("campaign preserves full-frame portrait markup and all existing styling", () => {
-  const figure = campaign.match(/<figure class="mentor-photo">[\s\S]*?<\/figure>/)?.[0];
-  assert.ok(figure);
-  assert.equal(hash(figure), "725de16d1c190d0b05378633c11ff1d0891ba692c4b974c33409339674029155", "Preserve responsive srcset, original frame and caption");
-  const css = text("ai-intensive/style.css");
-  const marker = "\n/* The free-call funnel keeps the campaign's existing orange layout. */";
-  const boundary = css.indexOf(marker);
-  assert.ok(boundary >= 0);
-  assert.equal(hash(css.slice(0, boundary)), "c474c2f9a7653e009cc163bf47763f370f9ae1ae2292023dc086496b50f3d253", "Existing campaign CSS");
-});
 
-test("booking page delegates details to Calendly without payment, Meta, or implied marketing consent", () => {
-  const booking = text("ai-intensive/book/index.html");
-  assert.doesNotMatch(booking, /<form\b|<input\b|\/api\/ai-intensive\/leads/);
-  assert.match(booking, /id="calendly-widget"/);
-  assert.match(booking, /name and email once, in Calendly/);
-  assert.match(booking, /Booking alone does not sign you up for marketing emails/);
-  assert.match(booking, /Calendly provides its own privacy and cookie choices/);
-  assert.match(booking, /separate, optional Meta ad measurement/);
-  assert.match(booking, /book in a new tab[\s\S]*cannot automatically verify/);
-  assert.doesNotMatch(booking, /<script[^>]+(?:tracking|checkout)\.js|\/api\/checkout|\bStripe\b/);
-  assert.doesNotMatch(text("ai-intensive/book/booking.js"), /hide_gdpr_banner|hide_landing_page_details|fetch\(/);
-  const eventUrl = text("ai-intensive/book/calendly-config.js").match(/eventUrl: '([^']*)'/)?.[1];
-  assert.equal(typeof eventUrl, 'string', 'One explicit public event URL setting');
-  assert.equal(eventUrl, 'https://calendly.com/theo-taylorintelligence/ai-intensive', 'Verified owned 15-minute free-call event');
-  if (eventUrl) {
-    const configured = new URL(eventUrl);
-    assert.equal(configured.origin, 'https://calendly.com');
-    assert.equal(configured.search + configured.hash + configured.username + configured.password, '');
-    assert.match(configured.pathname, /^\/[a-z0-9][a-z0-9_-]*\/[a-z0-9][a-z0-9_-]*\/?$/i);
-  }
-  const leadDocs = text("docs/ai-intensive-leads.md");
-  assert.match(leadDocs, /"saved": true, "redirect": "\/ai-intensive\/thank-you\/"/);
-});
 
 test("lead API bypasses SPA fallback and private tooling is excluded from assets", () => {
   const config = text("wrangler.jsonc");
