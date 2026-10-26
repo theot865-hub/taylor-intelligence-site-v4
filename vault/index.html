@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Free AI Teachings | Actually Automated</title>
+<meta name="description" content="5 builds with Claude you can set up this week. Free PDF from Julian at Taylor Intelligence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one screen, one column, one input. White ground, orange for the action, blue for small accents. Deliberately single light theme. */
+:root {
+  --bg: #ffffff;
+  --ink: #16181d;
+  --soft: #5d6270;
+  --line: #e3e5ea;
+  --orange: #f26b1d;
+  --orange-dark: #d65a10;
+  --blue: #2457e6;
+  --font: "Figtree", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; background: var(--bg); }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.top {
+  height: 4px;
+  background: linear-gradient(90deg, var(--orange) 0 78%, var(--blue) 78% 100%);
+  flex: 0 0 auto;
+}
+main {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: 24px;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+.col { width: 100%; max-width: 520px; display: grid; gap: 18px; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--blue);
+}
+.eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 5.2vw, 2.4rem);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+h1 span { color: var(--orange); }
+
+.desc { margin: 0; color: var(--soft); font-size: 1.05rem; max-width: 46ch; }
+
+.inside { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; color: var(--ink); }
+.inside li { display: inline-flex; align-items: center; gap: 6px; }
+.inside li::before { content: ""; width: 5px; height: 5px; background: var(--blue); border-radius: 1px; }
+
+form { display: grid; gap: 10px; margin-top: 4px; }
+.field {
+  display: flex;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  padding: 5px;
+  background: var(--bg);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.field:focus-within { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(36, 87, 230, 0.14); }
+.field input {
+  flex: 1 1 auto; min-width: 0;
+  border: 0; outline: 0; background: transparent;
+  font: 500 16px var(--font);
+  color: var(--ink);
+  padding: 10px 10px;
+}
+.field input::placeholder { color: #9aa0ad; }
+.field button {
+  flex: 0 0 auto;
+  border: 0; cursor: pointer;
+  background: var(--orange);
+  color: #fff;
+  font: 600 15px var(--font);
+  padding: 0 18px;
+  border-radius: 7px;
+  transition: background 0.15s;
+}
+.field button:hover { background: var(--orange-dark); }
+.field button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.consent { margin: 0; font-size: 12.5px; line-height: 1.45; color: var(--soft); }
+.msg { margin: 0; font-size: 14px; }
+.msg.err { color: #b3261e; }
+.msg.ok { color: var(--blue); font-weight: 500; }
+
+footer {
+  flex: 0 0 auto;
+  font-size: 12px; color: #8a8f9b;
+  text-align: center;
+  padding-block: 0 16px;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+
+@media (max-width: 440px) {
+  .field { flex-direction: column; gap: 6px; }
+  .field button { padding: 13px 18px; }
+  .inside { font-size: 13px; }
+}
+@media (max-height: 560px) { body { overflow: auto; } }
+</style>
+
+</head>
+<body>
+<div class="top" aria-hidden="true"></div>
+
+<main>
+  <div class="col">
+    <div class="eyebrow">Actually Automated · Free PDF</div>
+    <h1>5 builds with Claude you can set up <span>this week</span></h1>
+    <p class="desc">The exact prompts, slash commands and systems I use at my AI agency. Short, copy and paste, free.</p>
+    <ul class="inside" aria-label="What's inside">
+      <li>Video edit skill</li>
+      <li>Context template</li>
+      <li>Task checklist</li>
+      <li>Self-improving AI</li>
+    </ul>
+
+    <form id="signup" action="https://app.kit.com/forms/10097424/subscriptions" method="post" novalidate>
+      <label for="email" class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Email address</label>
+      <div class="field">
+        <input id="email" name="email_address" type="email" autocomplete="email" inputmode="email" placeholder="Your email" required>
+        <button type="submit">Email me the PDF</button>
+      </div>
+      <p class="consent">By signing up, you agree to receive emails from Julian at Taylor Intelligence with new AI teachings, updates, and offers on AI tools and services. Unsubscribe anytime.</p>
+      <p class="msg" id="msg" role="status" aria-live="polite" hidden></p>
+    </form>
+  </div>
+</main>
+
+<footer>Taylor Intelligence · 600 1st Ave, Ste 330 PMB 92768, Seattle, WA 98104-2246, USA · julian@taylorintelligence.ai</footer>
+
+<script>
+(function () {
+  var form = document.getElementById('signup');
+  var input = document.getElementById('email');
+  var msg = document.getElementById('msg');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = input.value.trim();
+    msg.hidden = false;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
+      msg.className = 'msg err';
+      msg.textContent = 'Check your email address. It needs an @ and a domain, like you@business.com.';
+      input.focus();
+      return;
+    }
+    var button = form.querySelector('button[type="submit"]');
+    var label = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Sending...';
+    msg.hidden = true;
+    var data = new FormData();
+    data.append('email_address', v);
+    fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Signup not accepted');
+        msg.hidden = false;
+        msg.className = 'msg ok';
+        msg.textContent = 'Check your inbox and tap Confirm to get the PDF. Not there in 2 minutes? Check spam or Promotions.';
+        form.reset();
+      })
+      .catch(function () {
+        // If the background request is blocked, send the form the normal way.
+        form.submit();
+      })
+      .finally(function () {
+        button.disabled = false;
+        button.textContent = label;
+      });
+  });
+})();
+</script>
+
+</body>
+</html>
