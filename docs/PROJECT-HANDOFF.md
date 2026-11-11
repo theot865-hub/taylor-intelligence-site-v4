@@ -18,6 +18,22 @@ and canonical-site verification. Check that receipt or current GitHub checks
 before describing a source copy as live; source files alone are not deployment
 proof.
 
+### November 11 Big O portfolio addition
+
+Big O Tires Victoria now appears immediately after Tire X on the homepage and
+Websites page. Its card is explicitly marked **Test site** and opens
+`https://taylorintelligence-test.ca/big-o/?location=victoria`. The preview image
+is a fresh capture of that public page at 1440×1000, saved as responsive WebPs
+in `assets/work/big-o.webp` and `big-o-720.webp`.
+
+Tire X's retired preview URL was replaced by the verified live site,
+`https://www.tirexcanada.com/`, and its card is labelled **Live website**.
+The first row is Tire X, Big O, Stone Design; Szolyd and Knot Normal remain in
+the second group alongside the project invitation. No existing project was
+removed. Both grids use the existing responsive styling. Checks covered both
+pages at 320, 800 and 1440 pixels with the correct card order and no horizontal
+overflow; the homepage expansion still reveals the remaining projects.
+
 ### November 11 CCT logo addition
 
 Added CCT — Cross Canada Tire Wholesaling to the homepage client row, after
