@@ -18,9 +18,26 @@ and canonical-site verification. Check that receipt or current GitHub checks
 before describing a source copy as live; source files alone are not deployment
 proof.
 
+### November 11 hero spacing correction
+
+The headline now sits within the raised left curve instead of below it. The
+supporting paragraph has a wider column, larger type and its own vertical offset
+below the curve's right edge. The desktop button fits its label; phones retain
+the full-width button. The headline wording and other sections are unchanged.
+
+`automotive.css` owns this layout. The panel's `--hero-top` controls the headline
+inset; the intro offset follows the existing 18vh curve height. Reset that offset
+in the single-column layout at 1100px. The stylesheet URL in `index.html` has a
+version query so returning visitors receive the correction.
+
+Visual and overflow checks passed at 320×740, 390×844, 800×1000, 1150×1000,
+1280×720, 1440×900 and 1920×1080. The contact button scrolled to the contact form
+on a 320px phone viewport. No form was submitted. This CSS-only correction does
+not change APIs; the earlier 153-test result remains the baseline test record.
+
 ### November 11 Big O portfolio addition
 
-Big O Tires Victoria now appears immediately after Tire X on the homepage and
+Big O Tires Victoria now appears immediately before Tire X on the homepage and
 Websites page. Its card is explicitly marked **Test site** and opens
 `https://taylorintelligence-test.ca/big-o/?location=victoria`. The preview image
 is a fresh capture of that public page at 1440×1000, saved as responsive WebPs
@@ -28,7 +45,7 @@ in `assets/work/big-o.webp` and `big-o-720.webp`.
 
 Tire X's retired preview URL was replaced by the verified live site,
 `https://www.tirexcanada.com/`, and its card is labelled **Live website**.
-The first row is Tire X, Big O, Stone Design; Szolyd and Knot Normal remain in
+The first row is Big O, Tire X, Stone Design; Szolyd and Knot Normal remain in
 the second group alongside the project invitation. No existing project was
 removed. Both grids use the existing responsive styling. Checks covered both
 pages at 320, 800 and 1440 pixels with the correct card order and no horizontal
