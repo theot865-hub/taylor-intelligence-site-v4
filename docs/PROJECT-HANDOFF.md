@@ -18,7 +18,23 @@ and canonical-site verification. Check that receipt or current GitHub checks
 before describing a source copy as live; source files alone are not deployment
 proof.
 
-Local verification completed November 11:
+### November 11 CCT logo addition
+
+Added CCT — Cross Canada Tire Wholesaling to the homepage client row, after
+Tire X and Big O. The row has seven logos on desktop and three columns on
+phones with the final mark centered. Named logo styles preserve the original
+brands when the order changes.
+
+`assets/logos/cct.svg` is the existing black/red CCT vector from the Tire X/CCT
+source, copied without modifying its artwork. Original filename:
+`assets/img/cct-logo-red.svg`; SHA-256:
+`7762b3b5564af65cf5ffe943034e723ddf6e4a5edde562f59a8d45bd4f1310fd`.
+No CCT website project or results claim was added. All seven logos loaded and
+no horizontal overflow was found at 320, 390, 800 and 1440 pixels. The original
+SVG hash and XML parse were verified. The release receipt records the published
+commit for this addition.
+
+Local verification of the preceding automotive revision completed November 11:
 
 - All 153 existing Node tests passed.
 - All 206 checked local asset and link references resolve.
