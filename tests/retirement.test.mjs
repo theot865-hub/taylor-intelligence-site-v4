@@ -72,14 +72,19 @@ test('all former campaign entry pages close bookings, payments and ad tracking',
   assert.doesNotMatch(read('sitemap.xml'), /<loc>https:\/\/taylorintelligence.ai\/ai-intensive\//);
 });
 
-test('homepage and Education cannot sell the retired package and preserve general agency services', () => {
-  for (const path of ['index.html', 'education/index.html']) {
+test('agency pages remove Education while retaining automotive services and historical receipts', () => {
+  for (const path of ['index.html', 'websites/index.html', 'marketing/index.html', 'software/index.html', 'principles/index.html']) {
     const html = read(path);
-    assert.doesNotMatch(html, /company-checkout|extra-employees|Four live group calls|\$1,200|href="\/ai-intensive\/(?:"|book)/);
-    assert.match(html, /The AI Intensive has ended/);
+    assert.doesNotMatch(html, /company-checkout|extra-employees|Four live group calls|\$1,200|href="\/(?:ai-intensive|education)\//);
     assert.match(html, /href="\/software\/"/);
     assert.match(html, /data-lead-form/);
   }
+  assert.doesNotMatch(read('index.html'), /education-section|id="education"|AI Intensive/);
+  assert.doesNotMatch(read('sitemap.xml'), /\/education\//);
+  const archive = read('education/index.html');
+  assert.match(archive, /The AI Intensive has ended/);
+  assert.match(archive, /noindex, nofollow/);
+  assert.doesNotMatch(archive, /<form\b|<iframe\b|tracking\.js|checkout\.js|booking\.js/);
   assert.match(read('index.html'), /buy\.stripe\.com\/aFa14pa10ffO1LLgcdeIw01/, 'Website purchase remains separate');
 });
 
