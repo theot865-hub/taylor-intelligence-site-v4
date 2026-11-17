@@ -1,3 +1,13 @@
+# November 17, 2026 — private Big O preview removal
+
+User explicitly requested removal of the new Big O test site from the public agency website. Removed its whole portfolio card from homepage and `/websites/`, retaining client logo and production Tire X link. Excluded `assets/work/big-o.webp` and `assets/work/big-o-720.webp` from public assets. These old image URLs now return the existing HTML fallback, not the images.
+
+Live Worker `taylor-intelligence-site-v4`: `6bbcde95-1e50-4eda-82d5-54ebee3fdb41`. Source branch `codex/private-preview-removal-20261117`, baseline `6326908c0a5bc7521bf0fba2501ee9c7c6a7f3cb`. Existing 153 tests and deployment dry-run pass. Canonical homepage and Websites return 200 with no Big O test link/card/image references. No API or commerce code changed. Before-state live homepage matched baseline except Cloudflare's injected challenge script.
+
+Big O/CCT previews are protected separately by the `cct-site` Worker; source is the sibling test-site project and TEST-DEPLOYMENT.md. Do not restore the public portfolio cards or bypass the preview password gate. No passwords in this repository. Older public-portfolio instructions below are historical.
+
+---
+
 # Taylor Intelligence site — project handoff
 
 Updated: November 11, 2026 (America/Vancouver)
