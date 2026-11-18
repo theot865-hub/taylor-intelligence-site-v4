@@ -583,4 +583,6 @@
           .start .direct a:hover { text-decoration: underline; }
           .start .form-note { font-size: 15px; line-height: 1.6; color: var(--brand-dark); background: #eef4ef; border: 1.5px solid var(--brand-accent); border-radius: 12px; padding: 16px 18px; }
           @media (max-width: 600px) { .start .f-row { grid-template-columns: 1fr; } }
-        
+
+/* The public offer is temporarily Agentic as a Service only. The home page supplies its direct service link. */
+.top-nav .services-menu{display:none}

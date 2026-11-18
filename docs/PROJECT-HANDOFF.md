@@ -1,12 +1,35 @@
 # Taylor Intelligence site — project handoff
 
-Updated: November 11, 2026 (America/Vancouver)
+Updated: November 18, 2026 (America/Vancouver)
 
 This is the starting point for Theo or another AI. Theo is new to coding and
 should not need to remember the setup. Keep this file current when the code,
 setup or deployment state changes. Explain commands and results plainly.
 
 ## Current status
+
+### November 18 — formula-driven manufacturing / Agentic as a Service pivot
+
+Theo directed a temporary public-offer pivot to **Agentic as a Service for
+formula-driven manufacturers**. The homepage hero, Agentic section, team
+description, contact copy, metadata and structured data now speak to practical
+agents for formulas, specifications, batch records, SDSs, COAs, technical
+answers and qualified requests. The `/software/` route now presents the same
+offer and its human-approval boundaries.
+
+The homepage Websites and Marketing sections are retained in source but hidden.
+Their routes are retained for recovery but carry `noindex, nofollow`; they are
+not linked from the homepage. The former shared Services menu is hidden across
+the static pages; the homepage has the single **Agentic as a Service** link.
+Do not delete the paused material or describe the change as a live deployment
+until the local checks, commit, push and canonical-site verification are done.
+
+Positioning source: the Taylor Intelligence Brain's November 18 formulator-call
+research. The target includes Canadian formula-driven manufacturers in natural
+health products, cosmetics, cleaning and industrial chemicals, coatings and
+construction chemicals. Keep claims conservative: agents assist with approved
+information and repeatable workflow; the customer's team retains formulation,
+pricing, compliance and customer-commitment approval.
 
 The November 11 revision makes Taylor Intelligence specific to AI and marketing
 for automotive repair, tire and service shops. The implementation and local
@@ -96,10 +119,13 @@ version therefore differed. Verify their current state before future work.
 
 ## What changed and what stays
 
-- Keep Websites, Marketing, Software as a Service, Agentic as a Service, Team,
-  Principles and Contact. The separate vault stays available.
-- Write for automotive shops: service enquiries, local drivers, tire and repair
-  services, seasonal promotions, service advisors and shop administration.
+- Publicly lead with Agentic as a Service for formula-driven manufacturers.
+  Websites and Marketing are temporarily paused, retained in source and not
+  publicly promoted. The separate vault stays available.
+- Write for formula-driven manufacturers: approved technical documents,
+  quotes, requests, batch records, SDSs, COAs, specifications and operational
+  follow-through. Do not imply autonomous formulations, compliance decisions,
+  pricing or customer commitments.
 - Remove Education as a marketed service and remove the homepage education
   section and its navigation and sitemap entries. Do not restore AI Intensive.
 - Keep the established TI identity, monochrome terrain, curved panels,
@@ -224,6 +250,7 @@ and customer data from a portable package.
 A useful starting instruction is:
 
 > Read AGENTS.md and docs/PROJECT-HANDOFF.md, inspect the current Git status and
-> diff, then continue the requested change. Preserve the automotive positioning,
-> retired programme safeguards and unrelated work. Keep the handoff current.
+> diff, then continue the requested change. Preserve the Agentic-as-a-Service
+> positioning, paused-offer recovery path, retired programme safeguards and
+> unrelated work. Keep the handoff current.
 > Report clearly whether the result is local, pushed or verified live.
