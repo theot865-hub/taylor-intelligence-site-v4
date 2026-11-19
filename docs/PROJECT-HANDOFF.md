@@ -1,12 +1,43 @@
 # Taylor Intelligence site — project handoff
 
-Updated: November 18, 2026 (America/Vancouver)
+Updated: November 19, 2026 (America/Vancouver)
 
 This is the starting point for Theo or another AI. Theo is new to coding and
 should not need to remember the setup. Keep this file current when the code,
 setup or deployment state changes. Explain commands and results plainly.
 
 ## Current status
+
+### November 19 — restore the private-preview publication boundary (approved release)
+
+The formula-driven manufacturing release is verified live at commit
+`2d3b70a7d73ccda4bfb74b131c8f0d1d4c8c4769`, with a successful Workers build on
+November 18 at 19:10:46 UTC. Canonical pages matched that source on November 19.
+That release inadvertently restored the Big O preview portfolio card and both
+screenshots previously excluded by the November 17 privacy repair.
+
+This isolated correction removes only that card from the homepage's hidden
+Websites section and `/websites/`, and restores the two screenshot exclusions in
+`.assetsignore`. Raw captures remain in source for recovery. The Big O client
+logo, all other portfolio cards, new formulator positioning, hidden service
+sections, route noindex settings and retired-offer protections are preserved.
+
+Theo explicitly approved publication on November 19: “yes approve both.
+publish the ti fix and the private big o update, verify both and update the
+brain.” Publish this exact correction by fast-forwarding the existing
+`codex/automotive-positioning-20261111` release branch; a branch push can deploy
+before PR merge. PR24 remains the existing integration review against older
+main; no unrelated historical main merge is part of this repair.
+
+The accompanying release receipt records the exact published commit, successful
+build and canonical readback. Before claiming a release verified, both HTML
+routes must have no preview URL or screenshot references and both
+`/assets/work/big-o*.webp` requests must no longer serve image content.
+The private Big O preview is a separate authorised deployment.
+
+Verification: `node --test tests/*.test.mjs`. The added regression tests protect
+all public HTML and deploy exclusions against a future branch rollback. The
+maintenance handoff records responsive checks and exact source hashes.
 
 ### November 18 — formula-driven manufacturing / Agentic as a Service pivot
 
