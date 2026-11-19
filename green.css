@@ -13,12 +13,12 @@ a:focus-visible,button:focus-visible{outline:2px solid #2e6f4e;outline-offset:5p
 .terrain-toggle{position:fixed;top:17vh;right:4%;z-index:5;color:#c3decc;font:10px system-ui;background:#0b161280;border:1px solid #c3decc55;padding:8px 12px;cursor:pointer}
 .client-proof{margin-top:32px;display:flex;gap:35px;align-items:center;padding:22px 0;border-top:1px solid #dce5de;border-bottom:1px solid #dce5de}
 .client-proof>p{font-size:10px;color:#677c6d;white-space:nowrap}
-.client-logos{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:center;gap:30px;width:100%}
+.client-logos{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));align-items:center;gap:30px;width:100%}
 .client-logos>div{height:44px;display:flex;align-items:center;justify-content:center}
 .client-logos img{width:100%;max-width:135px;height:36px;object-fit:contain;filter:grayscale(1);mix-blend-mode:multiply}
-.client-logos>div:nth-child(2) img,.client-logos>div:nth-child(4) img{filter:none;mix-blend-mode:normal}
-.client-logos>div:nth-child(2) img{height:42px}
-.client-logos>div:nth-child(3) img{filter:none;mix-blend-mode:normal;height:32px;max-width:110px}
+.client-logos>.client-logo-big-o img,.client-logos>.client-logo-szolyd img,.client-logos>.client-logo-cct img{filter:none;mix-blend-mode:normal}
+.client-logos>.client-logo-big-o img{height:42px}
+.client-logos>.client-logo-stone img{filter:none;mix-blend-mode:normal;height:32px;max-width:110px}
 .client-logos>.client-logo-omen img{height:48px}
 .client-logos>.client-logo-knot img{height:44px;max-width:75px;filter:none;mix-blend-mode:normal}
 .green-work{padding:36px 0 65px;scroll-margin-top:30vh}
@@ -47,7 +47,7 @@ a:focus-visible,button:focus-visible{outline:2px solid #2e6f4e;outline-offset:5p
 }
 @media(max-width:600px){
  .hero-video-bg{height:165px}.panel{padding:25px 20px}.hero-title{font-size:34px;line-height:1.1;max-width:360px}
- .client-logos{grid-template-columns:repeat(6,1fr);gap:12px 18px}.client-logos>div{grid-column:span 2;height:33px}.client-logos img{height:29px}.client-logos>div:nth-child(3) img{height:28px}.client-logos>div:nth-child(2) img,.client-logos>.client-logo-knot img{height:32px}
+ .client-logos{grid-template-columns:repeat(6,1fr);gap:12px 18px}.client-logos>div{grid-column:span 2;height:33px}.client-logos img{height:29px}.client-logos>.client-logo-stone img{height:28px}.client-logos>.client-logo-big-o img,.client-logos>.client-logo-knot img{height:32px}
  .green-work{padding:30px 0 40px}.green-heading{display:block;margin-bottom:24px}.green-heading>p{margin-top:16px}.green-heading h2,.green-software h2,.green-about h2{font-size:30px}
  .work-grid{grid-template-columns:1fr;gap:28px}.work-card:last-child>a{display:block}.work-card:last-child .work-image{aspect-ratio:1.44}.work-card:last-child .work-caption{display:flex;padding:15px 0 0}.work-card:last-child .work-status{margin-top:0}.work-caption h3{font-size:16px}.work-status{font-size:9px}
  .expertise-grid{grid-template-columns:1fr;gap:30px}.expertise-grid p{min-height:0;max-width:38ch}.green-services{padding:32px 0 42px}.green-software{grid-template-columns:1fr;gap:25px;padding:35px 0}.green-about{padding:35px 0}.green-footer{margin-top:45px;gap:15px}.green-footer a{margin-left:0;margin-right:18px}
@@ -175,3 +175,6 @@ a:focus-visible,button:focus-visible{outline:2px solid #2e6f4e;outline-offset:5p
 @media(max-width:1100px){.top-nav{left:0;gap:0;justify-content:flex-start}.services-menu summary{padding:15px 22px;border-top:1px solid #eaeae6;justify-content:space-between;font-size:16px}.services-dropdown{position:static;min-width:0;box-shadow:none;border:0;padding:0 12px 10px}.top-nav .services-dropdown a{padding:13px 22px;font-size:14px}.services-menu[open]{background:#fafaf8}.services-menu[open] .services-dropdown{background:transparent}}
 
 @media(min-width:1101px){.top-nav{z-index:8}}
+
+/* Centre the last mark when seven clients wrap into three phone columns. */
+@media(max-width:600px){.client-logos>div:last-child:nth-child(3n + 1){grid-column:3 / span 2}}

@@ -1,5 +1,19 @@
 # Taylor Intelligence — Agency site
 
+## November 11, 2026 — automotive positioning
+
+The current revision focuses the site on AI, marketing, websites and software
+for automotive repair, tire and service shops. Websites, Marketing, Software as
+a Service, Agentic as a Service, Team, Principles, Contact and the vault remain.
+Education is removed as a marketed service; its old URL retains a retired
+programme support notice and historical payment-receipt safeguards.
+
+Start with [the current project handoff](docs/PROJECT-HANDOFF.md) for setup,
+source locations, preview and test commands, deployment cautions and cross-AI
+continuity. Local verification passed: 153 tests, 206 local references and
+responsive browser checks. The portable handoff's release receipt records the
+exact published commit and live checks. The sections below are historical context.
+
 ## October 21 — AI Intensive retired
 
 Theo ended the AI Intensive. The campaign, book and thank-you URLs now show a

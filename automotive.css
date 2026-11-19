@@ -1,0 +1,23 @@
+/* Homepage positioning. Keep the established terrain, curved panels and type. */
+/* Follow the desktop panel's raised left cap and lower right edge independently. */
+.automotive-site .panel { --hero-top:clamp(64px,8.5vh,92px);padding-top:var(--hero-top); }
+.automotive-hero { display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:48px;align-items:start;margin-bottom:44px; }
+.automotive-hero .hero-title { position:static;width:auto;max-width:none;margin:0;font-size:clamp(40px,4.05vw,70px);line-height:1.12;letter-spacing:-.045em; }
+.automotive-hero .hero-title>span { width:auto;white-space:normal; }
+.automotive-hero .hero-title>span+span { margin-top:12px;font-size:1em; }
+.automotive-hero-intro { margin-top:calc(18vh + 24px - var(--hero-top)); }
+.automotive-hero-intro p { margin:0 0 24px;color:#555;font:400 17px/1.65 Manrope,Arial,sans-serif;max-width:46ch; }
+.automotive-hero .hero-contact.purchase-button { position:static;width:auto;max-width:100%;min-width:0;min-height:54px;margin:0;padding-inline:28px;font-size:13px; }
+@media(max-width:1100px) {
+  .automotive-site .panel { padding-top:32px; }
+  .automotive-hero { grid-template-columns:1fr;gap:24px;margin-bottom:28px; }
+  .automotive-hero .hero-title { font-size:clamp(32px,5.85vw,62px); }
+  .automotive-hero-intro { margin-top:0; }
+  .automotive-hero-intro p { max-width:54ch;font-size:16px; }
+}
+@media(max-width:600px) {
+  .automotive-hero { gap:20px; }
+  .automotive-hero .hero-title { font-size:clamp(30px,7.5vw,45px);line-height:1.15; }
+  .automotive-hero .hero-title>span+span { margin-top:8px; }
+  .automotive-hero .hero-contact.purchase-button { width:100%;max-width:none;font-size:14px; }
+}
